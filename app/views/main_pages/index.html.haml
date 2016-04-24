@@ -1,0 +1,31 @@
+- @menu_up_item = 'main'
+
+- @title = @page.title_tag
+
+
+
+-#%div
+  =@result
+  %hr/  
+
+
+- unless @info_msg.nil? and @info_msg == ''
+  %h3 
+    =@info_msg
+
+%section
+  %h3
+    =@main_page.title
+  =@main_page.description.html_safe  
+
+%section
+  #form.lead
+    %b
+      =render partial: 'new_order_form' 
+
+
+
+
+
+
+

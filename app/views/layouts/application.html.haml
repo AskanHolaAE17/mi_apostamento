@@ -1,0 +1,49 @@
+!!!
+%html
+  %head
+    = render partial: 'layouts/head/head'
+
+    
+  %body.un_selectable
+
+    = render partial: 'layouts/fond-content/text'
+    #fond_green_layer
+    
+    = image_tag 'fond_main/forest_original.jpg', id: 'fond_forest_main', title: "#{@main_page.fond_img_forest_title || 'Умиротворяющий лес'}", alt: "#{@main_page.fond_img_forest_alt_text || 'Умиротворяющий лес. Фон сайта для поиска пары.'}"
+    
+            
+            
+    - unless @menu_up_item == 'main'    
+     
+      %main
+        .row-fluid
+          .span5.offset2#block
+            %article.lead.info_msg
+              = yield
+                          
+            
+    - else      
+    
+      %main
+        .row-fluid
+          %nav#block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets}"}
+            = yield      
+
+
+
+-#= javascript_include_tag 'application', 'data-turbolinks-track' => true
+
+
+
+= render partial: 'layouts/head/pre/prerender_pages'
+= render partial: 'layouts/head/pre/prefetch_current_precompiled_imgs'
+/[if IE]
+  %script{type: 'text/javascript', src: 'http://html5shiv.googlecode.com/svn/trunk/html5.js'}
+      
+      
+
+
+
+
+
+

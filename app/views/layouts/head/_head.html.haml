@@ -1,0 +1,22 @@
+= csrf_meta_tags
+= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true        
+
+
+= render partial: 'layouts/head/meta'
+
+
+
+%title
+  =@site_title 
+  
+  - if @page
+    = @page.title_tag
+  - else
+    Хочу счастья
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+
+
+site_title:                 'Безопасные знакомства'
+site_root:                  'be-in-pair.herokuapp.com'
+
+mailing_user_name:          'be-in-pair@gmail.com'   
+mailing_password:           'jET9kLamurf3rMl5L2gAP9jfYp6DnYc%bA1'
+mailing_port:               '587'
+mailing_address:            'smtp.gmail.com'
+
+
+
+lp_private_key:             'irj04vFv5A7g7pdVVdJ59ja5nh79U5IlylVQk8jQ'
+
+site_key_full_easy:         'bKZLv_k9a-02Y6-9xuhoNGY_CTMIlQQS3kitty0E_-Bbd'
+site_key_short_easy:        'gn__vzGB3F_-sKcq_gtelephonYA'
+site_key_full_hard:         'M:4Y#7rwaterfallp"Bp`%Qs{t)t.&COi}y;=zOx-*El)XP%,'
+site_key_short_hard:        'v%{bFD"5:ofaBlebaneseQ@#!J}q'
+
+
+
+#RSA
+#public_key_modulus   = ''
+#public_key_exponent  = ''
+
+#private_key_modulus  = ''
+#private_key_exponent = ''
+
+

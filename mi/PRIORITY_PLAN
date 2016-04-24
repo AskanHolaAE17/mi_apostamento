@@ -1,0 +1,73 @@
+1) взять карту
+
+3) [30] pay: real
+
+email if null contacts
+new accs
+copy site to new local
+clean local
+all to new email
+upload site
+test content
+main content
+--->start work with search-systems
+if 7
+
+4) [45] чистый email все + мой email too везде
+
+6) [30] новые rep и url: план     
+  public/sitemap - root
+  just simple clean migrating
+  init/act_adm.rb: config.default_namespace = :fairytale -> :fairytale_panel
+  & config.site_title = ENV['site_title'] in app.yml
+  check init/session_store.rb
+  check app.yml
+  check order_mailer
+  check in appl.html:  'Фон сайта для поиска пары.' в alt
+  Pages info from local: copy
+
+
+1) [30] форма заказа
+
+2) [30] блок заказа
+        
+________________________________________________________________________________
+
+
+        
+1) [60 ]   тест: контент 
+ 
+
+ 
+
+
+4) [180]   формирование потенциального списка
+           реальных контактов ->
+           ПЛАН ПЕРВИЧНОГО ЗАПОЛНЕНИЯ БАЗЫ 
+
+________________________________________________________________________________
+         
+         
+                [3ч30м]
+           
+On Ready:
+         [30 ] новые rep и url 
+         [30 ] контент: 
+                       test-info: migration 
+                       main-text
+                       title-of-site
+                       copy SEO-tags from local db  
+                  
+      MI: 
+         [150] SEO-план + DEADLINE
+________________________________________________________________________________
+
+
+                ПЯТНИЦА (15 лунный день   - 22.4.16)        
+                
+
+      -> DO SEO PLAN --->                  
+        
+        
+        
+

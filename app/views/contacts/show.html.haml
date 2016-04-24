@@ -1,0 +1,49 @@
+- unless @contacts.count == 0 
+
+  
+  - @contacts.each do |contact|
+   
+    .white_border
+    
+    
+      %strong
+        =contact.name + ' ' + contact.surname        
+  
+      %address
+        =contact.city + ', ' + contact.country
+      
+      .text-success
+        =contact.birthday
+      
+      .lead
+        =contact.about_info   
+  
+      .label.label-success.select_able
+        =contact.email
+    
+      %br/
+      
+- else    
+  
+  .lead 
+    -# Email или отложка:
+    Контакты придут Вам на почту  
+-#______________________________________________________________________________  
+
+
+
+-#%section
+  #form.lead
+    %b
+      =render partial: 'new_consult_form' 
+
+
+  
+    
+
+
+
+
+
+
+

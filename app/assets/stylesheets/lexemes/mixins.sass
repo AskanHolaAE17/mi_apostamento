@@ -1,0 +1,58 @@
+=user-select-none
+  -webkit-user-select:             none
+  -moz-user-select:                none
+  -ms-user-select:                 none
+  user-select:                     none
+
+
+
+=user-select-all
+  -webkit-user-select:             all
+  -moz-user-select:                all
+  -ms-user-select:                 all
+  user-select:                     all
+  
+  
+  
+=background-size($size)
+  -webkit-background-size:         $size
+  -moz-background-size:            $size
+  -o-background-size:              $size            
+  background-size:                 $size
+ 
+  
+  
+=transition-standart($property) 
+  -webkit-transition:              $property .5s ease
+  -moz-transition:                 $property .5s ease
+  -o-transition:                   $property .5s ease       
+  transition:                      $property .5s ease
+  
+
+
+=border-radius-one-arg($arg)   
+  -webkit-border-radius:        $arg
+  -moz-border-radius:           $arg
+  border-radius:                $arg
+  
+  border-bottom-right-radius:   $arg
+  border-bottom-left-radius:    $arg  
+  border-top-right-radius:      $arg  
+  border-top-left-radius:       $arg  
+
+
+
+=box-shadow-inset($x, $y, $blur, $color)
+  -webkit-box-shadow:   $x $y $blur $color inset
+  -moz-box-shadow:      $x $y $blur $color inset
+  box-shadow:           $x $y $blur $color inset
+  
+  filter: progid:DXImageTransform.Microsoft.dropshadow(offX=$x, offY=$y, color=$color)
+  filter: progid:DXImageTransform.Microsoft.shadow(direction=120, color=$color, strength=10) 
+
+
+
+
+
+
+
