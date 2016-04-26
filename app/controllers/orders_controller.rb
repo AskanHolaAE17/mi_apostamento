@@ -64,7 +64,7 @@ class OrdersController < ApplicationController
         :description      => "Оплата теста",
         :server_url       => root_path + 'i_have_payed/' + server_url_details,
         :result_url       => root_path + 'info/proverte_email_posle_oplaty',
-        :sandbox          => '1'        
+        :sandbox          => '0'        
       }, liqpay, public_key, api_version)                                  
 #_______________________________________________________________________________if @order.save
 
