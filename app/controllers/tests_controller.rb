@@ -12,7 +12,7 @@ class TestsController < ApplicationController
   
     @site_title = MeConstant.find_by_title('site_title').content
       
-    root_path = MeConstant.find_by_title('root_path').content
+    root_path   = MeConstant.find_by_title('root_path').content
      
     test_url_encoded = params[:test_url_encoded]
     test_url_encoded[test_url_encoded.length-1] = ''
