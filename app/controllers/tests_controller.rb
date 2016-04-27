@@ -43,7 +43,9 @@ class TestsController < ApplicationController
     redirect_to '/' if order.test_ended == true      
           
     questions = Test.find(1).questions       
-    if qw_number < questions.count + 1 
+    
+    
+    if qw_number < questions.count + 1 and al_no.to_i < 7 and nl_no.to_i < 7 and shl_no.to_i < 7 and gml_no.to_i < 7 and dl_no.to_i < 7 and ml_no.to_i < 7 and ol_no.to_i < 7 and pl_no.to_i < 7 and kl_no.to_i < 7 and il_no.to_i < 7 and disl_no.to_i < 7    
     
       question = questions.find_by_number_of_question(qw_number)
       @question_title = question.title
@@ -129,38 +131,16 @@ class TestsController < ApplicationController
                                       
     else
 #_______________________________________________________________________________
-          
-          
-          
-      bad_group  = al_no.to_i   + 
-                   nl_no.to_i   + 
-                   shl_no.to_i  +  
-                   gml_no.to_i
                    
-      good_group = dl_no.to_i   + 
-                   ml_no.to_i   + 
-                   ol_no.to_i   + 
-                   pl_no.to_i   + 
-                   kl_no.to_i   + 
-                   il_no.to_i   + 
-                   disl_no.to_i                                  
-#_______________________________________________________________________________
-
 
 
       if order and order.akey == order_akey                
         
                 
-        if bad_group < 2 or good_group > 1
-        
-          order.group         = 'GOOD GROUP'           
-          flash[:notice]      = 'Client has gone to good group'
-
-        else         
-          
-          order.group         = 'BAD GROUP'                   
-          flash[:notice]      = 'Client has gone to bad group'
-          
+        order.group = if dl_no.to_i == 7 or ml_no.to_i == 7 or ol_no.to_i == 7 or pl_no.to_i == 7 or kl_no.to_i == 7 or il_no.to_i == 7 or disl_no.to_i == 7         
+          'GOOD GROUP'           
+        else                   
+          'BAD GROUP'                             
         end
 #_______________________________________________________________________________
             
