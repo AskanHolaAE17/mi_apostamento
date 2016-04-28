@@ -24,6 +24,8 @@ qw (&all) able -> change status cool?
 head: title on all (2..5) pages
 
 don`t save TOP fairy to browser cache
+
+diff admin path (local / on line)
 __________________
 
 

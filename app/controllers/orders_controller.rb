@@ -168,7 +168,7 @@ class OrdersController < ApplicationController
         order_id_length = ''        
         for i in 0..details.length-1
           unless details[i].in? ('a'..'z')
-            order_id_length += "#{details[i]}"  
+            order_id_length += details[i]
           else
             break
           end
