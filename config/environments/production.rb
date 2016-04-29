@@ -94,8 +94,8 @@ Rails.application.configure do
     user_name:             ENV['mailing_user_name'],
     password:              ENV['mailing_password'],
     #---  tls:                    true,
-    authentication:        'plain',
-    enable_starttls_auto:   true      
+    authentication:        'plain'
+    #enable_starttls_auto:   true      
   }
   
   config.action_mailer.perform_deliveries = true    

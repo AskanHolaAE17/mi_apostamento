@@ -9,5 +9,6 @@ class AddFullInfoToQuestions < ActiveRecord::Migration
     f.update_attribute :number_of_question, @count
     @count = @count + 1
   end
+
 end
 
