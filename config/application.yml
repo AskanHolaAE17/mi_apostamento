@@ -3,7 +3,7 @@
 site_title:                 'Безопасные отношения'
 site_root:                  'be-in-pair.herokuapp.com'
 
-mailing_user_name:          'be.in.pair@gmail.com'   
+mailing_user_name:          'be.in.pair'   
 mailing_password:           'jET9kLamurf3rMI5L2gAP9jfYp6DnYc%bA1'
 mailing_port:               '587'
 mailing_address:            'smtp.gmail.com'
@@ -25,5 +25,6 @@ site_key_short_hard:        'v%{bFD"5:ofaBlebaneseQ@#!J}q'
 
 #private_key_modulus  = ''
 #private_key_exponent = ''
+
 
 

@@ -19,6 +19,8 @@ class OrdersController < ApplicationController
       public_key   = me_liqpay.public_key
       private_key  = ENV['lp_private_key']
       api_version  = me_liqpay.api_version           
+      
+      @pay_way = MeConstant.find_by_title('pay_via_sandbox').content  
 #_______________________________________________________________________________if @order.save
 
 
@@ -64,7 +66,7 @@ class OrdersController < ApplicationController
         :description      => "Оплата теста",
         :server_url       => root_path + 'i_have_payed/' + server_url_details,
         :result_url       => root_path + 'info/proverte_email_posle_oplaty',
-        :sandbox          => '1'        
+        :sandbox          => @pay_way        
       }, liqpay, public_key, api_version)                                  
 #_______________________________________________________________________________if @order.save
 
