@@ -134,7 +134,7 @@ class TestsController < ApplicationController
                    
 
 
-      if order and order.akey == order_akey #----- If Right Order                
+      #-if order and order.akey == order_akey #----- If Right Order                
         
                 
         order.group = if dl_no.to_i == 7 or ml_no.to_i == 7 or ol_no.to_i == 7 or pl_no.to_i == 7 or kl_no.to_i == 7 or il_no.to_i == 7 or disl_no.to_i == 7         
@@ -191,12 +191,12 @@ class TestsController < ApplicationController
         
         
         
-    else #----- If Not Right Order
+    #-else #----- If Not Right Order
     
-      #Mail to Admin
-      redirect_to '/'
+    #-  #Mail to Admin
+    #-  redirect_to '/'
       
-    end #----- Checking is Right Order - Ended       
+    #-end #----- Checking is Right Order - Ended       
     
     end #----- TestPart Ended
 
