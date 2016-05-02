@@ -113,7 +113,21 @@ class ContactsController < ApplicationController
       order.more_info_save = true
       order.save
 
-      OrderMailer.d_see_contacts(order, link_with_contacts).deliver      
+
+
+      @contacts = if ( contacts_status.to_i % 2 == 0 )
+        Contact.where( group: 'GOOD GROUP')
+      else  
+        Contact.where( group: 'BAD GROUP' )
+      end        
+    
+      @contacts = @contacts.where.not(order_number: order_id)
+    
+      unless @contacts.count == 0 
+        OrderMailer.d_see_contacts(order, link_with_contacts).deliver      
+      end
+
+     
       redirect_to link_with_contacts                         
           
     else
@@ -244,6 +258,7 @@ class ContactsController < ApplicationController
 
 
   def show
+  
     @page            = Page.find_by_page :contacts
   
   

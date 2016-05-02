@@ -186,15 +186,15 @@ class TestsController < ApplicationController
       
       OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
       redirect_to link_with_more_info_form
-    end                      
+                          
 #_______________________________________________________________________________
         
         
         
-      else
-        #Mail to Admin
-        redirect_to '/'
-      end       
+    else
+      #Mail to Admin
+      redirect_to '/'
+    end       
 
   end
 #_______________________________________________________________________________      
