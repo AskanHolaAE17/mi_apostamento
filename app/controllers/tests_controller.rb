@@ -45,7 +45,7 @@ class TestsController < ApplicationController
     questions = Test.find(1).questions       
     
     
-    if qw_number < questions.count + 1 and al_no.to_i < 7 and nl_no.to_i < 7 and shl_no.to_i < 7 and gml_no.to_i < 7 and dl_no.to_i < 7 and ml_no.to_i < 7 and ol_no.to_i < 7 and pl_no.to_i < 7 and kl_no.to_i < 7 and il_no.to_i < 7 and disl_no.to_i < 7    
+    if qw_number < questions.count + 1 and al_no.to_i < 7 and nl_no.to_i < 7 and shl_no.to_i < 7 and gml_no.to_i < 7 and dl_no.to_i < 7 and ml_no.to_i < 7 and ol_no.to_i < 7 and pl_no.to_i < 7 and kl_no.to_i < 7 and il_no.to_i < 7 and disl_no.to_i < 7    #----- Start Testing Part
     
       question = questions.find_by_number_of_question(qw_number)
       @question_title = question.title
@@ -129,12 +129,12 @@ class TestsController < ApplicationController
         @no_params = root_path + "test/#{no_params_encoded}"
         
                                       
-    else
+    else #----- Test ended
 #_______________________________________________________________________________
                    
 
 
-      if order and order.akey == order_akey                
+      if order and order.akey == order_akey #----- If Right Order                
         
                 
         order.group = if dl_no.to_i == 7 or ml_no.to_i == 7 or ol_no.to_i == 7 or pl_no.to_i == 7 or kl_no.to_i == 7 or il_no.to_i == 7 or disl_no.to_i == 7         
@@ -191,12 +191,16 @@ class TestsController < ApplicationController
         
         
         
-    else
+    else #----- If Not Right Order
+    
       #Mail to Admin
       redirect_to '/'
-    end       
+      
+    end #----- Checking is Right Order - Ended       
+    
+    end #----- TestPart Ended
 
-  end
+  end #----- Def Ended
 #_______________________________________________________________________________      
 
   
