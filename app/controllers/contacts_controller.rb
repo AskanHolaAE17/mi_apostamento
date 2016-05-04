@@ -121,7 +121,7 @@ class ContactsController < ApplicationController
         Contact.where( group: 'BAD GROUP' )
       end        
     
-      @contacts = @contacts.where.not(order_number: order_id)
+      @contacts = @contacts.where.not(order_number: order.id)
     
       unless @contacts.count == 0 
         OrderMailer.d_see_contacts(order, link_with_contacts).deliver      
