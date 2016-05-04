@@ -183,8 +183,9 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________      
       
       
-      
-      OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
+      unless order.test_ended
+        OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
+      end  
       redirect_to link_with_more_info_form
                           
 #_______________________________________________________________________________
