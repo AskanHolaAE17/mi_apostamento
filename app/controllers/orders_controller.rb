@@ -238,9 +238,7 @@ class OrdersController < ApplicationController
     
         
     #pay-
-    result_url = root_path + 'info/proverte_email_posle_oplaty'
-    #pay-
-    redirect_to result_url
+    redirect_to test_url
   end    
 #_____________________________________________________________________________________________________________________________________________    
 
