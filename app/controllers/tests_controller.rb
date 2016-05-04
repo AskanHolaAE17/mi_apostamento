@@ -142,16 +142,7 @@ class TestsController < ApplicationController
         else                   
           'BAD GROUP'                             
         end
-#_______________________________________________________________________________
-            
-      unless order.test_ended
-        OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
-      end  
-                  
-                                           
-        order.test_ended = true
-        order.akey       = ''
-        order.save         
+
 #_______________________________________________________________________________
       
       
@@ -186,7 +177,16 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________      
       
       
-
+      unless 
+        OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
+      end              
+            
+                                           
+        order.test_ended = true
+        order.akey       = ''
+        order.save         
+#_______________________________________________________________________________              
+              
       redirect_to link_with_more_info_form
                           
 #_______________________________________________________________________________
