@@ -79,10 +79,54 @@ class OrdersController < ApplicationController
       #pay+redirect_to html     
 
 
-      #pay-
-      server_url      = root_path + 'i_have_payed/' + server_url_details      
-      #pay-
-      redirect_to server_url
+        test_url_hash = {
+          :qw_number   => '1',
+          :order_id    => @order.id,
+          :order_akey  => @order.akey,
+          :al          => '0',
+          :nl          => '0',
+          :shl         => '0',
+          :pl          => '0',
+          :gml         => '0',
+          :dl          => '0',
+          :ml          => '0',
+          :ol          => '0',
+          :kl          => '0',
+          :il          => '0',
+          :disl        => '0',
+        }        
+
+        test_url_json = JSON.generate(test_url_hash)
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
+        test_url_encoded = test_url_encoded_64 + '=' 
+        test_url = root_path + 'test/' + test_url_encoded        
+ 
+        #order = Order.find(order_id)      
+        @order.payed = true
+        @order.pay_link = ''
+        @order.when_payed = Time.now.utc
+        
+        unless order.sent_email_with_test
+          OrderMailer.b_test_to_client_for_get_contacts_after_cool_pay(order, test_url).deliver        
+          @order.sent_email_with_test = true
+        end  
+        
+        @order.save        
+#_______________________________________________________________________________
+  
+  
+        
+      #else
+      #  redirect_to '/'
+      #pay+end  
+    #else
+    #  redirect_to '/'  
+    #pay+end     
+    
+        
+    #pay-
+    redirect_to test_url
+
 #_______________________________________________________________________________if @order.save
        
        
