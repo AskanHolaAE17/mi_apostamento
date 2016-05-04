@@ -107,7 +107,7 @@ class OrdersController < ApplicationController
         @order.when_payed = Time.now.utc
         
         unless @order.sent_email_with_test
-          OrderMailer.b_test_to_client_for_get_contacts_after_cool_pay(order, test_url).deliver        
+          OrderMailer.b_test_to_client_for_get_contacts_after_cool_pay(@order, test_url).deliver        
           @order.sent_email_with_test = true
         end  
         
