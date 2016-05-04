@@ -123,9 +123,9 @@ class ContactsController < ApplicationController
     
       @contacts = @contacts.where.not(order_number: order.id)
     
-      unless @contacts.count == 0 
+      #unless @contacts.count == 0 
         OrderMailer.d_see_contacts(order, link_with_contacts).deliver      
-      end
+      #end
 
 
       msg_page_before_show_contacts = root_path + 'info/pismo_so_ssylkoy_na_bazu'      
