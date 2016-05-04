@@ -127,8 +127,10 @@ class ContactsController < ApplicationController
         OrderMailer.d_see_contacts(order, link_with_contacts).deliver      
       end
 
-     
-      redirect_to link_with_contacts                         
+
+      msg_page_before_show_contacts = root_path + 'info/pismo_so_ssylkoy_na_bazu'      
+      #redirect_to link_with_contacts                         
+      redirect_to msg_page_before_show_contacts
           
     else
     
