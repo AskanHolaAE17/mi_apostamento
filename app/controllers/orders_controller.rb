@@ -15,20 +15,20 @@ class OrdersController < ApplicationController
 
             
     if @order.save
-      me_liqpay    = MeLiqpay.find_by_me_number(1)
-      public_key   = me_liqpay.public_key
-      private_key  = ENV['lp_private_key']
-      api_version  = me_liqpay.api_version           
+      #pay+me_liqpay    = MeLiqpay.find_by_me_number(1)
+      #pay+public_key   = me_liqpay.public_key
+      #pay+private_key  = ENV['lp_private_key']
+      #pay+api_version  = me_liqpay.api_version           
       
-      @pay_way = MeConstant.find_by_title('pay_via_sandbox').content  
+      #pay+@pay_way = MeConstant.find_by_title('pay_via_sandbox').content  
 #_______________________________________________________________________________if @order.save
 
 
     
-      liqpay = Liqpay::Liqpay.new(
-        :public_key  => public_key,
-        :private_key => private_key
-      )    
+      #pay+liqpay = Liqpay::Liqpay.new(
+      #pay+  :public_key  => public_key,
+      #pay+  :private_key => private_key
+      #pay+)    
     
       def encode_json(params)
         JSON.generate(params)
@@ -41,12 +41,12 @@ class OrdersController < ApplicationController
 
 
     
-      def cnb_form_request(params = {}, liqpay, public_key, api_version)
-        params[:public_key] = public_key
-        json_params = encode64 encode_json params
-        signature = liqpay.cnb_signature params            
-        @liqpay_url = "https://liqpay.com/api/#{api_version}/checkout?data=#{json_params.to_s}&signature=#{signature.to_s}"
-      end
+      #pay+def cnb_form_request(params = {}, liqpay, public_key, api_version)
+      #pay+  params[:public_key] = public_key
+      #pay+  json_params = encode64 encode_json params
+      #pay+  signature = liqpay.cnb_signature params            
+      #pay+  @liqpay_url = "https://liqpay.com/api/#{api_version}/checkout?data=#{json_params.to_s}&signature=#{signature.to_s}"
+      #pay+end
 #_______________________________________________________________________________if @order.save
 
 
@@ -58,16 +58,16 @@ class OrdersController < ApplicationController
       details_encoded     = details_encoded_64 + '=' 
       server_url_details  = details_encoded
       
-      html = cnb_form_request({
-        :version          => api_version,
-        :action           => 'pay',
-        :amount           => @order.sum_for_pay,
-        :currency         => 'UAH',
-        :description      => "Оплата теста",
-        :server_url       => root_path + 'i_have_payed/' + server_url_details,
-        :result_url       => root_path + 'info/proverte_email_posle_oplaty',
-        :sandbox          => @pay_way        
-      }, liqpay, public_key, api_version)                                  
+      #pay+html = cnb_form_request({
+      #pay+  :version          => api_version,
+      #pay+  :action           => 'pay',
+      #pay+  :amount           => @order.sum_for_pay,
+      #pay+  :currency         => 'UAH',
+      #pay+  :description      => "Оплата теста",
+      #pay+  :server_url       => root_path + 'i_have_payed/' + server_url_details,
+      #pay+  :result_url       => root_path + 'info/proverte_email_posle_oplaty',
+      #pay+  :sandbox          => @pay_way        
+      #pay+}, liqpay, public_key, api_version)                                  
 #_______________________________________________________________________________if @order.save
 
 
@@ -75,9 +75,14 @@ class OrdersController < ApplicationController
       @order.pay_link = @liqpay_url
       @order.save
 
-      OrderMailer.a_has_client_payed(@order).deliver       
+      #pay+OrderMailer.a_has_client_payed(@order).deliver       
+      #pay+redirect_to html     
 
-      redirect_to html     
+
+      #pay-
+      server_url      = root_path + 'i_have_payed/' + server_url_details      
+      #pay-
+      redirect_to server_url
 #_______________________________________________________________________________if @order.save
        
        
@@ -129,32 +134,31 @@ class OrdersController < ApplicationController
     root_path = MeConstant.find_by_title('root_path').content
     
       
-    me_liqpay    = MeLiqpay.find_by_me_number(1)
-    public_key   = me_liqpay.public_key
-    private_key  = ENV['lp_private_key']
+    #pay+me_liqpay    = MeLiqpay.find_by_me_number(1)
+    #pay+public_key   = me_liqpay.public_key
+    #pay+private_key  = ENV['lp_private_key']
         
-    data = params[:data]     
-    data_json = Base64.decode64(data)    
-    data_hash = JSON.parse(data_json)
+    #pay+data = params[:data]     
+    #pay+data_json = Base64.decode64(data)    
+    #pay+data_hash = JSON.parse(data_json)
     
         
-    liqpay = Liqpay::Liqpay.new(
-      :public_key  => public_key,
-      :private_key => private_key
-    )    
+    #pay+liqpay = Liqpay::Liqpay.new(
+    #pay+  :public_key  => public_key,
+    #pay+  :private_key => private_key
+    #pay+)    
     
-    sign = liqpay.str_to_sign(
-    private_key +
-    data +
-    private_key
-    )       
+    #pay+sign = liqpay.str_to_sign(
+    #pay+private_key +
+    #pay+data +
+    #pay+private_key
+    #pay+)       
 #_______________________________________________________________________________
   
   
     
-    if sign == params[:signature]
-      #if data_hash['status'] == 'success'
-      if data_hash["status"].in? ['success', 'sandbox']      
+    #pay+if sign == params[:signature]
+      #pay+if data_hash["status"].in? ['success', 'sandbox']      
         
         
         
@@ -227,10 +231,16 @@ class OrdersController < ApplicationController
         
       #else
       #  redirect_to '/'
-      end  
+      #pay+end  
     #else
     #  redirect_to '/'  
-    end       
+    #pay+end     
+    
+        
+    #pay-
+    result_url = root_path + 'info/proverte_email_posle_oplaty'
+    #pay-
+    redirect_to result_url
   end    
 #_____________________________________________________________________________________________________________________________________________    
 
