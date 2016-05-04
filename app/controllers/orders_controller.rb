@@ -73,7 +73,7 @@ class OrdersController < ApplicationController
 
 
       @order.pay_link = @liqpay_url
-      @order.save
+      #@order.save
 
       #pay+OrderMailer.a_has_client_payed(@order).deliver       
       #pay+redirect_to html     
