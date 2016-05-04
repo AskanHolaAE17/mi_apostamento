@@ -77,9 +77,9 @@ class ContactsController < ApplicationController
 
     order      = Order.find(contact.order_number)    
     
-    if order and order.more_info_save != true
+    #if order and order.more_info_save != true
     
-        
+    unless order.more_info_save    
     if contact.save        
 
     
