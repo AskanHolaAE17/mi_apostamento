@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post  'info/:msg',                       to: 'order_info_pages#show'                                
   post  '/orders',                         to: 'orders#create'                     # for OrderForm works (path for creating new order)
   
+  match  '/i_have_payed/:details',         to: 'orders#b_test_for_get_contacts_after_pay',          via: 'get'  
   post  '/i_have_payed/:details',          to: 'orders#b_test_for_get_contacts_after_pay'
   
   
