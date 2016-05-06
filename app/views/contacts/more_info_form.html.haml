@@ -37,19 +37,18 @@
       Ваш пол:                                        
       
     %label
-      %input{type: 'radio', name: 'own_gender'}
+      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"}
       Мужской
       
     %label
-      %input{type: 'radio', name: 'own_gender'}
+      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"}
       Женский
       
     %label
-      %input{type: 'radio', name: 'own_gender'}
+      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"}
       Другое            
                                         
   
-
   
 
     %a{name: 'city'}
@@ -62,31 +61,6 @@
                                         maxlength:   '100',                              
                                         value:       "#{flash[:contact_city] || nil}",                                                  
                                         autofocus:    flash[:autofocus_city]
-
-
-
-
-
-    %a{name: 'own_gender'}
-    .dark-green{class: flash[:error_class_own_gender]}
-      Ваш пол:
-    
-    
-    = f.radio_button :own_gender,       'Мужчина', 
-                                         checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"
-    = f.label :own_gender,              'Мужчина'
-                       
-  
-    .radio
-      = f.radio_button :own_gender,     'Женщина',
-                                         checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"
-      = f.label :own_gender,            'Женщина'                                         
-
-    .radio
-      = f.radio_button :own_gender,     'Другое',
-                                         checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"                                          
-      = f.label :own_gender,            'Другое'                                         
-
 
   
 
@@ -119,30 +93,22 @@
                                         
                                         
                                         
-                                                                                
-                                        
+
     %a{name: 'search_for_gender'}
     .dark-green{class: flash[:error_class_search_for_gender]}
-      Кто Вас интересуют:
-    
-    
-    .radio
-      = f.radio_button :search_for_gender,     'Мужчины',
-                                                checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"
-      = f.label :search_for_gender,            'Мужчины'                                                
-  
-  
-    .radio
-      = f.radio_button :search_for_gender,     'Женщины',
-                                                checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"
-      = f.label :search_for_gender,            'Женщины'                                                                                                
-                                                
-                                                
-    .radio
-      = f.radio_button :search_for_gender,     'Оба пола',
-                                                checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"                                                                                  
-      = f.label :search_for_gender,            'Оба пола'                                                                                                
-  
+      Кто Вас интересуют:                                        
+      
+    %label
+      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"}
+      Мужчины
+      
+    %label
+      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"}
+      Женщины
+      
+    %label
+      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"}
+      Оба пола                                                                
   
 
   
@@ -159,8 +125,7 @@
                                         value:       "#{flash[:contact_about_info] || nil}",
                                         autofocus:    flash[:autofocus_about_info]
                                         
-                                         
-  
+                                           
   
   
 
