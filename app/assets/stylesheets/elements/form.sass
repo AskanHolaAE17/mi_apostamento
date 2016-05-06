@@ -8,8 +8,9 @@
   font-size:            1.3em  
 
 
-  INPUT, TEXTAREA 
+  INPUT, TEXTAREA, SELECT 
     background-color:   $brown-yellow-light
+    color:              $opacity-dark-green-text    
   
     width:              95%
     height:             170%
@@ -21,13 +22,17 @@
     font-size:          1em
     font-weight:        bold
     line-height:        110%    
-    
+
+
+  INPUT[type="radio"]
+    width:                5%    
+
     
   INPUT[name^="order"],
   INPUT[name^="contact"],
   SELECT[name^="contact"],
   TEXTAREA  
-    color:              $opacity-dark-green-text    
+    //color:              $opacity-dark-green-text    
     
     
   .btn
@@ -35,4 +40,7 @@
 
 
     
-      
+
+
+
+    
