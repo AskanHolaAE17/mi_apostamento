@@ -53,9 +53,8 @@
     
     
     .radio      
-      = label :own_gender do
-        = f.radio_button :own_gender,       'Мужчина', checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"      
-        Мужчина
+      = label :own_gender, 'Мужчина' do
+        = f.radio_button :own_gender,       'Мужчина', checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"              
                        
   
     .radio
