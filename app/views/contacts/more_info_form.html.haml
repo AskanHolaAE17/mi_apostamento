@@ -49,18 +49,24 @@
 
     %a{name: 'own_gender'}
     .dark-green{class: flash[:error_class_own_gender]}
-      Пол:
+      Ваш пол:
+    
     
     .radio
       = f.radio_button :own_gender,       'Мужчина',
                                          checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"
+    = label :own_gender,                  'Мужчина'
+                       
   
     .radio
       = f.radio_button :own_gender,       'Женщина',
                                          checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"
+    = label :own_gender,                  'Женщина'                                         
+
     .radio
       = f.radio_button :own_gender,       'Другое',
                                          checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"                                          
+    = label :own_gender,                  'Другое'                                         
 
 
   
@@ -98,18 +104,25 @@
                                         
     %a{name: 'search_for_gender'}
     .dark-green{class: flash[:error_class_search_for_gender]}
-      Пол:
+      Кто Вас интересует:
+    
     
     .radio
       = f.radio_button :search_for_gender,       'Мужчины',
                                                 checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"
+    = label :search_for_gender,                  'Мужчины'                                                
+  
   
     .radio
       = f.radio_button :search_for_gender,       'Женщины',
                                                 checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"
+    = label :search_for_gender,                  'Женщины'                                                                                                
+                                                
+                                                
     .radio
       = f.radio_button :search_for_gender,       'Оба пола',
                                                 checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"                                                                                  
+    = label :search_for_gender,                  'Оба пола'                                                                                                
   
   
 
