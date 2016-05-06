@@ -143,16 +143,26 @@ class ContactsController < ApplicationController
       flash[:contact_birthday]        = contact.birthday
       flash[:contact_about_info]      = contact.about_info
       
+      flash[:contact_own_gender_male_checked]   = true if contact.own_gender == 'Мужчина'
+      flash[:contact_own_gender_female_checked] = true if contact.own_gender == 'Женщина'
+      flash[:contact_own_gender_other_checked]  = true if contact.own_gender == 'Другое'
+      
+      flash[:contact_search_for_gender_male_checked]   = true if contact.search_for_gender == 'Мужчины'
+      flash[:contact_search_for_gender_female_checked] = true if contact.search_for_gender == 'Женщины'
+      flash[:contact_search_for_gender_both_checked]   = true if contact.search_for_gender == 'Оба пола'      
+      
       
       
       anchor = ''
       contact.errors.each do |attr, msg|
-        flash[:error_class_name]            = 'error_field' if attr == :name
-        #flash[:error_class_surname]         = 'error_field' if attr == :surname
-        flash[:error_class_city]            = 'error_field' if attr == :city
-        flash[:error_class_country]         = 'error_field' if attr == :country
-        flash[:error_class_birthday]        = 'error_field' if attr == :birthday
-        flash[:error_class_about_info]      = 'error_field' if attr == :about_info
+        flash[:error_class_name]              = 'error_field' if attr == :name
+        #flash[:error_class_surname]           = 'error_field' if attr == :surname
+        flash[:error_class_own_gender]        = 'error_field' if attr == :own_gender
+        flash[:error_class_city]              = 'error_field' if attr == :city
+        flash[:error_class_country]           = 'error_field' if attr == :country
+        flash[:error_class_birthday]          = 'error_field' if attr == :birthday
+        flash[:error_class_search_for_gender] = 'error_field' if attr == :search_for_gender
+        flash[:error_class_about_info]        = 'error_field' if attr == :about_info
                 
                 
                 
@@ -200,30 +210,39 @@ class ContactsController < ApplicationController
           anchor = 'name'
         else  
         
-          if attr == :surname
-            anchor = 'surname'
-          else  
-          
-            if attr == :city
-              anchor = 'city'
+          #if attr == :surname
+          #  anchor = 'surname'
+          #else  
+
+            if attr == :own_gender
+              anchor = 'own_gender'
             else  
-            
-              if attr == :country
-                anchor = 'country'
+          
+              if attr == :city
+                anchor = 'city'
               else  
-              
-                if attr == :birthday
-                  anchor = 'birthday'
+            
+                if attr == :country
+                  anchor = 'country'
                 else  
-                
-                  if attr == :about_info
-                    anchor = 'about_info'
+              
+                  if attr == :birthday
+                    anchor = 'birthday'
                   else  
-                  end                                            
-                end                                        
-              end                        
-            end                    
-          end                  
+                
+                    if attr == :search_for_gender
+                      anchor = 'search_for_gender'
+                    else                  
+                
+                      if attr == :about_info
+                        anchor = 'about_info'
+                      end                                            
+                    end  
+                  end                                        
+                end                        
+              end      
+            end                
+          #end                  
         end
         
       end    

@@ -39,12 +39,32 @@
     %div    
       = f.text_field :city,             required:    '', 
                                         class:       'input-xlarge', 
-                                        maxlength:   '100',
-                                        value:       "#{flash[:contact_city] || nil}",
+                                        maxlength:   '100',                              
+                                        value:       "#{flash[:contact_city] || nil}",                                                  
                                         autofocus:    flash[:autofocus_city]
+
+
+
+
+
+    %a{name: 'own_gender'}
+    .dark-green{class: flash[:error_class_own_gender]}
+      Пол:
+    
+    .radio
+      = f.text_field :own_gender,       'Мужчина',
+                                         checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"
   
+    .radio
+      = f.text_field :own_gender,       'Женщина',
+                                         checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"
+    .radio
+      = f.text_field :own_gender,       'Другое',
+                                         checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"                                          
+
 
   
+
 
     %a{name: 'country'}
     .dark-green{class: flash[:error_class_country]}
@@ -71,6 +91,26 @@
                                         value:       "#{flash[:contact_birthday] || nil}",
                                         autofocus:    flash[:autofocus_birthday],
                                         start_year:   1900
+                                        
+                                        
+                                        
+                                                                                
+                                        
+    %a{name: 'search_for_gender'}
+    .dark-green{class: flash[:error_class_search_for_gender]}
+      Пол:
+    
+    .radio
+      = f.text_field :search_for_gender,       'Мужчины',
+                                                checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"
+  
+    .radio
+      = f.text_field :search_for_gender,       'Женщины',
+                                                checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"
+    .radio
+      = f.text_field :search_for_gender,       'Оба пола',
+                                                checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"                                                                                  
+  
   
 
   
