@@ -68,6 +68,8 @@ class ContactsController < ApplicationController
 #_____________________________________________________________________________________________________________________________________________
 
 
+
+
   
   def create
     contact    = Contact.new(contact_params) 
@@ -76,10 +78,14 @@ class ContactsController < ApplicationController
     root_path  = MeConstant.find_by_title('root_path').content
 
     order      = Order.find(contact.order_number)    
+#_______________________________________________________________________________
+
+
     
     #if order and order.more_info_save != true
     
     unless order.more_info_save    
+    
     if contact.save        
 
     
@@ -107,7 +113,7 @@ class ContactsController < ApplicationController
       link_with_contacts = root_path                      + 
                            'contacts/'                    + 
                            contacts_details                      
-
+#_______________________________________________________________________________
 
 
       order.more_info_save = true
@@ -131,10 +137,12 @@ class ContactsController < ApplicationController
       msg_page_before_show_contacts = root_path + 'info/pismo_so_ssylkoy_na_bazu'      
       #redirect_to link_with_contacts                         
       redirect_to msg_page_before_show_contacts
-          
-    else
-    
+#_______________________________________________________________________________
 
+          
+    else   #if Contact notSave
+    
+    
 
       flash[:contact_name]            = contact.name
       #flash[:contact_surname]         = contact.surname
@@ -150,7 +158,7 @@ class ContactsController < ApplicationController
       flash[:contact_search_for_gender_male_checked]   = true if contact.search_for_gender == 'Мужчины'
       flash[:contact_search_for_gender_female_checked] = true if contact.search_for_gender == 'Женщины'
       flash[:contact_search_for_gender_both_checked]   = true if contact.search_for_gender == 'Оба пола'      
-      
+#_______________________________________________________________________________      
       
       
       anchor = ''
@@ -172,7 +180,7 @@ class ContactsController < ApplicationController
         flash[:autofocus_country]   = false         
         flash[:autofocus_birthday]  = false                
         flash[:about_info]          = false         
-        
+#_______________________________________________________________________________        
                         
                         
         if attr == :name
@@ -202,10 +210,10 @@ class ContactsController < ApplicationController
               end            
             end            
           #end
-        end     
+        end                                               #attr == :name
+#_______________________________________________________________________________
 
-        
-                
+                        
         if attr == :name
           anchor = 'name'
         else  
@@ -236,17 +244,17 @@ class ContactsController < ApplicationController
                 
                       if attr == :about_info
                         anchor = 'about_info'
-                      end                                            
-                    end  
-                  end                                        
-                end                        
-              end      
-            end                
+                      end                            #attr == :about_info
+                    end                              #attr == :search_for_gender   
+                  end                                #attr == :birthday                                        
+                end                                  #attr == :country                        
+              end                                    #attr == :city      
+            end                                      #attr == :own_gender                              
           #end                  
-        end
+        end                                          #attr == :name
         
-      end    
-      
+      end           #contact.errors.each
+#_______________________________________________________________________________      
            
            
       letter                    = ('a'..'z').to_a.shuffle.first
@@ -268,11 +276,12 @@ class ContactsController < ApplicationController
                                                
              
       redirect_to url_with_contacts         
-  end
-    else
+#_______________________________________________________________________________      
+  end        #end Contact.save
+    else        #if order.more_info_save    already
       flash[:notice]   = 'There is problem with your ID or Akey. Hm: Maybe you`re hacker, aren`t you?'
       redirect_to '/'
-    end       
+    end         #end   order.more_info_save    
   end
 #_____________________________________________________________________________________________________________________________________________
 
