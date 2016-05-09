@@ -146,7 +146,7 @@ class ContactsController < ApplicationController
 
           
     else   #if Contact notSave
-    
+      flash[:your_sex] = contact.own_gender
     
 
       flash[:contact_name]            = contact.name
