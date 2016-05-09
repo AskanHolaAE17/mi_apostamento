@@ -61,6 +61,7 @@ class ContactsController < ApplicationController
       @order = order
     else
       #Mail to Admin
+      flash[:notice] = order.id.to_s + ' ' + order.akey_payed + ' ' + order_akey_payed
       redirect_to '/'
     end       
 
