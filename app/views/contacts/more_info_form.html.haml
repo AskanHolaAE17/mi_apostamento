@@ -41,18 +41,18 @@
     %br/                                                    
       
 
-    %input{value: 'Мужской', id:'own_gender_male' ,type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
+    %input{value: 'Мужской', id:'own_gender_male', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
     %label{for: 'own_gender_male'}      
       Мужской 
       
 
-    %input{id:'own_gender_female' ,type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_female_checked]}"}
+    %input{value: 'Женский', id:'own_gender_female', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_female_checked]}"}
     %label{for: 'own_gender_female'}          
       Женский
     %br/             
         
     -#      
-      %input{id:'own_gender_both' ,type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_other_checked]}"}
+      %input{value: 'Другое', id:'own_gender_both', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_other_checked]}"}
       %label{for: 'own_gender_both'}          
         Другое   
 
