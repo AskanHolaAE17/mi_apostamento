@@ -24,14 +24,36 @@
 
 
   INPUT[type="radio"]
-    -webkit-appearance: radio
-    box-sizing:         border-box
-
     width:              1em    
     height:             1em      
+    
+    -webkit-appearance: radio
+    box-sizing:         border-box
+    
+    visibility:         hidden
+    position:           absolute
 
+
+  INPUT[type="radio"] + label:before
+    background-color:   $brown-yellow-light
     
+    display:            inline-block
+    vertical-align:     baseline
+    border:             1px solid $opacity-dark-green-text
+        
+    margin-right:       2px
+    content:            " "    
+    border-radius:      20px 
     
+    width:              12px
+    height:             12px
+    
+  INPUT[type="radio"]:checked + label:before    
+    background-color:   $opacity-dark-green-text
+            
+
+         
+        
   .btn
     color:              white
     padding:            2% 1%    

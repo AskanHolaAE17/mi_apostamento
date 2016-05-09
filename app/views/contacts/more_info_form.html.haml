@@ -32,24 +32,29 @@
       %br/                                        
                                         
                                         
+                                        
 
                                         
     %a{name: 'own_gender'}
     .dark-green{class: flash[:error_class_own_gender]}
       Ваш пол:                                        
+    %br/                                                    
       
-    %label
-      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"}
-      Мужской
+
+    %input{id:'own_gender_male' ,type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"}
+    %label{for: 'own_gender_male'}      
+      Мужской 
       
-    %label
-      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"}
+
+    %input{id:'own_gender_female' ,type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"}
+    %label{for: 'own_gender_female'}          
       Женский
-      
-    %label
-      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"}
-      Другое            
-    %br/                                          
+          
+    %input{id:'own_gender_both' ,type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"}
+    %label{for: 'own_gender_both'}          
+      Другое
+    %br/                                              
+
                                         
   
   
@@ -103,19 +108,22 @@
     %a{name: 'search_for_gender'}
     .dark-green{class: flash[:error_class_search_for_gender]}
       Кто Вас интересуют:                                        
+    %br/                                                    
       
-    %label
-      %input{type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"}
+
+    %input{id:'search_for_gender_male' ,type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"}
+    %label{for: 'search_for_gender_male'}      
       Мужчины
       
-    %label
-      %input{type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"}
+
+    %input{id:'search_for_gender_female' ,type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"}
+    %label{for: 'search_for_gender_female'}          
       Женщины
-      
-    %label
-      %input{type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"}
+          
+    %input{id:'search_for_gender_both' ,type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"}
+    %label{for: 'search_for_gender_both'}          
       Оба пола                              
-    %br/                                                                            
+    %br/                                                                    
   
 
   
