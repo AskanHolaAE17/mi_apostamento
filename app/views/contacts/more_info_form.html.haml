@@ -105,15 +105,15 @@
       Кто Вас интересуют:                                        
       
     %label
-      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"}
+      %input{type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"}
       Мужчины
       
     %label
-      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"}
+      %input{type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"}
       Женщины
       
     %label
-      %input{type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"}
+      %input{type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"}
       Оба пола                              
     %br/                                                                            
   
