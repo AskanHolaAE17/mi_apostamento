@@ -50,7 +50,11 @@ class ContactsController < ApplicationController
 
         
     for i in @current_i..order_info.length - 1
-      order_akey_payed += order_info[i]
+      unless order_info[i] == '#'
+        order_akey_payed += order_info[i]
+      else
+        break
+      end  
     end        
 #_______________________________________________________________________________        
         
@@ -61,7 +65,6 @@ class ContactsController < ApplicationController
       @order = order
     else
       #Mail to Admin
-      flash[:notice] = order.id.to_s + ' ' + order.akey_payed + ' ' + order_akey_payed
       redirect_to '/'
     end       
 
