@@ -1,0 +1,157 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic);
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/html-body.sass */
+HTML, BODY {
+  width: auto;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #EBFFCC;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/block.sass */
+#block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 7%;
+  padding: 5%;
+  background: url(/assets/bred-c61f10a528a1d976ac87b1e55cc8684126f3aa3412a1836da6f5d4771019c3fd.png);
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  color: #341c00;
+  text-align: justify;
+  line-height: 1.5em;
+  font-size: 1.3em;
+  font-family: "Open Sans", Helvetica, sans-serif;
+}
+/* line 20, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/block.sass */
+#block P {
+  margin-bottom: 2%;
+}
+/* line 23, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/block.sass */
+#block P::before {
+  content: "";
+  width: 30px;
+  height: 15px;
+  float: left;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/text-colors.sass */
+.dark-green {
+  color: #164700;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/elements.sass */
+.white_border {
+  padding: 5%;
+  border: 2px solid white;
+  border-width: 2px 2px 1px 1px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  -webkit-box-shadow: -1px 1px 3px white inset;
+  -moz-box-shadow: -1px 1px 3px white inset;
+  box-shadow: -1px 1px 3px white inset;
+  filter: progid:DXImageTransform.Microsoft.dropshadow(offX=$x, offY=$y, color=$color);
+  filter: progid:DXImageTransform.Microsoft.shadow(direction=120, color=$color, strength=10);
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/activities/form_errors.sass */
+.error_field {
+  color: #D13939;
+}
+
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/activities/form_errors.sass */
+.error_field + DIV INPUT,
+.error_field + DIV INPUT:focus {
+  border-color: #D13939;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/fond-main.sass */
+#fond_text {
+  position: absolute;
+}
+
+/* line 4, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/fond-main.sass */
+#fond_green_layer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #EBFFCC;
+}
+
+/* line 14, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/fond-main.sass */
+#fond_forest_main {
+  width: 100%;
+  height: 100%;
+  min-width: 1100px;
+  min-height: 500px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form {
+  padding: 10% 15%;
+  text-align: center;
+  background: url(/assets/form/form_fond-693b1187ba04807214da1f3be9018c98d862552ce56ec70a2ddda18e11bb9418.png);
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  font-size: 1.3em;
+}
+/* line 11, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form INPUT, #form TEXTAREA, #form SELECT {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background-color: #F6F9CA;
+  color: #32601D;
+  width: 95%;
+  height: 170%;
+  margin: 1%;
+  padding: 1%;
+  text-align: center;
+  font-size: 1em;
+  line-height: 110%;
+}
+/* line 32, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form INPUT[type="radio"] {
+  -webkit-appearance: radio;
+  box-sizing: border-box;
+  border: 1px solid #75AE5A;
+  width: 5%;
+}
+/* line 47, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form .btn {
+  color: white;
+  padding: 2% 1%;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/info-msg.sass */
+.info_msg {
+  text-align: left;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/features/secure.sass */
+.un_selectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 4, /home/vitalina/mi_apostamento/app/assets/stylesheets/features/secure.sass */
+.select_able {
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
