@@ -13,7 +13,8 @@ class ContactsController < ApplicationController
     @site_title = MeConstant.find_by_title('site_title').content
   
     @contact = Contact.new
-#_______________________________________________________________________________
+
+#_______________________________________________________________________________      
 
 
     order_info  = params[:order_info]
@@ -155,13 +156,13 @@ class ContactsController < ApplicationController
       flash[:contact_birthday]        = contact.birthday
       flash[:contact_about_info]      = contact.about_info
       
-      flash[:contact_own_gender_male_checked]   = true if contact.own_gender == 'Мужчина'
-      flash[:contact_own_gender_female_checked] = true if contact.own_gender == 'Женщина'
-      flash[:contact_own_gender_other_checked]  = true if contact.own_gender == 'Другое'
+      flash[:contact_own_gender_male_checked]   = ", checked: 'checked'" if contact.own_gender == 'Мужчина'
+      flash[:contact_own_gender_female_checked] = ", checked: 'checked'" if contact.own_gender == 'Женщина'
+      #flash[:contact_own_gender_other_checked]  = ", checked: 'checked'" if contact.own_gender == 'Другое'
       
-      flash[:contact_search_for_gender_male_checked]   = true if contact.search_for_gender == 'Мужчины'
-      flash[:contact_search_for_gender_female_checked] = true if contact.search_for_gender == 'Женщины'
-      flash[:contact_search_for_gender_both_checked]   = true if contact.search_for_gender == 'Оба пола'      
+      flash[:contact_search_for_gender_male_checked]   = ", checked: 'checked'" if contact.search_for_gender == 'Мужчины'
+      flash[:contact_search_for_gender_female_checked] = ", checked: 'checked'" if contact.search_for_gender == 'Женщины'
+      flash[:contact_search_for_gender_both_checked]   = ", checked: 'checked'" if contact.search_for_gender == 'Оба пола'      
 #_______________________________________________________________________________      
       
       

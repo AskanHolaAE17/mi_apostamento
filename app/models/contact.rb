@@ -20,14 +20,15 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :own_gender,           presence:        { :if => 'own_gender.nil?' } 
+  validates_inclusion_of :own_gender, in: [true, false]
+  # validates :own_gender,           presence:        { :if => 'own_gender.nil?' } 
   
   #   :inclusion => { :in => ['М', 'Ж', 'Другое'] }
 
 #____________________________________________________________________________________________________________________________________________
 
-
-  validates :search_for_gender,    presence:        { :if => 'search_for_gender.nil?' }   
+  validates_inclusion_of :search_for_gender, in: [true, false]
+  # validates :search_for_gender,    presence:        { :if => 'search_for_gender.nil?' }   
 
 #____________________________________________________________________________________________________________________________________________
 

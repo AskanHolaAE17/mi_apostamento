@@ -41,19 +41,20 @@
     %br/                                                    
       
 
-    %input{id:'own_gender_male' ,type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_male_checked] || 'false'}"}
+    %input{id:'own_gender_male' ,type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
     %label{for: 'own_gender_male'}      
       Мужской 
       
 
-    %input{id:'own_gender_female' ,type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_female_checked] || 'false'}"}
+    %input{id:'own_gender_female' ,type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_female_checked]}"}
     %label{for: 'own_gender_female'}          
       Женский
-          
-    %input{id:'own_gender_both' ,type: 'radio', name: 'own_gender', checked:      "#{flash[:contact_own_gender_other_checked] || 'false'}"}
-    %label{for: 'own_gender_both'}          
-      Другое
-    %br/                                              
+        
+    -#      
+      %input{id:'own_gender_both' ,type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_other_checked]}"}
+      %label{for: 'own_gender_both'}          
+        Другое
+      %br/                                              
 
                                         
   
@@ -111,16 +112,16 @@
     %br/                                                    
       
 
-    %input{id:'search_for_gender_male' ,type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_male_checked] || 'false'}"}
+    %input{id:'search_for_gender_male' ,type: 'radio', name: 'search_for_gender' "#{flash[:contact_search_for_gender_male_checked]}"}
     %label{for: 'search_for_gender_male'}      
       Мужчины
       
 
-    %input{id:'search_for_gender_female' ,type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_female_checked] || 'false'}"}
+    %input{id:'search_for_gender_female' ,type: 'radio', name: 'search_for_gender' "#{flash[:contact_search_for_gender_female_checked]}"}
     %label{for: 'search_for_gender_female'}          
       Женщины
           
-    %input{id:'search_for_gender_both' ,type: 'radio', name: 'search_for_gender', checked:      "#{flash[:contact_search_for_gender_both_checked] || 'false'}"}
+    %input{id:'search_for_gender_both' ,type: 'radio', name: 'search_for_gender' "#{flash[:contact_search_for_gender_both_checked]}"}
     %label{for: 'search_for_gender_both'}          
       Оба пола                              
     %br/                                                                    
@@ -144,9 +145,9 @@
   
   
 
-    = f.hidden_field  :email,             value:  "#{@order.email}"
-    = f.hidden_field  :group,             value:  "#{@order.group}"      
-    = f.hidden_field  :order_number,      value:  "#{@order.id}"    
+    = f.hidden_field  :email,             value:  @order.email
+    = f.hidden_field  :group,             value:  @order.group      
+    = f.hidden_field  :order_number,      value:  @order.id   
 
 
 

@@ -12,8 +12,9 @@ class MainPagesController < ApplicationController
     
     root_path               = MeConstant.find_by_title('root_path').content      
     @prerender_page         = root_path 
-    
-    
+       
+#_______________________________________________________________________________      
+
     
     #link_details_encoded = '123456asdj717866c554731kjnq71n20s78f65q123456asd'
     ##key_pair  = RSA::KeyPair.generate(500)
