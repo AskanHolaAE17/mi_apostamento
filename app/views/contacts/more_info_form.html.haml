@@ -34,7 +34,7 @@
                                         
                                         
 
-    =flash[:your_sex]                                    
+                                 
     %a{name: 'own_gender'}
     .dark-green{class: flash[:error_class_own_gender]}
       Ваш пол:                                        
@@ -42,7 +42,7 @@
       
         
     =f.radio_button :own_gender, 'Мужской' "#{flash[:contact_own_gender_male_checked]}"
-    =label :own_gender, 'Мужской'    
+    =label :own_gender_Мужской, 'Мужской'    
     
     -#
       %input{value: 'Мужской', id:'own_gender_male', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
