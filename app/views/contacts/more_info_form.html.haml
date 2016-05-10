@@ -38,29 +38,25 @@
     %a{name: 'own_gender'}
     .dark-green{class: flash[:error_class_own_gender]}
       Ваш пол:                                        
+      
     %br/                                                    
       
         
-    =f.radio_button :own_gender, 'Мужской' "#{flash[:contact_own_gender_male_checked]}"
-    =f.label :own_gender, 'Мужской', value: 'Мужской'    
+    =f.radio_button :own_gender, 'Мужчина' "#{flash[:contact_own_gender_male_checked]}"
+    =f.label :own_gender, 'Мужской', value: 'Мужчина'    
     
-    -#
-      %input{value: 'Мужской', id:'own_gender_male', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
-      %label{for: 'own_gender_male'}      
-        Мужской 
-      
-
-    %input{value: 'Женский', id:'own_gender_female', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_female_checked]}"}
-    %label{for: 'own_gender_female'}          
-      Женский
+    
+    =f.radio_button :own_gender, 'Женщина' "#{flash[:contact_own_gender_female_checked]}"
+    =f.label :own_gender, 'Женский', value: 'Женщина'    
+    
     %br/             
+
         
     -#      
-      %input{value: 'Другое', id:'own_gender_both', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_other_checked]}"}
-      %label{for: 'own_gender_both'}          
-        Другое   
-
+      =f.radio_button :own_gender, 'Другой пол' "#{flash[:contact_own_gender_other_checked]}"
+      =f.label :own_gender, 'Другое', value: 'Другой пол'                  
                                         
+
   
   
 
@@ -108,30 +104,33 @@
     %br/                                                                            
                                         
                                         
+
                                         
 
     %a{name: 'search_for_gender'}
     .dark-green{class: flash[:error_class_search_for_gender]}
       Кто Вас интересуют:                                        
+      
     %br/                                                    
       
-
-    %input{id:'search_for_gender_male' ,type: 'radio', name: 'search_for_gender' "#{flash[:contact_search_for_gender_male_checked]}"}
-    %label{for: 'search_for_gender_male'}      
-      Мужчины
+            
+            
+    =f.radio_button :search_for_gender, 'Мужчины' "#{flash[:contact_search_for_gender_male_checked]}"
+    =f.label :search_for_gender, 'Мужчины', value: 'Мужчины'    
       
 
-    %input{id:'search_for_gender_female' ,type: 'radio', name: 'search_for_gender' "#{flash[:contact_search_for_gender_female_checked]}"}
-    %label{for: 'search_for_gender_female'}          
-      Женщины
-          
-    %input{id:'search_for_gender_both' ,type: 'radio', name: 'search_for_gender' "#{flash[:contact_search_for_gender_both_checked]}"}
-    %label{for: 'search_for_gender_both'}          
-      Оба пола                              
+    =f.radio_button :search_for_gender, 'Женщины' "#{flash[:contact_search_for_gender_male_checked]}"
+    =f.label :search_for_gender, 'Женщины', value: 'Женщины'    
+
+
+    =f.radio_button :search_for_gender, 'Оба пола' "#{flash[:contact_search_for_gender_male_checked]}"
+    =f.label :search_for_gender, 'Оба пола', value: 'Оба пола'                      
+      
     %br/                                                                    
   
 
   
+
 
     %a{name: 'about_info'}
     .dark-green{class: flash[:error_class_about_info]}
