@@ -40,10 +40,14 @@
       Ваш пол:                                        
     %br/                                                    
       
-
-    %input{value: 'Мужской', id:'own_gender_male', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
-    %label{for: 'own_gender_male'}      
-      Мужской 
+        
+    =f.radio_button :own_gender, 'Мужской' "#{flash[:contact_own_gender_male_checked]}"
+    =label :own_gender, 'Мужской'    
+    
+    -#
+      %input{value: 'Мужской', id:'own_gender_male', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_male_checked]}"}
+      %label{for: 'own_gender_male'}      
+        Мужской 
       
 
     %input{value: 'Женский', id:'own_gender_female', type: 'radio', name: 'own_gender' "#{flash[:contact_own_gender_female_checked]}"}
