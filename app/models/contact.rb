@@ -21,7 +21,7 @@ class Contact < ActiveRecord::Base
 
 
   # validates_inclusion_of :own_gender, in: [true, false]
-  validates :own_gender,           inclusion: { :in => ['Мужской', 'Женский'] }
+  validates :own_gender,           inclusion: { :in => ['Мужчина', 'Женщина'] }
 
 #____________________________________________________________________________________________________________________________________________
 
