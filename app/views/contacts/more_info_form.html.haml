@@ -41,13 +41,16 @@
       
     %br/                                                    
       
+        
+    =f.radio_button :own_gender, 'Мужчина' "#{flash[:contact_own_gender_male_checked]}"
+    =f.label :own_gender, 'Мужской', value: 'Мужчина'    
+    
     
     =f.radio_button :own_gender, 'Женщина' "#{flash[:contact_own_gender_female_checked]}"
     =f.label :own_gender, 'Женский', value: 'Женщина'    
     
-        
-    =f.radio_button :own_gender, 'Мужчина' "#{flash[:contact_own_gender_male_checked]}"
-    =f.label :own_gender, 'Мужской', value: 'Мужчина'    
+    =f.radio_button :own_gender, 'С' "#{flash[:contact_own_gender_c_checked]}"
+    =f.label :own_gender, 'С', value: 'С'        
     
     %br/             
 
