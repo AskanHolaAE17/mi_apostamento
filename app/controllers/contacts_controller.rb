@@ -331,16 +331,33 @@ class ContactsController < ApplicationController
     unless ( order and order.akey_payed == akey_payed )
       redirect_to '/'  
     end               
+#_______________________________________________________________________________
+
+
+
+    contact = Contact.where(order_number: order_id)         # current User
     
     @contacts = if ( status % 2 == 0 )
       Contact.where( group: 'GOOD GROUP')
     else  
       Contact.where( group: 'BAD GROUP' )
     end        
+
     
-    @contacts = @contacts.where.not(order_number: order_id)
+    @contacts = @contacts.where.not(order_number: order_id) # without current User
+                                                            # all genders
     
-    if @contacts.count == 0 
+#_______________________________________________________________________________
+
+    
+    if contact.search_for_gender.in? ['М', 'Ж']             # if User searching just for one gender
+      @contacts = @contacts.where(own_gender: contact.search_for_gender)   # set Contacts with ONE right gender
+    end
+    
+#_______________________________________________________________________________
+
+    
+    if @contacts.count == 0                                 # if DB with contacts is nill - inform Leader
       InformMailer.if_contacts_null(order).deliver        
     end
   end
