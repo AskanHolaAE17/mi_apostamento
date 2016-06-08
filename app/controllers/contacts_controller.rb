@@ -10,9 +10,7 @@ class ContactsController < ApplicationController
   
   def more_info_form
     @page       = Page.find_by_page :more_info_form  
-    @site_title = MeConstant.find_by_title('site_title').content
-  
-    @contact = Contact.new
+    @site_title = MeConstant.find_by_title('site_title').content 
 
 #_______________________________________________________________________________      
 
@@ -60,6 +58,17 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________        
         
 
+    @contact = Contact.new
+    
+    if Contact.find_by(order_number: order_id)
+      @exist_contact = Contact.find_by(order_number: order_id)
+    else
+      @exist_contact = Contact.new  
+    end  
+    
+#_______________________________________________________________________________        
+
+    
 
     order = Order.find(order_id)    
     if order and order.akey_payed == order_akey_payed            
@@ -147,6 +156,7 @@ class ContactsController < ApplicationController
           
     else   #if Contact notSave
       flash[:your_sex] = contact.own_gender
+      flash[:search_for_gender] = contact.search_for_gender
     
 
       flash[:contact_name]            = contact.name
@@ -156,13 +166,13 @@ class ContactsController < ApplicationController
       flash[:contact_birthday]        = contact.birthday
       flash[:contact_about_info]      = contact.about_info
       
-      flash[:contact_own_gender_male_checked]   = ", checked: 'checked'" if contact.own_gender == 'Мужчина'
-      flash[:contact_own_gender_female_checked] = ", checked: 'checked'" if contact.own_gender == 'Женщина'
-      #flash[:contact_own_gender_other_checked]  = ", checked: 'checked'" if contact.own_gender == 'Другое'
+      flash[:contact_own_gender_male_checked]   = 'checked' if contact.own_gender == 'М'
+      flash[:contact_own_gender_female_checked] = 'checked' if contact.own_gender == 'Ж'
+      #flash[:contact_own_gender_other_checked]  = 'checked' if contact.own_gender == 'ЖМ'
       
-      flash[:contact_search_for_gender_male_checked]   = ", checked: 'checked'" if contact.search_for_gender == 'Мужчины'
-      flash[:contact_search_for_gender_female_checked] = ", checked: 'checked'" if contact.search_for_gender == 'Женщины'
-      flash[:contact_search_for_gender_both_checked]   = ", checked: 'checked'" if contact.search_for_gender == 'Оба пола'      
+      flash[:contact_search_for_gender_male_checked]   = 'checked' if contact.search_for_gender == 'М'
+      flash[:contact_search_for_gender_female_checked] = 'checked' if contact.search_for_gender == 'Ж'
+      flash[:contact_search_for_gender_both_checked]   = 'checked' if contact.search_for_gender == 'ЖМ'      
 #_______________________________________________________________________________      
       
       
@@ -334,7 +344,6 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________
 
 
-
     contact = Contact.where(order_number: order_id)         # current User
     
     @contacts = if ( status % 2 == 0 )
@@ -349,9 +358,9 @@ class ContactsController < ApplicationController
     
 #_______________________________________________________________________________
 
-    
-    if contact.search_for_gender.in? ['М', 'Ж']             # if User searching just for one gender
-      @contacts = @contacts.where(own_gender: contact.search_for_gender)   # set Contacts with ONE right gender
+
+    if contact.search_for_gender == 'М' or contact.search_for_gender == 'Ж'     # if User searching just for one gender
+      @contacts = @contacts.where(own_gender: contact.search_for_gender)      # set Contacts with ONE right gender
     end
     
 #_______________________________________________________________________________
