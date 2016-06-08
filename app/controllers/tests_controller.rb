@@ -42,7 +42,7 @@ class TestsController < ApplicationController
           
     redirect_to '/' if order.test_ended == true      
           
-    questions = Test.find(1).questions.limit(5)       
+    questions = Test.find(1).questions
     
     
     if qw_number < questions.count + 1 
