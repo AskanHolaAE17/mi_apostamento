@@ -344,7 +344,7 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________
 
 
-    contact = Contact.where(order_number: order_id)         # current User
+    contact = Contact.find_by order_number: order_id         # current User
     
     @contacts = if ( status % 2 == 0 )
       Contact.where( group: 'GOOD GROUP')
@@ -359,15 +359,27 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________
 
 
-    if contact.search_for_gender == 'М' or contact.search_for_gender == 'Ж'     # if User searching just for one gender
-      @contacts = @contacts.where(own_gender: contact.search_for_gender)      # set Contacts with ONE right gender
+    if contact.search_for_gender == 'М' or contact.search_for_gender == 'Ж'     # if User searching just for ONE gender
+      @contacts = @contacts.where(own_gender: contact.search_for_gender)        # set Contacts with ONE right for CurrentContact gender  
+    end        
+    
+    
+    @res_contacts = []
+    @contacts.each do |c|
+      if contact.own_gender.in? c.search_for_gender                             #leave just Contacts that like -> CurrentContact
+        @res_contacts << c
+      end
     end
+    
+    
+    @contacts = @res_contacts
+    
     
 #_______________________________________________________________________________
 
     
     if @contacts.count == 0                                 # if DB with contacts is nill - inform Leader
-      InformMailer.if_contacts_null(order).deliver        
+      InformMailer.if_contacts_null(contact).deliver        
     end
   end
 #_____________________________________________________________________________________________________________________________________________
