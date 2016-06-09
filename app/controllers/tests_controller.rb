@@ -49,7 +49,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find(1).questions.limit(2)       
+    questions = Test.find(1).questions      
     
     
     if qw_number < questions.count + 1 
