@@ -49,7 +49,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find(1).questions.limit(2)       
+    questions = Test.find(1).questions       
     
     
     if qw_number < questions.count + 1 
@@ -210,7 +210,7 @@ class TestsController < ApplicationController
                                     'Ml: ' + ml_no + ' ___ ' +
                                     'Ol: ' + ol_no + ' ___ ' +
                                     'Kl: ' + kl_no + ' ___ ' +
-                                    'Il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
+                                    'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
                                     'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
                                           
       order.save
