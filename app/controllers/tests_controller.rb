@@ -49,7 +49,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find(1).questions
+    questions = Test.find(1).questions.limit(2)       
     
     
     if qw_number < questions.count + 1 
@@ -186,7 +186,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________      
       
       
-      unless 
+      unless order.test_ended
         OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
       end              
             
