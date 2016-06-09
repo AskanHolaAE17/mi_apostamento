@@ -42,7 +42,7 @@ class TestsController < ApplicationController
           
     redirect_to '/' if order.test_ended == true      
           
-    questions = Test.find(1).questions
+    questions = Test.find(1).questions       
     
     
     if qw_number < questions.count + 1 
@@ -186,9 +186,32 @@ class TestsController < ApplicationController
                                            
         order.test_ended = true
         order.akey       = ''
-        order.save         
+        
+        
 #_______________________________________________________________________________              
-              
+
+
+      #-#contact = Contact.new
+      #-#contact.order_number = order.id
+      
+      order.structure_test_info = 'Al: ' + al_no + ' ___ ' +       
+                                    'Nl: ' + nl_no + ' ___ ' +
+                                    'Shl: ' + shl_no + ' ___ ' +
+                                    'Gml: ' + gml_no + ' __---__ ' +
+                                    'Pl: ' + pl_no + ' ___ ' +
+                                    'Dl: ' + dl_no + ' ___ ' +
+                                    'Ml: ' + ml_no + ' ___ ' +
+                                    'Ol: ' + ol_no + ' ___ ' +
+                                    'Kl: ' + kl_no + ' ___ ' +
+                                    'Il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
+                                    'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
+                                          
+      order.save
+      #-#errors_c = contact.errors.messages.inspect
+      
+#_______________________________________________________________________________              
+
+      #-#flash[:notice] = contact.id.to_s + '___' + contact.structure_test_info + '___' + contact.order_number.to_s + '___' + errors_c         
       redirect_to link_with_more_info_form
                           
 #_______________________________________________________________________________

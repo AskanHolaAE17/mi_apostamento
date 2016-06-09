@@ -55,16 +55,7 @@ class ContactsController < ApplicationController
         break
       end  
     end        
-#_______________________________________________________________________________        
-        
 
-    @contact = Contact.new
-    
-    if Contact.find_by(order_number: order_id)
-      @exist_contact = Contact.find_by(order_number: order_id)
-    else
-      @exist_contact = Contact.new  
-    end  
     
 #_______________________________________________________________________________        
 
@@ -77,6 +68,24 @@ class ContactsController < ApplicationController
       #Mail to Admin
       redirect_to '/'
     end       
+#_______________________________________________________________________________        
+
+    
+    #if order.more_info_save
+    #  redirect_to root_path + 'info/'
+    #end
+
+#_______________________________________________________________________________        
+        
+    
+
+    @contact = Contact.new              #-# less 5 strings down
+    
+    if Contact.find_by(order_number: order_id)
+      @exist_contact = Contact.find_by(order_number: order_id)
+    else  
+      @exist_contact = Contact.new  
+    end      
 
   end
 #_____________________________________________________________________________________________________________________________________________
@@ -85,13 +94,22 @@ class ContactsController < ApplicationController
 
 
   
-  def create
-    contact    = Contact.new(contact_params) 
-    #@consult = Consult.new
+  def create    
+
+    #-#order      = Order.find(params[:order_number])       
+    
+    #-#contact = Contact.find_by(order_number: params[:order_number])     
+    #-#contact.update_attributes(contact_params.clone) 
+    contact = Contact.new(contact_params)    
+    order = Order.find(contact.order_number)
+    
+    contact.structure_test_info = order.structure_test_info    
+    order.structure_test_info = ''        
+    
+    
     
     root_path  = MeConstant.find_by_title('root_path').content
 
-    order      = Order.find(contact.order_number)    
 #_______________________________________________________________________________
 
 
@@ -392,7 +410,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info)
     end  
  
   
