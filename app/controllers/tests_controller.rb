@@ -36,13 +36,20 @@ class TestsController < ApplicationController
     disl_no = test_url_hash["disl"]
 #_______________________________________________________________________________        
           
-          
+                        
+    order = Order.find(order_id)    
     
-    order = Order.find(order_id)
           
-    redirect_to '/' if order.test_ended == true      
+    #redirect_to '/' if order.test_ended == true      
+
+    if order.test_ended                                                         # if Test has ended previously
+      redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
+    end
+    
+#_______________________________________________________________________________            
+    
           
-    questions = Test.find(1).questions
+    questions = Test.find(1).questions.limit(2)       
     
     
     if qw_number < questions.count + 1 

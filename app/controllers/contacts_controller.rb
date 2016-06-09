@@ -71,8 +71,8 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________        
 
     
-    if order.more_info_save
-      redirect_to root_path + 'info/kontaktnye_dannye_uzhe_sohraneny'
+    if order.more_info_save                                                     # if MoreContactInfo has saved previously
+      redirect_to root_path + 'info/kontaktnue_dannue_yzhe_sohranenu'           # Redirect immediately to explaining Msg
     end
 
 #_______________________________________________________________________________        
@@ -166,7 +166,7 @@ class ContactsController < ApplicationController
       #end
 
 
-      msg_page_before_show_contacts = root_path + 'info/pismo_so_ssylkoy_na_bazu'      
+      msg_page_before_show_contacts = root_path + 'info/pismo_so_ssulkoy_na_bazy'      
       #redirect_to link_with_contacts                         
       redirect_to msg_page_before_show_contacts
 #_______________________________________________________________________________

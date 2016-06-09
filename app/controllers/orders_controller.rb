@@ -65,7 +65,7 @@ class OrdersController < ApplicationController
       #pay+  :currency         => 'UAH',
       #pay+  :description      => "Оплата теста",
       #pay+  :server_url       => root_path + 'i_have_payed/' + server_url_details,
-      #pay+  :result_url       => root_path + 'info/proverte_email_posle_oplaty',
+      #pay+  :result_url       => root_path + 'info/proverte_email_posle_oplatu',
       #pay+  :sandbox          => @pay_way        
       #pay+}, liqpay, public_key, api_version)                                  
 #_______________________________________________________________________________if @order.save
