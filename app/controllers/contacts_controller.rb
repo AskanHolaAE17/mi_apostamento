@@ -71,9 +71,9 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________        
 
     
-    #if order.more_info_save
-    #  redirect_to root_path + 'info/'
-    #end
+    if order.more_info_save
+      redirect_to root_path + 'info/kontaktnye_dannye_uzhe_sohraneny'
+    end
 
 #_______________________________________________________________________________        
         
