@@ -1,6 +1,7 @@
-.articles-block{ style: 'background-color: green; display: inline-block; height: 100px; float: right; color: white;' }
+.articles-block
   - @articles.each do |article|
     = link_to "/articles/#{article.translit}" do
       %div
         =article.title
+    = image_tag 'elements/separator.png'    
 
