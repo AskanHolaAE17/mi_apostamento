@@ -1,7 +1,10 @@
 .articles-block
+
   - @articles.each do |article|
+  
     = link_to "/articles/#{article.translit}" do
       %div
         =article.title
-    = image_tag 'elements/separator.png'    
+        
+    = image_tag 'elements/slicer.png'    
 

@@ -12,6 +12,7 @@ class MainPagesController < ApplicationController
     
     root_path               = MeConstant.find_by_title('root_path').content      
     @prerender_page         = root_path 
+        
        
 #_______________________________________________________________________________      
 
@@ -24,19 +25,26 @@ class MainPagesController < ApplicationController
     end
     @articles = @articles.shuffle
     
+        
     @article = unless translit
       Article.where(code_name: 'main').first
     else
       Article.where(translit: translit).first
     end
+    
+    
+    @page.description_meta += '. ' + @article.description_meta + '. ' + @page_article.description_meta
+    @page.keywords_meta    += ', ' + @article.keywords_meta    + ', ' + @page_article.keywords_meta
+    @page.em               += ', ' + @article.em               + ', ' + @page_article.em
 #_______________________________________________________________________________     
     
 
+    # ArticlesMenu in last but one Paragraph in Text  
     descr_full   =  @article.description
     tmp_split    =  descr_full.rindex('<p>')                                    # tmp part: find LAST entry of '<p>' in text                          
     tmp_text     =  descr_full.slice(0, tmp_split)                              # tmp TEXT without last paragraph
     split_symbol =  tmp_text.rindex('<p>') + 3                                  # find LAST BUT ONE split symbol (on original text)     
-    last_symbol  =  descr_full.length                               ## -> split string after this '<p>'
+    last_symbol  =  descr_full.length                                           ## -> split string after this '<p>'
     @descr_start =  descr_full.slice(0, split_symbol)
     @descr_end   =  descr_full.slice(split_symbol + 1, last_symbol)
     
@@ -57,9 +65,10 @@ class MainPagesController < ApplicationController
   private
   
     def set_pages_and_new_order
-      @main_page  = MainPage.find(1)       
-      @page       = Page.find_by_page :main
-      @order      = Order.new      
+      @main_page    = MainPage.find(1)       
+      @page         = Page.find_by_page :main
+      @page_article = Page.find_by_page :article
+      @order        = Order.new      
     end          
     
 end
