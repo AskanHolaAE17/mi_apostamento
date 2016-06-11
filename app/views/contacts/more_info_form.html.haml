@@ -150,7 +150,19 @@
                                         maxlength:   '1000',
                                         value:       "#{flash[:contact_about_info] || @exist_contact.about_info || nil}",
                                         autofocus:    flash[:autofocus_about_info]
-                                        
+  
+    %br/
+    
+    
+  
+  
+    
+    %a{name: 'image'}
+    .dark-green{class: flash[:error_class_image]}
+      Выберите Ваше фото:
+    %div                                        
+      =f.file_field :image_data
+  
                                            
   
   

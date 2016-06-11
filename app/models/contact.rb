@@ -1,4 +1,20 @@
 class Contact < ActiveRecord::Base
+
+
+  has_attached_file :image,
+    :storage => :dropbox,
+    :dropbox_credentials => Rails.root.join("config/dropbox.yml")
+    #,
+    #:dropbox_options => {...}
+      
+ #:styles => { :medium => "300x300" , :thumb => "100x100>"},    
+ #:dropbox_options => {       
+ #:path => proc { |style| "#{style}/#{id}_#{picture.original_filename}"},       :unique_filename => true   
+ # }
+  
+  validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]  
+  
+    
 #____________________________________________________________________________________________________________________________________________  
 
 
@@ -64,6 +80,11 @@ class Contact < ActiveRecord::Base
                                       :if =>         :about_info? }
 
 #____________________________________________________________________________________________________________________________________________
+
+
+  #validates :image,           presence:         true
+    
+#____________________________________________________________________________________________________________________________________________  
 end
 
    

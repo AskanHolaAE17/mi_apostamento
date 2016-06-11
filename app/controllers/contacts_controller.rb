@@ -103,8 +103,16 @@ class ContactsController < ApplicationController
     contact = Contact.new(contact_params)    
     order = Order.find(contact.order_number)
     
+    
+    
     contact.structure_test_info = order.structure_test_info    
     order.structure_test_info = ''        
+    
+    contact.level = order.level
+    order.level = ''        
+    
+    contact.level_test_info = order.level_test_info    
+    order.level_test_info = ''                
     
     
     
@@ -119,7 +127,18 @@ class ContactsController < ApplicationController
     unless order.more_info_save    
     
     if contact.save        
+#_______________________________________________________________________________    
 
+
+    #SAVE IMAGE
+    
+    
+    
+    
+    #contact.save
+
+#_______________________________________________________________________________
+    
     
       contacts_status = if order.group == 'GOOD GROUP'                     
         [2,4,6,8].shuffle.first.to_s
@@ -399,6 +418,7 @@ class ContactsController < ApplicationController
     if @contacts.count == 0                                 # if DB with contacts is nill - inform Leader
       InformMailer.if_contacts_null(contact).deliver        
     end
+    
   end
 #_____________________________________________________________________________________________________________________________________________
 
@@ -410,8 +430,9 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :image, :level, :level_test_info)
     end  
  
   
 end
+

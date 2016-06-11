@@ -10,6 +10,7 @@ default: &default
   timeout: 5000
 
 development:
+  app_key: '9gjame4bv1c2q8k'
   <<: *default
   database: db/development.sqlite3
 
@@ -17,9 +18,11 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
+  app_key: '9gjame4bv1c2q8k'
   <<: *default
   database: db/test.sqlite3
 
 production:
+  app_key: '9gjame4bv1c2q8k'
   <<: *default
   database: db/production.sqlite3

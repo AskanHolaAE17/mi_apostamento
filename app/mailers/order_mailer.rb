@@ -15,7 +15,14 @@ class OrderMailer < ActionMailer::Base
     @test_url = test_url
     mail(to: @order.email, subject: 'Пройдите тест')
   end
-  
+
+
+  def b_to_test_2_levels(order, link_with_test_2_levels)
+    @order = order
+    @link_with_test_2_levels = link_with_test_2_levels
+    mail(to: @order.email, subject: 'Второй тест')
+  end  
+
   
   def c_more_info_form(order, link_with_more_info_form)
     @order = order

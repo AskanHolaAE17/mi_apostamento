@@ -4,6 +4,7 @@ class OrderInfoPagesController < ApplicationController
   before_action :set_pages_and_order_info_page, :set_site_title,  only: [:show]
 
   def show
+    @root_path    = MeConstant.find_by_title('root_path').content      
   end
 #_____________________________________________________________________________________________________________________________________________
 

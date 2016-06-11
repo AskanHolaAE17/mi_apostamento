@@ -19,47 +19,71 @@ class TestsController < ApplicationController
     test_url_json    = Base64.decode64(test_url_encoded)    
     test_url_hash    = JSON.parse(test_url_json)    
     
-    qw_number  = test_url_hash["qw_number"].to_i
-    order_id   = test_url_hash["order_id"]
-    order_akey = test_url_hash["order_akey"]
+    test_number = test_url_hash["test_number"].to_i
+    qw_number   = test_url_hash["qw_number"].to_i
+    order_id    = test_url_hash["order_id"]
+    order_akey  = test_url_hash["order_akey"]
     
-    al_no   = test_url_hash["al"]
-    nl_no   = test_url_hash["nl"]
-    shl_no  = test_url_hash["shl"]
-    pl_no   = test_url_hash["pl"]
-    gml_no  = test_url_hash["gml"]
-    dl_no   = test_url_hash["dl"]
-    ml_no   = test_url_hash["ml"]
-    ol_no   = test_url_hash["ol"]
-    kl_no   = test_url_hash["kl"]
-    il_no   = test_url_hash["il"]
-    disl_no = test_url_hash["disl"]
 #_______________________________________________________________________________        
           
                         
     order = Order.find(order_id)    
-    
-          
-    #redirect_to '/' if order.test_ended == true      
 
-    if order.test_ended                                                         # if Test has ended previously
-      redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
+    #redirect_to ''
+
+
+    
+    if test_number == 1 
+      if order.test_1_ended                                                         # if Test1 has ended previously
+        redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
+      end
     end
     
+    if test_number == 2
+      if order.test_2_ended                                                         # if Test2 has ended previously
+        redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
+      end    
+    end      
+    
+#_______________________________________________________________________________            
+
+    
+    if test_number == 1 
+      al_no   = test_url_hash['al']
+      nl_no   = test_url_hash['nl']
+      shl_no  = test_url_hash['shl']
+      pl_no   = test_url_hash['pl']
+      gml_no  = test_url_hash['gml']
+      dl_no   = test_url_hash['dl']
+      ml_no   = test_url_hash['ml']
+      ol_no   = test_url_hash['ol']
+      kl_no   = test_url_hash['kl']
+      il_no   = test_url_hash['il']
+      disl_no = test_url_hash['disl']
+    end  
+    
+    if test_number == 2 
+      psihot_no     = test_url_hash['psihot']
+      pogranich_no  = test_url_hash['pogranich']
+      nevrot_no     = test_url_hash['nevrot']
+    end    
 #_______________________________________________________________________________            
     
           
-    questions = Test.find(1).questions
+    questions = Test.find_by(number_of_test: test_number).questions.limit(3)      
     
     
-    if qw_number < questions.count + 1 
-    #and al_no.to_i < 7 and nl_no.to_i < 7 and shl_no.to_i < 7 and gml_no.to_i < 7 and dl_no.to_i < 7 and ml_no.to_i < 7 and ol_no.to_i < 7 and pl_no.to_i < 7 and kl_no.to_i < 7 and il_no.to_i < 7 and disl_no.to_i < 7    #----- Start Testing Part
+    if qw_number < questions.count + 1                                          #----- Start Testing Part
     
       question = questions.find_by_number_of_question(qw_number)
       @question_title = question.title
       
       next_qw_number = (qw_number + 1).to_s
+      
+#__________________________________________
+                        
             
+    if test_number == 1            
       case question.for_yes_answer_plus_1_point_to
         when 'al' 
           then al_yes = (al_no.to_i + 1).to_s
@@ -87,7 +111,8 @@ class TestsController < ApplicationController
       
       yes_params_hash = {
         :controller => 'tests', 
-        :action => 'load_page', 
+        :action => 'load_page',
+        :test_number => '1', 
         :qw_number => next_qw_number,
         :order_id => order_id,
         :order_akey => order_akey,
@@ -102,7 +127,37 @@ class TestsController < ApplicationController
         :kl => "#{kl_yes or kl_no or '0'}",
         :il => "#{il_yes or il_no or '0'}",
         :disl => "#{disl_yes or disl_no or '0'}"
-        }
+      }
+    end    
+
+#__________________________________________    
+
+
+    if test_number == 2
+      case question.for_yes_answer_plus_1_point_to
+        when 'psihot' 
+          then psihot_yes = (psihot_no.to_i + 1).to_s
+        when 'pogranich' 
+          then pogranich_yes = (pogranich_no.to_i + 1).to_s
+        when 'nevrot' 
+          then nevrot_yes = (nevrot_no.to_i + 1).to_s
+      end      
+      
+      yes_params_hash = {
+        :controller   => 'tests', 
+        :action       => 'load_page', 
+        :test_number  => '2',
+        :qw_number    => next_qw_number,
+        :order_id     => order_id,
+        :order_akey   => order_akey,
+        :psihot       => "#{psihot_yes or psihot_no or '0'}",
+        :pogranich    => "#{pogranich_yes or pogranich_no or '0'}",
+        :nevrot       => "#{nevrot_yes or nevrot_no or '0'}"
+      }    
+    end                    
+        
+#__________________________________________        
+        
         
         yes_params_json = JSON.generate(yes_params_hash)
         yes_params_encoded_64 = (Base64.encode64 yes_params_json).chomp.delete("\n")
@@ -111,10 +166,11 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________
                 
          
-         
+    if test_number == 1         
       no_params_hash = {
         :controller  => 'tests', 
         :action      => 'load_page', 
+        :test_number => '1',
         :qw_number   => next_qw_number,
         :order_id    => order_id,
         :order_akey  => order_akey,
@@ -129,7 +185,26 @@ class TestsController < ApplicationController
         :kl          => "#{kl_no or '0'}",
         :il          => "#{il_no or '0'}",
         :disl        => "#{disl_no or '0'}"
-        }
+      }
+    end            
+#__________________________________________            
+
+
+    if test_number == 2         
+      no_params_hash = {
+        :controller  => 'tests', 
+        :action      => 'load_page', 
+        :test_number => '2',
+        :qw_number   => next_qw_number,
+        :order_id    => order_id,
+        :order_akey  => order_akey,
+        :psihot      => "#{psihot_no or '0'}",
+        :pogranich   => "#{pogranich_no or '0'}",
+        :nevrot      => "#{nevrot_no or '0'}"
+      }
+    end            
+#__________________________________________        
+
         
         no_params_json = JSON.generate(no_params_hash)
         no_params_encoded_64 = (Base64.encode64 no_params_json).chomp.delete("\n")
@@ -141,31 +216,114 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________
                    
 
-
       #-if order and order.akey == order_akey #----- If Right Order                
         
                 
-        #order.group = if dl_no.to_i == 7 or ml_no.to_i == 7 or ol_no.to_i == 7 or pl_no.to_i == 7 or kl_no.to_i == 7 or il_no.to_i == 7 or disl_no.to_i == 7         
+      if test_number == 1               
         order.group = if [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i].max > [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i].max        
           'GOOD GROUP'           
         else                   
           'BAD GROUP'                             
         end
+      end  
+#__________________________________________        
+
+
+      if test_number == 2               
+      
+        levels_array = [psihot_no.to_i, pogranich_no.to_i, nevrot_no.to_i]
+      
+        order.level = if levels_array.index(levels_array.max) == 0
+          'psihotick'           
+        elsif levels_array.index(levels_array.max) == 1                   
+          'pogranichnick'                             
+        else  
+          'nevrotick'
+        end
+        
+      end             
 
 #_______________________________________________________________________________
       
+
+    if test_number == 1                             
       
       
+      
+        test_2_url_hash = {
+          :test_number => '2',
+          :qw_number   => '1',
+          :order_id    => "#{order_id}",
+          :order_akey  => "#{order_akey}",
+          :psihot      => '0',
+          :pogranich   => '0',
+          :nevrot      => '0'
+        }        
+
+
+        test_2_url_json = JSON.generate(test_2_url_hash)
+        test_2_url_encoded_64 = (Base64.encode64 test_2_url_json).chomp.delete("\n")
+        test_2_url_encoded = test_2_url_encoded_64 + '=' 
+        #test_2_url = root_path + 'test/' + test_2_url_encoded
+        test_2_url = root_path + 'infos/tekst_mezhdy_testami/' + test_2_url_encoded                            
+        
+        link_with_test_2_levels = test_2_url                                          
+      
+      
+      
+      unless order.test_1_ended
+        OrderMailer.b_to_test_2_levels(order, link_with_test_2_levels).deliver                          
+      end              
+            
+                                           
+        order.test_1_ended = true
+        order.akey         = ''
+                
+#__________________________________________
+
+
+        order.structure_test_info = 'Al: ' + al_no + ' ___ ' +       
+                                    'Nl: ' + nl_no + ' ___ ' +
+                                    'Shl: ' + shl_no + ' ___ ' +
+                                    'Gml: ' + gml_no + ' __---__ ' +
+                                    'Pl: ' + pl_no + ' ___ ' +
+                                    'Dl: ' + dl_no + ' ___ ' +
+                                    'Ml: ' + ml_no + ' ___ ' +
+                                    'Ol: ' + ol_no + ' ___ ' +
+                                    'Kl: ' + kl_no + ' ___ ' +
+                                    'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
+                                    'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
+     
+                                          
+      order.save
+      
+      redirect_to link_with_test_2_levels
+      
+    end  #---End Test1
+                          
+#__________________________________________
+
+
+
+
+    if test_number == 2             
+                             
+      
+        order.level_test_info = 'Psihot: ' + psihot_no + ' ___ ' +       
+                                'Pogranich: ' + pogranich_no + ' ___ ' +
+                                'Nevrot: ' + nevrot_no                                   
+            
+        order.save
+      
+#__________________________________________
+
+
       redirect_letter          = ('a'..'z').to_a.shuffle.first
       link_details             = order.id.to_s + redirect_letter + order.akey_payed
-#_______________________________________________________________________________
-
 
       
       link_details_encoded_64  = (Base64.encode64 link_details).chomp.delete("\n")
       link_details_encoded     = link_details_encoded_64 + '=' 
-#_______________________________________________________________________________
-
 
             
       #key_pair  = RSA::KeyPair.generate(1024)
@@ -182,47 +340,25 @@ class TestsController < ApplicationController
       
       
       #link_with_more_info_form = root_path + 'much_form/' + link_details_begin
-      link_with_more_info_form = root_path + 'much_form/' + link_details_encoded       
-#_______________________________________________________________________________      
+      link_with_more_info_form = root_path + 'much_form/' + link_details_encoded                 
+
+#__________________________________________      
       
       
-      unless order.test_ended
+      unless order.test_2_ended
         OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
       end              
-            
-                                           
-        order.test_ended = true
-        order.akey       = ''
-        
-        
-#_______________________________________________________________________________              
-
-
-      #-#contact = Contact.new
-      #-#contact.order_number = order.id
       
-      order.structure_test_info = 'Al: ' + al_no + ' ___ ' +       
-                                    'Nl: ' + nl_no + ' ___ ' +
-                                    'Shl: ' + shl_no + ' ___ ' +
-                                    'Gml: ' + gml_no + ' __---__ ' +
-                                    'Pl: ' + pl_no + ' ___ ' +
-                                    'Dl: ' + dl_no + ' ___ ' +
-                                    'Ml: ' + ml_no + ' ___ ' +
-                                    'Ol: ' + ol_no + ' ___ ' +
-                                    'Kl: ' + kl_no + ' ___ ' +
-                                    'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
-                                    'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
-                                          
+      order.test_2_ended = true      
+#__________________________________________
+
       order.save
-      #-#errors_c = contact.errors.messages.inspect
-      
-#_______________________________________________________________________________              
 
-      #-#flash[:notice] = contact.id.to_s + '___' + contact.structure_test_info + '___' + contact.order_number.to_s + '___' + errors_c         
       redirect_to link_with_more_info_form
-                          
-#_______________________________________________________________________________
+         
+    end  #---End Test2
         
+#_______________________________________________________________________________        
         
         
     #-else #----- If Not Right Order

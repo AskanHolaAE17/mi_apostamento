@@ -19,12 +19,20 @@ site_key_short_hard:        'v%{bFD"5:ofaBlebaneseQ@#!J}q'
 
 
 
-#RSA
-#public_key_modulus   = ''
-#public_key_exponent  = ''
+# DROPBOX
+#dropbox_app_key: '9gjame4bv1c2q8k'
+#dropbox_app_secret: 'tg0rede8324v830'
+#dropbox_access_token: 'm0gbbf85zk0aldw2' 
+#dropbox_access_token_secret: 'l2ghjq5d60vhif7'
+#dropbox_user_id: '572895168'
 
-#private_key_modulus  = ''
-#private_key_exponent = ''
+
+#RSA
+#public_key_modulus: ''
+#public_key_exponent: ''
+
+#private_key_modulus: ''
+#private_key_exponent: ''
 
 
 

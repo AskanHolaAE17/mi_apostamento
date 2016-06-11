@@ -80,6 +80,7 @@ class OrdersController < ApplicationController
 
 
         test_url_hash = {
+          :test_number => '1',
           :qw_number   => '1',
           :order_id    => @order.id,
           :order_akey  => @order.akey,
@@ -238,6 +239,7 @@ class OrdersController < ApplicationController
         
         
         test_url_hash = {
+          :test_number => '1',
           :qw_number   => '1',
           :order_id    => "#{order_id}",
           :order_akey  => "#{order_akey}",
@@ -251,9 +253,9 @@ class OrdersController < ApplicationController
           :ol          => '0',
           :kl          => '0',
           :il          => '0',
-          :disl        => '0',
+          :disl        => '0'
         }        
-
+          
         test_url_json = JSON.generate(test_url_hash)
         test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
         test_url_encoded = test_url_encoded_64 + '=' 
@@ -291,7 +293,7 @@ class OrdersController < ApplicationController
   
   private  
     def order_params
-      params.require(:order).permit(:payed, :name, :email, :akey, :pay_link, :sum_for_pay, :when_payed, :akey_payed, :able, :sent_email_with_test, :group, :test_ended, :structure_test_info)
+      params.require(:order).permit(:payed, :name, :email, :akey, :pay_link, :sum_for_pay, :when_payed, :akey_payed, :able, :sent_email_with_test, :group, :structure_test_info, :level, :test_1_ended, :test_2_ended, :level_test_info)
     end  
 
 end    

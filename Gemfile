@@ -11,9 +11,17 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'
 
-gem 'country_select', github: 'stefanpenner/country_select'
+
 
 gem 'activeadmin', github: 'activeadmin'
+
+gem 'country_select', github: 'stefanpenner/country_select'
+
+gem 'paperclip'
+gem 'paperclip-dropbox'
+
+
+
 gem 'devise'
 gem 'mail'
 

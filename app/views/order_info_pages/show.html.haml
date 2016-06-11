@@ -1,3 +1,10 @@
-=@info_msg
+.order-info-pages-text
+  =@info_msg.html_safe
+  
 
-=button_to 'На главную', '/', class: 'btn btn-success btn-large'   
+
+- if params[:to_test_2]
+  =button_to 'Продолжить тест', " #{ @root_path + '/test/' + params[:to_test_2] } ", class: 'btn btn-success btn-large'   
+
+- else
+  =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
