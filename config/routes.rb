@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   
                                                
   
-  match '/articles/:title',                to: 'main_pages#index',                                   via: 'get'  # for set current Article & load Articles menu    
+  match '/articles/:translit',             to: 'main_pages#index',                                   via: 'get'  # for set current Article & load Articles menu    
     
   root 'main_pages#index'
   

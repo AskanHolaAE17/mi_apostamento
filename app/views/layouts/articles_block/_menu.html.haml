@@ -1,3 +1,6 @@
-.articles-block{ style: 'background-color: green; display: inline-block; height: 100px; float: right;' }
-  Articles block.1
+.articles-block{ style: 'background-color: green; display: inline-block; height: 100px; float: right; color: white;' }
+  - @articles.each do |article|
+    = link_to "/articles/#{article.translit}" do
+      %div
+        =article.title
 
