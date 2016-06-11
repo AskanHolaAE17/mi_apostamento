@@ -70,7 +70,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number)      
+    questions = Test.find_by(number_of_test: test_number).questions.limit(2)      
     
     
     if qw_number < questions.count + 1                                          #----- Start Testing Part
