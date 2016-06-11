@@ -70,7 +70,8 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number).questions.limit(2)      
+    questions = Test.find_by(number_of_test: test_number).questions
+    #.limit(2)      
     
     
     if qw_number < questions.count + 1                                          #----- Start Testing Part
@@ -229,19 +230,29 @@ class TestsController < ApplicationController
 #__________________________________________        
 
 
-      if test_number == 2               
+      if test_number == 2                                                       ### if 2nd Test (233)
       
-        levels_array = [psihot_no.to_i, pogranich_no.to_i, nevrot_no.to_i]
+        l_arr = levels_array    = [psihot_no.to_i, pogranich_no.to_i, nevrot_no.to_i]      # count in every ResultLevelGroups
+        max_l = max_level_count = levels_array.max                                         # max count of points
+
+        l_ind = level_indexes   = l_arr.each_index.select{                                 # Indexes of Level(s) with MaxPoints
+                                  |i| l_arr[i]== max_l }        
       
-        order.level = if levels_array.index(levels_array.max) == 0
-          'psihotick'           
-        elsif levels_array.index(levels_array.max) == 1                   
-          'pogranichnick'                             
-        else  
-          'nevrotick'
-        end
+        if l_ind.count > 1                                                            # if more then 1 LevelGroup with MaxPoints
+
+          order.level = 'FAIL'
         
-      end             
+        else                                                                          # if just 1 max LevelGroupResult -> define the Group
+          order.level = if levels_array.index(levels_array.max) == 0
+            'psihotick'           
+          elsif levels_array.index(levels_array.max) == 1                   
+            'pogranichnick'                             
+          else  
+            'nevrotick'
+          end
+        end                                                                           # end LevelGroup Defining
+        
+      end                                                                       ### END if 2nd Test (233)
 
 #_______________________________________________________________________________
       
@@ -340,7 +351,7 @@ class TestsController < ApplicationController
       
       
       #link_with_more_info_form = root_path + 'much_form/' + link_details_begin
-      link_with_more_info_form = root_path + 'much_form/' + link_details_encoded                 
+      next_page_after_test_2_level = link_with_more_info_form = root_path + 'much_form/' + link_details_encoded                 
 
 #__________________________________________      
       
@@ -350,11 +361,41 @@ class TestsController < ApplicationController
       end              
       
       order.test_2_ended = true      
+      
+#__________________________________________        
+
+      if order.level == 'FAIL'
+      
+        test_2_url_hash = {
+          :test_number => '2',
+          :qw_number   => '1',
+          :order_id    => "#{order_id}",
+          :order_akey  => "#{order_akey}",
+          :psihot      => '0',
+          :pogranich   => '0',
+          :nevrot      => '0'
+        }        
+
+
+        test_2_url_json = JSON.generate(test_2_url_hash)
+        test_2_url_encoded_64 = (Base64.encode64 test_2_url_json).chomp.delete("\n")
+        test_2_url_encoded = test_2_url_encoded_64 + '=' 
+        
+        test_2_url = root_path + 'infos/test_proyden_neverno/' + test_2_url_encoded                            
+        
+        
+        
+        next_page_after_test_2_level = link_with_test_2_levels = test_2_url                                          
+        
+        order.test_2_ended = false      
+      
+      end          
 #__________________________________________
+
 
       order.save
 
-      redirect_to link_with_more_info_form
+      redirect_to next_page_after_test_2_level
          
     end  #---End Test2
         
