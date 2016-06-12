@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   match 'info/:msg',                       to: 'order_info_pages#show',                             via: 'get'  
   post  'info/:msg',                       to: 'order_info_pages#show'                                  
   
-  match 'infos/:msg/:to_test_2',            to: 'order_info_pages#show',                             via: 'get'  
+  match 'infos/:msg/:to_test_2',            to: 'order_info_pages#show',                            via: 'get'  
   post  'infos/:msg/:to_test_2',            to: 'order_info_pages#show'                                
   
   post  '/orders',                         to: 'orders#create'                  # for OrderForm works (path for creating new order)
@@ -23,9 +23,15 @@ Rails.application.routes.draw do
   post  '/contacts',                       to: 'contacts#create'                # for MoreContactsForm works (path for creating new contact)  
   match '/contacts/:details',              to: 'contacts#show',                                     via: 'get'      
   
+  
+  
+  match '/deactivate/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
+  match '/de-activate/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        
+  post  '/de-activate/:deactive_params',         to: 'contacts#disable_contact'  
+  
                                                
   
-  match '/articles/:translit',             to: 'main_pages#index',                                   via: 'get'  # for set current Article & load Articles menu    
+  match '/articles/:translit',             to: 'main_pages#index',                                  via: 'get'  # for set current Article & load Articles menu    
     
   root 'main_pages#index'
   

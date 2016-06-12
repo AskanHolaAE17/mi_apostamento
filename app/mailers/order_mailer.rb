@@ -31,9 +31,10 @@ class OrderMailer < ActionMailer::Base
   end
   
   
-  def d_see_contacts(order, link_with_contacts)
+  def d_see_contacts(order, link_with_contacts, disable_contact_link)
     @order = order
     @link_with_contacts = link_with_contacts
+    @disable_contact_link = disable_contact_link
     mail(to: @order.email, subject: 'Страница с контактами')  
   end
   

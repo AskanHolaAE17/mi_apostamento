@@ -5,7 +5,8 @@ ActiveAdmin.register Contact do
                               :about_info, :email, :order_number, 
                               :able_for_contact, :group, :own_gender, 
                               :search_for_gender, :structure_test_info, 
-                              :image, :image_data, :level, :level_test_info]
+                              :image, :image_data, :level, :level_test_info, 
+                              :unsubscribed_link]
     end
   end
 end

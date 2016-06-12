@@ -1,0 +1,10 @@
+.order-info-pages-text
+  %p
+    После удаления Ваши контактные данные больше не будут показываться на сайте.
+  %p  
+    Вы уверены, что хотите деактивировать свою учетную запись? 
+  
+
+
+  =button_to 'Да', @deactive_link, class: 'btn btn-primary btn-large'   
+  =button_to 'Нет', '/', class: 'btn btn-info btn-large'   

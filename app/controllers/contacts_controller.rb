@@ -3,7 +3,7 @@ require 'uri'
 # encoding: utf-8
 class ContactsController < ApplicationController
 
-  before_action :set_main_page, only: [:more_info_form, :show]
+  before_action :set_main_page, only: [:more_info_form, :show, :disable_contact_ask, :disable_contact]
 #_____________________________________________________________________________________________________________________________________________
 
   
@@ -168,6 +168,7 @@ class ContactsController < ApplicationController
 
 
       order.more_info_save = true
+      order.akey           = akey
       order.save
 
 
@@ -179,9 +180,30 @@ class ContactsController < ApplicationController
       end        
     
       @contacts = @contacts.where.not(order_number: order.id)
+      
+#_____________________________________________
+
+
+      disable_contact_params_hash = {
+        :order_number => order.id,
+        :order_akey   => order.akey,
+        :contact_id   => contact.id
+      }      
+        
+        d_c_params_json = JSON.generate(disable_contact_params_hash)
+        d_c_params_encoded_64 = (Base64.encode64 d_c_params_json).chomp.delete("\n")
+        d_c_params_encoded = d_c_params_encoded_64 + '='
+        disable_contact_params = d_c_params_encoded
+
+
+    
+      disable_contact_link = root_path + 'deactivate/' + disable_contact_params     
+     
+#_____________________________________________
+    
     
       #unless @contacts.count == 0 
-        OrderMailer.d_see_contacts(order, link_with_contacts).deliver      
+        OrderMailer.d_see_contacts(order, link_with_contacts, disable_contact_link).deliver      
       #end
 
 
@@ -366,6 +388,17 @@ class ContactsController < ApplicationController
         break
       end
     end
+    
+#_______________________________________________________________________________
+
+
+    # show IF current contact active (able)
+    check_is_contact_able = Contact.find_by(order_number: order_id)    
+    
+    unless check_is_contact_able.able_for_contact
+      redirect_to root_path + 'info/polzovatel_ne_nayden'
+    end
+    
 #_______________________________________________________________________________
 
 
@@ -389,7 +422,7 @@ class ContactsController < ApplicationController
       Contact.where( group: 'BAD GROUP' )
     end        
 
-    
+    @contacts = @contacts.where(able_for_contact: true)     # just activated Contacts
     @contacts = @contacts.where.not(order_number: order_id) # without current User
                                                             # all genders
     
@@ -420,7 +453,59 @@ class ContactsController < ApplicationController
     end
     
   end
+  
 #_____________________________________________________________________________________________________________________________________________
+
+
+  def disable_contact_ask
+    
+    @page       = Page.find_by_page :more_info_form  
+    @site_title = MeConstant.find_by_title('site_title').content   
+    
+    
+    @deactive_link = root_path + 'de-activate/' + params[:deactive_params]
+    
+  end
+
+#_____________________________________________________________________________________________________________________________________________
+
+
+  def disable_contact
+    @page       = Page.find_by_page :more_info_form  
+    @site_title = MeConstant.find_by_title('site_title').content     
+    root_path  = MeConstant.find_by_title('root_path').content    
+      
+
+    # disable_contact_params is dcp
+    dcp_encoded  = params[:deactive_params]
+    dcp_encoded[dcp_encoded.length-1] = ''
+    dcp_json     = Base64.decode64(dcp_encoded)    
+    disable_contact_params_hash       = JSON.parse(dcp_json)    
+    
+    contact_id   = disable_contact_params_hash['contact_id'].to_i    
+    order_number = disable_contact_params_hash['order_number'].to_i
+    order_akey   = disable_contact_params_hash['order_akey']
+    
+    
+    contact = Contact.find(contact_id)      
+    order = Order.find(order_number)    
+    
+    if contact and order and contact.order_number == order_number and order.akey == order_akey
+      contact.able_for_contact = false
+      contact.save
+      redirect_to root_path + '/info/dannue_ydalenu_iz_bazu'
+    else
+      
+      #MailToAdmin    
+      redirect_to '/'
+      
+    end
+  
+  
+  end  
+
+#_____________________________________________________________________________________________________________________________________________
+
 
 
   private
@@ -430,7 +515,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :image, :level, :level_test_info)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :image, :level, :level_test_info, :unsubscribed_link)
     end  
  
   
