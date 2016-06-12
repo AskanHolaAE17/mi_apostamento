@@ -80,7 +80,11 @@ class TestsController < ApplicationController
       @question_title = question.title
       
       next_qw_number = (qw_number + 1).to_s
-      
+#__________________________________________
+
+
+    @current_question = next_qw_number
+    @questions_amount = questions.count.to_s      
 #__________________________________________
                         
             
@@ -324,8 +328,7 @@ class TestsController < ApplicationController
                                 'Pogranich: ' + pogranich_no + ' ___ ' +
                                 'Nevrot: ' + nevrot_no                                   
             
-        order.save
-      
+        order.save      
 #__________________________________________
 
 
