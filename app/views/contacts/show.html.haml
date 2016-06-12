@@ -1,6 +1,6 @@
 - unless @contacts.count == 0 
 
-  
+  - @conter = 1
   - @contacts.each do |contact|
    
     .white_border
@@ -12,6 +12,8 @@
       %strong
         =contact.name        
   
+      = image_tag contact.image.url      
+  
       %address
         =contact.city + ', ' + contact.country
       
@@ -22,7 +24,7 @@
         =contact.about_info   
   
       .label.label-success.select_able
-        =contact.email
+        =contact.email        
         
        
     

@@ -130,13 +130,10 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________    
 
 
-    #SAVE IMAGE
+    # RESIZE IMAGE
     
-    
-    
-    
-    #contact.save
-
+    #orig_geo = original_geometry = Paperclip::Geometry.from_file(contact.image(:original)).to_s
+    #width = geo    
 #_______________________________________________________________________________
     
     
@@ -247,6 +244,7 @@ class ContactsController < ApplicationController
         flash[:error_class_birthday]          = 'error_field' if attr == :birthday
         flash[:error_class_search_for_gender] = 'error_field' if attr == :search_for_gender
         flash[:error_class_about_info]        = 'error_field' if attr == :about_info
+        flash[:error_class_image]             = 'error_field' if attr == :image    
                 
                 
                 
@@ -256,6 +254,7 @@ class ContactsController < ApplicationController
         flash[:autofocus_country]   = false         
         flash[:autofocus_birthday]  = false                
         flash[:about_info]          = false         
+        flash[:image]               = false         
 #_______________________________________________________________________________        
                         
                         
@@ -281,6 +280,10 @@ class ContactsController < ApplicationController
           
                   if attr == :about_info
                     flash[:autofocus_about_info] = true
+                  else
+                    if attr == :image
+                      flash[:autofocus_image] = true                    
+                    end                                            
                   end                        
                 end                        
               end            
@@ -320,6 +323,10 @@ class ContactsController < ApplicationController
                 
                       if attr == :about_info
                         anchor = 'about_info'
+                      else  
+                        if attr == :image
+                          anchor = 'image'                      
+                        end                          #attr == :image
                       end                            #attr == :about_info
                     end                              #attr == :search_for_gender   
                   end                                #attr == :birthday                                        
@@ -337,9 +344,7 @@ class ContactsController < ApplicationController
       
       url_with_contacts_details = order.id.to_s      +
                                   letter             +        
-                                  order.akey_payed   +
-                                  '#'                +
-                                  anchor
+                                  order.akey_payed   
                                                                                                       
       url_with_contacts_details_encoded_64  = (Base64.encode64 url_with_contacts_details).chomp.delete("\n")
       url_with_contacts_details = url_with_contacts_details_encoded_64 + '=' 
@@ -348,7 +353,9 @@ class ContactsController < ApplicationController
       
       url_with_contacts         = root_path           +
                                  'much_form/'         + 
-                                  url_with_contacts_details
+                                  url_with_contacts_details +
+                                  '#'                +
+                                  anchor
                                                
              
       redirect_to url_with_contacts         
@@ -366,7 +373,7 @@ class ContactsController < ApplicationController
   def show
   
     @page            = Page.find_by_page :contacts
-  
+         
   
   
     details_encoded  = params[:details]
@@ -426,8 +433,7 @@ class ContactsController < ApplicationController
 
     @contacts = @contacts.where(able_for_contact: true)     # just activated Contacts
     @contacts = @contacts.where.not(order_number: order_id) # without current User
-                                                            # all genders
-    
+        
 #_______________________________________________________________________________
 
 
@@ -517,7 +523,8 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :image, :level, :level_test_info, :link_for_disable_contact)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image)
+      #, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
     end  
  
   

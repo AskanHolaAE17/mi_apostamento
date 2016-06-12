@@ -27,9 +27,9 @@ Rails.application.routes.draw do
   
   match '/deactivate/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
   match '/de-activate/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        
-  post  '/de-activate/:deactive_params',         to: 'contacts#disable_contact'  
+  post  '/de-activate/:deactive_params',   to: 'contacts#disable_contact'  
   
-                                               
+        
   
   match '/articles/:translit',             to: 'main_pages#index',                                  via: 'get'  # for set current Article & load Articles menu    
     

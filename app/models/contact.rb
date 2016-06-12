@@ -1,9 +1,10 @@
 class Contact < ActiveRecord::Base
 
+  has_attached_file :image
 
-  has_attached_file :image,
-    :storage => :dropbox,
-    :dropbox_credentials => Rails.root.join("config/dropbox.yml")
+  #has_attached_file :image,
+  #  :storage => :dropbox,
+  #  :dropbox_credentials => Rails.root.join("config/dropbox.yml")
     #,
     #:dropbox_options => {...}
       
@@ -12,7 +13,9 @@ class Contact < ActiveRecord::Base
  #:path => proc { |style| "#{style}/#{id}_#{picture.original_filename}"},       :unique_filename => true   
  # }
   
-  validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]  
+  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
+  validates :image, attachment_presence: true
+
   
     
 #____________________________________________________________________________________________________________________________________________  

@@ -6,13 +6,17 @@ class MainPagesController < ApplicationController
 #_____________________________________________________________________________________________________________________________________________
 
   
+  #def show_contact_image
+  #  @contact = Contact.find(37)
+  #  send_data @contact.image, :type => @contact.image_content_type, :disposition => 'inline'    
+  #end
+  
   
   def index 
     @site_title             = MeConstant.find_by_title('site_title').content
     
     root_path               = MeConstant.find_by_title('root_path').content      
-    @prerender_page         = root_path 
-        
+    @prerender_page         = root_path                
        
 #_______________________________________________________________________________      
 
