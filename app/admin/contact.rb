@@ -8,8 +8,6 @@ ActiveAdmin.register Contact do
                               :level, :level_test_info, 
                               :link_for_disable_contact,
                               :image]
-                              #, :image_file_name, :image_content_type,
-                              #:image_file_size, :image_updated_at
     end
   end
 end

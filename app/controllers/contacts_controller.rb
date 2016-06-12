@@ -221,8 +221,11 @@ class ContactsController < ApplicationController
       #flash[:contact_surname]         = contact.surname
       flash[:contact_city]            = contact.city
       flash[:contact_country]         = contact.country
-      flash[:contact_birthday]        = contact.birthday
       flash[:contact_about_info]      = contact.about_info
+      
+      flash[:contact_birthday_day]    = contact.birthday.strftime("%d %m %Y").split[0]
+      flash[:contact_birthday_month]  = contact.birthday.strftime("%d %m %Y").split[1]
+      flash[:contact_birthday_year]   = contact.birthday.strftime("%d %m %Y").split[2]
       
       flash[:contact_own_gender_male_checked]   = 'checked' if contact.own_gender == 'М'
       flash[:contact_own_gender_female_checked] = 'checked' if contact.own_gender == 'Ж'
@@ -524,7 +527,6 @@ class ContactsController < ApplicationController
 
     def contact_params
       params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image)
-      #, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
     end  
  
   
