@@ -16,6 +16,9 @@
 !/log/.keep
 /tmp
 
+#un_using
+/test
+
 #mi
 /no_commit
 /to_product.sh
