@@ -83,7 +83,7 @@ class TestsController < ApplicationController
 #__________________________________________
 
 
-    @current_question = next_qw_number
+    @current_question = qw_number.to_s
     @questions_amount = questions.count.to_s      
 #__________________________________________
                         
