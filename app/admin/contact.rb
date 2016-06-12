@@ -6,7 +6,7 @@ ActiveAdmin.register Contact do
                               :able_for_contact, :group, :own_gender, 
                               :search_for_gender, :structure_test_info, 
                               :image, :image_data, :level, :level_test_info, 
-                              :unsubscribed_link]
+                              :link_for_disable_contact]
     end
   end
 end

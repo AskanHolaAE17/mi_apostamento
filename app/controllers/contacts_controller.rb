@@ -198,7 +198,9 @@ class ContactsController < ApplicationController
 
     
       disable_contact_link = root_path + 'deactivate/' + disable_contact_params     
-     
+      
+      contact.link_for_disable_contact = disable_contact_link
+      contact.save
 #_____________________________________________
     
     
@@ -461,8 +463,7 @@ class ContactsController < ApplicationController
     
     @page       = Page.find_by_page :more_info_form  
     @site_title = MeConstant.find_by_title('site_title').content   
-    
-    
+        
     @deactive_link = root_path + 'de-activate/' + params[:deactive_params]
     
   end
@@ -492,8 +493,9 @@ class ContactsController < ApplicationController
     
     if contact and order and contact.order_number == order_number and order.akey == order_akey
       contact.able_for_contact = false
+      contact.link_for_disable_contact = ''
       contact.save
-      redirect_to root_path + '/info/dannue_ydalenu_iz_bazu'
+      redirect_to root_path + 'info/dannue_ydalenu_iz_bazu'
     else
       
       #MailToAdmin    
@@ -515,7 +517,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :image, :level, :level_test_info, :unsubscribed_link)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :image, :level, :level_test_info, :link_for_disable_contact)
     end  
  
   
