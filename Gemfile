@@ -21,6 +21,9 @@ gem 'paperclip'
 gem 'paperclip-dropbox'
 
 
+gem 'utf8-cleaner'
+gem 'aes'
+
 
 gem 'devise'
 gem 'mail'

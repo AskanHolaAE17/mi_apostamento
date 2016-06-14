@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'openssl'
+require 'uri'
 class OrdersController < ApplicationController
   
   
@@ -97,10 +99,12 @@ class OrdersController < ApplicationController
           :disl        => '0',
         }        
 
-        test_url_json = JSON.generate(test_url_hash)
-        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
-        test_url_encoded = test_url_encoded_64 + '=' 
-        test_url = root_path + 'test/' + test_url_encoded        
+        test_url_json    = JSON.generate(test_url_hash)
+        test_url_encoded = (Base64.encode64 test_url_json).chomp.delete("\n")                        
+        test_url = root_path + 'test/' + test_url_encoded
+                
+#___________________________________________
+        
       
         #order = Order.find(order_id)      
         @order.payed = true
@@ -236,6 +240,7 @@ class OrdersController < ApplicationController
         for i in (order_id_length-1)..(details.length-1 - order_id_length)
            order_akey += details[i]
         end                    
+#______________________________________
         
         
         test_url_hash = {
@@ -259,7 +264,10 @@ class OrdersController < ApplicationController
         test_url_json = JSON.generate(test_url_hash)
         test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
         test_url_encoded = test_url_encoded_64 + '=' 
-        test_url = root_path + 'test/' + test_url_encoded        
+        test_url = root_path + 'test/' + test_url_encoded              
+        
+#______________________________________        
+        
  
         order = Order.find(order_id)      
         order.payed = true

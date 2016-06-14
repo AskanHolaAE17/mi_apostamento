@@ -1,5 +1,5 @@
-require 'rsa'
 require 'uri'
+require 'openssl'
 class TestsController < ApplicationController
 
   before_action :set_main_page, only: [:load_page]
@@ -13,11 +13,13 @@ class TestsController < ApplicationController
     @site_title = MeConstant.find_by_title('site_title').content
       
     root_path   = MeConstant.find_by_title('root_path').content
-     
-    test_url_encoded = params[:test_url_encoded]
-    test_url_encoded[test_url_encoded.length-1] = ''
+
+#_______________________________________
+
+    
+    test_url_encoded = params[:test_encrypted]         
     test_url_json    = Base64.decode64(test_url_encoded)    
-    test_url_hash    = JSON.parse(test_url_json)    
+    test_url_hash    = JSON.parse(test_url_json)
     
     test_number = test_url_hash["test_number"].to_i
     qw_number   = test_url_hash["qw_number"].to_i
