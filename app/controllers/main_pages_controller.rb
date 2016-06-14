@@ -37,9 +37,13 @@ class MainPagesController < ApplicationController
     end
     
     
-    @page.description_meta += '. ' + "#{@article.description_meta or nil}" + '. ' + @page_article.description_meta
-    @page.keywords_meta    += ', ' + "#{@article.keywords_meta or nil}"    + ', ' + @page_article.keywords_meta
-    @page.em               += ', ' + "#{@article.em or nil}"               + ', ' + @page_article.em
+    art_descr = @article.description_meta ? @article.description_meta : ''
+    art_key   = @article.keywords_meta ? @article.keywords_meta : ''
+    art_em    = @article.em ? @article.em : ''
+    
+    @page.description_meta += '. ' + art_descr + '. ' + @page_article.description_meta
+    @page.keywords_meta    += ', ' + art_key   + ', ' + @page_article.keywords_meta
+    @page.em               += ', ' + art_em    + ', ' + @page_article.em
 #_______________________________________________________________________________     
     
 
