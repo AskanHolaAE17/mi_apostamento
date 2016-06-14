@@ -37,25 +37,14 @@ class MainPagesController < ApplicationController
     end
     
     
-    #art_descr = @article.description_meta ? @article.description_meta : ''
-    #art_key   = @article.keywords_meta ? @article.keywords_meta : ''
-    #art_em    = @article.em ? @article.em : ''    
-    art_descr = ''
-    art_key   = ''
-    art_em    = ''
-    
-    art_descr = @article.description_meta if @article.description_meta     
-    art_key   = @article.keywords_meta if @article.keywords_meta
-    art_em    = @article.em if @article.em
-    
-    @page.description_meta += '. ' + art_descr + '. ' + @page_article.description_meta
-    @page.keywords_meta    += ', ' + art_key   + ', ' + @page_article.keywords_meta
-    @page.em               += ', ' + art_em    + ', ' + @page_article.em
+    @page.description_meta += '. ' + @article.description_meta + '. ' + @page_article.description_meta
+    @page.keywords_meta    += ', ' + @article.keywords_meta    + ', ' + @page_article.keywords_meta
+    @page.em               += ', ' + @article.em               + ', ' + @page_article.em
 #_______________________________________________________________________________     
     
 
     # ArticlesMenu in last but one Paragraph in Text  
-    descr_full   =  @article.description or @main_page.description
+    descr_full   =  @article.description
     tmp_split    =  descr_full.rindex('<p>')                                    # tmp part: find LAST entry of '<p>' in text                          
     tmp_text     =  descr_full.slice(0, tmp_split)                              # tmp TEXT without last paragraph
     split_symbol =  tmp_text.rindex('<p>') + 3                                  # find LAST BUT ONE split symbol (on original text)     
