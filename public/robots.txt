@@ -6,3 +6,5 @@ Allow: /
 Disallow: /contacts
 Disallow: /much_form
 Disallow: /info
+
+Sitemap: http://be-in-pair.herokuapp.com/sitemap.xml

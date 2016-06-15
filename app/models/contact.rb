@@ -13,7 +13,8 @@ class Contact < ActiveRecord::Base
  #:path => proc { |style| "#{style}/#{id}_#{picture.original_filename}"},       :unique_filename => true   
  # }
   
-  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
+  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+                       size: { in: 0..6000.kilobytes }
   validates :image, attachment_presence: true
 
   
