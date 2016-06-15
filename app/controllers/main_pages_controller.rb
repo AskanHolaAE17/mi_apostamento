@@ -17,11 +17,17 @@ class MainPagesController < ApplicationController
     
     root_path               = MeConstant.find_by_title('root_path').content      
     @prerender_page         = root_path                
-       
+    
+#_______________________________________________________________________________      
+
+    
+    @questions = Question.all
+    #.shuffle[0..39]
+        
 #_______________________________________________________________________________      
 
 
-    translit  = params[:translit]
+    translit  = params[:translit]    
     @articles = unless translit
       Article.where.not(code_name: 'main')
     else
@@ -36,6 +42,10 @@ class MainPagesController < ApplicationController
       Article.where(translit: translit).first
     end
     
+    
+    unless translit
+      @page = Page.find_by(page: 'main')
+    end
     
     @page.description_meta += '. ' + @article.description_meta + '. ' + @page_article.description_meta
     @page.keywords_meta    += ', ' + @article.keywords_meta    + ', ' + @page_article.keywords_meta
