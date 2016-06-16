@@ -23,6 +23,7 @@ class TestsController < ApplicationController
     
     test_number = test_url_hash["test_number"].to_i
     qw_number   = test_url_hash["qw_number"].to_i
+    @qw_number  = qw_number
     order_id    = test_url_hash["order_id"]
     order_akey  = test_url_hash["order_akey"]
     
@@ -417,6 +418,19 @@ class TestsController < ApplicationController
     end #----- TestPart Ended
 
   end #----- Def Ended
+#_______________________________________________________________________________
+
+
+  def qs
+    details = params[:details]
+    if details == 'alta1175'
+      @questions = Question.all
+    end
+    @main_page = MainPage.new
+    @page = Page.first
+    @info_msg = OrderInfoPage.find_by(translit: 'dannue_receive_obrabotanu').msg
+  end
+      
 #_______________________________________________________________________________      
 
   
