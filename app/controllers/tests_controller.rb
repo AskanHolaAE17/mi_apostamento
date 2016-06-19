@@ -80,6 +80,7 @@ class TestsController < ApplicationController
     
           
     questions = Test.find_by(number_of_test: test_number).questions
+    questions = questions.where(able: true)
     #.limit(2)      
     
     
