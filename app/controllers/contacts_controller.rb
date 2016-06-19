@@ -432,11 +432,13 @@ class ContactsController < ApplicationController
 
     contact = Contact.find_by order_number: order_id         # current User
     
-    @contacts = if ( status % 2 == 0 )
-      Contact.where( group: 'GOOD GROUP')
-    else  
-      Contact.where( group: 'BAD GROUP' )
-    end        
+    @contacts = Contact.all
+    
+    #@contacts = if ( status % 2 == 0 )
+    #  Contact.where( group: 'GOOD GROUP')
+    #else  
+    #  Contact.where( group: 'BAD GROUP' )
+    #end        
 
     @contacts = @contacts.where(able_for_contact: true)     # just activated Contacts
     @contacts = @contacts.where.not(order_number: order_id) # without current User
