@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615030502) do
+ActiveRecord::Schema.define(version: 20160617160300) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -58,6 +58,26 @@ ActiveRecord::Schema.define(version: 20160615030502) do
     t.string   "description_meta"
     t.string   "keywords_meta"
     t.string   "em"
+  end
+
+  create_table "consults", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.boolean  "payed",                            default: false
+    t.decimal  "sum_for_pay"
+    t.string   "date1"
+    t.string   "time1"
+    t.string   "date2"
+    t.string   "time2"
+    t.string   "selected_time"
+    t.string   "when_payed"
+    t.string   "akey_payed"
+    t.string   "pay_link"
+    t.boolean  "able",                             default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "link_if_unsaved"
+    t.boolean  "sent_email_after_pay_for_waiting", default: false
   end
 
   create_table "contacts", force: :cascade do |t|

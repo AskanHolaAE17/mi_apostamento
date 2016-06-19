@@ -8,13 +8,15 @@ Rails.application.routes.draw do
   match 'info/:msg',                       to: 'order_info_pages#show',                             via: 'get'  
   post  'info/:msg',                       to: 'order_info_pages#show'                                  
   
-  match 'infos/:msg/:to_test_2',            to: 'order_info_pages#show',                            via: 'get'  
-  post  'infos/:msg/:to_test_2',            to: 'order_info_pages#show'                                
+  match 'infos/:msg/:to_test_2',           to: 'order_info_pages#show',                             via: 'get'  
+  post  'infos/:msg/:to_test_2',           to: 'order_info_pages#show'                                 
   
   post  '/orders',                         to: 'orders#create'                  # for OrderForm works (path for creating new order)
   
-  match  '/i_have_payed/:details',         to: 'orders#b_test_for_get_contacts_after_pay',          via: 'get'  
-  post  '/i_have_payed/:details',          to: 'orders#b_test_for_get_contacts_after_pay'
+  match  '/i_have_payed_consult/:details', to: 'consults#e_get_consults_after_pay',                   via: 'get'  
+  post  '/i_have_payed_consult/:details',  to: 'consults#e_get_consults_after_pay'
+  #match  '/i_have_payed_test/:details',    to: 'orders#b_get_contacts_after_pay',                   via: 'get'  
+  #post  '/i_have_payed_test/:details',     to: 'orders#b_get_contacts_after_pay'  
     
   post  '/test/:test_encrypted',           to: 'tests#load_page'
   match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'    
@@ -23,6 +25,8 @@ Rails.application.routes.draw do
   
   post  '/contacts',                       to: 'contacts#create'                # for MoreContactsForm works (path for creating new contact)  
   match '/contacts/:details',              to: 'contacts#show',                                     via: 'get'      
+  
+  post  '/consults',                       to: 'consults#create'                # for creating new contact
   
   match '/deactivate/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
   match '/de-activate/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        

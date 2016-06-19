@@ -18,6 +18,12 @@ class TestsController < ApplicationController
 
     
     test_url_encoded = params[:test_encrypted]         
+    #AES decode    
+    #test_url_encoded = test_url_encoded_aes_with_symbols = repl_all_subs('slash', '/', test_url_encoded)
+    #    aes_key = 'asdfghjlqwyueuhgkl5'
+    #    test_url_encoded = AES.encrypt(test_url_encoded, aes_key)                                                                
+
+    
     test_url_json    = Base64.decode64(test_url_encoded)    
     test_url_hash    = JSON.parse(test_url_json)
     
@@ -418,7 +424,7 @@ class TestsController < ApplicationController
     end #----- TestPart Ended
 
   end #----- Def Ended
-#_______________________________________________________________________________
+#__________________________________________________________________________________________________________________________________________________
 
 
   def qs

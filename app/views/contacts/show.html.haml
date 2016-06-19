@@ -1,7 +1,7 @@
 - unless @contacts.count == 0 
 
   - @conter = 1
-  - @contacts.each do |contact|
+  - @contacts.each_with_index do |contact, index|
    
     .white_border
     
@@ -29,6 +29,13 @@
        
     
       %br/
+      
+      
+      -#-if index == 1
+        %section
+          #form.lead
+            %b      
+              = render partial: 'consults/consult_form'
       
 - else    
   

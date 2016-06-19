@@ -374,15 +374,19 @@ class ContactsController < ApplicationController
 
 
   def show
+ 
+    # For Consult FORM
+    @sum_for_pay = MeConstant.find_by(title: 'consult_price').content  
+  
   
     @page            = Page.find_by_page :contacts
-         
+    @consult = Consult.new     
   
   
-    details_encoded  = params[:details]
+    @details_encoded  = params[:details]
     
-    details_encoded[details_encoded.length-1] = ''
-    details          = Base64.decode64(details_encoded)    
+    @details_encoded[@details_encoded.length-1] = ''
+    details          = Base64.decode64(@details_encoded)    
     
     
     

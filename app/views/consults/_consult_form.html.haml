@@ -1,0 +1,101 @@
+= form_for @consult, action: "create" do |f|
+  
+
+  %a{name: 'name'}    
+  .dark-green{class: flash[:error_class_name]}
+    Введите Ваше имя:
+    
+  %div    
+    = f.text_field :name,             required:    '', 
+                                      class:       'input-xlarge', 
+                                      maxlength:   '100',
+                                      value:        flash[:contact_name], 
+                                      autofocus:    flash[:autofocus_name]
+                                                                                           
+  %br/                                    
+   
+    
+    
+  %a{name: 'email'}    
+  .dark-green{class: flash[:error_class_email]}
+    Введите Ваш Email:
+   
+  %div    
+    = f.text_field :email,            type: 'email', required:    '', 
+                                      class:       'input-xlarge', 
+                                      maxlength:   '100',
+                                      value:        flash[:contact_email],
+                                      autofocus:    flash[:autofocus_email]
+                                                                                           
+  %br/                                    
+    
+
+
+
+  %a{name: 'date1'}
+  .dark-green{class: flash[:error_class_date1]}
+    Время консультации:
+   
+  %div    
+  = f.date_select :date1,   required:    '', 
+                            class:       'input-xlarge', 
+                            maxlength:   100,
+                            autofocus:   flash[:autofocus_date1],
+                            start_year:  1900,
+                            order:       [:day, :month, :year],
+                            default:     { day:   flash[:consult_date1_day], 
+                                           month: flash[:consult_date1_month], 
+                                           year:  flash[:consult_date1_year]}                                                                                                                                                                                                      
+  %br/                                    
+
+
+
+  %div    
+  = f.time_select :time1,   required:    '', 
+                            class:       'input-xlarge', 
+                            maxlength:   100,
+                            autofocus:   flash[:autofocus_time1],
+                            start_year:  1900,
+                            order:       [:day, :month, :year],
+                            default:     { hour:   flash[:consult_time1_hour], 
+                                           minute: flash[:consult_time1_minute]}                                                                                                                                                                                                      
+  %br/    
+
+
+  %a{name: 'date2'}
+  .dark-green{class: flash[:error_class_date1]}
+    или:
+
+  %div    
+  = f.date_select :date2,   required:    '', 
+                            class:       'input-xlarge', 
+                            maxlength:   100,
+                            autofocus:   flash[:autofocus_date2],
+                            start_year:  1900,
+                            order:       [:day, :month, :year],
+                            default:     { day:   flash[:consult_date2_day], 
+                                           month: flash[:consult_date2_month], 
+                                           year:  flash[:consult_date2_year]}                                                                                                                                                                                                      
+  %br/    
+
+  
+  
+  %div    
+  = f.time_select :time2,   required:    '', 
+                            class:       'input-xlarge', 
+                            maxlength:   100,
+                            autofocus:   flash[:autofocus_time2],
+                            start_year:  1900,
+                            order:       [:day, :month, :year],
+                            default:     { hour:   flash[:consult_time2_hour], 
+                                           minute: flash[:consult_time2_minute]}                                                                                                                                                                                                      
+  %br/           
+
+
+  = f.hidden_field :link_if_unsaved, value: @details_encoded
+  = f.hidden_field :sum_for_pay, value: @sum_for_pay
+
+
+  %div       
+    = f.submit 'Перейти к оплате', class: 'btn btn-success btn-large'
+

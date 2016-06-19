@@ -38,5 +38,16 @@ class OrderMailer < ActionMailer::Base
     mail(to: @order.email, subject: 'Страница с контактами')  
   end
   
+  
+  def e_ready_for_pay_consult(consult)
+    @consult = consult
+    mail(to: @consult.email, subject: 'Заказ консультации')  
+  end    
+    
+  
+  def f_consult_payed(consult)
+    @consult = consult
+    mail(to: @consult.email, subject: 'Консультация оплачена')  
+  end    
       
 end

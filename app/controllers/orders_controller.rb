@@ -99,9 +99,18 @@ class OrdersController < ApplicationController
           :disl        => '0',
         }        
 
-        test_url_json    = JSON.generate(test_url_hash)
-        test_url_encoded = (Base64.encode64 test_url_json).chomp.delete("\n")                        
-        test_url = root_path + 'test/' + test_url_encoded
+        test_url_json    = JSON.generate(test_url_hash)        
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
+        
+        #AES encode    
+        #aes_key = 'asdfghjlqwyueuhgkl5'
+        #iv = AES.iv(:base_64)
+        
+        #test_url_encoded_aes_with_symbols = AES.encrypt(test_url_encoded_64, aes_key, {iv: iv})        
+        #test_url_encoded = repl_all_subs('/', 'slash', test_url_encoded_aes_with_symbols)
+
+        
+        test_url = root_path + 'test/' + test_url_encoded_64
                 
 #___________________________________________
         
@@ -112,7 +121,7 @@ class OrdersController < ApplicationController
         @order.when_payed = Time.now.utc
         
         unless @order.sent_email_with_test
-          OrderMailer.b_test_to_client_for_get_contacts_after_cool_pay(@order, test_url).deliver        
+        #  OrderMailer.b_test_to_client_for_get_contacts_after_cool_pay(@order, test_url).deliver        
           @order.sent_email_with_test = true
         end  
         
