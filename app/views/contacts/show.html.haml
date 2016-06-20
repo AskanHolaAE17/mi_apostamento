@@ -21,9 +21,10 @@
         .contact-square{style: "background-color: #{@color}; color: #{@color}; "}
           OO
         =contact.name        
-  
-      .contact-image
-        = image_tag contact.image.url      
+      
+      - if contact.image.url      
+        .contact-image
+          = image_tag contact.image.url      
   
       %address
         =contact.city + ', ' + contact.country

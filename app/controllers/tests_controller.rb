@@ -79,7 +79,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number).questions.limit(2)      
+    questions = Test.find_by(number_of_test: test_number).questions
     questions = questions.where(able: true)
     #.limit(2)      
     
@@ -374,7 +374,7 @@ class TestsController < ApplicationController
       
       
       unless order.test_2_ended
-        OrderMailer.c_more_info_form(order, link_with_more_info_form).deliver                  
+        OrderMailer.c_more_info_form(order, link_with_more_info_form).try(:deliver)
       end              
       
       order.test_2_ended = true      
