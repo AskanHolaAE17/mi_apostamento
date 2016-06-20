@@ -7,7 +7,9 @@ ActiveAdmin.register Contact do
                               :search_for_gender, :structure_test_info, 
                               :level, :level_test_info, 
                               :link_for_disable_contact,
-                              :image]
+                              :image, :image_file_name, :image_content_type, 
+                              :image_file_size, :image_updated_at, 
+                              :utf8,:_method, :authenticity_token, :commit, :id]                              
     end
   end
 end

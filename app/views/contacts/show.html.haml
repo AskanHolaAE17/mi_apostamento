@@ -1,18 +1,29 @@
+- @menu_up_item = 'contacts_show'
+
+
+
 - unless @contacts.count == 0 
+
 
   - @conter = 1
   - @contacts.each_with_index do |contact, index|
-   
-    .white_border
+  
+    -# COLOR
+    - @color = 'green'       if contact.group == 'GOOD GROUP'    
+    - @color = 'saddlebrown' if contact.group == 'MIDDLE GROUP'    
+    - @color = 'indigo'      if contact.group == 'BAD GROUP'   
+      
     
-
-      -#.contact-image
-        =image_tag ''        
-    
+    -#.white_border
+    %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+       
       %strong
+        .contact-square{style: "background-color: #{@color}; color: #{@color}; "}
+          OO
         =contact.name        
   
-      = image_tag contact.image.url      
+      .contact-image
+        = image_tag contact.image.url      
   
       %address
         =contact.city + ', ' + contact.country
@@ -32,10 +43,10 @@
       
       
       -#-if index == 1
-        %section
-          #form.lead
-            %b      
-              = render partial: 'consults/consult_form'
+      -#  %section
+      -#    #form.lead
+      -#      %b      
+      -#        = render partial: 'consults/consult_form'
       
 - else    
   
@@ -48,7 +59,7 @@
 
 
 
-%section
+-#%section
   #form.lead
     %b
       -#=render partial: 'new_consult_form' 

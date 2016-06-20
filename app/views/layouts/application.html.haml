@@ -13,21 +13,30 @@
     
             
             
-    - unless @menu_up_item == 'main'    
+    - if @menu_up_item == 'main'    
      
+      %main
+        .row-fluid
+          %nav.block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets}"}
+            = yield                 
+                          
+            
+    - elsif @menu_up_item == 'contacts_show'      
+        
+      %main
+        .row-fluid
+          .contacts-block.span5.offset2
+            .lead.info_msg
+              = yield         
+            
+              
+    - else
+    
       %main
         .row-fluid
           .span5.offset2.block
             %article.lead.info_msg
-              = yield
-                          
-            
-    - else      
-    
-      %main
-        .row-fluid
-          %nav.block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets}"}
-            = yield      
+              = yield                 
 
 
 

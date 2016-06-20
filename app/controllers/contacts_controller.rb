@@ -112,8 +112,8 @@ class ContactsController < ApplicationController
     order.level = ''        
     
     contact.level_test_info = order.level_test_info    
-    order.level_test_info = ''                
-    
+    order.level_test_info = ''                        
+        
     
     
     root_path  = MeConstant.find_by_title('root_path').content
@@ -459,8 +459,7 @@ class ContactsController < ApplicationController
     end
     
     
-    @contacts = @res_contacts
-    
+    @contacts = @res_contacts          
     
 #_______________________________________________________________________________
 
@@ -532,7 +531,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id)
     end  
  
   

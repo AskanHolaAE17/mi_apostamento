@@ -235,7 +235,7 @@ class TestsController < ApplicationController
         
                 
       if test_number == 1               
-        order.group = if [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i].max > [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i].max        
+        order.group = if [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i].max > [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i].max         
           'GOOD GROUP'           
         else                   
           'BAD GROUP'                             
@@ -265,6 +265,10 @@ class TestsController < ApplicationController
             'nevrotick'
           end
         end                                                                           # end LevelGroup Defining
+        
+                
+        order.group = 'MIDDLE GROUP' if order.level == 'pogranichnick'        
+        order.group = 'BAD GROUP' if order.level == 'psihotick'
         
       end                                                                       ### END if 2nd Test (233)
 
