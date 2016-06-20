@@ -79,7 +79,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number).questions
+    questions = Test.find_by(number_of_test: test_number).questions.limit(2)      
     questions = questions.where(able: true)
     #.limit(2)      
     
