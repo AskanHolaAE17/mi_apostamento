@@ -158,8 +158,26 @@
     %br/
     
     
+    
+    
+    %a{name: 'deep_info'}
+    .dark-green{class: flash[:error_class_deep_info]}
+      Жизненные смыслы, сделающие жизнь полной
+      .contacts-examples-text
+        (например, хочу дом, поездки в Испанию вдвоем, хозяйство, теплицы, 3-их детей, открыть бизнес...):
+    
+    %div    
+      = f.text_area :deep_info,        size:        '25x5',
+                                        required:    '',                                                                                 
+                                        class:       'input-xlarge', 
+                                        maxlength:   '1000',
+                                        value:       "#{flash[:contact_deep_info] || @exist_contact.deep_info || nil}",
+                                        autofocus:    flash[:autofocus_deep_info]
+  
+    %br/    
   
   
+    
     
     %a{name: 'image'}
     .dark-green{class: flash[:error_class_image]}

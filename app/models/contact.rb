@@ -22,7 +22,7 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________  
 
 
-  validates :name,                 presence:         true,        
+  validates :name,                   presence:         true,        
                                                
                                      length:         { maximum:           100,                                              
                
@@ -31,7 +31,7 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________
 
 
-  #validates :surname,              presence:         true,        
+  #validates :surname,                presence:         true,        
                                                
   #                                   length:         { maximum:           100,                                              
                
@@ -40,17 +40,17 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :own_gender,           presence: true 
+  validates :own_gender,             presence: true 
 
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :search_for_gender,    presence: true 
+  validates :search_for_gender,      presence: true 
 
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :city,                 presence:         true,        
+  validates :city,                   presence:         true,        
                                                
                                      length:         { maximum:           100,                                              
                
@@ -59,7 +59,7 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :country,              presence:         true,        
+  validates :country,                presence:         true,        
                                                
                                      length:         { maximum:           100,                                              
                
@@ -68,7 +68,7 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :birthday,             presence:         true,        
+  validates :birthday,               presence:         true,        
                                                
                                      length:         { maximum:           100,                                              
                
@@ -77,11 +77,20 @@ class Contact < ActiveRecord::Base
 #____________________________________________________________________________________________________________________________________________
 
 
-  validates :about_info,           presence:         true,        
+  validates :about_info,             presence:         true,        
                                                
-                                     length:         { maximum:           1000,                                              
+                                     length:         { maximum:           5000,                                              
                
                                       :if =>         :about_info? }
+                                      
+#____________________________________________________________________________________________________________________________________________
+
+
+  validates :deep_info,              presence:         true,        
+                                               
+                                     length:         { maximum:           5000,                                              
+               
+                                      :if =>         :deep_info? }
 
 #____________________________________________________________________________________________________________________________________________
 

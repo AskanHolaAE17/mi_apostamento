@@ -11,18 +11,25 @@
     -# COLOR
     - @color = 'green'       if contact.group == 'GOOD GROUP'    
     - @color = 'saddlebrown' if contact.group == 'MIDDLE GROUP'    
-    - @color = 'indigo'      if contact.group == 'BAD GROUP'   
+    - @color = 'indigo'      if contact.group == 'BAD GROUP'
+    
+    - @title_on_hover = 'С этим человеком отношения безопасны'           if contact.group == 'GOOD GROUP'    
+    - @title_on_hover = 'С этим человеком строить отношения сложнее, чем с людьми с зеленым квадратом' if contact.group == 'MIDDLE GROUP'    
+    - @title_on_hover = 'С этим человеком строить отношения сложно'      if contact.group == 'BAD GROUP'          
+      
       
     
     -#.white_border
     %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
        
       %strong
-        .contact-square{style: "background-color: #{@color}; color: #{@color}; "}
+        .contact-square{style: "background-color: #{@color}; color: #{@color}; ", title: @title_on_hover}
           OO
+          .contact-square-info
+            ?
         =contact.name        
       
-      - if contact.image.url      
+      - unless contact.image.url.match(/missing.png/)     
         .contact-image
           = image_tag contact.image.url      
   

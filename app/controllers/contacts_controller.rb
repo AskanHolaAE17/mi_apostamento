@@ -222,6 +222,7 @@ class ContactsController < ApplicationController
       flash[:contact_city]            = contact.city
       flash[:contact_country]         = contact.country
       flash[:contact_about_info]      = contact.about_info
+      flash[:contact_deep_info]       = contact.deep_info      
       
       flash[:contact_birthday_day]    = contact.birthday.strftime("%d %m %Y").split[0]
       flash[:contact_birthday_month]  = contact.birthday.strftime("%d %m %Y").split[1]
@@ -247,6 +248,7 @@ class ContactsController < ApplicationController
         flash[:error_class_birthday]          = 'error_field' if attr == :birthday
         flash[:error_class_search_for_gender] = 'error_field' if attr == :search_for_gender
         flash[:error_class_about_info]        = 'error_field' if attr == :about_info
+        flash[:error_class_deep_info]         = 'error_field' if attr == :deep_info        
         flash[:error_class_image]             = 'error_field' if attr == :image    
                 
                 
@@ -257,6 +259,7 @@ class ContactsController < ApplicationController
         flash[:autofocus_country]   = false         
         flash[:autofocus_birthday]  = false                
         flash[:about_info]          = false         
+        flash[:deep_info]           = false           
         flash[:image]               = false         
 #_______________________________________________________________________________        
                         
@@ -284,9 +287,13 @@ class ContactsController < ApplicationController
                   if attr == :about_info
                     flash[:autofocus_about_info] = true
                   else
-                    if attr == :image
-                      flash[:autofocus_image] = true                    
-                    end                                            
+                    if attr == :deep_info
+                      flash[:autofocus_deep_info] = true
+                    else                  
+                      if attr == :image
+                        flash[:autofocus_image] = true                    
+                      end                                            
+                    end  
                   end                        
                 end                        
               end            
@@ -326,10 +333,14 @@ class ContactsController < ApplicationController
                 
                       if attr == :about_info
                         anchor = 'about_info'
-                      else  
-                        if attr == :image
-                          anchor = 'image'                      
-                        end                          #attr == :image
+                      else 
+                        if attr == :deep_info
+                          anchor = 'deep_info'
+                        else                        
+                          if attr == :image
+                            anchor = 'image'                      
+                          end                          #attr == :image
+                        end  
                       end                            #attr == :about_info
                     end                              #attr == :search_for_gender   
                   end                                #attr == :birthday                                        
@@ -531,7 +542,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info)
     end  
  
   
