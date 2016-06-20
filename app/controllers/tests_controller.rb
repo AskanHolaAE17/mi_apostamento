@@ -282,8 +282,8 @@ class TestsController < ApplicationController
         test_2_url_hash = {
           :test_number => '2',
           :qw_number   => '1',
-          :order_id    => "#{order_id}",
-          :order_akey  => "#{order_akey}",
+          :order_id    => order_id,
+          :order_akey  => order_akey,
           :psihot      => '0',
           :pogranich   => '0',
           :nevrot      => '0'
