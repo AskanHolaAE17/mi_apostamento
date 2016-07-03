@@ -1,21 +1,30 @@
-#fond_text
-  %h1
-    =@page.title_tag
+%h1
+  =@page.title_tag
 
-  %h2
-    %em
-      =@page.em
+
+
+
+- @count_of_words = @page.em.split.size
+- @split_in = @count_of_words / 2 - 1
+
+%h2
+  =@page.em.split[0..@split_in].join(' ')
+
+
+%em
+  =@page.em.split[@split_in+1..@count_of_words-1].join(' ')
+
     
     
   
-  %br/  
-  - if @menu_up_item == 'qs'    
-    - @questions.each do |q|
-      =q.title
-      %br/
+%br/  
+- if @menu_up_item == 'qs'    
+  - @questions.each do |q|
+    =q.title
+    %br/
     
     
     
-  %section      
-    .article-author-link
-      =link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'       
+%section      
+  .article-author-link
+    =link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'       

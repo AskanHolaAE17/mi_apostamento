@@ -82,23 +82,15 @@ class OrdersController < ApplicationController
 
 
         test_url_hash = {
-          :test_number => '1',
+          :test_number => '2',
           :qw_number   => '1',
           :order_id    => @order.id,
           :order_akey  => @order.akey,
-          :al          => '0',
-          :nl          => '0',
-          :shl         => '0',
-          :pl          => '0',
-          :gml         => '0',
-          :dl          => '0',
-          :ml          => '0',
-          :ol          => '0',
-          :kl          => '0',
-          :il          => '0',
-          :disl        => '0',
+          :psihot      => '0',
+          :pogranich   => '0',
+          :nevrot      => '0'          
         }        
-
+        
         test_url_json    = JSON.generate(test_url_hash)        
         test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
         
@@ -253,21 +245,13 @@ class OrdersController < ApplicationController
         
         
         test_url_hash = {
-          :test_number => '1',
+          :test_number => '2',
           :qw_number   => '1',
-          :order_id    => "#{order_id}",
-          :order_akey  => "#{order_akey}",
-          :al          => '0',
-          :nl          => '0',
-          :shl         => '0',
-          :pl          => '0',
-          :gml         => '0',
-          :dl          => '0',
-          :ml          => '0',
-          :ol          => '0',
-          :kl          => '0',
-          :il          => '0',
-          :disl        => '0'
+          :order_id    => @order.id,
+          :order_akey  => @order.akey,
+          :psihot      => '0',
+          :pogranich   => '0',
+          :nevrot      => '0'          
         }        
           
         test_url_json = JSON.generate(test_url_hash)

@@ -80,7 +80,7 @@ class TestsController < ApplicationController
     
           
     questions = Test.find_by(number_of_test: test_number).questions
-    questions = questions.where(able: true)
+    questions = questions.where(able: true).limit(2)      
     #.limit(2)      
     
     
@@ -267,7 +267,7 @@ class TestsController < ApplicationController
         end                                                                           # end LevelGroup Defining
         
                 
-        order.group = 'MIDDLE GROUP' if order.level == 'pogranichnick'        
+        order.group = 'BAD GROUP' if order.level == 'pogranichnick'        
         order.group = 'BAD GROUP' if order.level == 'psihotick'
         
       end                                                                       ### END if 2nd Test (233)
@@ -277,72 +277,6 @@ class TestsController < ApplicationController
 
     if test_number == 1                             
       
-      
-      
-        test_2_url_hash = {
-          :test_number => '2',
-          :qw_number   => '1',
-          :order_id    => order_id,
-          :order_akey  => order_akey,
-          :psihot      => '0',
-          :pogranich   => '0',
-          :nevrot      => '0'
-        }        
-
-
-        test_2_url_json = JSON.generate(test_2_url_hash)
-        test_2_url_encoded_64 = (Base64.encode64 test_2_url_json).chomp.delete("\n")
-        test_2_url_encoded = test_2_url_encoded_64 + '=' 
-        #test_2_url = root_path + 'test/' + test_2_url_encoded
-        test_2_url = root_path + 'infos/tekst_mezhdy_testami/' + test_2_url_encoded                            
-        
-        link_with_test_2_levels = test_2_url                                          
-      
-      
-      
-      unless order.test_1_ended
-        OrderMailer.b_to_test_2_levels(order, link_with_test_2_levels).deliver                          
-      end              
-            
-                                           
-        order.test_1_ended = true
-        order.akey         = ''
-                
-#__________________________________________
-
-
-        order.structure_test_info = 'Al: ' + al_no + ' ___ ' +       
-                                    'Nl: ' + nl_no + ' ___ ' +
-                                    'Shl: ' + shl_no + ' ___ ' +
-                                    'Gml: ' + gml_no + ' __---__ ' +
-                                    'Pl: ' + pl_no + ' ___ ' +
-                                    'Dl: ' + dl_no + ' ___ ' +
-                                    'Ml: ' + ml_no + ' ___ ' +
-                                    'Ol: ' + ol_no + ' ___ ' +
-                                    'Kl: ' + kl_no + ' ___ ' +
-                                    'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
-                                    'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
-     
-                                          
-      order.save
-      
-      redirect_to link_with_test_2_levels
-      
-    end  #---End Test1
-                          
-#__________________________________________
-
-
-
-
-    if test_number == 2             
-                             
-      
-        order.level_test_info = 'Psihot: ' + psihot_no + ' ___ ' +       
-                                'Pogranich: ' + pogranich_no + ' ___ ' +
-                                'Nevrot: ' + nevrot_no                                   
-            
-        order.save      
 #__________________________________________
 
 
@@ -369,12 +303,89 @@ class TestsController < ApplicationController
       
       #link_with_more_info_form = root_path + 'much_form/' + link_details_begin
       next_page_after_test_2_level = link_with_more_info_form = root_path + 'much_form/' + link_details_encoded                 
+                   
+      
+      
+      
+      unless order.test_1_ended
+        OrderMailer.c_more_info_form(order, link_with_more_info_form).try(:deliver)      
+      end              
+            
+                                           
+        order.test_1_ended = true
+        order.akey         = ''
+                
+#__________________________________________
+
+
+        order.structure_test_info = 'Al: ' + al_no + ' ___ ' +       
+                                    'Nl: ' + nl_no + ' ___ ' +
+                                    'Shl: ' + shl_no + ' ___ ' +
+                                    'Gml: ' + gml_no + ' __---__ ' +
+                                    'Pl: ' + pl_no + ' ___ ' +
+                                    'Dl: ' + dl_no + ' ___ ' +
+                                    'Ml: ' + ml_no + ' ___ ' +
+                                    'Ol: ' + ol_no + ' ___ ' +
+                                    'Kl: ' + kl_no + ' ___ ' +
+                                    'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
+                                    'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
+     
+                                          
+      order.save
+      
+      redirect_to next_page_after_test_2_level      
+      
+    end  #---End Test1
+                          
+#__________________________________________
+
+
+
+
+    if test_number == 2             
+    
+    
+        test_2_url_hash = {
+          :test_number => '1',
+          :qw_number   => '1',        
+          :order_id    => "#{order_id}",
+          :order_akey  => "#{order_akey}",
+          :al          => '0',
+          :nl          => '0',
+          :shl         => '0',
+          :pl          => '0',
+          :gml         => '0',
+          :dl          => '0',
+          :ml          => '0',
+          :ol          => '0',
+          :kl          => '0',
+          :il          => '0',
+          :disl        => '0'          
+        }        
+
+
+        test_2_url_json = JSON.generate(test_2_url_hash)
+        test_2_url_encoded_64 = (Base64.encode64 test_2_url_json).chomp.delete("\n")
+        test_2_url_encoded = test_2_url_encoded_64 + '=' 
+        #test_2_url = root_path + 'test/' + test_2_url_encoded
+        test_2_url = root_path + 'infos/tekst_mezhdy_testami/' + test_2_url_encoded                            
+        
+        link_with_test_2_levels = test_2_url                                              
+                             
+      
+      
+      
+        order.level_test_info = 'Psihot: ' + psihot_no + ' ___ ' +       
+                                'Pogranich: ' + pogranich_no + ' ___ ' +
+                                'Nevrot: ' + nevrot_no                                   
+            
+        order.save      
 
 #__________________________________________      
       
       
       unless order.test_2_ended
-        OrderMailer.c_more_info_form(order, link_with_more_info_form).try(:deliver)
+        OrderMailer.b_to_test_2_levels(order, link_with_test_2_levels).deliver                          
       end              
       
       order.test_2_ended = true      
@@ -412,7 +423,7 @@ class TestsController < ApplicationController
 
       order.save
 
-      redirect_to next_page_after_test_2_level
+      redirect_to link_with_test_2_levels
          
     end  #---End Test2
         
