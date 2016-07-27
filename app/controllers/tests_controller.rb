@@ -18,7 +18,7 @@ class TestsController < ApplicationController
 
     
     test_url_encoded = params[:test_encrypted]         
-    #AES decode    
+    #AES de3code    
     #test_url_encoded = test_url_encoded_aes_with_symbols = repl_all_subs('slash', '/', test_url_encoded)
     #    aes_key = 'asdfghjlqwyueuhgkl5'
     #    test_url_encoded = AES.encrypt(test_url_encoded, aes_key)                                                                
@@ -28,7 +28,14 @@ class TestsController < ApplicationController
     test_url_hash    = JSON.parse(test_url_json)
     
     test_number = test_url_hash["test_number"].to_i
-    qw_number   = test_url_hash["qw_number"].to_i
+    qw_number   = test_url_hash["qw_number"].to_i 
+    if test_number == 1
+      if qw_number == 1
+        qw_number = 1 if test_url_hash["level"] == 'psihot'  #start from 1st qw if current level is 'psihot'
+        qw_number = 3 if test_url_hash["level"] == 'pogranich'
+        qw_number = 5 if test_url_hash["level"] == 'nevrot'
+      end
+    end  
     @qw_number  = qw_number
     order_id    = test_url_hash["order_id"]
     order_akey  = test_url_hash["order_akey"]
@@ -36,23 +43,9 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________        
           
                         
-    order = Order.find(order_id)    
-
+    order = Order.find(order_id)            
     #redirect_to ''
-
-
-    
-    if test_number == 1 
-      if order.test_1_ended                                                         # if Test1 has ended previously
-        redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
-      end
-    end
-    
-    if test_number == 2
-      if order.test_2_ended                                                         # if Test2 has ended previously
-        redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
-      end    
-    end      
+              
     
 #_______________________________________________________________________________            
 
@@ -80,14 +73,42 @@ class TestsController < ApplicationController
     
           
     questions = Test.find_by(number_of_test: test_number).questions
-    questions = questions.where(able: true).limit(2)      
+    questions = questions.where(able: true)
     #.limit(2)      
     
+                                                                                            #----- Start Testing Part
+    if   (((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')      or 
+           (qw_number.in? 3..4 and test_url_hash['level'] == 'pogranich') or 
+           (qw_number.in? 5..6 and test_url_hash['level'] == 'nevrot'))   and       
+           test_number == 1)                                             or
+       ( (  qw_number < questions.count + 1 ) and          
+         (  test_number == 2) )                         
+       
+
+
+
+      if test_number == 1 
+        if order.test_1_ended                                                         # if Test1 has ended previously
+          redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
+        end
+      end
     
-    if qw_number < questions.count + 1                                          #----- Start Testing Part
+      if test_number == 2
+        if order.test_2_ended                                                         # if Test2 has ended previously
+          redirect_to root_path + 'info/test_yzhe_proyden'                          # Redirect immediately to explaining Msg
+        end    
+      end   
+
+       
+       
     
       question = questions.find_by_number_of_question(qw_number)
       @question_title = question.title
+
+      
+        level = 'psihot' if order.level == 'psihotick'
+        level = 'pogranich' if order.level == 'pogranichnick'
+        level = 'nevrot' if order.level == 'nevrotick'             
       
       next_qw_number = (qw_number + 1).to_s
 #__________________________________________
@@ -128,6 +149,7 @@ class TestsController < ApplicationController
         :controller => 'tests', 
         :action => 'load_page',
         :test_number => '1', 
+        :level       => level,
         :qw_number => next_qw_number,
         :order_id => order_id,
         :order_akey => order_akey,
@@ -179,13 +201,15 @@ class TestsController < ApplicationController
         yes_params_encoded = yes_params_encoded_64 + '='
         @yes_params = root_path + "test/#{yes_params_encoded}"
 #_______________________________________________________________________________
-                
+
+                        
          
     if test_number == 1         
       no_params_hash = {
         :controller  => 'tests', 
         :action      => 'load_page', 
         :test_number => '1',
+        :level       => level,        
         :qw_number   => next_qw_number,
         :order_id    => order_id,
         :order_akey  => order_akey,
@@ -250,7 +274,7 @@ class TestsController < ApplicationController
         max_l = max_level_count = levels_array.max                                         # max count of points
 
         l_ind = level_indexes   = l_arr.each_index.select{                                 # Indexes of Level(s) with MaxPoints
-                                  |i| l_arr[i]== max_l }        
+                                  |i| l_arr[i] == max_l }        
       
         if l_ind.count > 1                                                            # if more then 1 LevelGroup with MaxPoints
 
@@ -344,12 +368,16 @@ class TestsController < ApplicationController
 
     if test_number == 2             
     
-    
+        level = 'psihot'    if order.level == 'psihotick'
+        level = 'pogranich' if order.level == 'pogranichnick'
+        level = 'nevrot'    if order.level == 'nevrotick'        
+            
         test_2_url_hash = {
+          :level       => level,
           :test_number => '1',
           :qw_number   => '1',        
-          :order_id    => "#{order_id}",
-          :order_akey  => "#{order_akey}",
+          :order_id    => order_id,
+          :order_akey  => order_akey,
           :al          => '0',
           :nl          => '0',
           :shl         => '0',
@@ -416,6 +444,7 @@ class TestsController < ApplicationController
         next_page_after_test_2_level = link_with_test_2_levels = test_2_url                                          
         
         order.test_2_ended = false      
+              
       
       end          
 #__________________________________________
@@ -423,7 +452,7 @@ class TestsController < ApplicationController
 
       order.save
 
-      redirect_to link_with_test_2_levels
+      redirect_to link_with_test_2_levels        
          
     end  #---End Test2
         
@@ -433,7 +462,6 @@ class TestsController < ApplicationController
     #-else #----- If Not Right Order
     
     #-  #Mail to Admin
-    #-  redirect_to '/'
       
     #-end #----- Checking is Right Order - Ended       
     
