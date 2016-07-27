@@ -78,16 +78,18 @@ class TestsController < ApplicationController
     questions = Test.find_by(number_of_test: test_number).questions
     #questions = questions.where(able: true)
     #.limit(2)      
-    qw_number   = qw_number + 1 if questions.find_by_number_of_question(qw_number).able == false    
+    if qw_number < questions.count + 1
+      qw_number   = qw_number + 1 if questions.find_by_number_of_question(qw_number).able == false    
+    end  
     @qw_number  = qw_number    
     
                                                                                             #----- Start Testing Part
-    if   (((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')      or 
+    if   ( (((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')      or 
            (qw_number.in? 3..4 and test_url_hash['level'] == 'pogranich') or 
            (qw_number.in? 5..6 and test_url_hash['level'] == 'nevrot'))   and       
            test_number == 1)                                             or
-       ( (  qw_number < questions.count + 1 ) and          
-         (  test_number == 2) )                         
+           test_number == 2 ) and 
+                                  qw_number < questions.count + 1                        
        
 
 
