@@ -75,9 +75,10 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number).questions
-    #questions = questions.where(able: true)
-    #.limit(2)      
+    questions = Test.find_by(number_of_test: test_number).questions.limit(3)          
+    #.limit(2)          
+
+    #questions = questions.where(able: true)    
     if qw_number < questions.count + 1
       qw_number   = qw_number + 1 if questions.find_by_number_of_question(qw_number).able == false    
     end  
