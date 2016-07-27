@@ -27,8 +27,10 @@ class TestsController < ApplicationController
     test_url_json    = Base64.decode64(test_url_encoded)    
     test_url_hash    = JSON.parse(test_url_json)
     
-    test_number = test_url_hash["test_number"].to_i
-    qw_number   = test_url_hash["qw_number"].to_i 
+    test_number = test_url_hash["test_number"].to_i    
+    qw_number   = test_url_hash["qw_number"].to_i     
+    
+    
     if test_number == 1
       if qw_number == 1
         qw_number = 1 if test_url_hash["level"] == 'psihot'  #start from 1st qw if current level is 'psihot'
@@ -36,7 +38,8 @@ class TestsController < ApplicationController
         qw_number = 5 if test_url_hash["level"] == 'nevrot'
       end
     end  
-    @qw_number  = qw_number
+ 
+    
     order_id    = test_url_hash["order_id"]
     order_akey  = test_url_hash["order_akey"]
     
@@ -73,8 +76,10 @@ class TestsController < ApplicationController
     
           
     questions = Test.find_by(number_of_test: test_number).questions
-    questions = questions.where(able: true)
+    #questions = questions.where(able: true)
     #.limit(2)      
+    qw_number   = qw_number + 1 if questions.find_by_number_of_question(qw_number).able == false    
+    @qw_number  = qw_number    
     
                                                                                             #----- Start Testing Part
     if   (((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')      or 
