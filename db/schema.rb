@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621014700) do
+ActiveRecord::Schema.define(version: 20160728125900) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20160621014700) do
     t.string   "level_test_info"
     t.string   "link_for_disable_contact"
     t.string   "deep_info"
+    t.integer  "user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -141,6 +142,20 @@ ActiveRecord::Schema.define(version: 20160621014700) do
     t.string   "api_version"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "sender"
+    t.string   "title"
+    t.string   "body"
+    t.string   "spam"
+    t.boolean  "important",  default: false
+    t.boolean  "deleted",    default: false
+    t.boolean  "able",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "msg_type"
   end
 
   create_table "order_info_pages", force: :cascade do |t|
@@ -193,12 +208,43 @@ ActiveRecord::Schema.define(version: 20160621014700) do
     t.datetime "updated_at"
   end
 
+  create_table "requests_incomings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "from"
+    t.string   "status"
+    t.boolean  "able",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "requests_outcomings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "to"
+    t.string   "status"
+    t.boolean  "able",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tests", force: :cascade do |t|
     t.integer  "number_of_test"
     t.string   "title"
     t.boolean  "able",           default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.integer  "id_in_base"
+    t.string   "email"
+    t.string   "name"
+    t.string   "surname"
+    t.string   "group"
+    t.string   "akey"
+    t.boolean  "active",                            default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "white_writing_able_users_ids_list"
   end
 
 end

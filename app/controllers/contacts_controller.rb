@@ -197,6 +197,21 @@ class ContactsController < ApplicationController
       disable_contact_link = root_path + 'deactivate/' + disable_contact_params     
       
       contact.link_for_disable_contact = disable_contact_link
+
+#_____________________________________________
+      
+      
+    user              = User.new
+    user.id_in_base   = akey    
+    
+    user.email        = contact.email
+    user.name         = contact.name
+    user.surname      = contact.surname
+    
+    user.group        = contact.group    
+      contact.user_id = user.id
+    
+    user.save      
       contact.save
 #_____________________________________________
     
@@ -542,7 +557,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id)
     end  
  
   

@@ -78,19 +78,47 @@ class TestsController < ApplicationController
     questions = Test.find_by(number_of_test: test_number).questions.limit(3)          
     #.limit(2)          
 
-    #questions = questions.where(able: true)    
-    if qw_number < questions.count + 1
-      qw_number   = qw_number + 1 if questions.find_by_number_of_question(qw_number).able == false    
-    end  
-    @qw_number  = qw_number    
+    ##questions = questions.where(able: true)    
+    ##if qw_number < questions.count + 1
+    #flash[:error_mi] = ''
+        
+    @questions = questions    
+    @qw_number = qw_number
+    def is_question_able
+      @question = @questions.find_by_number_of_question(@qw_number)
+      #flash[:error_mi] += "A qw with qw_number(#{qw_number}) found <br/>"
+      if @question
+        #flash[:error_mi] += 'B and qw exist <br/>'
+        if @question.able == false    
+          #flash[:error_mi] += 'C it`s disabled <br/>'
+          if @questions.find_by_number_of_question(@qw_number + 1)
+            @qw_number = @qw_number + 1 
+          else
+            @test_ended = true  
+          end
+          #flash[:error_mi] += 'D so inc(qw_number) <br/>'
+        end  
+      end  
+      @question = @questions.find_by_number_of_question(@qw_number)
+      
+      if @question.able == false    
+        is_question_able
+      end
+    end
+    is_question_able
+    #flash[:error_mi] += "E seted qw with qw_number(#{qw_number}) again "
+    qw_number = @qw_number
+    question  = @question  
+    questions = @questions
+    #@qw_number  = qw_number    
     
                                                                                             #----- Start Testing Part
-    if   ( (((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')      or 
-           (qw_number.in? 3..4 and test_url_hash['level'] == 'pogranich') or 
-           (qw_number.in? 5..6 and test_url_hash['level'] == 'nevrot'))   and       
-           test_number == 1)                                             or
-           test_number == 2 ) and 
-                                  qw_number < questions.count + 1                        
+    if   ((((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')    or 
+           (qw_number.in? 3..4 and test_url_hash['level'] == 'pogranich')  or 
+           (qw_number.in? 5..6 and test_url_hash['level'] == 'nevrot'))    and       
+           test_number == 1)                                               or
+           (test_number == 2 and qw_number < questions.count + 1) ) and 
+                                                                       @test_ended != true                        
        
 
 

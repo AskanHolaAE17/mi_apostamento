@@ -130,8 +130,9 @@ class OrdersController < ApplicationController
     #  redirect_to '/'  
     #pay+end     
     
+    #pay-   
         
-    #pay-
+    
     redirect_to test_url
 
 #_______________________________________________________________________________if @order.save
