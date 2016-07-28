@@ -81,36 +81,100 @@ class TestsController < ApplicationController
     ##questions = questions.where(able: true)    
     ##if qw_number < questions.count + 1
     #flash[:error_mi] = ''
+
+
+        level = 'psihot' if order.level == 'psihotick'
+        level = 'pogranich' if order.level == 'pogranichnick'
+        level = 'nevrot' if order.level == 'nevrotick'             
+    
+    
+    question = questions.find_by_number_of_question(qw_number)  
+    if question and question.able == false
+    if test_number == 1         
+      no_params_hash = {
+        :controller  => 'tests', 
+        :action      => 'load_page', 
+        :test_number => '1',
+        :level       => level,        
+        :qw_number   => qw_number + 1,
+        :order_id    => order_id,
+        :order_akey  => order_akey,
+        :al          => "#{al_no or '0'}",
+        :nl          => "#{nl_no or '0'}",
+        :shl         => "#{shl_no or '0'}",
+        :pl          => "#{pl_no or '0'}",
+        :gml         => "#{gml_no or '0'}",
+        :dl          => "#{dl_no or '0'}",
+        :ml          => "#{ml_no or '0'}",
+        :ol          => "#{ol_no or '0'}",
+        :kl          => "#{kl_no or '0'}",
+        :il          => "#{il_no or '0'}",
+        :disl        => "#{disl_no or '0'}"
+      }
+    end            
+#__________________________________________            
+
+
+    if test_number == 2         
+      no_params_hash = {
+        :controller  => 'tests', 
+        :action      => 'load_page', 
+        :test_number => '2',
+        :qw_number   => qw_number + 1,
+        :order_id    => order_id,
+        :order_akey  => order_akey,
+        :psihot      => "#{psihot_no or '0'}",
+        :pogranich   => "#{pogranich_no or '0'}",
+        :nevrot      => "#{nevrot_no or '0'}"
+      }
+    end            
+#__________________________________________        
+
         
-    @questions = questions    
-    @qw_number = qw_number
-    def is_question_able
-      @question = @questions.find_by_number_of_question(@qw_number)
-      #flash[:error_mi] += "A qw with qw_number(#{qw_number}) found <br/>"
-      if @question
-        #flash[:error_mi] += 'B and qw exist <br/>'
-        if @question.able == false    
-          #flash[:error_mi] += 'C it`s disabled <br/>'
-          if @questions.find_by_number_of_question(@qw_number + 1)
-            @qw_number = @qw_number + 1 
-          else
-            @test_ended = true  
-          end
-          #flash[:error_mi] += 'D so inc(qw_number) <br/>'
-        end  
-      end  
-      @question = @questions.find_by_number_of_question(@qw_number)
-      
-      if @question.able == false    
-        is_question_able
-      end
-    end
-    is_question_able
-    #flash[:error_mi] += "E seted qw with qw_number(#{qw_number}) again "
-    qw_number = @qw_number
-    question  = @question  
-    questions = @questions
-    #@qw_number  = qw_number    
+        no_params_json = JSON.generate(no_params_hash)
+        no_params_encoded_64 = (Base64.encode64 no_params_json).chomp.delete("\n")
+        no_params_encoded = no_params_encoded_64 + '='
+        no_params = root_path + "test/#{no_params_encoded}"
+        redirect_to no_params
+  end             ### if question and question.able == false
+    
+     
+    
+    
+    ###    
+    #@questions = questions    
+    #@qw_number = qw_number
+    #def is_question_able
+    #  @question = @questions.find_by_number_of_question(@qw_number)
+    #  #flash[:error_mi] += "A qw with qw_number(#{qw_number}) found <br/>"
+    #  if @question
+    #    #flash[:error_mi] += 'B and qw exist <br/>'
+    #    if @question.able == false    
+    #      #flash[:error_mi] += 'C it`s disabled <br/>'
+    #      if @questions.find_by_number_of_question(@qw_number + 1)
+    #        @qw_number = @qw_number + 1 
+    #      else
+    #        @test_ended = true  
+    #      end
+    #      #flash[:error_mi] += 'D so inc(qw_number) <br/>'
+    #    end  
+    #  end  
+    #  @question = @questions.find_by_number_of_question(@qw_number)
+    #  
+    #  if @question.able == false    
+    #    is_question_able
+    #  end
+    #end
+    #is_question_able
+    ##flash[:error_mi] += "E seted qw with qw_number(#{qw_number}) again "
+    #qw_number = @qw_number
+    #question  = @question  
+    #questions = @questions
+    ###
+#_______________________________________________________________________________
+
+                  
+    @qw_number  = qw_number    
     
                                                                                             #----- Start Testing Part
     if   ((((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')    or 
@@ -118,7 +182,8 @@ class TestsController < ApplicationController
            (qw_number.in? 5..6 and test_url_hash['level'] == 'nevrot'))    and       
            test_number == 1)                                               or
            (test_number == 2 and qw_number < questions.count + 1) ) and 
-                                                                       @test_ended != true                        
+                                                                       question
+                                                                       #@test_ended != true                        
        
 
 
@@ -141,10 +206,7 @@ class TestsController < ApplicationController
       question = questions.find_by_number_of_question(qw_number)
       @question_title = question.title
 
-      
-        level = 'psihot' if order.level == 'psihotick'
-        level = 'pogranich' if order.level == 'pogranichnick'
-        level = 'nevrot' if order.level == 'nevrotick'             
+     
       
       next_qw_number = (qw_number + 1).to_s
 #__________________________________________
