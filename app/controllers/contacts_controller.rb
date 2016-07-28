@@ -202,14 +202,14 @@ class ContactsController < ApplicationController
       
       
     user              = User.new
-    user.id_in_base   = akey    
+    user.id_in_base   = akey
     
     user.email        = contact.email
     user.name         = contact.name
     user.surname      = contact.surname
     
     user.group        = contact.group    
-      contact.user_id = user.id
+      user.contact = contact
     
     user.save      
       contact.save
