@@ -1,7 +1,6 @@
 - @menu_up_item = 'contacts_show'
 
 
-
 - unless @contacts.count == 0 
 
 
@@ -42,12 +41,19 @@
       .lead
         =contact.about_info   
   
-      .label.label-success.select_able
+      -#.label.label-success.select_able
         =contact.email        
+        
+      - @receiver_user_id = contact.user_id  
+        
+        
+      %section
+        %b
+          =render partial: 'new_request_for_communicate' 
         
        
     
-      %br/
+      -#%br/
       
       
       -#-if index == 1

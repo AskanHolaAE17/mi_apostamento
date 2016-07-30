@@ -43,21 +43,21 @@
     %br/                                                    
       
         
-    =f.radio_button :own_gender, 'М', checked: flash[:contact_own_gender_male_checked]
-    =f.label :own_gender, 'Мужской'
+    =f.radio_button :own_gender, 'М', checked: flash[:contact_own_gender_male_checked], id: 'own_gender_male'
+    =f.label :own_gender, 'Мужской', for: 'own_gender_male'
     
     %br/                 
     
     
-    =f.radio_button :own_gender, 'Ж', checked: flash[:contact_own_gender_female_checked]
-    =f.label :own_gender, 'Женский'
+    =f.radio_button :own_gender, 'Ж', checked: flash[:contact_own_gender_female_checked], id: 'own_gender_female'
+    =f.label :own_gender, 'Женский', for: 'own_gender_female'
     
     %br/             
 
         
     -#      
-      =f.radio_button :own_gender, 'ЖМ' "#{flash[:contact_own_gender_other_checked]}"
-      =f.label :own_gender, 'Другой пол'
+      =f.radio_button :own_gender, 'ЖМ' "#{flash[:contact_own_gender_other_checked]}", id: 'own_gender_other'
+      =f.label :own_gender, 'Другой пол', for: 'own_gender_other'
                                         
 
   
@@ -122,20 +122,20 @@
       
             
                         
-    =f.radio_button :search_for_gender, 'М', checked: flash[:contact_search_for_gender_male_checked]
-    =f.label :own_gender, 'Мужчины'    
+    =f.radio_button :search_for_gender, 'М', checked: flash[:contact_search_for_gender_male_checked], id: 'search_for_gender_male'
+    =f.label :own_gender, 'Мужчины', for: 'search_for_gender_male'                
     
     %br/             
           
 
-    =f.radio_button :search_for_gender, 'Ж', checked: flash[:contact_search_for_gender_female_checked]
-    =f.label :own_gender, 'Женщины'        
+    =f.radio_button :search_for_gender, 'Ж', checked: flash[:contact_search_for_gender_female_checked], id: 'search_for_gender_female'
+    =f.label :own_gender, 'Женщины', for: 'search_for_gender_female'                    
 
     %br/             
     
     
-    =f.radio_button :search_for_gender, 'ЖМ', checked: flash[:contact_search_for_gender_both_checked]
-    =f.label :own_gender, 'Оба пола'            
+    =f.radio_button :search_for_gender, 'ЖМ', checked: flash[:contact_search_for_gender_both_checked], id: 'search_for_gender_both'
+    =f.label :own_gender, 'Оба пола', for: 'search_for_gender_both'            
       
     %br/                                                                    
   

@@ -4,9 +4,14 @@ Rails.application.routes.draw do
   post  '/',                               to: 'main_pages#index'           
   
   match '/articles/:translit',             to: 'main_pages#index',                                  via: 'get'  # for set current Article & load Articles menu      
+
   
   match 'info/:msg',                       to: 'order_info_pages#show',                             via: 'get'  
   post  'info/:msg',                       to: 'order_info_pages#show'                                  
+  
+  match 'room_info_messages/:msg',         to: 'room_nonverbally_info_pages#show',                  via: 'get'  
+  post  'room_info_message/:msg',          to: 'room_verbally_info_pages#show'                                  
+  
   
   match 'infos/:msg/:to_test_2',           to: 'order_info_pages#show',                             via: 'get'  
   post  'infos/:msg/:to_test_2',           to: 'order_info_pages#show'                                 
@@ -26,6 +31,9 @@ Rails.application.routes.draw do
   post  '/contacts',                       to: 'contacts#create'                # for MoreContactsForm works (path for creating new contact)  
   match '/contacts/:details',              to: 'contacts#show',                                     via: 'get'      
   
+  
+  #post  '/requests_for_communications',                         to: 'requests_for_communications#create'                  # for creating new order  
+  
   post  '/consults',                       to: 'consults#create'                # for creating new contact
   
   match '/deactivate/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
@@ -35,6 +43,13 @@ Rails.application.routes.draw do
     
   match 'receive/:details',                to: 'tests#qs',                                          via: 'get'  
     
+  
+  
+  resources :users do
+    resources :requests_for_communications
+  end  
+  
+  
     
   root 'main_pages#index'
   

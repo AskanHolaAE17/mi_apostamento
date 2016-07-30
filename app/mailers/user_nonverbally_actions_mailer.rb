@@ -1,0 +1,22 @@
+# encoding: utf-8
+class UserNonverballyActionsMailer < ActionMailer::Base
+
+  default from: 'be-in-pair@gmail.com'
+    
+  
+  def new_incoming_request_for_open_communication(user_sender, user_receiver, room_url)
+    @user_sender   = user_sender
+    @user_receiver = user_receiver
+    @room_url      = room_url
+    mail(to: user_receiver.contact.email, subject: 'Вы получили новый запрос на общение')    
+  end 
+   
+
+  def request_is_approved(user_sender, user_receiver, room_url)
+    @user_sender   = user_sender
+    @user_receiver = user_receiver
+    @room_url      = room_url
+    mail(to: user_receiver.contact.email, subject: 'Ваш запрос на общение одобрен')    
+  end  
+
+end

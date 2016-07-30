@@ -201,8 +201,14 @@ class ContactsController < ApplicationController
 #_____________________________________________
       
       
-    user              = User.new
-    user.id_in_base   = akey
+    user                 = User.new
+    
+    iibase = id_in_base  = user.id.to_s + akey + akey
+    iibase = iibase.gsub(/\D+/, '')
+    iibase = iibase.slice(0, iibase.length/2)        
+      user.id_in_base    = iibase
+
+
     
     user.email        = contact.email
     user.name         = contact.name
@@ -213,6 +219,7 @@ class ContactsController < ApplicationController
     
     user.save      
       contact.save
+      
 #_____________________________________________
     
     
@@ -224,6 +231,7 @@ class ContactsController < ApplicationController
       msg_page_before_show_contacts = root_path + 'info/pismo_so_ssulkoy_na_bazy'      
       #redirect_to link_with_contacts                         
       redirect_to msg_page_before_show_contacts
+      
 #_______________________________________________________________________________
 
           
@@ -399,20 +407,23 @@ class ContactsController < ApplicationController
 
 
 
-  def show
+  def show 
+   
  
     # For Consult FORM
     @sum_for_pay = MeConstant.find_by(title: 'consult_price').content  
   
   
     @page            = Page.find_by_page :contacts
-    @consult = Consult.new     
+    @consult         = Consult.new     
   
   
     @details_encoded  = params[:details]
     
     @details_encoded[@details_encoded.length-1] = ''
-    details          = Base64.decode64(@details_encoded)    
+    
+    #flash[:contact_details_reload] = params[:details]   # contact_details_for_contact_show_page_reload
+    details                 = Base64.decode64(@details_encoded)    
     
     
     
@@ -456,7 +467,14 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________
 
 
-    contact = Contact.find_by order_number: order_id         # current User
+    contact  = Contact.find_by order_number: order_id         # current User
+    @user    = User.find(contact.user_id)
+    ###Request
+    #@request = requests_for_communication = RequestsForCommunication.new    
+    @request = @user.requests_for_communications.create
+    
+#_______________________________________________________________________________
+    
     
     @contacts = Contact.all
     
@@ -485,7 +503,7 @@ class ContactsController < ApplicationController
     end
     
     
-    @contacts = @res_contacts          
+    @contacts         = @res_contacts              
     
 #_______________________________________________________________________________
 

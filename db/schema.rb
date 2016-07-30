@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728125900) do
+ActiveRecord::Schema.define(version: 20160730162500) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -208,20 +208,34 @@ ActiveRecord::Schema.define(version: 20160728125900) do
     t.datetime "updated_at"
   end
 
-  create_table "requests_incomings", force: :cascade do |t|
+  create_table "requests_for_communications", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "from"
+    t.string   "asker"
+    t.string   "receiver"
     t.string   "status"
     t.boolean  "able",       default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "requests_outcomings", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "to"
-    t.string   "status"
-    t.boolean  "able",       default: true
+  create_table "room_nonverbally_info_pages", force: :cascade do |t|
+    t.string   "title"
+    t.text     "msg"
+    t.string   "translit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "room_verbally_info_pages", force: :cascade do |t|
+    t.string   "title"
+    t.text     "msg"
+    t.string   "translit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "secret_questions", force: :cascade do |t|
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -235,13 +249,13 @@ ActiveRecord::Schema.define(version: 20160728125900) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer  "id_in_base"
+    t.integer  "id_in_base",                        limit: 8
     t.string   "email"
     t.string   "name"
     t.string   "surname"
     t.string   "group"
     t.string   "akey"
-    t.boolean  "active",                            default: true
+    t.boolean  "active",                                      default: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "white_writing_able_users_ids_list"
