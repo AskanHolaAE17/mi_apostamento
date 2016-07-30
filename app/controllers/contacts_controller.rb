@@ -11,6 +11,8 @@ class ContactsController < ApplicationController
   def more_info_form
     @page       = Page.find_by_page :more_info_form  
     @site_title = MeConstant.find_by_title('site_title').content 
+    
+    @secret_questions = SecretQuestion.all
 
 #_______________________________________________________________________________      
 
@@ -80,6 +82,7 @@ class ContactsController < ApplicationController
     
 
     @contact = Contact.new              #-# less 5 strings down
+    #@contact.order = order
     
     if Contact.find_by(order_number: order_id)
       @exist_contact = Contact.find_by(order_number: order_id)
@@ -102,6 +105,8 @@ class ContactsController < ApplicationController
     #-#contact.update_attributes(contact_params.clone) 
     contact = Contact.new(contact_params)    
     order = Order.find(contact.order_number)
+    
+    contact.order = order
     
     
     

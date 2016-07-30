@@ -1,5 +1,8 @@
 class Order < ActiveRecord::Base
 
+  belongs_to  :contact
+
+
   before_save { |order| order.email = order.email.downcase }
   
 

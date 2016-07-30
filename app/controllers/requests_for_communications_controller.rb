@@ -20,25 +20,55 @@ class RequestsForCommunicationsController < ApplicationController
     room_url = root_path + 'room'
     
 #______________________________________
+
+
+    order = User.find(request.user_id).contact.order   
     
-              
-    unless request.save
-      UserNonverballyActionsMailer.new_incoming_request_for_open_communication(user_sender, user_receiver, room_url).deliver
-      redirect_to 'room_info_messages/zapros_na_obshchenie_otpravlen'
-    else
-    
-      if flash[:contact_details_reload]
-        redirect_to root_path + 'contacts/' + flash[:contact_details_reload] 
+      contacts_status = if order.group == 'GOOD GROUP'                     
+        [2,4,6,8].shuffle.first.to_s
       else
-        msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_ne_bul_otpravlen').msg
-        flash[:error_on_request_added] = msg
-        redirect_to '/'
-      end  
+        [1,3,5,7,9].shuffle.first.to_s      
+      end
+
+      plus_2_letters      = ('a'..'z').to_a.shuffle.first + 
+                            ('a'..'z').to_a.shuffle.first
+           
+      contacts_details    = contacts_status               + 
+                            order.id.to_s                 + 
+                            plus_2_letters                + 
+                            order.akey_payed                     
+
+
+
+      contacts_details_encoded_64  = (Base64.encode64 contacts_details).chomp.delete("\n")
+      contacts_details     = contacts_details_encoded_64 + '='
+
+
+
+      link_with_contacts = root_path                      + 
+                           'contacts/'                    + 
+                           contacts_details                                                
+
+#______________________________________        
+
+              
+    if request.save
+    
+      UserNonverballyActionsMailer.new_incoming_request_for_open_communication(user_sender, user_receiver, room_url).deliver      
+      msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_otpravlen').msg
+        
+#______________________________________        
+
+    else   # unless request.save          
+    
+      msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_ne_bul_otpravlen').msg      
+    end   # end request.save      
       
-    end    
+      
+      flash[:info_on_request_added] = msg                
+      redirect_to link_with_contacts    
     
-    
-  end
+  end   # end def create
 #_______________________________________________________________________________  
   
   

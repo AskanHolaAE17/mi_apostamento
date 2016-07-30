@@ -1,7 +1,10 @@
 class Contact < ActiveRecord::Base
   
-  belongs_to :user  
+  belongs_to        :user 
+  has_one           :order
+   
   has_attached_file :image
+   
   
   #has_attached_file :image,
   #  :storage => :dropbox,

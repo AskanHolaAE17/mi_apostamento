@@ -172,11 +172,11 @@
                                         class:       'input-xlarge', 
                                         maxlength:   '1000',
                                         value:       "#{flash[:contact_deep_info] || @exist_contact.deep_info || nil}",
-                                        autofocus:    flash[:autofocus_deep_info]
-  
+                                        autofocus:    flash[:autofocus_deep_info]  
     %br/    
   
   
+
     
     
     %a{name: 'image'}
@@ -184,6 +184,24 @@
       Выберите Ваше фото:
     %div                                        
       =f.file_field :image
+
+
+
+
+
+    %a{name: 'secret_question'}
+    .dark-green{class: flash[:error_class_secret_question]}
+      Выберите секретный вопрос для входа на сайт:                                        
+      
+    %br/                                                    
+      
+     
+    - @secret_questions.each do |secret_qw|
+        
+      =f.radio_button :secret_question, #{'secret_question_'secret_qw.id}, checked: flash[#{'contact_secret_question_'secret_qw.id}], id: #{'secret_question_'secret_qw.id}
+      =f.label :secret_question, secret_qw.body, for: #{'secret_question_'secret_qw.id}
+    
+      %br/                     
   
                                            
   

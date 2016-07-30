@@ -7,10 +7,6 @@
 - @contact = Contact.new                                               
 
 
-- if flash[:error_on_request_added]
-  %section
-    #note
-      =flash[:error_on_request_added].html_safe
 
 - unless @info_msg.nil? and @info_msg == ''
   %h2 
