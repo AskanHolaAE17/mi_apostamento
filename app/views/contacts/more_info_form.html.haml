@@ -195,7 +195,7 @@
       %br/                     
               
        
-      - @secret_question.each do |secret_question|      
+      - @secret_questions.each do |secret_question|      
     
         =f.check_box :secret_question, {id: 'secret_question_' + secret_question.id.to_s}, secret_question.id, 0
         =f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s
