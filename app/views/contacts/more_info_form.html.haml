@@ -195,10 +195,10 @@
       %br/                     
               
        
-      - @secret_questions.each do |secret_questions|      
+      - @secret_question.each do |secret_question|      
     
-        =f.check_box :secret_question, {id: 'secret_questions_' + secret_questions.id.to_s}, secret_questions.id, 0
-        =f.label     :secret_question, secret_questions.body, for: 'secret_questions_' + secret_questions.id.to_s
+        =f.check_box :secret_question, {id: 'secret_question_' + secret_question.id.to_s}, secret_question.id, 0
+        =f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s
         
         
         
