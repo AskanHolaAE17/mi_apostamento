@@ -107,13 +107,13 @@ class ContactsController < ApplicationController
     #-#contact = Contact.find_by(order_number: params[:order_number])     
     #-#contact.update_attributes(contact_params.clone) 
     contact = Contact.new(contact_params)    
-    order = Order.find(contact.order_number)
+    order   = Order.find(contact.order_number)
     
     
     
     contact.order = order
     
-    contact.secret_questions = '1' if contact.secret_questions == '0'
+    contact.secret_question = '1' if contact.secret_question == '0'
     
     
     contact.structure_test_info = order.structure_test_info    
@@ -583,7 +583,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id, :secret_questions)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id, :secret_question)
     end  
  
   
