@@ -13,6 +13,7 @@ class ContactsController < ApplicationController
     @site_title = MeConstant.find_by_title('site_title').content 
     
     @secret_questions = SecretQuestion.all
+    #@secret_questions = @secret_questions.where.not(id: 1)
 
 #_______________________________________________________________________________      
 
@@ -99,6 +100,8 @@ class ContactsController < ApplicationController
   
   def create    
 
+    root_path  = MeConstant.find_by_title('root_path').content
+    
     #-#order      = Order.find(params[:order_number])       
     
     #-#contact = Contact.find_by(order_number: params[:order_number])     
@@ -106,8 +109,11 @@ class ContactsController < ApplicationController
     contact = Contact.new(contact_params)    
     order = Order.find(contact.order_number)
     
+    
+    
     contact.order = order
     
+    contact.secret_questions = '1' if contact.secret_questions == '0'
     
     
     contact.structure_test_info = order.structure_test_info    
@@ -118,10 +124,7 @@ class ContactsController < ApplicationController
     
     contact.level_test_info = order.level_test_info    
     order.level_test_info = ''                        
-        
-    
-    
-    root_path  = MeConstant.find_by_title('root_path').content
+                   
 
 #_______________________________________________________________________________
 
@@ -210,7 +213,7 @@ class ContactsController < ApplicationController
     
     iibase = id_in_base  = user.id.to_s + akey + akey
     iibase = iibase.gsub(/\D+/, '')
-    iibase = iibase.slice(0, iibase.length/2)        
+    iibase = iibase.slice(0, iibase.length/3)        
       user.id_in_base    = iibase
 
 
@@ -580,7 +583,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id, :secret_questions)
     end  
  
   

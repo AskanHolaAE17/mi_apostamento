@@ -1,3 +1,3 @@
-class SecretQuestion < ActiveRecord::Base
+class SecretQuestion < ActiveRecord::Base  
   
 end

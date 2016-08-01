@@ -38,9 +38,7 @@
 
     %a{name: 'own_gender'}
     .dark-green{class: flash[:error_class_own_gender]}
-      Ваш пол:                                        
-      
-    %br/                                                    
+      Ваш пол:                                                                           
       
         
     =f.radio_button :own_gender, 'М', checked: flash[:contact_own_gender_male_checked], id: 'own_gender_male'
@@ -62,6 +60,7 @@
 
   
   
+    %br/                        
 
     %a{name: 'city'}
     .dark-green{class: flash[:error_class_city]}
@@ -116,10 +115,7 @@
 
     %a{name: 'search_for_gender'}
     .dark-green{class: flash[:error_class_search_for_gender]}
-      Кто Вас интересует:                                        
-      
-    %br/                                                    
-      
+      Кто Вас интересует:                                                                                                   
             
                         
     =f.radio_button :search_for_gender, 'М', checked: flash[:contact_search_for_gender_male_checked], id: 'search_for_gender_male'
@@ -141,7 +137,7 @@
   
 
   
-
+    %br/     
 
     %a{name: 'about_info'}
     .dark-green{class: flash[:error_class_about_info]}
@@ -185,23 +181,33 @@
     %div                                        
       =f.file_field :image
 
+    %br/                     
 
 
 
 
-    %a{name: 'secret_question'}
-    .dark-green{class: flash[:error_class_secret_question]}
-      Выберите секретный вопрос для входа на сайт:                                        
-      
-    %br/                                                    
-      
-     
-    - @secret_questions.each do |secret_qw|
-        
-      =f.radio_button :secret_question, #{'secret_question_'secret_qw.id}, checked: flash[#{'contact_secret_question_'secret_qw.id}], id: #{'secret_question_'secret_qw.id}
-      =f.label :secret_question, secret_qw.body, for: #{'secret_question_'secret_qw.id}
-    
+    #paper
+      %a{name: 'secret_question'}
+      .dark-green{class: flash[:error_class_secret_question]}
+        -#Выберите 2 секретных вопроса для входа на сайт:
+        Выберите секретный вопрос для входа на сайт:                                                                                
+
       %br/                     
+              
+       
+      - @secret_questions.each do |secret_questions|      
+    
+        =f.check_box :secret_questions, {id: 'secret_questions_' + secret_questions.id.to_s}, secret_questions.id, 0
+        =f.label :secret_questions, secret_questions.body, for: 'secret_questions_' + secret_questions.id.to_s
+        
+        
+        
+        -#=f.radio_button :secret_questions, secret_questions.id, checked: flash['contact_secret_questions_' + secret_questions.id.to_s], id: 'secret_questions_' + secret_questions.id.to_s
+        -#=f.label :secret_questions, secret_questions.body, for: 'secret_questions_' + secret_questions.id.to_s                
+      
+           
+        %br/
+        %br/                                                  
   
                                            
   

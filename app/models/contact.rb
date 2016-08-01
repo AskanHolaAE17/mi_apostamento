@@ -5,24 +5,6 @@ class Contact < ActiveRecord::Base
    
   has_attached_file :image
    
-  
-  #has_attached_file :image,
-  #  :storage => :dropbox,
-  #  :dropbox_credentials => Rails.root.join("config/dropbox.yml")
-    #,
-    #:dropbox_options => {...}
-      
- #:styles => { :medium => "300x300" , :thumb => "100x100>"},    
- #:dropbox_options => {       
- #:path => proc { |style| "#{style}/#{id}_#{picture.original_filename}"},       :unique_filename => true   
- # }
-  
-  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
-                       size: { in: 0..6000.kilobytes }
-  validates :image, attachment_presence: true
-
-  
-    
 #____________________________________________________________________________________________________________________________________________  
 
 
@@ -96,12 +78,31 @@ class Contact < ActiveRecord::Base
                
                                       :if =>         :deep_info? }
 
+#____________________________________________________________________________________________________________________________________________  
+
+  ### ATTACHED IMAGE
+  
+  #has_attached_file :image,
+  #  :storage => :dropbox,
+  #  :dropbox_credentials => Rails.root.join("config/dropbox.yml")
+    #,
+    #:dropbox_options => {...}
+      
+ #:styles => { :medium => "300x300" , :thumb => "100x100>"},    
+ #:dropbox_options => {       
+ #:path => proc { |style| "#{style}/#{id}_#{picture.original_filename}"},       :unique_filename => true   
+ # }
+  
+  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+                       size: { in: 0..6000.kilobytes }
+  validates :image, attachment_presence: true
+   
 #____________________________________________________________________________________________________________________________________________
 
 
-  #validates :image,           presence:         true
-    
-#____________________________________________________________________________________________________________________________________________  
+  validates :secret_questions,              presence:         true
+
+#____________________________________________________________________________________________________________________________________________    
 end
 
    
