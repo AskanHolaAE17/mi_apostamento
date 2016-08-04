@@ -193,25 +193,53 @@
         Выберите секретный вопрос для входа на сайт:                                                                                
 
       %br/                     
-              
-       
+
+
+      =flash['contact.secret_question'] 
       - @secret_questions.each do |secret_question|      
-    
-        =f.check_box :secret_question, {id: 'secret_question_' + secret_question.id.to_s}, secret_question.id, 0
-        =f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s
-        
-        
-        
-        -#=f.radio_button :secret_questions, secret_questions.id, checked: flash['contact_secret_questions_' + secret_questions.id.to_s], id: 'secret_questions_' + secret_questions.id.to_s
-        -#=f.label :secret_questions, secret_questions.body, for: 'secret_questions_' + secret_questions.id.to_s                
       
+        =f.check_box :secret_question, {multiple: true, id: 'secret_question_' + secret_question.id.to_s, checked: flash['contact_secret_question_' + secret_question.id.to_s]}, secret_question.id, nil
+        =f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s              
+              
            
         %br/
-        %br/                                                  
+        %br/             
+                
+        
+        
+        
+    %a{name: 'secret_answer_1'}
+    .dark-green{class: flash[:error_class_secret_answer_1]}
+      Ответ на секретный вопрос:
+    
+    %div    
+      = f.text_area :secret_answer_1,   size:        '25x2',
+                                        required:    '',                                                                                 
+                                        class:       'input-xlarge', 
+                                        maxlength:   '100',
+                                        value:       "#{flash[:contact_secret_answer_1] || @exist_contact.secret_answer_1 || nil}",
+                                        autofocus:    flash[:autofocus_secret_answer_1]
+    %br/                     
+                             
+                             
+                             
+                             
+    -#%a{name: 'secret_answer_2'}
+    -#.dark-green{class: flash[:error_class_secret_answer_2]}
+      Ответ на второй секретный вопрос:
+    
+    -#%div    
+      = f.text_area :secret_answer_2,   size:        '25x2',
+                                        required:    '',                                                                                 
+                                        class:       'input-xlarge', 
+                                        maxlength:   '100',
+                                        value:       "#{flash[:contact_secret_answer_2] || @exist_contact.secret_answer_2 || nil}",
+                                        autofocus:    flash[:autofocus_secret_answer_2]
+    -#%br/                                                                  
   
-                                           
   
-  
+
+
 
     = f.hidden_field  :email,             value:  @order.email
     = f.hidden_field  :group,             value:  @order.group      

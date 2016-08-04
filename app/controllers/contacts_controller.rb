@@ -113,7 +113,7 @@ class ContactsController < ApplicationController
     
     contact.order = order
     
-    contact.secret_question = '1' if contact.secret_question == '0'
+    #contact.secret_question = '1' if contact.secret_question == '0'
     
     
     contact.structure_test_info = order.structure_test_info    
@@ -211,10 +211,10 @@ class ContactsController < ApplicationController
       
     user                 = User.new
     
-    iibase = id_in_base  = user.id.to_s + akey + akey
+    iibase = id_in_base  = akey + akey
     iibase = iibase.gsub(/\D+/, '')
     iibase = iibase.slice(0, iibase.length/3)        
-      user.id_in_base    = iibase
+      user.id_in_base    = user.id.to_s + iibase
 
 
     
@@ -254,6 +254,7 @@ class ContactsController < ApplicationController
       flash[:contact_country]         = contact.country
       flash[:contact_about_info]      = contact.about_info
       flash[:contact_deep_info]       = contact.deep_info      
+      flash[:contact_secret_answer_1] = contact.secret_answer_1
       
       flash[:contact_birthday_day]    = contact.birthday.strftime("%d %m %Y").split[0]
       flash[:contact_birthday_month]  = contact.birthday.strftime("%d %m %Y").split[1]
@@ -266,6 +267,26 @@ class ContactsController < ApplicationController
       flash[:contact_search_for_gender_male_checked]   = 'checked' if contact.search_for_gender == 'М'
       flash[:contact_search_for_gender_female_checked] = 'checked' if contact.search_for_gender == 'Ж'
       flash[:contact_search_for_gender_both_checked]   = 'checked' if contact.search_for_gender == 'ЖМ'      
+      
+
+       
+      sqw = contact.secret_question 
+      sqw.gsub!('"',"'")
+      sqw.gsub!('[',"")
+      sqw.gsub!(']',"")
+      sqw.gsub!("'","")      
+      sqw.gsub!(" ","")  
+      sqw = sqw.split(",")
+
+      flash[:sqw] = ''
+      sqw.each  do |sqw|
+        flash[:sqw] += sqw.to_s
+	      flash['contact_secret_question_' + sqw.to_s]   = 'checked' 	      
+      end	      
+           
+      
+      flash['contact.secret_question'] = contact.secret_question
+      
 #_______________________________________________________________________________      
       
       
@@ -583,7 +604,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id, :secret_question)
+      params.require(:contact).permit(:name, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id, :secret_answer_1, :secret_answer_2, :secret_question => [])
     end  
  
   
