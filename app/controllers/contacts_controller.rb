@@ -123,7 +123,18 @@ class ContactsController < ApplicationController
     order.level = ''        
     
     contact.level_test_info = order.level_test_info    
-    order.level_test_info = ''                        
+    order.level_test_info = ''    
+    
+    
+      if contact.secret_question 
+        sqw = contact.secret_question 
+        sqw.gsub!('"',"'")
+        sqw.gsub!('[',"")
+        sqw.gsub!(']',"")
+        sqw.gsub!("'","")      
+        sqw.gsub!(" ","")                       
+        contact.secret_question = sqw
+      end  
                    
 
 #_______________________________________________________________________________
@@ -244,80 +255,90 @@ class ContactsController < ApplicationController
 
           
     else   #if Contact notSave
-      flash[:your_sex] = contact.own_gender
-      flash[:search_for_gender] = contact.search_for_gender
     
-
+    
       flash[:contact_name]            = contact.name
       #flash[:contact_surname]         = contact.surname
       flash[:contact_city]            = contact.city
       flash[:contact_country]         = contact.country
-      flash[:contact_about_info]      = contact.about_info
-      flash[:contact_deep_info]       = contact.deep_info      
-      flash[:contact_secret_answer_1] = contact.secret_answer_1
       
       flash[:contact_birthday_day]    = contact.birthday.strftime("%d %m %Y").split[0]
       flash[:contact_birthday_month]  = contact.birthday.strftime("%d %m %Y").split[1]
       flash[:contact_birthday_year]   = contact.birthday.strftime("%d %m %Y").split[2]
+
+      #flash[:own_gender] = contact.own_gender
+      #flash[:search_for_gender] = contact.search_for_gender
       
-      flash[:contact_own_gender_male_checked]   = 'checked' if contact.own_gender == 'М'
-      flash[:contact_own_gender_female_checked] = 'checked' if contact.own_gender == 'Ж'
-      #flash[:contact_own_gender_other_checked]  = 'checked' if contact.own_gender == 'ЖМ'
+      flash[:contact_own_gender_male_checked]          = 'checked' if contact.own_gender == 'М'
+      flash[:contact_own_gender_female_checked]        = 'checked' if contact.own_gender == 'Ж'
+      #flash[:contact_own_gender_other_checked]         = 'checked' if contact.own_gender == 'ЖМ'
       
       flash[:contact_search_for_gender_male_checked]   = 'checked' if contact.search_for_gender == 'М'
       flash[:contact_search_for_gender_female_checked] = 'checked' if contact.search_for_gender == 'Ж'
       flash[:contact_search_for_gender_both_checked]   = 'checked' if contact.search_for_gender == 'ЖМ'      
       
+      flash[:contact_about_info]      = contact.about_info
+      flash[:contact_deep_info]       = contact.deep_info                       
 
-       
-      sqw = contact.secret_question 
-      sqw.gsub!('"',"'")
-      sqw.gsub!('[',"")
-      sqw.gsub!(']',"")
-      sqw.gsub!("'","")      
-      sqw.gsub!(" ","")  
-      sqw = sqw.split(",")
-
-      flash[:sqw] = ''
-      sqw.each  do |sqw|
-        flash[:sqw] += sqw.to_s
-	      flash['contact_secret_question_' + sqw.to_s]   = 'checked' 	      
-      end	      
+      if sqw
+        sqw = sqw.split(",")         
+        sqw.each  do |sqw|
+	        flash['contact_secret_question_' + sqw.to_s]   = 'checked' 	      
+        end	 
+      end     
            
       
-      flash['contact.secret_question'] = contact.secret_question
+      flash[:contact_secret_answer_1] = contact.secret_answer_1      
+      flash[:contact_secret_answer_2] = contact.secret_answer_2      
       
 #_______________________________________________________________________________      
       
-      
+              
       anchor = ''
       contact.errors.each do |attr, msg|
         flash[:error_class_name]              = 'error_field' if attr == :name
         #flash[:error_class_surname]           = 'error_field' if attr == :surname
-        flash[:error_class_own_gender]        = 'error_field' if attr == :own_gender
         flash[:error_class_city]              = 'error_field' if attr == :city
         flash[:error_class_country]           = 'error_field' if attr == :country
         flash[:error_class_birthday]          = 'error_field' if attr == :birthday
+        
+        flash[:error_class_own_gender]        = 'error_field' if attr == :own_gender        
         flash[:error_class_search_for_gender] = 'error_field' if attr == :search_for_gender
+        
         flash[:error_class_about_info]        = 'error_field' if attr == :about_info
         flash[:error_class_deep_info]         = 'error_field' if attr == :deep_info        
-        flash[:error_class_image]             = 'error_field' if attr == :image    
+        flash[:error_class_image]             = 'error_field' if attr == :image
+        
+        flash[:error_class_secret_question]   = 'error_field' if attr == :secret_question
+        flash[:error_class_secret_answer_1]   = 'error_field' if attr == :secret_answer_1                
+        flash[:error_class_secret_answer_2]   = 'error_field' if attr == :secret_answer_2
                 
-                
+
+ 
                 
         flash[:autofocus_name]      = false                
         #flash[:autofocus_surname]   = false         
         flash[:autofocus_city]      = false                
         flash[:autofocus_country]   = false         
-        flash[:autofocus_birthday]  = false                
+        flash[:autofocus_birthday]  = false
+        
+        flash[:own_gender]          = false   
+        flash[:search_for_gender]   = false      
+                     
         flash[:about_info]          = false         
         flash[:deep_info]           = false           
-        flash[:image]               = false         
+        flash[:image]               = false   
+              
+        flash[:secret_question]     = false
+        flash[:secret_answer_1]     = false   
+        flash[:secret_answer_2]     = false      
+                          
 #_______________________________________________________________________________        
                         
-                        
+      unless @skip_autofocus                  
         if attr == :name
           flash[:autofocus_name] = true
+          @skip_autofocus = true
         else
         
           #if attr == :surname
@@ -326,83 +347,159 @@ class ContactsController < ApplicationController
           
             if attr == :city
               flash[:autofocus_city] = true
+              @skip_autofocus = true
             else
           
               if attr == :country
                 flash[:autofocus_country] = true
+                @skip_autofocus = true
               else
           
                 if attr == :birthday
                   flash[:autofocus_birthday] = true
+                  @skip_autofocus = true
                 else
+          
           
                   if attr == :about_info
                     flash[:autofocus_about_info] = true
+                    @skip_autofocus = true
                   else
                     if attr == :deep_info
                       flash[:autofocus_deep_info] = true
+                      @skip_autofocus = true
                     else                  
                       if attr == :image
                         flash[:autofocus_image] = true                    
+                        @skip_autofocus = true
+                      else
+                      
+                      
+                        if attr == :own_gender
+                          flash[:autofocus_own_gender] = true
+                          @skip_autofocus = true
+                        else
+                          if attr == :search_for_gender
+                            flash[:autofocus_search_for_gender] = true
+                            @skip_autofocus = true
+                          else
+          
+                      
+                            if attr == :secret_question
+                              flash[:autofocus_secret_question] = true
+                              @skip_autofocus = true
+                            else                  
+                              if attr == :secret_answer_1
+                                flash[:autofocus_secret_answer_1] = true
+                                @skip_autofocus = true
+                              else                  
+                                if attr == :secret_answer_2
+                                  flash[:autofocus_secret_answer_2] = true
+                                  @skip_autofocus = true
+                                end                                            
+                              end                        
+                            end            #attr == :secret_question              
+          
+          
+                          end
+                        end                      #attr == :own_gender
+          
+                        
                       end                                            
                     end  
-                  end                        
+                  end                                 #attr == :about_info
+          
+                  
                 end                        
               end            
             end            
           #end
         end                                               #attr == :name
+      end          #skip autofocus
+        
 #_______________________________________________________________________________
 
-                        
+      unless @skip_anchor
         if attr == :name
           anchor = 'name'
+          @skip_anchor = true
         else  
         
           #if attr == :surname
           #  anchor = 'surname'
           #else  
 
-            if attr == :own_gender
-              anchor = 'own_gender'
+            if attr == :city
+              anchor = 'city'
+              @skip_anchor = true
             else  
           
-              if attr == :city
-                anchor = 'city'
+              if attr == :country
+                anchor = 'country'
+                @skip_anchor = true
               else  
             
-                if attr == :country
-                  anchor = 'country'
+                if attr == :birthday
+                  anchor = 'birthday'
+                  @skip_anchor = true
                 else  
               
-                  if attr == :birthday
-                    anchor = 'birthday'
+              
+                  if attr == :own_gender
+                    anchor = 'own_gender'
+                    @skip_anchor = true
                   else  
                 
-                    if attr == :search_for_gender
-                      anchor = 'search_for_gender'
+                    if attr == :image
+                      anchor = 'image'
+                      @skip_anchor = true
                     else                  
+                
                 
                       if attr == :about_info
                         anchor = 'about_info'
+                        @skip_anchor = true
                       else 
                         if attr == :deep_info
                           anchor = 'deep_info'
+                          @skip_anchor = true
                         else                        
-                          if attr == :image
-                            anchor = 'image'                      
+                          if attr == :search_for_gender
+                            anchor = 'search_for_gender'                      
+                            @skip_anchor = true
+                          else  
+                            
+                            
+                            if attr == :secret_question
+                                anchor = 'secret_question'                      
+                                @skip_anchor = true
+                            else
+                              if attr == :secret_answer_1
+                                anchor = 'secret_answer_1'                      
+                                @skip_anchor = true
+                              else
+                                if attr == :secret_answer_2
+                                  anchor = 'secret_answer_2'                      
+                                  @skip_anchor = true
+                                end
+                              end
+                            end    
+                            
+                            
                           end                          #attr == :image
                         end  
                       end                            #attr == :about_info
+                      
                     end                              #attr == :search_for_gender   
-                  end                                #attr == :birthday                                        
-                end                                  #attr == :country                        
-              end                                    #attr == :city      
-            end                                      #attr == :own_gender                              
+                  end                                #attr == :own_gender                                        
+                end                                  #attr == :birthday                        
+              end                                    #attr == :country      
+            end                                      #attr == :city                              
           #end                  
         end                                          #attr == :name
-        
-      end           #contact.errors.each
+        end    #skip_anchor
+      end           #contact.errors.each      
+      
 #_______________________________________________________________________________      
            
            

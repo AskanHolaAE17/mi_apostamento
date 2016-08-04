@@ -2,6 +2,7 @@ class OrderInfoPage < ActiveRecord::Base
   before_save :translit_order_info_page_title
   
   private
+  
   def translit_order_info_page_title
     res = self.title.clone.to_s
     5.times do   

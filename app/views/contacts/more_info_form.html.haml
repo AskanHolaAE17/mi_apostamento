@@ -190,16 +190,17 @@
       %a{name: 'secret_question'}
       .dark-green{class: flash[:error_class_secret_question]}
         -#Выберите 2 секретных вопроса для входа на сайт:
-        Выберите секретный вопрос для входа на сайт:                                                                                
+        Выберите 2 секретных вопроса для входа на сайт:                                                                                
 
       %br/                     
 
 
-      =flash['contact.secret_question'] 
+      -#=flash['contact.secret_question'] 
       - @secret_questions.each do |secret_question|      
       
         =f.check_box :secret_question, {multiple: true, id: 'secret_question_' + secret_question.id.to_s, checked: flash['contact_secret_question_' + secret_question.id.to_s]}, secret_question.id, nil
         =f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s              
+        -#=flash[:sqw]
               
            
         %br/
@@ -210,7 +211,7 @@
         
     %a{name: 'secret_answer_1'}
     .dark-green{class: flash[:error_class_secret_answer_1]}
-      Ответ на секретный вопрос:
+      Ответ на первый секретный вопрос:
     
     %div    
       = f.text_area :secret_answer_1,   size:        '25x2',
@@ -224,11 +225,11 @@
                              
                              
                              
-    -#%a{name: 'secret_answer_2'}
-    -#.dark-green{class: flash[:error_class_secret_answer_2]}
+    %a{name: 'secret_answer_2'}
+    .dark-green{class: flash[:error_class_secret_answer_2]}
       Ответ на второй секретный вопрос:
     
-    -#%div    
+    %div    
       = f.text_area :secret_answer_2,   size:        '25x2',
                                         required:    '',                                                                                 
                                         class:       'input-xlarge', 
