@@ -13,7 +13,6 @@ class ContactsController < ApplicationController
     @site_title = MeConstant.find_by_title('site_title').content 
     
     @secret_questions = SecretQuestion.all
-    #@secret_questions = @secret_questions.where.not(id: 1)
 
 #_______________________________________________________________________________      
 
@@ -26,6 +25,7 @@ class ContactsController < ApplicationController
     #link_details_begin_ascii_8 = URI.decode(link_details_begin_for_url)    
     #key_pair  = @key_pair      
     #order_info = key_pair.decrypt(link_details_begin_ascii_8)          
+    
 #_______________________________________________________________________________
       
 
@@ -335,6 +335,7 @@ class ContactsController < ApplicationController
                           
 #_______________________________________________________________________________        
                         
+                        
       unless @skip_autofocus                  
         if attr == :name
           flash[:autofocus_name] = true
@@ -419,67 +420,68 @@ class ContactsController < ApplicationController
         
 #_______________________________________________________________________________
 
+
       unless @skip_anchor
         if attr == :name
-          anchor = 'name'
+          anchor = '1'
           @skip_anchor = true
         else  
         
           #if attr == :surname
-          #  anchor = 'surname'
+          #  anchor = '2'
           #else  
 
             if attr == :city
-              anchor = 'city'
+              anchor = '3'
               @skip_anchor = true
             else  
           
               if attr == :country
-                anchor = 'country'
+                anchor = '4'
                 @skip_anchor = true
               else  
             
                 if attr == :birthday
-                  anchor = 'birthday'
+                  anchor = '5'
                   @skip_anchor = true
                 else  
               
               
                   if attr == :own_gender
-                    anchor = 'own_gender'
+                    anchor = '6'
                     @skip_anchor = true
                   else  
                 
-                    if attr == :image
-                      anchor = 'image'
+                    if attr == :search_for_gender
+                      anchor = '7'
                       @skip_anchor = true
                     else                  
                 
                 
                       if attr == :about_info
-                        anchor = 'about_info'
+                        anchor = '8'
                         @skip_anchor = true
                       else 
                         if attr == :deep_info
-                          anchor = 'deep_info'
+                          anchor = '9'
                           @skip_anchor = true
                         else                        
-                          if attr == :search_for_gender
-                            anchor = 'search_for_gender'                      
+                          if attr == :image
+                            anchor = '10'                      
                             @skip_anchor = true
                           else  
                             
                             
                             if attr == :secret_question
-                                anchor = 'secret_question'                      
+                                anchor = '11'                      
                                 @skip_anchor = true
                             else
                               if attr == :secret_answer_1
-                                anchor = 'secret_answer_1'                      
+                                anchor = '12'                      
                                 @skip_anchor = true
                               else
                                 if attr == :secret_answer_2
-                                  anchor = 'secret_answer_2'                      
+                                  anchor = '13'                      
                                   @skip_anchor = true
                                 end
                               end

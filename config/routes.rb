@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   
   post  '/orders',                         to: 'orders#create'                  # for OrderForm works (path for creating new order)
   
+  
   match  '/i_have_payed_consult/:details', to: 'consults#e_get_consults_after_pay',                   via: 'get'  
   post  '/i_have_payed_consult/:details',  to: 'consults#e_get_consults_after_pay'
   #match  '/i_have_payed_test/:details',    to: 'orders#b_get_contacts_after_pay',                   via: 'get'  
@@ -30,9 +31,7 @@ Rails.application.routes.draw do
   
   post  '/contacts',                       to: 'contacts#create'                # for MoreContactsForm works (path for creating new contact)  
   match '/contacts/:details',              to: 'contacts#show',                                     via: 'get'      
-  
-  
-  #post  '/requests_for_communications',                         to: 'requests_for_communications#create'                  # for creating new order  
+       
   
   post  '/consults',                       to: 'consults#create'                # for creating new contact
   
@@ -40,8 +39,14 @@ Rails.application.routes.draw do
   match '/de-activate/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        
   post  '/de-activate/:deactive_params',   to: 'contacts#disable_contact'  
             
-    
-  match 'receive/:details',                to: 'tests#qs',                                          via: 'get'  
+  ## dannue_receive_obrabotanu  
+  match 'receive/:details',                to: 'tests#qs',                                          via: 'get'
+  
+  
+      
+  ## (User Loged In)
+  ## ROOM 
+  match 'room/:details',                   to: 'room#show',                                         via: 'get'      
     
   
   
@@ -57,4 +62,5 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)    
     
   match "*path",                           to: 'main_pages#index',                                  via: 'get'
+  
 end
