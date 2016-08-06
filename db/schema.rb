@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805123800) do
+ActiveRecord::Schema.define(version: 20160806161800) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 20160805123800) do
 
   create_table "rooms", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "id_in_base",     limit: 8
+    t.string   "id_in_base",     limit: 8
     t.string   "font_size",                default: "1"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -271,7 +271,7 @@ ActiveRecord::Schema.define(version: 20160805123800) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer  "id_in_base",                        limit: 8
+    t.string   "id_in_base",                        limit: 8
     t.string   "email"
     t.string   "name"
     t.string   "surname"

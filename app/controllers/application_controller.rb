@@ -55,6 +55,7 @@ class ApplicationController < ActionController::Base
     iibase = akey + akey          #id_in_base
     iibase = iibase.gsub(/\D+/, '')
     iibase = iibase.slice(0, iibase.length/devided_by.to_i)  
+    iibase = iibase.to_s
   end
   
   

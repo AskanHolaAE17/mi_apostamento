@@ -132,7 +132,7 @@ before_action :set_main_page, only: [:show]
 #_______________________________________
 
     
-    unless @user and @room and @room.user_id.to_s == user_id and user_id_in_base_start_2symbols == @user.id_in_base.to_s[0,2] and room_id_in_base_start_3symbols == @room.id_in_base.to_s[0,3]
+    unless @user and @room and @room.user_id.to_s == user_id and user_id_in_base_start_2symbols == @user.id_in_base[0,2] and room_id_in_base_start_3symbols == @room.id_in_base[0,3]
       redirect_to ''
     else
       @page = Page.find_by_page :room_one  
