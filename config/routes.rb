@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       
   ## (User Loged In)
   ## ROOM 
-  match 'room/:details',                   to: 'room#show',                                         via: 'get'      
+  match 'room/:details',                   to: 'rooms#show',                                         via: 'get'      
     
   
   

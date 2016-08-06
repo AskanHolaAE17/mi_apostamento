@@ -4,6 +4,7 @@ require 'uri'
 class ContactsController < ApplicationController
 
   before_action :set_main_page, only: [:more_info_form, :show, :disable_contact_ask, :disable_contact]
+  
 #_____________________________________________________________________________________________________________________________________________
 
   
@@ -32,6 +33,7 @@ class ContactsController < ApplicationController
                    
     order_info[order_info.length-1] = ''
     order_info  = Base64.decode64(order_info)        
+    
 #_______________________________________________________________________________
 
 
@@ -47,6 +49,7 @@ class ContactsController < ApplicationController
         break
       end
     end    
+    
 #_______________________________________________________________________________        
 
 
@@ -84,6 +87,10 @@ class ContactsController < ApplicationController
 
     @contact = Contact.new              #-# less 5 strings down
     #@contact.order = order
+    
+    @date_select_year_start = Time.now.year - 100
+    @date_select_year_end   = Time.now.year - 18    
+    
     
     if Contact.find_by(order_number: order_id)
       @exist_contact = Contact.find_by(order_number: order_id)
@@ -221,11 +228,13 @@ class ContactsController < ApplicationController
       
       
     user                 = User.new
+    room                 = Room.new
     
-    iibase = id_in_base  = akey + akey
-    iibase = iibase.gsub(/\D+/, '')
-    iibase = iibase.slice(0, iibase.length/3)        
-      user.id_in_base    = user.id.to_s + iibase
+      user.save
+      room.save
+    
+    user.id_in_base    = user.id.to_s + id_in_base(3)
+    user.id_in_base    = user.id.to_s + id_in_base(3)
 
 
     
@@ -234,10 +243,12 @@ class ContactsController < ApplicationController
     user.surname      = contact.surname
     
     user.group        = contact.group    
-      user.contact = contact
+      user.contact    = contact
+      user.room       = room
     
     user.save      
       contact.save
+      room.save
       
 #_____________________________________________
     
