@@ -126,6 +126,8 @@ before_action :set_main_page, only: [:show]
     
     user_id = user_id.to_s
     room_id = room_id.to_s    
+    
+    @
 
 #_______________________________________
 
