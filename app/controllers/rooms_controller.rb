@@ -126,9 +126,7 @@ before_action :set_main_page, only: [:show]
     
     user_id = user_id.to_s
     room_id = room_id.to_s    
-    
-    @
-
+        
 #_______________________________________
 
     
@@ -136,6 +134,8 @@ before_action :set_main_page, only: [:show]
       redirect_to ''
     else
       @page = Page.find_by_page :room_one  
+      @requests_for_communication = RequestsForCommunication.where(user_id: user.id) # show on page with status
+#_______________________________________      
     end
     
   end

@@ -234,7 +234,7 @@ class ContactsController < ApplicationController
       room.save
     
     user.id_in_base    = user.id.to_s + id_in_base(3)
-    user.id_in_base    = user.id.to_s + id_in_base(3)
+    room.id_in_base    = room.id.to_s + id_in_base(3)
 
 
     
@@ -610,7 +610,7 @@ class ContactsController < ApplicationController
     @user    = User.find(contact.user_id)
     ###Request
     #@request = requests_for_communication = RequestsForCommunication.new    
-    @request = @user.requests_for_communications.create
+    @request = @user.requests_for_communications.build
     
 #_______________________________________________________________________________
     

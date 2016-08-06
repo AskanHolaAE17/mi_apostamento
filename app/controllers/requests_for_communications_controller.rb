@@ -12,12 +12,14 @@ class RequestsForCommunicationsController < ApplicationController
 #______________________________________
 
   
-    #request = requests_for_communication = RequestsForCommunication.new(requests_for_communication_params)
     user_sender    = User.find(params[:user_id]) 
-    request        = requests_for_communication = user_sender.requests_for_communications.create(requests_for_communication_params)
-    user_receiver  = User.find(request.receiver)    
     
+    request        = requests_for_communication = user_sender.requests_for_communications.create(requests_for_communication_params)   
+    #request.save        
+    
+    user_receiver  = User.find(request.receiver)        
     user           = user_receiver
+    
     room           = user.room    
 
 #______________________________________
