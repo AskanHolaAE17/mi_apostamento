@@ -121,7 +121,7 @@ before_action :set_main_page, only: [:show]
 #_______________________________________  
   
   
-    @user = User.find(user_id)
+    @user = User.find(user_id)  # request Receiver
     @room = Room.find(room_id)
     
     user_id = user_id.to_s
@@ -132,10 +132,35 @@ before_action :set_main_page, only: [:show]
     
     unless @user and @room and @room.user_id.to_s == user_id and user_id_in_base_start_2symbols == @user.id_in_base[0,2] and room_id_in_base_start_3symbols == @room.id_in_base[0,3]
       redirect_to ''
-    else
-      @page = Page.find_by_page :room_one  
-      @requests_for_communication = RequestsForCommunication.where(user_id: user.id) # show on page with status
-#_______________________________________      
+    else        
+      @page       = Page.find_by_page :room_one        
+      
+      
+      # getted Requests
+      @getted_rqs = RequestsForCommunication.where(receiver: @user.id)
+      @getted_rqs_from_users = []
+      
+      @getted_rqs.each do |rq|
+        @getted_rqs_from_users << User.find(rq.user_id)
+      end
+        
+      # sent Requests  
+      @sent_rqs   = @user.requests_for_communications
+      @sent_rqs_to_users = []
+      
+      @sent_rqs.each do |rq|
+        @sent_rqs_to_users << User.find(rq.receiver)
+      end
+      
+      
+      ###
+      #@requests_for_communications = @user.requests_for_communications
+      #@receiver_users = []
+      
+      #@requests_for_communications.each do |rq|
+      #  @receiver_users << User.find(rq.receiver)
+      #end   
+      
     end
     
   end

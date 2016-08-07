@@ -14,8 +14,8 @@ class RequestsForCommunicationsController < ApplicationController
   
     user_sender    = User.find(params[:user_id]) 
     
-    request        = requests_for_communication = user_sender.requests_for_communications.create(requests_for_communication_params)   
-    #request.save        
+    request        = requests_for_communication = user_sender.requests_for_communications.build(requests_for_communication_params)   
+    
     
     user_receiver  = User.find(request.receiver)        
     user           = user_receiver
@@ -34,12 +34,12 @@ class RequestsForCommunicationsController < ApplicationController
                                  ('a'..'z').to_a.shuffle.first + 
                                  ('a'..'z').to_a.shuffle.first                                       
            
-      room_details             = user.id.to_s                  + 
-                                 plus_2_letters                + 
-                                 room.id.to_s                  +
-                                 '_'                           +
-                                 user.id_in_base.to_s[0, 2]    +
-                                 plus_3_letters                + 
+      room_details             = user_receiver.id.to_s                  + 
+                                 plus_2_letters                         + 
+                                 room.id.to_s                           +
+                                 '_'                                    +
+                                 user_receiver.id_in_base.to_s[0, 2]    +
+                                 plus_3_letters                         + 
                                  room.id_in_base.to_s[0, 3]                                                      
 
 
@@ -99,8 +99,12 @@ class RequestsForCommunicationsController < ApplicationController
 
 #______________________________________        
 
-              
-    if request.save
+
+    request_exist = RequestsForCommunication.find_by user_id: user_sender.id   
+    if request_exist and request_exist.receiver == request.receiver  # if request from current user was sended to this receiver
+      msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_yzhe_bul_otpravlen').msg      
+                        
+    elsif request.save
     
       UserNonverballyActionsMailer.new_incoming_request_for_open_communication(user_sender, user_receiver, room_url).deliver      
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_otpravlen').msg

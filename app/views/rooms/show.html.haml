@@ -1,2 +1,27 @@
-%h1
-  Nice Room ;)
+%h3
+  Ваши запросы на общение
+%br/
+
+%p
+  %b
+    Полученные:
+- @getted_rqs.each_with_index do |rq, i|
+
+  От #{@getted_rqs_from_users[i].name} 
+  %br/
+  * #{rq.status}
+  %hr
+
+   
+%br/
+
+
+
+%p
+  %b
+    Отправленные:
+- @sent_rqs.each_with_index do |rq, i|  
+  К #{@sent_rqs_to_users[i].name} 
+  %br/
+  * #{rq.status}
+  %hr
