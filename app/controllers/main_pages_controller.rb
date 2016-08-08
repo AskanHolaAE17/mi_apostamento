@@ -47,9 +47,18 @@ class MainPagesController < ApplicationController
       @page = Page.find_by(page: 'main')
     end
     
-    @page.description_meta += '. ' + @article.description_meta + '. ' + @page_article.description_meta
-    @page.keywords_meta    += ', ' + @article.keywords_meta    + ', ' + @page_article.keywords_meta
-    @page.em               += ', ' + @article.em               + ', ' + @page_article.em
+#_______________________________________
+    
+    
+    @page.description_meta = @page.description_meta.to_s
+    @page.keywords_meta    = @page.keywords_meta.to_s
+    @page.em               = @page.em.to_s
+    @page.h2               = @page.h2.to_s
+    
+    @page.description_meta += @article.description_meta.to_s + ' ' + @page_article.description_meta.to_s
+    @page.keywords_meta    += @article.keywords_meta.to_s    + ' ' + @page_article.keywords_meta.to_s
+    @page.em               += @article.em.to_s               + ' ' + @page_article.em.to_s
+    @page.h2               += @article.h2.to_s
 #_______________________________________________________________________________     
     
 

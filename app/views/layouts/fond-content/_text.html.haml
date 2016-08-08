@@ -4,15 +4,17 @@
 
 
 
-- @count_of_words = @page.em.split.size
-- @split_in = @count_of_words / 2 - 1
+-# @count_of_words = @page.em.split.size
+-#- @split_in = @count_of_words / 2 - 1
 
 %h2
-  =@page.em.split[0..@split_in].join(' ')
+  -#=@page.em.split[0..@split_in].join(' ')
+  =@page.h2
 
 
 %em
-  =@page.em.split[@split_in+1..@count_of_words-1].join(' ')
+  -#=@page.em.split[@split_in+1..@count_of_words-1].join(' ')
+  =@page.em
 
     
     
