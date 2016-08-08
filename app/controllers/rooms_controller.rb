@@ -152,6 +152,13 @@ before_action :set_main_page, only: [:show]
         @sent_rqs_to_users << User.find(rq.receiver)
       end
       
+      #TMP!
+      word = "Hello"
+      key  = 'world'
+      res  = xor_with(word, key)
+      res.force_encoding('UTF-8')
+      @res = res
+      
       
       ###
       #@requests_for_communications = @user.requests_for_communications

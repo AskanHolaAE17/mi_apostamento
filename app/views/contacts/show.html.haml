@@ -43,7 +43,7 @@
         =contact.city + ', ' + contact.country
       
       .text-success
-        =contact.birthday
+        =contact.birthday.strftime("%B %-d, %Y")
       
       .lead
         =contact.about_info   

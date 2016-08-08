@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :null_session
-  helper_method :akey, :repl_all_subs, :swap_symb, :id_in_base
+  helper_method :akey, :repl_all_subs, :swap_symb, :id_in_base, :xor_with
   
       
   def akey(*m)
@@ -57,6 +57,13 @@ class ApplicationController < ActionController::Base
     iibase = iibase.slice(0, iibase.length/devided_by.to_i)  
     iibase = iibase.to_s
   end
+  
+  
+  #class String
+    def xor_with(word, key)
+      word.bytes.zip(key.bytes).map { |(a,b)| a ^ b }.pack('c*')
+    end
+  #end  
   
   
   def repl_all_subs(a, b, str)

@@ -32,7 +32,7 @@ class MainPagesController < ApplicationController
       Article.where.not(code_name: 'main')
     else
       Article.where.not(translit: translit)
-    end
+    end    
     @articles = @articles.shuffle
     
         

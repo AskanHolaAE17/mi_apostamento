@@ -106,7 +106,7 @@
                                         order:       [:day, :month, :year],
                                         default:     { day:   flash[:contact_birthday_day], 
                                                        month: flash[:contact_birthday_month], 
-                                                       year:  flash[:contact_birthday_year]}
+                                                       year:  "#{1990 || flash[:contact_birthday_year] }" }
                                         
     %br/                                                                            
                                         
