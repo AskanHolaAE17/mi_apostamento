@@ -1,12 +1,12 @@
 - @menu_up_item = 'main'
 
-- @title = @page.title_tag
+- @title = @title_tag
 
 
 
 - @contact = Contact.new                                               
 
-
+=flash[:echo_me]
 
 - unless @info_msg.nil? and @info_msg == ''
   %h2 
@@ -18,6 +18,11 @@
   %h3
     =@article.title
   -#=@main_page.description.html_safe    
+  
+  
+  -#- unless contact.image.url.match(/missing.png/)     
+    .contact-image
+      = image_tag contact.image.url          
   
   
   =@descr_start.html_safe      

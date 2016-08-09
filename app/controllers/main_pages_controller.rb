@@ -46,6 +46,11 @@ class MainPagesController < ApplicationController
     unless translit
       @page = Page.find_by(page: 'main')
     end
+
+#_______________________________________
+
+    
+    @title_tag = @article.title_tag || @page.title_tag || ' '
     
 #_______________________________________
     

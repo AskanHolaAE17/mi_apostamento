@@ -1,0 +1,8 @@
+= form_for [@user_from, @rq], action: 'update' do |f|
+     
+  = f.hidden_field :receiver,   value: @rq.receiver
+  = f.hidden_field :status,     value: 'yes'
+    
+  
+  = f.submit 'Принять', class: ' btn btn-large btn-block btn-info request-btn '
+

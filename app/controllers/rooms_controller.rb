@@ -144,34 +144,19 @@ before_action :set_main_page, only: [:show]
         @getted_rqs_from_users << User.find(rq.user_id)
       end
         
+        
       # sent Requests  
       @sent_rqs   = @user.requests_for_communications
       @sent_rqs_to_users = []
       
       @sent_rqs.each do |rq|
         @sent_rqs_to_users << User.find(rq.receiver)
-      end
-      
-      #TMP!
-      word = "Hello"
-      key  = 'world'
-      res  = xor_with(word, key)
-      res.force_encoding('UTF-8')
-      @res = res
-      
-      
-      ###
-      #@requests_for_communications = @user.requests_for_communications
-      #@receiver_users = []
-      
-      #@requests_for_communications.each do |rq|
-      #  @receiver_users << User.find(rq.receiver)
-      #end   
+      end      
       
     end
     
   end
-
+  
 #_______________________________________________________________________________
 
 

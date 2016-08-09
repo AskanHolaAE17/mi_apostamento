@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808140500) do
+ActiveRecord::Schema.define(version: 20160809130000) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -291,7 +291,7 @@ ActiveRecord::Schema.define(version: 20160808140500) do
     t.boolean  "active",                                      default: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "white_writing_able_users_ids_list"
+    t.string   "white_writing_able_users_ids_list",           default: ""
   end
 
 end

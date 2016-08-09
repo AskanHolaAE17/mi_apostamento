@@ -1,3 +1,11 @@
+- if flash[:answer_on_request]
+  %article
+    %section
+      #note
+        =flash[:answer_on_request].html_safe
+
+
+
 %h3
   Ваши запросы на общение
 %br/
@@ -5,15 +13,25 @@
 %p
   %b
     Полученные:
+    
 - @getted_rqs.each_with_index do |rq, i|
+
+  - @user_from = @getted_rqs_from_users[i]
+  - @rq        = rq 
+  
 
   От #{@getted_rqs_from_users[i].name} 
   %br/
   * #{rq.status}
+  
+  - if rq.status == 'still'
+    =render partial: 'request_incoming_agree'
+  
   %hr
 
    
 %br/
+
 
 
 
@@ -27,4 +45,4 @@
   %hr
   
   
-=@res  
+
