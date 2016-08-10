@@ -56,14 +56,95 @@ class ApplicationController < ActionController::Base
     iibase = iibase.gsub(/\D+/, '')
     iibase = iibase.slice(0, iibase.length/devided_by.to_i)  
     iibase = iibase.to_s
-  end
+  end    
+
+#_______________________________________________________________________________
   
-  
-  #class String
-    def xor_with(word, key)
-      word.bytes.zip(key.bytes).map { |(a,b)| a ^ b }.pack('c*')
+
+  def details_from_url_to_array(details)
+    res_array = []
+
+#________________________________________    
+
+    
+    array_last_element = ''
+
+    for i in 0..details.length-1
+      if details[i] == '&'
+        @ampersand_position = i
+        for m in i+1..details.length-1
+          array_last_element += details[m]
+        end  
+      end
     end
-  #end  
+        
+        
+    details = details[0,@ampersand_position] if @ampersand_position
+    
+#________________________________________    
+    
+    
+    @room_details_res     = ''
+    @devider_pos_counter  = 0
+    
+    #remote all '_' but central
+    details.split('').each do |a|  
+    
+      if a == '_'
+        @devider_pos_counter += 1
+        
+        unless @devider_pos_counter == 2
+          next
+        end
+        
+      end  
+      
+      @room_details_res  += a
+    end 
+      
+    details               =  @room_details_res.to_s 
+    
+#________________________________________    
+
+
+    # START EXTRACTING ELEMENTS before '&' for Res_Array 
+    @current_i = 0  # common counter of position
+
+#_______________________________________    
+
+
+    element = ''  # getting element for Res_Array
+    
+    for i in 0..details.length-1
+    
+      unless details[i].in? ('a'..'z') or details[i].in? ('A'..'Z') or details[i] == '_'      
+      
+        element += details[i]
+        @current_i += 1
+        
+      else #skip alphabet symbols
+      
+        unless element == ''
+          res_array    << element.to_i 
+          element      = ''
+        end  
+        
+        @current_i     += 1
+      end            
+          
+    end      
+    
+#________________________________________    
+    
+    
+    if array_last_element != ''
+      res_array          << array_last_element
+    end
+    puts res_array[0]
+    res_array
+  end  
+  
+#_______________________________________________________________________________  
   
   
   def repl_all_subs(a, b, str)

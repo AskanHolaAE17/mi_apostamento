@@ -27,11 +27,10 @@ class ContactsController < ApplicationController
     #key_pair  = @key_pair      
     #order_info = key_pair.decrypt(link_details_begin_ascii_8)          
     
-#_______________________________________________________________________________
-      
+#_______________________________________________________________________________     
 
                    
-    order_info[order_info.length-1] = ''
+    #order_info[order_info.length-1] = ''
     order_info  = Base64.decode64(order_info)        
     
 #_______________________________________________________________________________
@@ -108,6 +107,9 @@ class ContactsController < ApplicationController
   def create    
 
     root_path  = MeConstant.find_by_title('root_path').content
+
+#_______________________________________________________________________________
+
     
     #-#order      = Order.find(params[:order_number])       
     
@@ -116,6 +118,7 @@ class ContactsController < ApplicationController
     contact = Contact.new(contact_params)    
     order   = Order.find(contact.order_number)
     
+#_______________________________________________________________________________
     
     
     contact.order = order
@@ -145,8 +148,6 @@ class ContactsController < ApplicationController
                    
 
 #_______________________________________________________________________________
-
-
     
     #if order and order.more_info_save != true
     
@@ -160,6 +161,7 @@ class ContactsController < ApplicationController
     
     #orig_geo = original_geometry = Paperclip::Geometry.from_file(contact.image(:original)).to_s
     #width = geo    
+    
 #_______________________________________________________________________________
     
     
@@ -179,8 +181,8 @@ class ContactsController < ApplicationController
 
 
 
-      contacts_details_encoded_64  = (Base64.encode64 contacts_details).chomp.delete("\n")
-      contacts_details     = contacts_details_encoded_64 + '='
+      contacts_details  = (Base64.encode64 contacts_details).chomp.delete("\n")
+      #contacts_details     = contacts_details_encoded_64 + '='
 
 
 
@@ -215,12 +217,12 @@ class ContactsController < ApplicationController
         
         d_c_params_json = JSON.generate(disable_contact_params_hash)
         d_c_params_encoded_64 = (Base64.encode64 d_c_params_json).chomp.delete("\n")
-        d_c_params_encoded = d_c_params_encoded_64 + '='
-        disable_contact_params = d_c_params_encoded
+        #d_c_params_encoded = d_c_params_encoded_64 + '='
+        disable_contact_params = d_c_params_encoded_64
 
 
     
-      disable_contact_link = root_path + 'deactivate/' + disable_contact_params     
+      disable_contact_link = root_path + 'deactivate-contact/' + disable_contact_params     
       
       contact.link_for_disable_contact = disable_contact_link
 
@@ -522,8 +524,8 @@ class ContactsController < ApplicationController
                                   letter             +        
                                   order.akey_payed   
                                                                                                       
-      url_with_contacts_details_encoded_64  = (Base64.encode64 url_with_contacts_details).chomp.delete("\n")
-      url_with_contacts_details = url_with_contacts_details_encoded_64 + '=' 
+      url_with_contacts_details  = (Base64.encode64 url_with_contacts_details).chomp.delete("\n")
+      #url_with_contacts_details = url_with_contacts_details_encoded_64 + '=' 
       
       
       
@@ -556,16 +558,23 @@ class ContactsController < ApplicationController
     @page            = Page.find_by_page :contacts
     @consult         = Consult.new     
   
+#_______________________________________________________________________________
+
   
     @details_encoded  = params[:details]
     
-    @details_encoded[@details_encoded.length-1] = ''
-    
+    #@details_encoded[@details_encoded.length-1] = ''    
     #flash[:contact_details_reload] = params[:details]   # contact_details_for_contact_show_page_reload
     details                 = Base64.decode64(@details_encoded)    
+#?????????????????    
+
+#    details_array    = details_from_url_to_array(details)
     
+#    order_id         = details_array.first     
+#    order_akey_payed = details_array.last
     
-    
+#_______________________________________________________________________________
+               
     
     status     = details[0].to_i
    
@@ -611,7 +620,7 @@ class ContactsController < ApplicationController
     ###Request
     #@request = requests_for_communication = RequestsForCommunication.new    
     @request = @user.requests_for_communications.build
-    
+    @requests_of_current_user = @user.requests_for_communications
 #_______________________________________________________________________________
     
     
@@ -656,12 +665,120 @@ class ContactsController < ApplicationController
 #_____________________________________________________________________________________________________________________________________________
 
 
+  def link_with_contacts_again
+  
+    root_path  = MeConstant.find_by_title('root_path').content
+    
+#_______________________________________________________________________________
+
+    
+    details64        = params[:details]
+    details          = Base64.decode64(details64)    
+    details_array    = details_from_url_to_array(details)
+    
+    order_id         = details_array.first     
+    order_akey_payed = details_array.last
+    
+    
+    order         = Order.find(order_id)
+        
+#_______________________________________________________________________________    
+
+  
+    if order and order.akey_payed[0,3] == order_akey_payed and order.more_info_save
+
+      contact       = Contact.find(order.contact_id)        
+  
+#_______________________________________________________________________________
+
+  
+      contacts_status = if order.group == 'GOOD GROUP'                     
+        [2,4,6,8].shuffle.first.to_s
+      else
+        [1,3,5,7,9].shuffle.first.to_s      
+      end
+
+      plus_2_letters      = ('a'..'z').to_a.shuffle.first + 
+                            ('a'..'z').to_a.shuffle.first
+           
+      contacts_details    = contacts_status               + 
+                            order.id.to_s                 + 
+                            plus_2_letters                + 
+                            order.akey_payed                     
+
+#_______________________________________________________________________________
+
+
+      contacts_details  = (Base64.encode64 contacts_details).chomp.delete("\n")
+      #contacts_details     = contacts_details_encoded_64 + '='
+
+
+
+      link_with_contacts = root_path                      + 
+                           'contacts/'                    + 
+                           contacts_details                 
+                           
+#_______________________________________________________________________________
+
+
+      disable_contact_params_hash = {
+        :order_number => order.id,
+        :order_akey   => order.akey,
+        :contact_id   => contact.id
+      }      
+        
+        d_c_params_json = JSON.generate(disable_contact_params_hash)
+        d_c_params_encoded_64 = (Base64.encode64 d_c_params_json).chomp.delete("\n")
+        #d_c_params_encoded = d_c_params_encoded_64 + '='
+        disable_contact_params = d_c_params_encoded_64
+
+
+    
+      disable_contact_link = root_path + 'deactivate-contact/' + disable_contact_params     
+
+#_______________________________________________________________________________
+
+                           
+      OrderMailer.d_see_contacts(order, link_with_contacts, disable_contact_link).deliver
+
+      msg_page_before_show_contacts = root_path + 'info/pismo_so_ssulkoy_na_bazy'      
+    else  
+      
+#_______________________________________________________________________________
+
+      
+      redirect_letter          = ('a'..'z').to_a.shuffle.first
+      link_details             = order.id.to_s                  + 
+                                 redirect_letter                + 
+                                 '&'                            +
+                                 order.akey_payed[0,3]
+
+      
+      link_details_encoded  = (Base64.encode64 link_details).chomp.delete("\n")
+      #link_details_encoded     = link_details_encoded_64 + '=' 
+
+            
+      next_page_after_test_2_level = link_with_more_info_form = root_path + 'much_form/' + link_details_encoded                       
+      
+#_______________________________________________________________________________
+      
+      
+      msg_page_before_show_contacts = root_path + 'info/informatsiya_eshche_ne_zapolnena'
+    end 
+ 
+      redirect_to msg_page_before_show_contacts
+                           
+  end
+
+#_____________________________________________________________________________________________________________________________________________
+
+
   def disable_contact_ask
     
     @page       = Page.find_by_page :more_info_form  
     @site_title = MeConstant.find_by_title('site_title').content   
         
-    @deactive_link = root_path + 'de-activate/' + params[:deactive_params]
+    @deactive_link = root_path + 'de-activate-contact/' + params[:deactive_params]
     
   end
 

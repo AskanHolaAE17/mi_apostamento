@@ -28,16 +28,28 @@ Rails.application.routes.draw do
   match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'    
 
   match '/much_form/:order_info',          to: 'contacts#more_info_form',                           via: 'get'        
+
+
   
   post  '/contacts',                       to: 'contacts#create'                # for MoreContactsForm works (path for creating new contact)  
   match '/contacts/:details',              to: 'contacts#show',                                     via: 'get'      
+
+  match '/contacts-show/:details',         to: 'contacts#link_with_contacts',                                     via: 'get'        
+
+
        
   
   post  '/consults',                       to: 'consults#create'                # for creating new contact
   
-  match '/deactivate/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
-  match '/de-activate/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        
-  post  '/de-activate/:deactive_params',   to: 'contacts#disable_contact'  
+  
+  
+  match '/deactivate-contact/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
+  match '/de-activate-contact/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        
+  post  '/de-activate-contact/:deactive_params',   to: 'contacts#disable_contact'  
+  
+  match '/show-contacts/:details',                 to: 'contacts#link_with_contacts_again',                 via: 'get'          
+  
+  
             
   ## dannue_receive_obrabotanu  
   match 'receive/:details',                to: 'tests#qs',                                          via: 'get'

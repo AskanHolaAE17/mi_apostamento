@@ -51,12 +51,22 @@
       -#.label.label-success.select_able
         =contact.email        
         
-      - @receiver_user_id = contact.user_id  
         
         
-      %section
-        %b
-          =render partial: 'new_request_for_communication' 
+      - @receiver_user_id = contact.user_id          
+      - @exist_request    = @requests_of_current_user.find_by receiver: @receiver_user_id  
+        
+      - unless @exist_request and @exist_request.status == 'yes'
+        %section
+          %b
+            =render partial: 'new_request_for_communication'
+            
+      - else
+        %section
+          %b
+            =render partial: 'new_message'        
+             
+        
           
       =contact.secret_answer_1            
       =contact.secret_answer_2

@@ -403,11 +403,15 @@ class TestsController < ApplicationController
 
 
       redirect_letter          = ('a'..'z').to_a.shuffle.first
-      link_details             = order.id.to_s + redirect_letter + order.akey_payed
+      link_details             = order.id.to_s               + 
+                                 redirect_letter             + 
+                                 order.akey_payed
 
       
       link_details_encoded_64  = (Base64.encode64 link_details).chomp.delete("\n")
-      link_details_encoded     = link_details_encoded_64 + '=' 
+      #link_details_encoded     = link_details_encoded_64 + '=' 
+
+
 
             
       #key_pair  = RSA::KeyPair.generate(1024)
@@ -424,13 +428,33 @@ class TestsController < ApplicationController
       
       
       #link_with_more_info_form = root_path + 'much_form/' + link_details_begin
-      next_page_after_test_2_level = link_with_more_info_form = root_path + 'much_form/' + link_details_encoded                 
+      next_page_after_test_2_level = link_with_more_info_form = root_path + 'much_form/' + link_details_encoded_64                 
                    
+#__________________________________________
+
+
+      plus_2_letters           = ('a'..'z').to_a.shuffle.first + 
+                                 ('A'..'Z').to_a.shuffle.first
+                                                                                                   
+      
+      details                  = order.id.to_s                 + 
+                                 plus_2_letters                + 
+                                 '&'                           +
+                                 order.akey_payed[0,3]                
+                                 
+                                 
+      details  = (Base64.encode64 details).chomp.delete("\n")                                 
       
       
+      link_with_contacts_again = root_path                     + 
+                                'show-contacts/'               + 
+                                 details                       
+      
+#__________________________________________
+
       
       unless order.test_1_ended
-        OrderMailer.c_more_info_form(order, link_with_more_info_form).try(:deliver)      
+        OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
       end              
             
                                            
@@ -452,8 +476,12 @@ class TestsController < ApplicationController
                                     'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
                                     'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
      
-                                          
+                 
+#__________________________________________                 
+                 
+                 
       order.save
+      
       
       redirect_to next_page_after_test_2_level      
       

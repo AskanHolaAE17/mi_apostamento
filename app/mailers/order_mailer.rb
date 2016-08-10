@@ -24,9 +24,10 @@ class OrderMailer < ActionMailer::Base
   end  
 
   
-  def c_more_info_form(order, link_with_more_info_form)
+  def c_more_info_form(order, link_with_more_info_form, link_with_contacts_again)
     @order = order
     @link_with_more_info_form = link_with_more_info_form
+    @link_with_contacts_again = link_with_contacts_again
     mail(to: @order.email, subject: 'Информация о себе')
   end
   
