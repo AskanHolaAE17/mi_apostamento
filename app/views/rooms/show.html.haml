@@ -10,39 +10,53 @@
   Ваши запросы на общение
 %br/
 
-%p
-  %b
-    Полученные:
+- if @getted_rqs.count > 0
+  %p
+    %b
+      Полученные:
     
-- @getted_rqs.each_with_index do |rq, i|
+  - @getted_rqs.each_with_index do |rq, i|
 
-  - @user_from = @getted_rqs_from_users[i]
-  - @rq        = rq 
+    - @user_from = @getted_rqs_from_users[i]
+    - @rq        = rq 
   
 
-  От #{@getted_rqs_from_users[i].name} 
-  %br/
-  * #{rq.status}
+    От #{@getted_rqs_from_users[i].name} 
+    %br/
+    
+    
+    - if rq.status == 'yes'  
+      - status = 'Запрос Вами одобрен'
+    - elsif rq.status == 'still'    
+      - status = 'Запрос ожидает действия'
+    - elsif rq.status == 'no'      
+      - status = 'Запрос отклонен Вами'
+    - elsif rq.status == 'stop'
+      - status = 'Запрос отменен пользователем'        
+    
+    * #{status}
   
-  - if rq.status == 'still'
-    =render partial: 'request_incoming_agree'
+    - if rq.status == 'still'
+      =render partial: 'request_incoming_agree'
   
-  %hr
+    %hr
 
    
-%br/
 
 
 
 
-%p
-  %b
-    Отправленные:
-- @sent_rqs.each_with_index do |rq, i|  
-  К #{@sent_rqs_to_users[i].name} 
+- if @sent_rqs.count > 0
   %br/
-  * #{rq.status}
-  %hr
+
+  %p
+    %b
+      Отправленные:
+  - @sent_rqs.each_with_index do |rq, i|  
+    К #{@sent_rqs_to_users[i].name} 
+    %br/
+    * #{rq.status}
+    %hr
   
   
 

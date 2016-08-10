@@ -224,7 +224,7 @@ class ContactsController < ApplicationController
     
       disable_contact_link = root_path + 'deactivate-contact/' + disable_contact_params     
       
-      contact.link_for_disable_contact = disable_contact_link
+      contact.link_for_disable_contact = disable_contact_link            
 
 #_____________________________________________
       
@@ -252,11 +252,57 @@ class ContactsController < ApplicationController
       contact.save
       room.save
       
+#______________________________________
+
+
+    # ROOM
+
+      plus_2_letters           = ('a'..'z').to_a.shuffle.first + 
+                                 ('a'..'z').to_a.shuffle.first
+                                 
+      plus_3_letters           = ('a'..'z').to_a.shuffle.first + 
+                                 ('a'..'z').to_a.shuffle.first + 
+                                 ('a'..'z').to_a.shuffle.first                                       
+           
+      room_details             = user.id.to_s                           + 
+                                 plus_2_letters                         + 
+                                 room.id.to_s                           +
+                                 '_'                                    +
+                                 user.id_in_base.to_s[0, 2]             +
+                                 plus_3_letters                         + 
+                                 room.id_in_base.to_s[0, 3]                                                      
+
+
+      devider_central_position = room_details.index('_')            
+      devider_start_position   = devider_central_position.to_i / 2      
+      
+      time_now_min             = Time.now.min
+      devider_end_position     = if time_now_min % 2 == 0
+        room_details.length-3
+      else  
+        room_details.length-2 
+      end  
+      
+      room_details.insert(devider_start_position, '_')
+      room_details.insert(devider_end_position, '_')
+      
+
+
+      room_details_encoded_64  = (Base64.encode64 room_details).chomp.delete("\n")
+      room_details             = room_details_encoded_64 
+
+
+
+      room_url                 = root_path                      + 
+                                'room/'                         + 
+                                 room_details                                                         
+      
 #_____________________________________________
     
     
       #unless @contacts.count == 0 
         OrderMailer.d_see_contacts(order, link_with_contacts, disable_contact_link).deliver
+        UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).deliver
       #end
 
 
@@ -615,11 +661,11 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________
 
 
-    contact  = Contact.find_by order_number: order_id         # current User
-    @user    = User.find(contact.user_id)
+    contact                   = Contact.find_by order_number: order_id         # current User
+    @user                     = User.find(contact.user_id)
     ###Request
     #@request = requests_for_communication = RequestsForCommunication.new    
-    @request = @user.requests_for_communications.build
+    @request                  = @user.requests_for_communications.build
     @requests_of_current_user = @user.requests_for_communications
 #_______________________________________________________________________________
     
@@ -803,12 +849,15 @@ class ContactsController < ApplicationController
     
     
     contact = Contact.find(contact_id)      
-    order = Order.find(order_number)    
+    order   = Order.find(order_number)    
+    user    = User.find(contact.user_id)
     
     if contact and order and contact.order_number == order_number and order.akey == order_akey
-      contact.able_for_contact = false
+      user.active                      = false
+      contact.able_for_contact         = false
       contact.link_for_disable_contact = ''
       contact.save
+      user.save
       redirect_to root_path + 'info/dannue_ydalenu_iz_bazu'
     else
       

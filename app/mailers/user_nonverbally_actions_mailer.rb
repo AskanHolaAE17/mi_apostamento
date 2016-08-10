@@ -2,6 +2,13 @@
 class UserNonverballyActionsMailer < ActionMailer::Base
 
   default from: 'be-in-pair@gmail.com'
+
+
+  def the_room_of_current_user(user, room_url)
+    @user          = user
+    @room_url      = room_url
+    mail(to: user.contact.email, subject: 'Ваша комната создана')    
+  end 
     
   
   def new_incoming_request_for_open_communication(user_sender, user_receiver, room_url)

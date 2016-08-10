@@ -53,23 +53,40 @@
         
         
         
-      - @receiver_user_id = contact.user_id          
-      - @exist_request    = @requests_of_current_user.find_by receiver: @receiver_user_id  
         
-      - unless @exist_request and @exist_request.status == 'yes'
+      - @receiver_user_id = contact.user_id          
+      - @exist_sent_request    = @requests_of_current_user.find_by receiver: @receiver_user_id
+      
+      - @exist_income_request    = RequestsForCommunication.where    user_id: @receiver_user_id
+      - @exist_income_request    = (@exist_income_request.where      receiver: @user.id).last
+      
+      
+      -#- if @exist_income_request == nil
+        - @exist_income_request = @exist_sent_request
+        
+      - if @exist_sent_request == nil
+        - @exist_sent_request = RequestsForCommunication.first  
+        - @exist_sent_request.status = 'hello'
+      - if @exist_income_request == nil
+        - @exist_income_request = RequestsForCommunication.first  
+        - @exist_income_request.status = 'hello'        
+      
+        
+      - if (@exist_sent_request and @exist_sent_request.status == 'yes') or (@exist_income_request and @exist_income_request.status == 'yes')
         %section
           %b
-            =render partial: 'new_request_for_communication'
+            =render partial: 'new_message'
             
+      - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
+        %hr/
+        %section
+          %b
+            Запрос на общение уже отправлен
+      
       - else
         %section
           %b
-            =render partial: 'new_message'        
-             
-        
-          
-      =contact.secret_answer_1            
-      =contact.secret_answer_2
+            =render partial: 'new_request_for_communication'                     
         
        
     
@@ -83,12 +100,13 @@
       -#        = render partial: 'consults/consult_form'
       
 - else    
-  
-  .lead 
-    -# Email или отложка:
-    База создается. Зайдите повторно через несколько дней.
+
+  .contact-block  
+    .lead 
+      -# Email или отложка:
+      База создается. Зайдите повторно через несколько дней.
     
-  =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
+    =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
 -#______________________________________________________________________________  
 
 

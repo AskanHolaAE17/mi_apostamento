@@ -215,6 +215,8 @@ class RequestsForCommunicationsController < ApplicationController
     
     if user_sender.save and user_receiver.save and request.save
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_odobren').msg                
+      UserNonverballyActionsMailer.request_is_approved(user_sender, user_receiver, room_url).deliver
+      
     else
       msg = (OrderInfoPage.find_by translit: 'poprobyyte_eshche_raz').msg                  
     end
