@@ -8,13 +8,18 @@
 
 %h3
   Ваши запросы на общение
+  
+  - if @getted_rqs.count == 0 and @sent_rqs.count == 0
+    будут отображаться здесь
+  
+  
 %br/
 
 - if @getted_rqs.count > 0
   %p
     %b
       Полученные:
-    
+
   - @getted_rqs.each_with_index do |rq, i|
 
     - @user_from = @getted_rqs_from_users[i]
@@ -38,7 +43,8 @@
   
     - if rq.status == 'still'
       =render partial: 'request_incoming_agree'
-  
+      =render partial: 'request_incoming_reject'
+
     %hr
 
    
@@ -55,7 +61,18 @@
   - @sent_rqs.each_with_index do |rq, i|  
     К #{@sent_rqs_to_users[i].name} 
     %br/
-    * #{rq.status}
+    
+    
+    - if rq.status == 'yes'  
+      - status = 'Запрос одобрен'
+    - elsif rq.status == 'still'    
+      - status = 'Запрос ожидает действия'
+    - elsif rq.status == 'no'      
+      - status = 'Запрос отклонен'
+    - elsif rq.status == 'stop'
+      - status = 'Запрос отменен Вами'            
+    
+    * #{status}
     %hr
   
   

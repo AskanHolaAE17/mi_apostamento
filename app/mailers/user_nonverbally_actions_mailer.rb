@@ -26,4 +26,13 @@ class UserNonverballyActionsMailer < ActionMailer::Base
     mail(to: user_receiver.contact.email, subject: 'Ваш запрос на общение одобрен')    
   end  
 
+  def request_is_rejected(user_sender, user_receiver, room_url, link_with_contacts)
+    @user_sender   = user_sender
+    @user_receiver = user_receiver
+    @link_with_contacts = link_with_contacts
+    @room_url      = room_url
+    mail(to: user_receiver.contact.email, subject: 'Запрос на общение отклонен')    
+  end  
+
+
 end
