@@ -6,7 +6,7 @@ class InformMailer < ActionMailer::Base
   
   def if_contacts_null(contact)
     @contact = contact        
-    mail(to: 'be-in-pair@gmail.com', subject: 'Клиент заплатил и все еще ждет контакты.')    
+    mail(to: 'be-in-pair@gmail.com', subject: 'KIND: Клиент заплатил и все еще ждет контакты.')    
   end  
 
 end

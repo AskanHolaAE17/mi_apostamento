@@ -12,7 +12,7 @@ class MainPagesController < ApplicationController
   #end
   
   
-  def index 
+  def index    
   
     @site_title             = MeConstant.find_by_title('site_title').content
     

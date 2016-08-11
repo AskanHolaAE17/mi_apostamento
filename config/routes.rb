@@ -58,12 +58,19 @@ Rails.application.routes.draw do
       
   ## (User Loged In)
   ## ROOM 
-  match 'room/:details',                   to: 'rooms#show',                                         via: 'get'      
+  match 'room/:details',                   to: 'rooms#show',                                        via: 'get'      
+   
+   
+   
+  #MESSAGE
+  post  'message_new/:details',            to: 'messages#new'                                        
+  match 'message_new/:details',            to: 'messages#new',                                      via: 'get'           
     
   
   
   resources :users do
     resources :requests_for_communications
+    resources :messages
   end  
   
   

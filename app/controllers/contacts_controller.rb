@@ -706,9 +706,36 @@ class ContactsController < ApplicationController
       InformMailer.if_contacts_null(contact).deliver        
     end
     
+#_______________________________________________________________________________
+
+    
+    #MESSAGE    
+    @sender_id         = @user.id.to_s
+    @message           = @user.messages.build    
+    @message_letter    = ('a'..'z').to_a.shuffle.first        
+    
+    user_id_in_base    = @user.id_in_base.to_s
+    id_in_base_begin   = user_id_in_base[0,2]
+    id_in_base_end     = user_id_in_base[2, user_id_in_base.length-1]
+    
+    message_details    = id_in_base_begin               +
+                         '_'                            +
+                         id_in_base_end                 +
+                         ('a'..'z').to_a.shuffle.first  +
+                         '_'                            
+                         
+                                                                                                      
+    #message_details    = (Base64.encode64 message_details).chomp.delete("\n")
+    
+    @message_path_new  = root_path + 'message_new/' + message_details         
+        
+    
   end
   
 #_____________________________________________________________________________________________________________________________________________
+
+
+
 
 
   def link_with_contacts_again

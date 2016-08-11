@@ -13,6 +13,8 @@
 
   - @conter = 1
   - @contacts.each_with_index do |contact, index|
+    
+    - @receiver_id = contact.user_id.to_s
   
     -# COLOR
     - @color = 'green'       if contact.group == 'GOOD GROUP'    
@@ -75,13 +77,20 @@
       - if (@exist_sent_request and @exist_sent_request.status == 'yes') or (@exist_income_request and @exist_income_request.status == 'yes')
         %section
           %b
-            =render partial: 'new_message'
+            =render partial: 'messages/message_button'
             
       - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
         %hr/
         %section
           %b
             Запрос на общение уже отправлен
+      
+      - elsif (@exist_sent_request and @exist_sent_request.status == 'no') or (@exist_income_request and @exist_income_request.status == 'no')
+        %hr/
+        %section
+          %b
+            Пользователь уже отклонил запрос от Вас
+      
       
       - else
         %section

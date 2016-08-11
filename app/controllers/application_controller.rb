@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
   
 
   def details_from_url_to_array(details)
+    details[details.length] = 'A'
     res_array = []
 
 #________________________________________    

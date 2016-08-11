@@ -6,21 +6,21 @@ class OrderMailer < ActionMailer::Base
   
   def a_has_client_payed(order)
     @order = order        
-    mail(to: @order.email, subject: 'Контакты')    
+    mail(to: @order.email, subject: 'KIND: Контакты')    
   end
     
       
   def b_test_to_client_for_get_contacts_after_cool_pay(order, test_url)
     @order = order            
     @test_url = test_url
-    mail(to: @order.email, subject: 'Пройдите тест')
+    mail(to: @order.email, subject: 'KIND: Пройдите тест')
   end
 
 
   def b_to_test_2_levels(order, link_with_test_2_levels)
     @order = order
     @link_with_test_2_levels = link_with_test_2_levels
-    mail(to: @order.email, subject: 'Второй тест')
+    mail(to: @order.email, subject: 'KIND: Второй тест')
   end  
 
   
@@ -28,7 +28,7 @@ class OrderMailer < ActionMailer::Base
     @order = order
     @link_with_more_info_form = link_with_more_info_form
     @link_with_contacts_again = link_with_contacts_again
-    mail(to: @order.email, subject: 'Информация о себе')
+    mail(to: @order.email, subject: 'KIND: Информация о себе')
   end
   
   
@@ -36,19 +36,19 @@ class OrderMailer < ActionMailer::Base
     @order = order
     @link_with_contacts = link_with_contacts
     @disable_contact_link = disable_contact_link
-    mail(to: @order.email, subject: 'Страница с контактами')  
+    mail(to: @order.email, subject: 'KIND: Страница с контактами')  
   end
   
   
   def e_ready_for_pay_consult(consult)
     @consult = consult
-    mail(to: @consult.email, subject: 'Заказ консультации')  
+    mail(to: @consult.email, subject: 'KIND: Заказ консультации')  
   end    
     
   
   def f_consult_payed(consult)
     @consult = consult
-    mail(to: @consult.email, subject: 'Консультация оплачена')  
+    mail(to: @consult.email, subject: 'KIND: Консультация оплачена')  
   end    
       
 end

@@ -7,7 +7,7 @@ class UserNonverballyActionsMailer < ActionMailer::Base
   def the_room_of_current_user(user, room_url)
     @user          = user
     @room_url      = room_url
-    mail(to: user.contact.email, subject: 'Ваша комната создана')    
+    mail(to: user.contact.email, subject: 'KIND: Ваша комната создана')    
   end 
     
   
@@ -15,7 +15,7 @@ class UserNonverballyActionsMailer < ActionMailer::Base
     @user_sender   = user_sender
     @user_receiver = user_receiver
     @room_url      = room_url
-    mail(to: user_receiver.contact.email, subject: 'Вы получили новый запрос на общение')    
+    mail(to: user_receiver.contact.email, subject: 'KIND: Вы получили новый запрос на общение')    
   end 
    
 
@@ -23,7 +23,7 @@ class UserNonverballyActionsMailer < ActionMailer::Base
     @user_sender   = user_sender
     @user_receiver = user_receiver
     @room_url      = room_url
-    mail(to: user_receiver.contact.email, subject: 'Ваш запрос на общение одобрен')    
+    mail(to: user_receiver.contact.email, subject: 'KIND: Ваш запрос на общение одобрен')    
   end  
 
   def request_is_rejected(user_sender, user_receiver, room_url, link_with_contacts)
@@ -31,7 +31,7 @@ class UserNonverballyActionsMailer < ActionMailer::Base
     @user_receiver = user_receiver
     @link_with_contacts = link_with_contacts
     @room_url      = room_url
-    mail(to: user_receiver.contact.email, subject: 'Запрос на общение отклонен')    
+    mail(to: user_receiver.contact.email, subject: 'KIND: Запрос на общение отклонен')    
   end  
 
 

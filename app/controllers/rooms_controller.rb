@@ -135,7 +135,10 @@ before_action :set_main_page, only: [:show]
     else        
       @page       = Page.find_by_page :room_one        
       
-      
+#_______________________________________      
+
+
+      # REQUESTS      
       # getted Requests
       @getted_rqs = RequestsForCommunication.where(receiver: @user.id)
       @getted_rqs_from_users = []
@@ -143,6 +146,7 @@ before_action :set_main_page, only: [:show]
       @getted_rqs.each do |rq|
         @getted_rqs_from_users << User.find(rq.user_id)
       end
+      
         
         
       # sent Requests  
@@ -152,6 +156,22 @@ before_action :set_main_page, only: [:show]
       @sent_rqs.each do |rq|
         @sent_rqs_to_users << User.find(rq.receiver)
       end      
+
+#_______________________________________
+
+
+      # MESSAGES
+      @messages_from_you = Messages.find_by user_id:  @user.id
+      
+      @messages_from_you.each do |msg|
+      end
+      
+      
+      
+      @messages_to_you   = Messages.find_by receiver: @user.id            
+           
+#_______________________________________
+      
       
     end
     

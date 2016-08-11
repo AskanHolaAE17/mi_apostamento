@@ -1,0 +1,44 @@
+#form.lead
+
+  = form_for [@user, @user.messages.build] do |f|
+     
+    
+    %a{name: '1'}    
+    .dark-green{class: flash[:error_class_title]}
+      Тема:
+    
+    %div    
+      = f.text_field :title,            required:    '',                                                                                 
+                                        class:       'input-xlarge', 
+                                        maxlength:   '50',
+                                        value:       "#{flash[:contact_title] || nil}",
+                                        autofocus:    flash[:autofocus_title]
+                                                                                           
+    %br/                                    
+
+    
+    
+    %a{name: '2'}
+    .dark-green{class: flash[:error_class_body]}
+      Сообщение:
+    
+    %div    
+      = f.text_area :body,              size:        '25x5',
+                                        required:    '',                                                                                 
+                                        class:       'input-xlarge', 
+                                        maxlength:   '5000',
+                                        value:       "#{flash[:contact_body] || nil}",
+                                        autofocus:    flash[:autofocus_body]
+                                            
+    
+
+
+    = f.hidden_field :user_id,                          value: @sender_id
+    = f.hidden_field :receiver,                         value: @receiver_id
+    = f.hidden_field :current_tmp_new_message_link,     value: @current_tmp_new_message_link
+    -#= f.hidden_field :msg_type,                       value: 'outcoming'
+  
+
+  
+    = f.submit 'Отправить', class: ' btn btn-large btn-block btn-success request-btn '
+  

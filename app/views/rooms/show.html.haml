@@ -6,6 +6,17 @@
 
 
 
+
+
+%h3
+  Ваши сообщения
+
+
+
+%hr/
+%hr/
+
+
 %h3
   Ваши запросы на общение
   
@@ -20,32 +31,34 @@
     %b
       Полученные:
 
-  - @getted_rqs.each_with_index do |rq, i|
+  .request_communic_block
+    - @getted_rqs.each_with_index do |rq, i|
 
-    - @user_from = @getted_rqs_from_users[i]
-    - @rq        = rq 
+      - @user_from = @getted_rqs_from_users[i]
+      - @rq        = rq 
   
 
-    От #{@getted_rqs_from_users[i].name} 
-    %br/
+      От #{@getted_rqs_from_users[i].name} 
+      %br/
     
     
-    - if rq.status == 'yes'  
-      - status = 'Запрос Вами одобрен'
-    - elsif rq.status == 'still'    
-      - status = 'Запрос ожидает действия'
-    - elsif rq.status == 'no'      
-      - status = 'Запрос отклонен Вами'
-    - elsif rq.status == 'stop'
-      - status = 'Запрос отменен пользователем'        
+      - if rq.status == 'yes'  
+        - status = 'Запрос Вами одобрен'
+      - elsif rq.status == 'still'    
+        - status = 'Запрос ожидает действия'
+      - elsif rq.status == 'no'      
+        - status = 'Запрос отклонен Вами'
+      - elsif rq.status == 'stop'
+        - status = 'Запрос отменен пользователем'        
     
-    * #{status}
+      .request_communic_status  
+        * #{status}
   
-    - if rq.status == 'still'
-      =render partial: 'request_incoming_agree'
-      =render partial: 'request_incoming_reject'
+      - if rq.status == 'still'
+        =render partial: 'request_incoming_agree'
+        =render partial: 'request_incoming_reject'
 
-    %hr
+      %hr
 
    
 

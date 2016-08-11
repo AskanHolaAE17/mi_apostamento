@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810103800) do
+ActiveRecord::Schema.define(version: 20160811232100) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -159,16 +159,17 @@ ActiveRecord::Schema.define(version: 20160810103800) do
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "sender"
+    t.string   "receiver"
     t.string   "title"
     t.string   "body"
     t.string   "spam"
-    t.boolean  "important",  default: false
-    t.boolean  "deleted",    default: false
-    t.boolean  "able",       default: true
+    t.boolean  "important",                    default: false
+    t.boolean  "deleted",                      default: false
+    t.boolean  "able",                         default: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "msg_type"
+    t.string   "current_tmp_new_message_link"
   end
 
   create_table "order_info_pages", force: :cascade do |t|
