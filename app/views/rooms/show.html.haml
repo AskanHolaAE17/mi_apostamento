@@ -11,15 +11,15 @@
 
 %h3
   Выберите собеседника
-  - if @conversations_msg_users_names.count == 0
+  - unless @conversations_msg_users_names
     (они будут отображаться здесь)  
 
 
-    
-  - @conversations_msg_users_names.each_with_index do |conv_names, i|
-    .to-msg-link
-      %b
-        =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i] 
+  - else  
+    - @conversations_msg_users_names.each_with_index do |conv_names, i|
+      .to-msg-link
+        %b
+          =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i] 
   
 
 %hr/
@@ -40,6 +40,7 @@
     %b
       Полученные:
 
+  %br/
   .request_communic_block
     - @getted_rqs.each_with_index do |rq, i|
 
@@ -47,7 +48,8 @@
       - @rq        = rq 
   
 
-      От #{@getted_rqs_from_users[i].name} 
+      .request-who
+        =@getted_rqs_from_users[i].name
       %br/
     
     
@@ -80,9 +82,13 @@
   %p
     %b
       Отправленные:
+      %br/
+      
   - @sent_rqs.each_with_index do |rq, i|  
-    К #{@sent_rqs_to_users[i].name} 
-    %br/
+  
+    .request-who
+      =@sent_rqs_to_users[i].name
+
     
     
     - if rq.status == 'yes'  
@@ -94,7 +100,9 @@
     - elsif rq.status == 'stop'
       - status = 'Запрос отменен Вами'            
     
-    * #{status}
+    .request_communic_status  
+      * #{status}
+
     %hr
   
   

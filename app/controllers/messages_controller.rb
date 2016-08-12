@@ -78,9 +78,20 @@ class MessagesController < ApplicationController
   
     user_sender    = User.find(params[:user_id])        
     user_receiver  = User.find(params[:message][:receiver])     
+
+
+    members1 = user_sender.id.to_s  + ' ' + user_receiver.id.to_s
+    members2 = user_receiver.id.to_s + ' ' + user_sender.id.to_s
     
-    conversation         = Conversation.new
-    conversation.members = user_sender.id.to_s + ' ' + user_receiver.id.to_s                 
+    conversation = Conversation.find_by members: members1
+    if conversation == nil
+      conversation = Conversation.find_by members: members2
+    end
+    if conversation == nil
+      conversation = Conversation.new
+      conversation.members = user_sender.id.to_s + ' ' + user_receiver.id.to_s                 
+    end
+        
     
     message              = conversation.messages.build(message_params)           
 
@@ -99,7 +110,7 @@ class MessagesController < ApplicationController
       end      
       
       @url_next = message.current_tmp_new_message_link[@url_next.. -1]
-      message.current_tmp_new_message_link = current_tmp_new_message_link_origin
+      message.current_tmp_new_message_link = current_tmp_new_message_link_origin      
 
 #______________________________________
 
@@ -297,7 +308,7 @@ class MessagesController < ApplicationController
 
     
     message.current_tmp_new_message_link = ''
-    #message.save
+    message.save
     
     flash[:info_on_request_added] = msg                
     redirect_to link_with_contacts        
@@ -362,13 +373,14 @@ class MessagesController < ApplicationController
 
    
       @users_msg_senders = []
+      @messages = @messages.reverse
       @messages.each_with_index do |msg, i|
           #@msg_user_id_tmp = msg.user_id
           #@cur_user_id_tmp = @user_id      
-        if msg.user_id == @user_id
+        if msg.user_id.to_s == @user_id.to_s
           @users_msg_senders << 'Вы'
         else
-          user_cur = User.find(msg.receiver)
+          user_cur = User.find(msg.user_id)
           @users_msg_senders << ( user_cur.name.to_s + ' ' + user_cur.surname.to_s )
         end
       end      

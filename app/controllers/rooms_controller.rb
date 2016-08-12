@@ -187,12 +187,12 @@ before_action :set_main_page, only: [:show]
       #@messages = messages.order(created_at: :desc)
       
       @conversations    = Conversation.where("members LIKE ?" , "%#{@user.id}%")
-      
+        @conversations_msg_users_names = []
+        @conversations_msg_users_links = []
+              
       @conversations.each do |c|
         users_companions = c.members.split(' ')      
       
-        @conversations_msg_users_names = []
-        @conversations_msg_users_links = []
         users_companions.each do |us_id|        
           if us_id.to_s != @user.id.to_s
             conversation_user = User.find(us_id)
