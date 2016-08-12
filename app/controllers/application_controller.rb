@@ -61,7 +61,14 @@ class ApplicationController < ActionController::Base
 #_______________________________________________________________________________
   
 
-  def details_from_url_to_array(details)
+  def details_from_url_to_array(details, *is_three_deviders)
+  
+	  is_three_deviders = is_three_deviders[0] ? is_three_deviders[0] : false 
+	  is_three_deviders = is_three_deviders || true
+
+#________________________________________    
+
+  
     details[details.length] = 'A'
     res_array = []
 
@@ -85,6 +92,7 @@ class ApplicationController < ActionController::Base
 #________________________________________    
     
     
+  if is_three_deviders  
     @room_details_res     = ''
     @devider_pos_counter  = 0
     
@@ -104,7 +112,8 @@ class ApplicationController < ActionController::Base
     end 
       
     details               =  @room_details_res.to_s 
-    
+  end
+        
 #________________________________________    
 
 
@@ -141,6 +150,7 @@ class ApplicationController < ActionController::Base
     if array_last_element != ''
       res_array          << array_last_element
     end
+    details[details.length] = ''
     puts res_array[0]
     res_array
   end  

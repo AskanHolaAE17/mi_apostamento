@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   #MESSAGE
   post  'message_new/:details',            to: 'messages#new'                                        
   match 'message_new/:details',            to: 'messages#new',                                      via: 'get'           
+  match 'messages/:details',               to: 'messages#show',                                     via: 'get'             
     
   
   
@@ -73,6 +74,9 @@ Rails.application.routes.draw do
     resources :messages
   end  
   
+  resources :conversations do
+    resources :messages
+  end    
   
     
   root 'main_pages#index'

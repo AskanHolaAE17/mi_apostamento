@@ -5,7 +5,10 @@ before_action :set_main_page, only: [:show]
 #_______________________________________________________________________________
 
 
-  def show
+  def show    
+  
+    @root_path  = MeConstant.find_by_title('root_path').content      
+  
     details = params[:details]
     
     room_details = Base64.decode64(details)        
@@ -161,14 +164,70 @@ before_action :set_main_page, only: [:show]
 
 
       # MESSAGES
-      @messages_from_you = Messages.find_by user_id:  @user.id
       
-      @messages_from_you.each do |msg|
-      end
+      #messages_from_you = Message.where user_id:  @user.id
+      
+      #if messages_from_you
+      #  messages_from_you.each do |msg|
+      #    msg.msg_type = 'outcoming'
+      #  end
+      #end  
       
       
       
-      @messages_to_you   = Messages.find_by receiver: @user.id            
+      #messages_to_you   = Message.where receiver: @user.id            
+      #if messages_to_you 
+      #  messages_to_you.each do |msg|
+      #    msg.msg_type = 'incoming'
+      #  end
+      #end      
+      
+      
+      ##messages = messages_to_you.merge(messages_from_you)            
+      #@messages = messages.order(created_at: :desc)
+      
+      @conversations    = Conversation.where("members LIKE ?" , "%#{@user.id}%")
+      
+      @conversations.each do |c|
+        users_companions = c.members.split(' ')      
+      
+        @conversations_msg_users_names = []
+        @conversations_msg_users_links = []
+        users_companions.each do |us_id|        
+          if us_id.to_s != @user.id.to_s
+            conversation_user = User.find(us_id)
+            @conversations_msg_users_names << conversation_user.name.to_s + ' ' + conversation_user.surname.to_s
+#______________________________________        
+
+    
+    # conv_link
+    
+      conversation_id       = c.id
+      conv_user_first_id    = users_companions.first
+      conv_user_last_id     = users_companions.last
+      
+      conv_id_len           = conversation_id.to_s.length
+      conv_user_last_id_len = conv_user_last_id.length
+
+           
+      conv_details          = conv_id_len.to_s                 +
+                              conversation_id.to_s             +
+                              conv_user_first_id.to_s          +
+                              conv_user_last_id.to_s           +
+                              conv_user_last_id_len.to_s       +
+                              @user.id.to_s                    +                             
+                              @user.id.to_s.length.to_s
+
+
+      conv_details_64       = (Base64.encode64 conv_details).chomp.delete("\n")
+      conv_details          = conv_details_64
+
+#______________________________________
+            
+            @conversations_msg_users_links << conv_details
+          end
+        end
+      end           
            
 #_______________________________________
       

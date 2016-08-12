@@ -1,9 +1,3 @@
-От
-=@sender_id
-
-к
-=@receiver_id
-
 #form.lead
 
   = form_for [@user, @user.messages.build] do |f|
@@ -29,7 +23,7 @@
       Сообщение:
     
     %div    
-      = f.text_area :body,              size:        '25x5',
+      = f.text_area :body,              size:        '25x3',
                                         required:    '',                                                                                 
                                         class:       'input-xlarge', 
                                         maxlength:   '5000',
@@ -41,7 +35,7 @@
 
     = f.hidden_field :user_id,                          value: @sender_id
     = f.hidden_field :receiver,                         value: @receiver_id
-    = f.hidden_field :current_tmp_new_message_link,     value: @current_tmp_new_message_link + '_contacts'
+    = f.hidden_field :current_tmp_new_message_link,     value: @current_tmp_new_message_link
     -#= f.hidden_field :msg_type,                       value: 'outcoming'
   
 

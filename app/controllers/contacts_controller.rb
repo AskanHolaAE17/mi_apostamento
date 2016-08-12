@@ -667,6 +667,7 @@ class ContactsController < ApplicationController
     #@request = requests_for_communication = RequestsForCommunication.new    
     @request                  = @user.requests_for_communications.build
     @requests_of_current_user = @user.requests_for_communications
+
 #_______________________________________________________________________________
     
     
@@ -729,6 +730,25 @@ class ContactsController < ApplicationController
     
     @message_path_new  = root_path + 'message_new/' + message_details         
         
+#______________________________________
+
+
+      current_tmp_new_message_link_origin = ''
+      details.each_char.with_index do |ch, i|
+        unless ch == '_'
+          current_tmp_new_message_link_origin += ch
+        else
+        
+          @url_next = i + 1
+          break
+        end
+      end      
+      
+      @url_next = details[@url_next.. -1]
+      details = current_tmp_new_message_link_origin
+      @current_tmp_new_message_link = details + '_contacts'
+
+#______________________________________
     
   end
   

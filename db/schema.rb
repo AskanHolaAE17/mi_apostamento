@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811232100) do
+ActiveRecord::Schema.define(version: 20160812112300) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -112,6 +112,12 @@ ActiveRecord::Schema.define(version: 20160811232100) do
     t.string   "secret_answer_2"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.string   "members",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "db_models_explanations", force: :cascade do |t|
     t.string   "the_model_name"
     t.text     "common_info"
@@ -170,6 +176,7 @@ ActiveRecord::Schema.define(version: 20160811232100) do
     t.datetime "updated_at"
     t.string   "msg_type"
     t.string   "current_tmp_new_message_link"
+    t.integer  "conversation_id"
   end
 
   create_table "order_info_pages", force: :cascade do |t|

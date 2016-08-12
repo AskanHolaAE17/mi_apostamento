@@ -8,7 +8,7 @@ class MessageMailer < ActionMailer::Base
     @user_sender   = user_sender
     @user_receiver = user_receiver
     @room_url      = room_url
-    mail(to: @user_sender.email, subject: 'KIND: Новое сообщение')    
+    mail(to: @user_sender.email, subject: 'KIND: Новое письмо')    
   end 
 
 end

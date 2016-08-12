@@ -1,0 +1,48 @@
+%i
+  = User.find(@user_id).name            
+  
+-#%i  
+  @msg_user_id_tmp
+  =@msg_user_id_tmp
+
+  @cur_user_id_tmp
+  =@cur_user_id_tmp  
+
+%section
+  .msg-new-in-conversation
+    =render partial: 'messages/new'
+            
+            
+
+- @messages.each_with_index do |msg, i|
+
+  .k
+  
+    -#- if @users_msg_senders[i] == 'Вы'
+      <div class="msg-block">
+      
+    -#- else
+      <div class="k">
+
+    -#</div>      
+
+        
+    .msg-sender           
+      %b
+        =@users_msg_senders[i]
+
+    
+    
+    .msg-text
+      -#.msg-type
+        =msg.msg_type  
+      
+      %p  
+        =msg.title
+    
+      %p
+        =msg.body
+          
+
+    
+    %hr/

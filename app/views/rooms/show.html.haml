@@ -1,3 +1,6 @@
+%i
+  = @user.name            
+
 - if flash[:answer_on_request]
   %article
     %section
@@ -6,12 +9,18 @@
 
 
 
-
-
 %h3
-  Ваши сообщения
+  Выберите собеседника
+  - if @conversations_msg_users_names.count == 0
+    (они будут отображаться здесь)  
 
 
+    
+  - @conversations_msg_users_names.each_with_index do |conv_names, i|
+    .to-msg-link
+      %b
+        =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i] 
+  
 
 %hr/
 %hr/
