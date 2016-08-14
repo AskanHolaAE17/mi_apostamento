@@ -1,5 +1,10 @@
 - @menu_up_item = 'contacts_show'      
 
-=render partial: 'rooms/conversations_block'
+%article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+  =render partial: 'rooms/feedback_personal'
 
-=render partial: 'rooms/requests_block'
+%article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+  =render partial: 'rooms/conversations_block'
+
+%article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+  =render partial: 'rooms/requests_block'

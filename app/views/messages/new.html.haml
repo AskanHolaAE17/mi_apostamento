@@ -14,8 +14,7 @@
       Тема:
     
     %div    
-      = f.text_field :title,            required:    '',                                                                                 
-                                        class:       'input-xlarge', 
+      = f.text_field :title,            class:       'input-xlarge', 
                                         maxlength:   '50',
                                         value:       "#{flash[:contact_title] || nil}",
                                         autofocus:    flash[:autofocus_title]

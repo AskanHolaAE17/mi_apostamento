@@ -15,7 +15,7 @@
 
 - @messages.each_with_index do |msg, i|
 
-  .k
+  .msg-block
   
     -#- if @users_msg_senders[i] == 'Вы'
       <div class="msg-block">
@@ -36,8 +36,11 @@
       -#.msg-type
         =msg.msg_type  
       
-      %p  
-        =msg.title
+      - if msg.title != ''  
+        %p  
+          =msg.title
+    
+        %br/    
     
       %p
         =msg.body

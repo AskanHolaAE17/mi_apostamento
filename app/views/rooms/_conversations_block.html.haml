@@ -1,4 +1,4 @@
-%article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+.k
   =@user.name.to_s + ' ' + @user.surname.to_s            
 
   - if flash[:answer_on_request]
@@ -19,5 +19,5 @@
       - @conversations_msg_users_names.each_with_index do |conv_names, i|
         .to-msg-link
           %b
-            =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i] 
+            =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i], target: '_blank' 
 
