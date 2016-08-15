@@ -191,8 +191,14 @@ class ApplicationController < ActionController::Base
     if array_last_element != ''
       res_array          << array_last_element
     end
-    details[details.length] = ''
-    puts res_array[0]
+
+    details[details.length-1] = ''
+    
+    res_array_last = res_array.last.to_s
+    res_array_last[res_array_last.length - 1] = ''
+    res_array[res_array.length - 1]
+
+
     res_array
   end  
   
