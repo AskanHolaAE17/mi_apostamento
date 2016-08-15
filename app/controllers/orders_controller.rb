@@ -295,7 +295,7 @@ class OrdersController < ApplicationController
   
   private  
     def order_params
-      params.require(:order).permit(:payed, :name, :email, :akey, :pay_link, :sum_for_pay, :when_payed, :akey_payed, :able, :sent_email_with_test, :group, :structure_test_info, :level, :test_1_ended, :test_2_ended, :level_test_info, :contact_id)
+      params.require(:order).permit(:payed, :name, :email, :akey, :pay_link, :sum_for_pay, :when_payed, :akey_payed, :able, :sent_email_with_test, :group, :structure_test_info, :level, :test_1_ended, :test_2_ended, :level_test_info, :contact_id, :structure)
     end  
 
 end    

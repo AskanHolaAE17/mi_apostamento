@@ -356,12 +356,51 @@ class TestsController < ApplicationController
       #-if order and order.akey == order_akey #----- If Right Order                
         
                 
-      if test_number == 1               
-        order.group = if [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i].max > [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i].max         
-          'GOOD GROUP'           
+      if test_number == 1        
+      
+        good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i]       
+        bad_arr  = [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i]
+        
+        order.group = if good_arr.max > bad_arr.max         
+          'GOOD GROUP'                     
         else                   
-          'BAD GROUP'                             
+          'BAD GROUP'       
+        end        
+        
+        if order.group == 'GOOD GROUP'
+        
+          order.structure = case good_arr.index(good_arr.max)
+          when 0
+            'dl'
+          when 1
+            'ml'
+          when 2
+            'ol'
+          when 3
+            'pl'
+          when 4
+            'kl'
+          when 5
+            'il'
+          when 6
+            'disl'            
+          end        
+          
+        else 
+
+          order.structure = case bad_arr.index(bad_arr.max)
+          when 0
+            'al'
+          when 1
+            'nl'
+          when 2
+            'shl'
+          when 3
+            'gml'            
+          end
+                  
         end
+                                
       end  
 #__________________________________________        
 

@@ -5,7 +5,8 @@ ActiveAdmin.register Order do
                             :sum_for_pay, :when_payed, :akey_payed, 
                             :able, :sent_email_with_test, :group, 
                             :structure_test_info, :level, :test_1_ended, 
-                            :test_2_ended, :level_test_info, :contact_id]
+                            :test_2_ended, :level_test_info, :contact_id, 
+                            :structure]
     end
   end
 end
