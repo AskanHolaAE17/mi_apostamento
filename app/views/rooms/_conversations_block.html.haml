@@ -1,5 +1,4 @@
-.k
-  =@user.name.to_s + ' ' + @user.surname.to_s            
+.k  
 
   - if flash[:answer_on_request]
     %article
@@ -10,12 +9,13 @@
 
 
   %h3
-    Выберите собеседника
-    - unless @conversations_msg_users_names
-      (они будут отображаться здесь)  
+    .k
+    - unless @conversations_msg_users_names.count > 0 
+      Ваши собеседники будут отображаться здесь
 
 
     - else  
+      Выберите собеседника
       - @conversations_msg_users_names.each_with_index do |conv_names, i|
         .to-msg-link
           %b

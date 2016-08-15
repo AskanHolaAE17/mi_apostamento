@@ -234,6 +234,24 @@ before_action :set_main_page, only: [:show]
       
     end
     
+#___________________________________________________________
+
+   
+    user_id_in_base       = @user.id_in_base.to_s
+    user_iib_last         = user_id_in_base.length - 1
+    user_code             = user_id_in_base[user_iib_last - 1] + user_id_in_base[user_iib_last]
+    
+    feed_al_arr           =  feedback_sl_array = []    
+    feed_al_arr << @user.id
+    feed_al_arr << ('a'..'z').to_a.shuffle.first
+    feed_al_arr << user_code
+
+    details               = full_encode_array_to_link_details(feed_al_arr, false)
+    @link_to_feedbacks_sl = root_path + 'recommendations/' + details   #  Structure Level
+
+#___________________________________________________________
+    
+    
   end
   
 #_______________________________________________________________________________

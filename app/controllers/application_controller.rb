@@ -59,12 +59,53 @@ class ApplicationController < ActionController::Base
   end    
 
 #_______________________________________________________________________________
+
+
+  def full_encode_array_to_link_details(array, *use_three_deviders)
+    
+    #def: true
+    use_three_deviders = use_three_deviders[0].nil? ? true : use_three_deviders[0]
+    
+#________________________________________
+
+
+    #if use_three_deviders ### add 2 more deviders '_' (before and after center)
+    #end
+    
+#________________________________________
+
+    
+    res_string = ''
+        
+    array.each do |el|
+      res_string += el.to_s      
+      sec         = Time.now.sec
+      res_string += if sec % 2 == 0
+        ('a'..'z').to_a.shuffle.first + ('A'..'Z').to_a.shuffle.first
+      elsif sec % 5 == 0
+        ('A'..'Z').to_a.shuffle.first + ('a'..'z').to_a.shuffle.first
+      elsif sec % 3 == 0  
+        ('A'..'Z').to_a.shuffle.first      
+      else
+        ('a'..'z').to_a.shuffle.first
+      end
+    end
+    
+    
+    res_string_64 = (Base64.encode64 res_string).chomp.delete("\n")
+    res_string_64                                
+      
+  end
+
+#_______________________________________________________________________________
   
 
   def details_from_url_to_array(details, *is_three_deviders)
   
-	  is_three_deviders = is_three_deviders[0] ? is_three_deviders[0] : false 
-	  is_three_deviders = is_three_deviders || true
+	  #is_three_deviders = is_three_deviders[0] ? is_three_deviders[0] : false 
+	  #is_three_deviders = is_three_deviders || true
+	  
+    is_three_deviders = is_three_deviders[0].nil? ? true : is_three_deviders[0]	  
 
 #________________________________________    
 

@@ -66,6 +66,12 @@ Rails.application.routes.draw do
   post  'message_new/:details',            to: 'messages#new'                                        
   match 'message_new/:details',            to: 'messages#new',                                      via: 'get'           
   match 'messages/:details',               to: 'messages#show',                                     via: 'get'             
+  
+  
+  
+  # FEEDBACKS SL
+  post  'recommendations/:details',        to: 'feedbacks_structures_levels#show'                                          
+  match 'recommendations/:details',        to: 'feedbacks_structures_levels#show',                  via: 'get'             
     
   
   
