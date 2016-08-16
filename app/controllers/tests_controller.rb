@@ -27,21 +27,21 @@ class TestsController < ApplicationController
     test_url_json    = Base64.decode64(test_url_encoded)    
     test_url_hash    = JSON.parse(test_url_json)
     
-    test_number = test_url_hash["test_number"].to_i    
-    qw_number   = test_url_hash["qw_number"].to_i     
+    test_number = test_url_hash["t"].to_i    
+    qw_number   = test_url_hash["q"].to_i     
     
     
-    if test_number == 1
-      if qw_number == 1
-        qw_number = 1 if test_url_hash["level"] == 'psihot'  #start from 1st qw if current level is 'psihot'
-        qw_number = 3 if test_url_hash["level"] == 'pogranich'
-        qw_number = 5 if test_url_hash["level"] == 'nevrot'
-      end
-    end  
+    #if test_number == 1
+    #  if qw_number == 1
+    #    qw_number = 1 if test_url_hash["l"] == 'ps'  #start from 1st qw if current level is 'psihot'
+    #    qw_number = 3 if test_url_hash["l"] == 'p'
+    #    qw_number = 5 if test_url_hash["l"] == 'n'
+    #  end
+    #end  
  
     
-    order_id    = test_url_hash["order_id"]
-    order_akey  = test_url_hash["order_akey"]
+    order_id    = test_url_hash["oi"]
+    order_akey  = test_url_hash["oa"]
     
 #_______________________________________________________________________________        
           
@@ -54,28 +54,28 @@ class TestsController < ApplicationController
 
     
     if test_number == 1 
-      al_no   = test_url_hash['al']
-      nl_no   = test_url_hash['nl']
-      shl_no  = test_url_hash['shl']
-      pl_no   = test_url_hash['pl']
-      gml_no  = test_url_hash['gml']
-      dl_no   = test_url_hash['dl']
-      ml_no   = test_url_hash['ml']
-      ol_no   = test_url_hash['ol']
-      kl_no   = test_url_hash['kl']
-      il_no   = test_url_hash['il']
-      disl_no = test_url_hash['disl']
+      al_no   = test_url_hash['a']
+      nl_no   = test_url_hash['n']
+      shl_no  = test_url_hash['s']
+      pl_no   = test_url_hash['p']
+      gml_no  = test_url_hash['g']
+      dl_no   = test_url_hash['d']
+      ml_no   = test_url_hash['m']
+      ol_no   = test_url_hash['o']
+      kl_no   = test_url_hash['k']
+      il_no   = test_url_hash['i']
+      disl_no = test_url_hash['di']
     end  
     
     if test_number == 2 
-      psihot_no     = test_url_hash['psihot']
-      pogranich_no  = test_url_hash['pogranich']
-      nevrot_no     = test_url_hash['nevrot']
+      psihot_no     = test_url_hash['ps']
+      pogranich_no  = test_url_hash['po']
+      nevrot_no     = test_url_hash['ne']
     end    
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number).questions.limit(1)          
+    questions = Test.find_by(number_of_test: test_number).questions
     #.limit(2)          
 
     ##questions = questions.where(able: true)    
@@ -83,33 +83,33 @@ class TestsController < ApplicationController
     #flash[:error_mi] = ''
 
 
-        level = 'psihot' if order.level == 'psihotick'
-        level = 'pogranich' if order.level == 'pogranichnick'
-        level = 'nevrot' if order.level == 'nevrotick'             
+        level = 'ps' if order.level == 'psihotick'
+        level = 'p' if order.level == 'pogranichnick'
+        level = 'n' if order.level == 'nevrotick'             
     
     
     question = questions.find_by_number_of_question(qw_number)  
     if question and question.able == false
     if test_number == 1         
       no_params_hash = {
-        :controller  => 'tests', 
-        :action      => 'load_page', 
-        :test_number => '1',
-        :level       => level,        
-        :qw_number   => qw_number + 1,
-        :order_id    => order_id,
-        :order_akey  => order_akey,
-        :al          => "#{al_no or '0'}",
-        :nl          => "#{nl_no or '0'}",
-        :shl         => "#{shl_no or '0'}",
-        :pl          => "#{pl_no or '0'}",
-        :gml         => "#{gml_no or '0'}",
-        :dl          => "#{dl_no or '0'}",
-        :ml          => "#{ml_no or '0'}",
-        :ol          => "#{ol_no or '0'}",
-        :kl          => "#{kl_no or '0'}",
-        :il          => "#{il_no or '0'}",
-        :disl        => "#{disl_no or '0'}"
+        :c  => 'tests', 
+        :an      => 'load_page', 
+        :t => '1',
+        :l       => level,        
+        :q   => qw_number + 1,
+        :oi    => order_id,
+        :oa  => order_akey,
+        :a          => "#{al_no or '0'}",
+        :n          => "#{nl_no or '0'}",
+        :s         => "#{shl_no or '0'}",
+        :p          => "#{pl_no or '0'}",
+        :g         => "#{gml_no or '0'}",
+        :d          => "#{dl_no or '0'}",
+        :m          => "#{ml_no or '0'}",
+        :o          => "#{ol_no or '0'}",
+        :k          => "#{kl_no or '0'}",
+        :i          => "#{il_no or '0'}",
+        :di        => "#{disl_no or '0'}"
       }
     end            
 #__________________________________________            
@@ -117,15 +117,15 @@ class TestsController < ApplicationController
 
     if test_number == 2         
       no_params_hash = {
-        :controller  => 'tests', 
-        :action      => 'load_page', 
-        :test_number => '2',
-        :qw_number   => qw_number + 1,
-        :order_id    => order_id,
-        :order_akey  => order_akey,
-        :psihot      => "#{psihot_no or '0'}",
-        :pogranich   => "#{pogranich_no or '0'}",
-        :nevrot      => "#{nevrot_no or '0'}"
+        :c  => 'tests', 
+        :an      => 'load_page', 
+        :t => '2',
+        :q   => qw_number + 1,
+        :oi    => order_id,
+        :oa  => order_akey,
+        :ps      => "#{psihot_no or '0'}",
+        :po   => "#{pogranich_no or '0'}",
+        :ne      => "#{nevrot_no or '0'}"
       }
     end            
 #__________________________________________        
@@ -177,12 +177,13 @@ class TestsController < ApplicationController
     @qw_number  = qw_number    
     
                                                                                             #----- Start Testing Part
-    if   ((((qw_number.in? 1..2 and test_url_hash['level'] == 'psihot')    or 
-           (qw_number.in? 3..4 and test_url_hash['level'] == 'pogranich')  or 
-           (qw_number.in? 5..6 and test_url_hash['level'] == 'nevrot'))    and       
-           test_number == 1)                                               or
-           (test_number == 2 and qw_number < questions.count + 1) ) and 
-                                                                       question
+    if   (qw_number < questions.count + 1)  and  question
+         #((((qw_number.in? 1..2 and test_url_hash['l'] == 'ps')    or 
+         #  (qw_number.in? 3..4 and test_url_hash['l'] == 'p')  or 
+         #  (qw_number.in? 5..6 and test_url_hash['l'] == 'n'))    and       
+         #  test_number == 1)                                               or
+         #  (test_number == 2 and qw_number < questions.count + 1) ) and 
+         #                                                              question
                                                                        #@test_ended != true                        
        
 
@@ -244,24 +245,24 @@ class TestsController < ApplicationController
       end      
       
       yes_params_hash = {
-        :controller => 'tests', 
-        :action => 'load_page',
-        :test_number => '1', 
-        :level       => level,
-        :qw_number => next_qw_number,
-        :order_id => order_id,
-        :order_akey => order_akey,
-        :al => "#{al_yes or al_no or '0'}",
-        :nl => "#{nl_yes or nl_no or '0'}",
-        :shl => "#{shl_yes or shl_no or '0'}",
-        :pl => "#{pl_yes or pl_no or '0'}",
-        :gml => "#{gml_yes or gml_no or '0'}",
-        :dl => "#{dl_yes or dl_no or '0'}",
-        :ml => "#{ml_yes or ml_no or '0'}",
-        :ol => "#{ol_yes or ol_no or '0'}",
-        :kl => "#{kl_yes or kl_no or '0'}",
-        :il => "#{il_yes or il_no or '0'}",
-        :disl => "#{disl_yes or disl_no or '0'}"
+        :c => 'tests', 
+        :an => 'load_page',
+        :t => '1', 
+        :l       => level,
+        :q => next_qw_number,
+        :oi => order_id,
+        :oa => order_akey,
+        :a => "#{al_yes or al_no or '0'}",
+        :n => "#{nl_yes or nl_no or '0'}",
+        :s => "#{shl_yes or shl_no or '0'}",
+        :p => "#{pl_yes or pl_no or '0'}",
+        :g => "#{gml_yes or gml_no or '0'}",
+        :d => "#{dl_yes or dl_no or '0'}",
+        :m => "#{ml_yes or ml_no or '0'}",
+        :o => "#{ol_yes or ol_no or '0'}",
+        :k => "#{kl_yes or kl_no or '0'}",
+        :i => "#{il_yes or il_no or '0'}",
+        :di => "#{disl_yes or disl_no or '0'}"
       }
     end    
 
@@ -270,24 +271,24 @@ class TestsController < ApplicationController
 
     if test_number == 2
       case question.for_yes_answer_plus_1_point_to
-        when 'psihot' 
+        when 'ps' 
           then psihot_yes = (psihot_no.to_i + 1).to_s
-        when 'pogranich' 
+        when 'p' 
           then pogranich_yes = (pogranich_no.to_i + 1).to_s
-        when 'nevrot' 
+        when 'n' 
           then nevrot_yes = (nevrot_no.to_i + 1).to_s
       end      
       
       yes_params_hash = {
-        :controller   => 'tests', 
-        :action       => 'load_page', 
-        :test_number  => '2',
-        :qw_number    => next_qw_number,
-        :order_id     => order_id,
-        :order_akey   => order_akey,
-        :psihot       => "#{psihot_yes or psihot_no or '0'}",
-        :pogranich    => "#{pogranich_yes or pogranich_no or '0'}",
-        :nevrot       => "#{nevrot_yes or nevrot_no or '0'}"
+        :c   => 'tests', 
+        :an       => 'load_page', 
+        :t  => '2',
+        :q    => next_qw_number,
+        :oi     => order_id,
+        :oa   => order_akey,
+        :ps       => "#{psihot_yes or psihot_no or '0'}",
+        :po    => "#{pogranich_yes or pogranich_no or '0'}",
+        :ne       => "#{nevrot_yes or nevrot_no or '0'}"
       }    
     end                    
         
@@ -304,24 +305,24 @@ class TestsController < ApplicationController
          
     if test_number == 1         
       no_params_hash = {
-        :controller  => 'tests', 
-        :action      => 'load_page', 
-        :test_number => '1',
-        :level       => level,        
-        :qw_number   => next_qw_number,
-        :order_id    => order_id,
-        :order_akey  => order_akey,
-        :al          => "#{al_no or '0'}",
-        :nl          => "#{nl_no or '0'}",
-        :shl         => "#{shl_no or '0'}",
-        :pl          => "#{pl_no or '0'}",
-        :gml         => "#{gml_no or '0'}",
-        :dl          => "#{dl_no or '0'}",
-        :ml          => "#{ml_no or '0'}",
-        :ol          => "#{ol_no or '0'}",
-        :kl          => "#{kl_no or '0'}",
-        :il          => "#{il_no or '0'}",
-        :disl        => "#{disl_no or '0'}"
+        :c  => 'tests', 
+        :an      => 'load_page', 
+        :t => '1',
+        :l       => level,        
+        :q   => next_qw_number,
+        :oi    => order_id,
+        :oa  => order_akey,
+        :a          => "#{al_no or '0'}",
+        :n          => "#{nl_no or '0'}",
+        :s         => "#{shl_no or '0'}",
+        :p          => "#{pl_no or '0'}",
+        :g         => "#{gml_no or '0'}",
+        :d          => "#{dl_no or '0'}",
+        :m          => "#{ml_no or '0'}",
+        :o          => "#{ol_no or '0'}",
+        :k          => "#{kl_no or '0'}",
+        :i          => "#{il_no or '0'}",
+        :di        => "#{disl_no or '0'}"
       }
     end            
 #__________________________________________            
@@ -329,15 +330,15 @@ class TestsController < ApplicationController
 
     if test_number == 2         
       no_params_hash = {
-        :controller  => 'tests', 
-        :action      => 'load_page', 
-        :test_number => '2',
-        :qw_number   => next_qw_number,
-        :order_id    => order_id,
-        :order_akey  => order_akey,
-        :psihot      => "#{psihot_no or '0'}",
-        :pogranich   => "#{pogranich_no or '0'}",
-        :nevrot      => "#{nevrot_no or '0'}"
+        :c  => 'tests', 
+        :an      => 'load_page', 
+        :t => '2',
+        :q   => next_qw_number,
+        :oi    => order_id,
+        :oa  => order_akey,
+        :ps      => "#{psihot_no or '0'}",
+        :po   => "#{pogranich_no or '0'}",
+        :ne      => "#{nevrot_no or '0'}"
       }
     end            
 #__________________________________________        
@@ -533,27 +534,27 @@ class TestsController < ApplicationController
 
     if test_number == 2             
     
-        level = 'psihot'    if order.level == 'psihotick'
-        level = 'pogranich' if order.level == 'pogranichnick'
-        level = 'nevrot'    if order.level == 'nevrotick'        
+        level = 'ps'    if order.level == 'psihotick'
+        level = 'p' if order.level == 'pogranichnick'
+        level = 'n'    if order.level == 'nevrotick'        
             
         test_2_url_hash = {
-          :level       => level,
-          :test_number => '1',
-          :qw_number   => '1',        
-          :order_id    => order_id,
-          :order_akey  => order_akey,
-          :al          => '0',
-          :nl          => '0',
-          :shl         => '0',
-          :pl          => '0',
-          :gml         => '0',
-          :dl          => '0',
-          :ml          => '0',
-          :ol          => '0',
-          :kl          => '0',
-          :il          => '0',
-          :disl        => '0'          
+          :l       => level,
+          :t => '1',
+          :q   => '1',        
+          :oi    => order_id,
+          :oa  => order_akey,
+          :a          => '0',
+          :n          => '0',
+          :s         => '0',
+          :p          => '0',
+          :g         => '0',
+          :d          => '0',
+          :m          => '0',
+          :o          => '0',
+          :k          => '0',
+          :i          => '0',
+          :di        => '0'          
         }        
 
 
@@ -588,13 +589,13 @@ class TestsController < ApplicationController
       if order.level == 'FAIL'
       
         test_2_url_hash = {
-          :test_number => '2',
-          :qw_number   => '1',
-          :order_id    => "#{order_id}",
-          :order_akey  => "#{order_akey}",
-          :psihot      => '0',
-          :pogranich   => '0',
-          :nevrot      => '0'
+          :t => '2',
+          :q   => '1',
+          :oi    => "#{order_id}",
+          :oa  => "#{order_akey}",
+          :ps      => '0',
+          :po   => '0',
+          :ne      => '0'
         }        
 
 

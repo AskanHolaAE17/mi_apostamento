@@ -34,7 +34,8 @@ class MainPagesController < ApplicationController
     else
       Article.where.not(translit: translit)
     end    
-    @articles = @articles.shuffle
+    
+    #@articles = @articles.shuffle
     
         
     @article = unless translit

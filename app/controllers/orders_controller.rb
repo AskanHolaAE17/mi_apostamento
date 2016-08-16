@@ -82,14 +82,23 @@ class OrdersController < ApplicationController
 
 
         test_url_hash = {
-          :test_number => '2',
-          :qw_number   => '1',
-          :order_id    => @order.id,
-          :order_akey  => @order.akey,
-          :psihot      => '0',
-          :pogranich   => '0',
-          :nevrot      => '0'          
+
+          :t  => '2',
+          :q  => '1',
+          :oi => @order.id,
+          :oa => @order.akey,
+          :ps => '0',
+          :po => '0',
+          :ne => '0'                  
+          
         }        
+          #:test_number => '2',
+          #:qw_number   => '1',
+          #:order_id    => @order.id,
+          #:order_akey  => @order.akey,
+          #:psihot      => '0',
+          #:pogranich   => '0',
+          #:nevrot      => '0'         
         
         test_url_json    = JSON.generate(test_url_hash)        
         test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
@@ -246,13 +255,21 @@ class OrdersController < ApplicationController
         
         
         test_url_hash = {
-          :test_number => '2',
-          :qw_number   => '1',
-          :order_id    => @order.id,
-          :order_akey  => @order.akey,
-          :psihot      => '0',
-          :pogranich   => '0',
-          :nevrot      => '0'          
+          :t  => '2',
+          :q  => '1',
+          :oi => @order.id,
+          :oa => @order.akey,
+          :ps => '0',
+          :po => '0',
+          :ne => '0'
+          
+          #:test_number => '2',
+          #:qw_number   => '1',
+          #:order_id    => @order.id,
+          #:order_akey  => @order.akey,
+          #:psihot      => '0',
+          #:pogranich   => '0',
+          #:nevrot      => '0'                              
         }        
           
         test_url_json = JSON.generate(test_url_hash)

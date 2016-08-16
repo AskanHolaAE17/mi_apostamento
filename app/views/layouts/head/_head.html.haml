@@ -9,11 +9,12 @@
 %title
   
   - if @page
-    = @page.title_tag
+    = @page.title_tag + ' -'
   - else
-    Хочу счастья
-    
-  =@site_title     
+    Хочу счастья -
+  
+  - @site_title ||= @main_page.title 
+  =' ' + @site_title.to_s      
     
     
     
