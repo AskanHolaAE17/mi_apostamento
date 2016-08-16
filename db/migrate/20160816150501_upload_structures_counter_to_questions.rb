@@ -1,4 +1,4 @@
-class UploadStructuresOklToKlAndOlToQuestions < ActiveRecord::Migration
+class UploadStructuresCounterToQuestions < ActiveRecord::Migration
   
   
   @count = 1
