@@ -115,7 +115,34 @@ class ContactsController < ApplicationController
     
     #-#contact = Contact.find_by(order_number: params[:order_number])     
     #-#contact.update_attributes(contact_params.clone) 
-    contact = Contact.new(contact_params)    
+    
+    order_id_form = params[:order_id]
+    
+    if Contact.find_by(order_number: order_id_form)
+      contact = Contact.find_by order_number: order_id_form
+      
+    contact.name               = nil
+    contact.surname            = nil
+    contact.city               = nil
+    contact.country            = nil
+    contact.birthday           = nil
+    contact.own_gender         = nil
+    contact.search_for_gender  = nil
+    contact.about_info         = nil
+    contact.deep_info          = nil
+    contact.secret_question    = nil
+    contact.secret_answer_1    = nil
+    contact.secret_answer_2    = nil
+    
+    contact.image_content_type = nil
+    contact.image_file_name    = nil
+    contact.image_file_size    = nil      
+      
+      contact.update_attributes(contact_params)    
+    else  
+      contact = Contact.new(contact_params)    
+    end    
+        
     order   = Order.find(contact.order_number)
     
 #_______________________________________________________________________________
@@ -231,16 +258,21 @@ class ContactsController < ApplicationController
 
 #_____________________________________________
       
+    if contact.user_id == nil  
+      user                 = User.new
+      room                 = Room.new
+    
+        user.save
+        room.save
+    
+      user.id_in_base    = user.id.to_s + id_in_base(3)
+      room.id_in_base    = room.id.to_s + id_in_base(3)
       
-    user                 = User.new
-    room                 = Room.new
+    else
     
-      user.save
-      room.save
-    
-    user.id_in_base    = user.id.to_s + id_in_base(3)
-    room.id_in_base    = room.id.to_s + id_in_base(3)
-
+      user = User.find(contact.user_id)
+      room = user.room
+    end  
 
     
     user.email        = contact.email

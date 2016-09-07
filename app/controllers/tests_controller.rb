@@ -446,9 +446,8 @@ class TestsController < ApplicationController
       link_details             = order.id.to_s               + 
                                  redirect_letter             + 
                                  order.akey_payed
-
-      
       link_details_encoded_64  = (Base64.encode64 link_details).chomp.delete("\n")
+      
       #link_details_encoded     = link_details_encoded_64 + '=' 
 
 
@@ -465,10 +464,19 @@ class TestsController < ApplicationController
       
       
       #link_details_begin = link_details_begin_for_url 
-      
-      
+            
       #link_with_more_info_form = root_path + 'much_form/' + link_details_begin
-      next_page_after_test_2_level = link_with_more_info_form = root_path + 'much_form/' + link_details_encoded_64                 
+      
+      #-
+      order_id_for_do_you_want_to_db = order.id.to_s
+      oi_want_todb = order_id_for_do_you_want_to_db
+      oi_want_todb = oi_want_todb.insert(oi_want_todb.length-1, (0..9).to_a.shuffle.first.to_s)
+      order_id_for_do_you_want_to_db = oi_want_todb                
+      
+      next_page_after_test_2_level   = root_path + 'do_you_want_to_db/' + order_id_for_do_you_want_to_db
+      #link to much_form
+      #next_page_after_test_2_level = 
+      link_with_more_info_form = root_path + 'much_form/' + link_details_encoded_64                      
                    
 #__________________________________________
 
@@ -494,7 +502,7 @@ class TestsController < ApplicationController
 
       
       unless order.test_1_ended
-        OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
+        #OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
       end              
             
                                            
@@ -513,8 +521,7 @@ class TestsController < ApplicationController
                                     'Ml: ' + ml_no + ' ___ ' +
                                     'Ol: ' + ol_no + ' ___ ' +
                                     'Kl: ' + kl_no + ' ___ ' +
-                                    'il: ' + il_no + ' ___ ' +                                                                                                                                                                                                                                                                                               
-                                    'Disl: ' + disl_no                                                                                                                                                                                                                                                                                                
+                                    'il: ' + il_no + ' '
      
                  
 #__________________________________________                 

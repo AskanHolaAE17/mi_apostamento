@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   match 'room_info_messages/:msg',         to: 'room_nonverbally_info_pages#show',                  via: 'get'  
   post  'room_info_message/:msg',          to: 'room_verbally_info_pages#show'                                  
   
+  match 'room_info/:msg',                  to: 'room_nonverbally_info_pages#show',                  via: 'get'    
+  
+  
   
   match 'infos/:msg/:to_test_2',           to: 'order_info_pages#show',                             via: 'get'  
   post  'infos/:msg/:to_test_2',           to: 'order_info_pages#show'                                 
@@ -28,6 +31,7 @@ Rails.application.routes.draw do
   match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'    
 
   match '/much_form/:order_info',          to: 'contacts#more_info_form',                           via: 'get'        
+  post  '/much_form/:order_info',          to: 'contacts#more_info_form',                           via: 'get'          
 
 
   
@@ -54,6 +58,10 @@ Rails.application.routes.draw do
   ## dannue_receive_obrabotanu  
   match 'receive/:details',                to: 'tests#qs',                                          via: 'get'
   
+    
+  match 'do_you_want_to_db/:details',      to: 'users#does_user_want_to_db',                        via: 'get'  
+  match 'room_sent/:details',              to: 'users#room_url_without_added_to_base',              via: 'get'
+  post  'room_sent/:details',              to: 'users#room_url_without_added_to_base',              via: 'get'          
   
       
   ## (User Loged In)
