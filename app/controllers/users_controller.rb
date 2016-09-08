@@ -45,21 +45,23 @@ class UsersController < ApplicationController
     #  contact = Contact.find_by(order_number: order_id)
     #else  
       contact = Contact.new  
-      contact.order = order      
+
     #end
     contact.structure_test_info = order.structure_test_info    
-    order.structure_test_info = ''        
+    #-order.structure_test_info = ''        
 
     contact.structure = order.structure
-    order.structure = ''        
+    #-order.structure = ''        
     
     contact.level = order.level
-    order.level = ''        
+    #-order.level = ''        
     
     contact.level_test_info = order.level_test_info    
-    order.level_test_info = ''
+    #-order.level_test_info = ''
     
-    
+    contact.order = order      
+
+          
     contact.email = order.email
     contact.group = order.group
     contact.order_number = order.id
