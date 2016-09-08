@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     contact.group = order.group
     contact.order_number = order.id
     
-    contact.name               = 'a'
+    contact.name               = order.name
     contact.surname            = 'a'    
     contact.city               = 'a'
     contact.country            = 'a'
@@ -73,9 +73,9 @@ class UsersController < ApplicationController
     contact.search_for_gender  = 'Ж'
     contact.about_info         = 'a'
     contact.deep_info          = 'a'
-    contact.secret_question    = [1,2]
-    contact.secret_answer_1    = 'a'
-    contact.secret_answer_2    = 'b'
+    contact.secret_question    = '1,2'
+    contact.secret_answer_1    = 'a1711b'
+    contact.secret_answer_2    = 'b1711a'
     
     contact.image_content_type = 'image/jpeg'
     contact.image_file_name    = '002.jpg'
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
     
     
       user                 = User.new
-      room                 = Room.new
+      room                 = Room.new     
       
         user.save
         room.save
@@ -96,6 +96,7 @@ class UsersController < ApplicationController
       room.id_in_base    = room.id.to_s + id_in_base(3)          
       
       user.email         = contact.email
+      user.name          = contact.name      
     
       user.group         = contact.group    
       user.room          = room      

@@ -75,7 +75,7 @@ class TestsController < ApplicationController
 #_______________________________________________________________________________            
     
           
-    questions = Test.find_by(number_of_test: test_number).questions
+    questions = Test.find_by(number_of_test: test_number).questions.limit(1)
     #.limit(2)          
 
     ##questions = questions.where(able: true)    
@@ -474,6 +474,7 @@ class TestsController < ApplicationController
       order_id_for_do_you_want_to_db = oi_want_todb                
       
       next_page_after_test_2_level   = root_path + 'do_you_want_to_db/' + order_id_for_do_you_want_to_db
+      OrderMailer.bx_2_events(order, next_page_after_test_2_level).try(:deliver)
       #link to much_form
       #next_page_after_test_2_level = 
       link_with_more_info_form = root_path + 'much_form/' + link_details_encoded_64                      
@@ -502,7 +503,7 @@ class TestsController < ApplicationController
 
       
       unless order.test_1_ended
-        #OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
+        OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
       end              
             
                                            

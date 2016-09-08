@@ -23,6 +23,13 @@ class OrderMailer < ActionMailer::Base
     mail(to: @order.email, subject: 'KIND: Второй тест')
   end  
 
+
+  def bx_2_events(order, link_2_events)
+    @order         = order
+    @link_2_events = link_2_events
+    mail(to: @order.email, subject: 'KIND: 2 события')
+  end
+
   
   def c_more_info_form(order, link_with_more_info_form, link_with_contacts_again)
     @order = order

@@ -93,6 +93,24 @@ class ContactsController < ApplicationController
     
     if Contact.find_by(order_number: order_id)
       @exist_contact = Contact.find_by(order_number: order_id)
+      if @exist_contact.secret_answer_1 == 'a1711b' and @exist_contact.secret_answer_2 == 'b1711a'
+    @exist_contact.name               = nil
+    @exist_contact.surname            = nil
+    @exist_contact.city               = nil
+    @exist_contact.country            = nil
+    @exist_contact.birthday           = nil
+    @exist_contact.own_gender         = nil
+    @exist_contact.search_for_gender  = nil
+    @exist_contact.about_info         = nil
+    @exist_contact.deep_info          = nil
+    @exist_contact.secret_question    = nil
+    @exist_contact.secret_answer_1    = nil
+    @exist_contact.secret_answer_2    = nil
+    
+    @exist_contact.image_content_type = nil
+    @exist_contact.image_file_name    = nil
+    @exist_contact.image_file_size    = nil   
+      end
     else  
       @exist_contact = Contact.new  
     end      
