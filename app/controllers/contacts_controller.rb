@@ -88,7 +88,7 @@ class ContactsController < ApplicationController
     #@contact.order = order
     
     @date_select_year_start = Time.now.year - 100
-    @date_select_year_end   = Time.now.year - 18    
+    @date_select_year_end   = Time.now.year - 10    
     
     
     if Contact.find_by(order_number: order_id)
@@ -134,7 +134,7 @@ class ContactsController < ApplicationController
     #-#contact = Contact.find_by(order_number: params[:order_number])     
     #-#contact.update_attributes(contact_params.clone) 
     
-    order_id_form = params[:order_id]
+    order_id_form = params[:contact][:order_number]
     
     if Contact.find_by(order_number: order_id_form)
       contact = Contact.find_by order_number: order_id_form
