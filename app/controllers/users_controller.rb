@@ -41,12 +41,13 @@ class UsersController < ApplicationController
     order     = Order.find(order_id)  
     
     
-    #if Contact.find_by(order_number: order_id)
-    #  contact = Contact.find_by(order_number: order_id)
-    #else  
+    if Contact.find_by(order_number: order.id)        
+      contact = Contact.find_by(order_number: order.id)
+      user = User.find(contact.user_id)
+    else  
       contact = Contact.new  
-
-    #end
+    
+    
     contact.structure_test_info = order.structure_test_info    
     #-order.structure_test_info = ''        
 
@@ -106,6 +107,7 @@ class UsersController < ApplicationController
     
         user.save      
         room.save
+    end
       
       
     room_url = room_url_def(user.id)
