@@ -206,6 +206,7 @@ class TestsController < ApplicationController
     
       question = questions.find_by_number_of_question(qw_number)
       @question_title = question.title
+      @question       = question
 
      
       
