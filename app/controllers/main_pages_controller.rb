@@ -41,8 +41,8 @@ class MainPagesController < ApplicationController
 #_______________________________________
         
           
-      @articles = unless translit
-        Article.where.not(code_name: 'main')
+      @articles = if translit == ''
+        Article.where.not(number: number)
       else
         Article.where.not(translit: translit)
       end    
@@ -56,10 +56,18 @@ class MainPagesController < ApplicationController
     unless @article
         
       @article = if translit == ''
-        Article.where(code_name: 'main').first
+        if number and Article.where(number: number).first
+          Article.where(number: number).first
+        else  
+          Article.where(code_name: 'main').first
+        end
       else
-        Article.where(translit: translit).first
-        @article = Article.where(code_name: 'main').first unless @article
+        if Article.where(translit: translit).first
+          Article.where(translit: translit).first
+        #@article = Article.where(code_name: 'main').first unless @article
+        else
+          Article.where(code_name: 'main').first
+        end
       end
     
     
