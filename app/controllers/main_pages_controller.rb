@@ -29,25 +29,45 @@ class MainPagesController < ApplicationController
 
 
     translit  = params[:translit]    
-    @articles = unless translit
-      Article.where.not(code_name: 'main')
-    else
-      Article.where.not(translit: translit)
-    end    
     
-    #@articles = @articles.shuffle
-    
+    if translit
+      number  = translit[0].to_i
+      
+      unless number == 0
+        translit[0] = ''
+      end      
+    end
         
-    @article = unless translit
-      Article.where(code_name: 'main').first
-    else
-      Article.where(translit: translit).first
-    end
+#_______________________________________
+        
+          
+      @articles = unless translit
+        Article.where.not(code_name: 'main')
+      else
+        Article.where.not(translit: translit)
+      end    
+    
+      #@articles = @articles.shuffle
+    
+#_______________________________________
+
+
+    @article = Article.where(number: number).first
+    unless @article
+        
+      @article = if translit == ''
+        Article.where(code_name: 'main').first
+      else
+        Article.where(translit: translit).first
+        @article = Article.where(code_name: 'main').first unless @article
+      end
     
     
-    unless translit
-      @page = Page.find_by(page: 'main')
-    end
+      if translit == ''
+        @page = Page.find_by(page: 'main')
+      end
+      
+    end      
 
 #_______________________________________
 

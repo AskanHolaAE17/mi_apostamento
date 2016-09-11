@@ -7,5 +7,5 @@ Disallow: /contacts
 Disallow: /much_form
 Disallow: /info
 
-Sitemap: http://kindrelations.com//sitemap.xml
+Sitemap: http://kindrelations.com/sitemap.xml
 host: http://kindrelations.com/
