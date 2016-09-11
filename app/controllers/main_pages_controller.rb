@@ -55,7 +55,7 @@ class MainPagesController < ApplicationController
     @article = Article.where(number: number).first
     unless @article
         
-      @article = if translit == ''
+      @article = if translit == '' or translit == nil
         if number and Article.where(number: number).first
           Article.where(number: number).first
         else  
@@ -66,7 +66,8 @@ class MainPagesController < ApplicationController
           Article.where(translit: translit).first
         #@article = Article.where(code_name: 'main').first unless @article
         else
-          Article.where(code_name: 'main').first
+          redirect_to root_path + 'articles'
+          Article.where(code_name: 'main').first          
         end
       end
     
