@@ -41,8 +41,13 @@ class MainPagesController < ApplicationController
 #_______________________________________
         
           
-      @articles = if translit == ''
-        Article.where.not(number: number)
+      @articles = if translit == '' or translit == nil
+        if number
+          Article.where.not(number: number)
+        else  
+          Article.where.not(code_name: 'main')
+        end 
+        
       else
         Article.where.not(translit: translit)
       end    
@@ -66,7 +71,7 @@ class MainPagesController < ApplicationController
           Article.where(translit: translit).first
         #@article = Article.where(code_name: 'main').first unless @article
         else
-          redirect_to root_path + 'articles'
+          redirect_to root_path + 'articles/'
           Article.where(code_name: 'main').first          
         end
       end
