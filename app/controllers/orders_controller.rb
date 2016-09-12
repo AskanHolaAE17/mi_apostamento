@@ -7,11 +7,17 @@ class OrdersController < ApplicationController
   
   def create
     root_path = MeConstant.find_by_title('root_path').content  
+
+    @order    = Order.find_by email: params[:order][:email]
     
-    @order            = Order.new(order_params)
-    @order.akey       = akey
-    @order.akey_payed = akey  
-    @order.able       = true
+    unless @order
+      @order  = Order.new(order_params)
+    
+      @order.akey       = akey
+      @order.akey_payed = akey  
+      @order.able       = true    
+    end  
+
 #_______________________________________________________________________________
 
 
@@ -84,7 +90,7 @@ class OrdersController < ApplicationController
         test_url_hash = {
 
           :t  => '2',
-          :q  => '1',
+          :q  => "#{@order.current_qw_level or '1'}",
           :oi => @order.id,
           :oa => @order.akey,
           :ps => '0',
@@ -141,8 +147,11 @@ class OrdersController < ApplicationController
     
     #pay-   
         
-    
-    redirect_to test_url
+    if @order.current_test_link
+      redirect_to root_path + 'test/' + @order.current_test_link
+    else  
+      redirect_to test_url
+    end  
 
 #_______________________________________________________________________________if @order.save
        

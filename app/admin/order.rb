@@ -6,7 +6,8 @@ ActiveAdmin.register Order do
                             :able, :sent_email_with_test, :group, 
                             :structure_test_info, :level, :test_1_ended, 
                             :test_2_ended, :level_test_info, :contact_id, 
-                            :structure]
+                            :structure, :current_qw_level, :current_qw_struct, 
+                            :current_test_link]
     end
   end
 end

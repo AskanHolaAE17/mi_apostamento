@@ -17,7 +17,8 @@ class TestsController < ApplicationController
 #_______________________________________
 
     
-    test_url_encoded = params[:test_encrypted]         
+    test_url_encoded = params[:test_encrypted]             
+    
     #AES de3code    
     #test_url_encoded = test_url_encoded_aes_with_symbols = repl_all_subs('slash', '/', test_url_encoded)
     #    aes_key = 'asdfghjlqwyueuhgkl5'
@@ -30,6 +31,27 @@ class TestsController < ApplicationController
     test_number = test_url_hash["t"].to_i    
     qw_number   = test_url_hash["q"].to_i     
     
+#_______________________________________
+
+    
+    order_id    = test_url_hash["oi"]
+    order_akey  = test_url_hash["oa"]
+        
+    order = Order.find(order_id)            
+    order.current_test_link = test_url_encoded
+    order.save    
+    
+#_______________________________________
+
+    
+    questions = Test.find_by(number_of_test: test_number).questions
+    #.limit(3)          
+
+    ##questions = questions.where(able: true)    
+    ##if qw_number < questions.count + 1
+    #flash[:error_mi] = ''
+    
+    
     
     #if test_number == 1
     #  if qw_number == 1
@@ -37,18 +59,38 @@ class TestsController < ApplicationController
     #    qw_number = 3 if test_url_hash["l"] == 'p'
     #    qw_number = 5 if test_url_hash["l"] == 'n'
     #  end
-    #end  
- 
+    #end     
     
-    order_id    = test_url_hash["oi"]
-    order_akey  = test_url_hash["oa"]
+#_______________________________________________________________________________                                          
     
-#_______________________________________________________________________________        
-          
-                        
-    order = Order.find(order_id)            
-    #redirect_to ''
-              
+    
+    if qw_number.to_i == 1
+      unless order.current_test_link == '' or order.current_test_link == nil    
+        #redirect_to root_path + 'test/' + order.current_test_link
+      end
+    end
+    
+#_______________________________________
+        
+        
+    if test_number == 2
+      order.current_qw_level = if qw_number <= questions.count
+          qw_number.to_s
+        else  
+          ''
+        end
+    end
+            
+    
+    if test_number == 1 
+      order.current_qw_struct = if qw_number <= questions.count
+          qw_number.to_s
+        else  
+          ''
+        end
+    end     
+    
+    order.save         
     
 #_______________________________________________________________________________            
 
@@ -72,16 +114,9 @@ class TestsController < ApplicationController
       pogranich_no  = test_url_hash['po']
       nevrot_no     = test_url_hash['ne']
     end    
-#_______________________________________________________________________________            
     
-          
-    questions = Test.find_by(number_of_test: test_number).questions
-    #.limit(2)          
-
-    ##questions = questions.where(able: true)    
-    ##if qw_number < questions.count + 1
-    #flash[:error_mi] = ''
-
+#_______________________________________________________________________________            
+             
 
         level = 'ps' if order.level == 'psihotick'
         level = 'p' if order.level == 'pogranichnick'
@@ -135,6 +170,8 @@ class TestsController < ApplicationController
         no_params_encoded_64 = (Base64.encode64 no_params_json).chomp.delete("\n")
         no_params_encoded = no_params_encoded_64 + '='
         no_params = root_path + "test/#{no_params_encoded}"
+        order.current_test_link = "test/#{no_params_encoded}"
+        order.save
         redirect_to no_params
   end             ### if question and question.able == false
     
@@ -325,6 +362,7 @@ class TestsController < ApplicationController
         :i          => "#{il_no or '0'}",
         :di        => "#{disl_no or '0'}"
       }
+      
     end            
 #__________________________________________            
 
@@ -349,6 +387,9 @@ class TestsController < ApplicationController
         no_params_encoded_64 = (Base64.encode64 no_params_json).chomp.delete("\n")
         no_params_encoded = no_params_encoded_64 + '='
         @no_params = root_path + "test/#{no_params_encoded}"
+        
+        #order.current_test_link = "test/#{no_params_encoded}"
+        #order.save
         
                                       
     else #----- Test ended
@@ -529,6 +570,7 @@ class TestsController < ApplicationController
 #__________________________________________                 
                  
                  
+      order.current_test_link = ''                 
       order.save
       
       
@@ -550,7 +592,7 @@ class TestsController < ApplicationController
         test_2_url_hash = {
           :l       => level,
           :t => '1',
-          :q   => '1',        
+          :q   => "#{order.current_qw_struct or '1'}",        
           :oi    => order_id,
           :oa  => order_akey,
           :a          => '0',
@@ -572,6 +614,8 @@ class TestsController < ApplicationController
         test_2_url_encoded = test_2_url_encoded_64 + '=' 
         #test_2_url = root_path + 'test/' + test_2_url_encoded
         test_2_url = root_path + 'infos/tekst_mezhdy_testami/' + test_2_url_encoded                            
+        
+        #order.current_test_link = ''
         
         link_with_test_2_levels = test_2_url                                              
                              

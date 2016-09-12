@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911123500) do
+ActiveRecord::Schema.define(version: 20160912010000) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -225,6 +225,9 @@ ActiveRecord::Schema.define(version: 20160911123500) do
     t.string   "level_test_info"
     t.integer  "contact_id"
     t.string   "structure"
+    t.string   "current_qw_level"
+    t.string   "current_qw_struct"
+    t.string   "current_test_link"
   end
 
   create_table "pages", force: :cascade do |t|

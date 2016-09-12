@@ -52,6 +52,7 @@ class MainPagesController < ApplicationController
         Article.where.not(translit: translit)
       end    
     
+      ##@articles = @articles.sort! { |a,b| a.login_count <=> b.login_count }
       #@articles = @articles.shuffle
     
 #_______________________________________
