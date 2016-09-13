@@ -30,7 +30,7 @@ class TestsController < ApplicationController
     
     test_number = test_url_hash["t"].to_i    
     qw_number   = test_url_hash["q"].to_i     
-    
+   
 #_______________________________________
 
     
@@ -38,6 +38,137 @@ class TestsController < ApplicationController
     order_akey  = test_url_hash["oa"]
         
     order = Order.find(order_id)            
+    
+#_______________________________________
+
+
+    unless order.current_test_link == '' or order.current_test_link == nil
+    
+      last_answers_encoded = order.current_test_link
+      last_answers_json    = Base64.decode64(last_answers_encoded)    
+      
+      last_a = last_answers_hash    = JSON.parse(last_answers_json)      
+      cur_a  = current_answers_hash = test_url_hash
+      
+      
+      if last_a["t"] == cur_a["t"]
+      
+        if last_a["t"].to_i == 2   # ['ps'] ['po'] ['ne']          
+                
+          if last_a['ps'].to_i < cur_a['ps'].to_i  
+            order.yes_qws_level << (qw_number - 1).to_s << '. '
+          else
+          
+            if last_a['po'].to_i < cur_a['po'].to_i  
+              order.yes_qws_level << (qw_number - 1).to_s << '. '
+            else
+            
+              if last_a['ne'].to_i < cur_a['ne'].to_i  
+                order.yes_qws_level << (qw_number - 1).to_s << '. '
+              end   # ['ne']            
+            
+            end   # ['po']          
+          
+          end   # if last_a['ps'].to_i < cur_a['ps'].to_i
+            
+        end   # if last_a["t"].to_i == 2        # Struct
+              
+                            
+                            
+        if last_a["t"].to_i == 1   # ['a'] ['n'] ['s'] ['p'] ['g']   ['d'] ['m'] ['o'] ['k'] ['i']        
+
+          if last_a['a'].to_i < cur_a['a'].to_i  
+            order.yes_qws_struct << (qw_number - 1).to_s << '. '
+          else
+          
+            if last_a['n'].to_i < cur_a['n'].to_i  
+              order.yes_qws_struct << (qw_number - 1).to_s << '. '
+            else
+            
+              if last_a['s'].to_i < cur_a['s'].to_i  
+                order.yes_qws_struct << (qw_number - 1).to_s << '. '
+              else
+              
+                if last_a['p'].to_i < cur_a['p'].to_i  
+                  order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                else
+                
+                  if last_a['g'].to_i < cur_a['g'].to_i  
+                    order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                  else
+                
+                    if last_a['d'].to_i < cur_a['d'].to_i  
+                      order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                    else
+                    
+                      if last_a['m'].to_i < cur_a['m'].to_i  
+                        order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                      else
+                      
+                        if last_a['o'].to_i < cur_a['o'].to_i  
+                          order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                        else
+                        
+                          if last_a['k'].to_i < cur_a['k'].to_i  
+                            order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                          else
+                          
+                            if last_a['i'].to_i < cur_a['i'].to_i  
+                              order.yes_qws_struct << (qw_number - 1).to_s << '. '
+                            end   # ['i']                                                     
+                            
+                          end   # ['k']                                                   
+                          
+                        end   # ['o']                                  
+                        
+                      end   # ['m']                                  
+                      
+                    end   # ['d']                            
+                  
+                  end   # ['g']                            
+                  
+                end   # ['p']                          
+                
+              end   # ['s']            
+            
+            end   # ['n']          
+          
+          end   # if last_a['a'].to_i < cur_a['a'].to_i
+
+        end   # if last_a["t"].to_i == 1       ### Levels 
+      
+      
+      
+      end   # if last_a["t"] == cur_a["t"]
+       
+    end   # unless order.current_test_link == '' or order.current_test_link == nil    
+
+#_______________________________________
+    
+    
+    if qw_number.to_i == 1
+    
+      if order.current_test_link and cur_a
+        if order.current_qw_struct or order.current_qw_level
+      
+          cur_test_link_encoded            = order.current_test_link
+          cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
+        
+          cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
+          cur_answs = cur_a
+          
+          if cur_link['q'].to_i != cur_answs['q'].to_i
+            redirect_to root_path + 'test/' + order.current_test_link
+          end
+        
+        end   # if order.current_qw_struct  
+      end   # if order.current_test_link
+      
+    end   # if qw_number.to_i == 1
+    
+#_______________________________________
+
+
     order.current_test_link = test_url_encoded
     order.save    
     
@@ -62,15 +193,6 @@ class TestsController < ApplicationController
     #end     
     
 #_______________________________________________________________________________                                          
-    
-    
-    if qw_number.to_i == 1
-      unless order.current_test_link == '' or order.current_test_link == nil    
-        #redirect_to root_path + 'test/' + order.current_test_link
-      end
-    end
-    
-#_______________________________________
         
         
     if test_number == 2
@@ -404,12 +526,46 @@ class TestsController < ApplicationController
         good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i]       
         bad_arr  = [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i]
         
+        
         order.group = if good_arr.max > bad_arr.max         
           'GOOD GROUP'                     
         else                   
           'BAD GROUP'       
-        end        
+        end
         
+        
+        order.structure == ''
+        
+        
+        if good_arr.max > bad_arr.max         
+          good_arr_eq      = good_arr
+        
+          good_max_1       = good_arr_eq.max
+          good_max_index_1 = good_arr_eq.index(good_max_1)
+          good_arr_eq.delete_at(good_max_index_1)
+        
+          good_max_2       = good_arr_eq.max
+          
+          if good_max_1.to_i == good_max_2.to_i
+            order.structure = 'FAIL'
+          end                          
+        else            
+        
+          bad_arr_eq      = bad_arr
+        
+          bad_max_1       = bad_arr_eq.max
+          bad_max_index_1 = bad_arr_eq.index(bad_max_1)
+          bad_arr_eq.delete_at(bad_max_index_1)
+        
+          bad_max_2       = bad_arr_eq.max                
+          
+          if bad_max_1.to_i == bad_max_2.to_i
+            order.structure = 'FAIL'
+          end                        
+        end
+        
+                
+      unless order.structure == 'FAIL'
         if order.group == 'GOOD GROUP'
         
           order.structure = case good_arr.index(good_arr.max)
@@ -425,11 +581,11 @@ class TestsController < ApplicationController
             'kl'
           when 5
             'il'
-          when 6
-            'disl'            
+          #when 6
+          #  'disl'            
           end        
           
-        else 
+        else   # UNLESS order.group == 'GOOD GROUP'
 
           order.structure = case bad_arr.index(bad_arr.max)
           when 0
@@ -442,9 +598,11 @@ class TestsController < ApplicationController
             'gml'            
           end
                   
-        end
+        end   # if order.group == 'GOOD GROUP'
                                 
-      end  
+      end   # unless order.structure =- 'FAIL'  
+      
+      end   # if test_number == 1          
 #__________________________________________        
 
 
@@ -551,7 +709,48 @@ class TestsController < ApplicationController
                                            
         order.test_1_ended = true
         order.akey         = ''
-                
+
+#__________________________________________        
+
+
+      if order.structure == 'FAIL'
+      
+        test_1_url_hash = {
+          :l          => level,
+          :t          => '1',
+          :q          => '1',        
+          :oi         => order_id,
+          :oa         => order_akey,
+          :a          => '0',
+          :n          => '0',
+          :s          => '0',
+          :p          => '0',
+          :g          => '0',
+          :d          => '0',
+          :m          => '0',
+          :o          => '0',
+          :k          => '0',
+          :i          => '0',
+          :di         => '0'        
+        }        
+
+
+        test_1_url_json = JSON.generate(test_1_url_hash)
+        test_1_url_encoded_64 = (Base64.encode64 test_1_url_json).chomp.delete("\n")
+        test_1_url_encoded = test_1_url_encoded_64 + '=' 
+        
+        test_1_url = root_path + 'infos/test_proyden_neverno/' + test_1_url_encoded                            
+        
+        
+        
+        next_page_after_test_2_level = link_with_test_2_levels = test_1_url                                          
+        
+        order.test_1_ended = false     
+        order.yes_qws_struct = '' 
+              
+      
+      end                          
+
 #__________________________________________
 
 
@@ -614,18 +813,18 @@ class TestsController < ApplicationController
         test_2_url_encoded = test_2_url_encoded_64 + '=' 
         #test_2_url = root_path + 'test/' + test_2_url_encoded
         test_2_url = root_path + 'infos/tekst_mezhdy_testami/' + test_2_url_encoded                            
-        
-        #order.current_test_link = ''
+                
         
         link_with_test_2_levels = test_2_url                                              
                              
       
       
       
-        order.level_test_info = 'Psihot: ' + psihot_no + ' ___ ' +       
-                                'Pogranich: ' + pogranich_no + ' ___ ' +
-                                'Nevrot: ' + nevrot_no                                   
-            
+        order.level_test_info   = 'Psihot: ' + psihot_no + ' ___ ' +       
+                                  'Pogranich: ' + pogranich_no + ' ___ ' +
+                                  'Nevrot: ' + nevrot_no                                   
+        
+        order.current_test_link = ''    
         order.save      
 
 #__________________________________________      

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912010000) do
+ActiveRecord::Schema.define(version: 20160913530000) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -228,6 +228,8 @@ ActiveRecord::Schema.define(version: 20160912010000) do
     t.string   "current_qw_level"
     t.string   "current_qw_struct"
     t.string   "current_test_link"
+    t.string   "yes_qws_level",        default: " "
+    t.string   "yes_qws_struct",       default: " "
   end
 
   create_table "pages", force: :cascade do |t|
