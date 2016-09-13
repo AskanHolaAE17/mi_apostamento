@@ -292,7 +292,7 @@ class TestsController < ApplicationController
         no_params_encoded_64 = (Base64.encode64 no_params_json).chomp.delete("\n")
         no_params_encoded = no_params_encoded_64 + '='
         no_params = root_path + "test/#{no_params_encoded}"
-        order.current_test_link = "test/#{no_params_encoded}"
+        order.current_test_link = "#{no_params_encoded}"
         order.save
         redirect_to no_params
   end             ### if question and question.able == false
