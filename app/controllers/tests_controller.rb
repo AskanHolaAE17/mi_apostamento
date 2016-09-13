@@ -534,38 +534,10 @@ class TestsController < ApplicationController
         end
         
         
-        order.structure == ''
+        #order.structure == ' '
         
         
-        if good_arr.max > bad_arr.max         
-          good_arr_eq      = good_arr
-        
-          good_max_1       = good_arr_eq.max
-          good_max_index_1 = good_arr_eq.index(good_max_1)
-          good_arr_eq.delete_at(good_max_index_1)
-        
-          good_max_2       = good_arr_eq.max
-          
-          if good_max_1.to_i == good_max_2.to_i
-            order.structure = 'FAIL'
-          end                          
-        else            
-        
-          bad_arr_eq      = bad_arr
-        
-          bad_max_1       = bad_arr_eq.max
-          bad_max_index_1 = bad_arr_eq.index(bad_max_1)
-          bad_arr_eq.delete_at(bad_max_index_1)
-        
-          bad_max_2       = bad_arr_eq.max                
-          
-          if bad_max_1.to_i == bad_max_2.to_i
-            order.structure = 'FAIL'
-          end                        
-        end
-        
-                
-      unless order.structure == 'FAIL'
+      #unless order.structure == 'FAIL'
         if order.group == 'GOOD GROUP'
         
           order.structure = case good_arr.index(good_arr.max)
@@ -600,7 +572,39 @@ class TestsController < ApplicationController
                   
         end   # if order.group == 'GOOD GROUP'
                                 
-      end   # unless order.structure =- 'FAIL'  
+      #end   # unless order.structure = 'FAIL'  
+      
+      
+        if good_arr.max > bad_arr.max         
+          good_arr_eq      = good_arr
+        
+          good_max_1       = good_arr_eq.max
+          good_max_index_1 = good_arr_eq.index(good_max_1)
+          good_arr_eq.delete_at(good_max_index_1)
+        
+          good_max_2       = good_arr_eq.max
+          
+          if good_max_1.to_i == good_max_2.to_i
+            order.structure = 'FAIL'
+          end                          
+        else            
+        
+          bad_arr_eq      = bad_arr
+        
+          bad_max_1       = bad_arr_eq.max
+          bad_max_index_1 = bad_arr_eq.index(bad_max_1)
+          bad_arr_eq.delete_at(bad_max_index_1)
+        
+          bad_max_2       = bad_arr_eq.max                
+          
+          if bad_max_1.to_i == bad_max_2.to_i
+            order.structure = 'FAIL'
+          end                        
+        end
+        
+                
+      
+      
       
       end   # if test_number == 1          
 #__________________________________________        
