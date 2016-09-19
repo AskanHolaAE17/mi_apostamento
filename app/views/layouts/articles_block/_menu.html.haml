@@ -4,6 +4,7 @@
   
     = link_to "/articles/#{article.translit}" do
       %div
+        =article.number.to_s + '. '
         =article.title
         
     = image_tag 'elements/slicer.png'    

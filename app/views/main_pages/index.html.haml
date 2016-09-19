@@ -3,6 +3,12 @@
 - @title = @title_tag
 
 
+-#%a 
+  %u
+    #hello
+      Подробнее о нём
+-##more_hello
+  more_hello  
 
 
 - @page.title_tag = @article.title
@@ -20,6 +26,7 @@
 
 %section
   %h3
+    =@article.number.to_s + '. '
     =@article.title
   -#=@main_page.description.html_safe    
   
