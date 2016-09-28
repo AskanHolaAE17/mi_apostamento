@@ -71,7 +71,7 @@ class OrdersController < ApplicationController
       #pay+  :action           => 'pay',
       #pay+  :amount           => @order.sum_for_pay,
       #pay+  :currency         => 'UAH',
-      #pay+  :description      => "Оплата теста",
+      #pay+  :description      => "Оплата теста",flash[:oa]
       #pay+  :server_url       => root_path + 'i_have_payed/' + server_url_details,
       #pay+  :result_url       => root_path + 'info/proverte_email_posle_oplatu',
       #pay+  :sandbox          => @pay_way        
@@ -89,13 +89,13 @@ class OrdersController < ApplicationController
 
         test_url_hash = {
 
-          :t  => '2',
-          :q  => "#{@order.current_qw_level or '1'}",
-          :oi => @order.id,
-          :oa => @order.akey,
-          :ps => '0',
-          :po => '0',
-          :ne => '0'                  
+          #t:  '2',
+          #:q  => "#{@order.current_qw_level or '1'}",
+          oi: @order.id,
+          oa: @order.akey[0..2]
+          #:ps => '0',
+          #:po => '0',
+          #:ne => '0'                  
           
         }        
           #:test_number => '2',
@@ -107,17 +107,9 @@ class OrdersController < ApplicationController
           #:nevrot      => '0'         
         
         test_url_json    = JSON.generate(test_url_hash)        
-        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')
         
-        #AES encode    
-        #aes_key = 'asdfghjlqwyueuhgkl5'
-        #iv = AES.iv(:base_64)
-        
-        #test_url_encoded_aes_with_symbols = AES.encrypt(test_url_encoded_64, aes_key, {iv: iv})        
-        #test_url_encoded = repl_all_subs('/', 'slash', test_url_encoded_aes_with_symbols)
-
-        
-        test_url = root_path + 'test/' + test_url_encoded_64
+        test_url = root_path + 'testo/' + test_url_encoded_64
                 
 #___________________________________________
         

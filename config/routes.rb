@@ -22,16 +22,29 @@ Rails.application.routes.draw do
   post  '/orders',                         to: 'orders#create'                  # for OrderForm works (path for creating new order)
   
   
-  match  '/i_have_payed_consult/:details', to: 'consults#e_get_consults_after_pay',                   via: 'get'  
+  match  '/i_have_payed_consult/:details', to: 'consults#e_get_consults_after_pay',                 via: 'get'  
   post  '/i_have_payed_consult/:details',  to: 'consults#e_get_consults_after_pay'
   #match  '/i_have_payed_test/:details',    to: 'orders#b_get_contacts_after_pay',                   via: 'get'  
   #post  '/i_have_payed_test/:details',     to: 'orders#b_get_contacts_after_pay'  
     
-  post  '/test/:test_encrypted',           to: 'tests#load_page'
-  match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'    
+    
+
+  match '/testo/:test_encrypted',          to: 'tests#signal_level',                                via: 'get'          
+  post  '/testo/:test_encrypted',          to: 'tests#signal_level'  
+  #match '/te_s_le_ar',                     to: 'tests#signal_level_array_save',                     via: 'get'            
+  post  '/te_s_le_ar',                     to: 'tests#signal_level_array_save'                     
+  
+  #match '/tests/:test_encrypted',          to: 'tests#body_level',                                  via: 'get'      
+  #post  '/testo/:test_encrypted',          to: 'tests#signal_struct'
+  #match '/testos/:test_encrypted',         to: 'tests#body_struct',                                 via: 'get'      
+  
+  match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'        
+  post  '/test/:test_encrypted',           to: 'tests#load_page'                                   
+
+
 
   match '/much_form/:order_info',          to: 'contacts#more_info_form',                           via: 'get'        
-  post  '/much_form/:order_info',          to: 'contacts#more_info_form',                           via: 'get'          
+  post  '/much_form/:order_info',          to: 'contacts#more_info_form'  
 
 
   

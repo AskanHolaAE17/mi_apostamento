@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913530000) do
+ActiveRecord::Schema.define(version: 20160927125500) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -230,6 +230,9 @@ ActiveRecord::Schema.define(version: 20160913530000) do
     t.string   "current_test_link"
     t.string   "yes_qws_level",        default: " "
     t.string   "yes_qws_struct",       default: " "
+    t.boolean  "signal_level_done",    default: false
+    t.boolean  "signal_struct_done",   default: false
+    t.string   "signal_level_arr"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -252,6 +255,15 @@ ActiveRecord::Schema.define(version: 20160913530000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "advice"
+  end
+
+  create_table "qw_level_signals", force: :cascade do |t|
+    t.integer  "qw_number"
+    t.text     "field"
+    t.string   "level"
+    t.boolean  "able",       default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "requests_for_communications", force: :cascade do |t|

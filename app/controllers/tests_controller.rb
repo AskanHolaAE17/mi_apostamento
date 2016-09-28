@@ -2,9 +2,194 @@ require 'uri'
 require 'openssl'
 class TestsController < ApplicationController
 
+
   before_action :set_main_page, only: [:load_page]
+  before_action :set_root, only: [:signal_level]
+  before_action :set_info, only: [:signal_level]  
 #_____________________________________________________________________________________________________________________________________________
 
+  def signal_level
+
+    test_url_encoded = params[:test_encrypted].partition('#').first                 
+    test_url_json    = Base64.decode64(test_url_encoded)    
+    test_url_hash    = JSON.parse(test_url_json)
+    
+    order_id = test_url_hash['oi'].to_i    
+    order_akey = test_url_hash['oa']            
+    
+    order = Order.find(order_id)
+    
+#______________________________________
+
+  
+    if order and order.akey[0..2] == order_akey           
+  
+        #test_url_hash = {
+
+        #  :t  => '2',
+        #  :q  => "#{order.current_qw_level or '1'}",
+        #  :oi => order.id,
+        #  :oa => order.akey,
+        #  :ps => '0',
+        #  :po => '0',
+        #  :ne => '0'                            
+        #}        
+        
+        #test_url_json    = JSON.generate(test_url_hash)        
+        #test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
+        #test_url = root_path + 'test/' + test_url_encoded_64  
+        
+        #level_body_test = test_url
+        
+#______________________________________
+
+  
+      if order.current_test_link == '' or order.current_test_link == nil 
+      
+        #if order.signal_level_done
+        #  redirect_to level_body_test
+        #end      
+        order.current_test_link = 'testo/' + test_url_encoded          
+        
+      else
+        if order.current_test_link != 'testo/' + test_url_encoded
+          redirect_to root_path + order.current_test_link	
+        end  
+      end   # unless order.current_test_link == '' or order.current_test_link == nil                     
+
+#______________________________________
+
+
+      @qw_level_signals = QwLevelSignal.all
+      @order = order
+        
+#______________________________________
+        
+  
+    ## 0 t  - test
+    ## 1 q  - question
+    ## 2 oi - order id
+    ## 3 oa - order akey
+    ## 4 ps - ps
+    ## 5 po - po
+    ## 6 ne - ne
+    
+    #test_url_uncoded = "
+
+    #  t2',
+    #  :q  => #{@order.current_qw_level or '1'},
+    #  :oi => @order.id,
+    #  :oa => @order.akey,
+    #  :ps => '0',
+    #  :po => '0',
+    #  :ne => '0'                  
+      
+    #".delete("\n").delete(' ')
+
+    #test_url_64       = Base64.encode64 test_url_uncoded
+    #test_url_details  = test_url_64.chomp.delete("\n").delete('=')
+    #test_url          = root_path + 'tests/' + test_url_details
+
+#______________________________________
+
+      order.save
+              
+    else   # unless order and order.akey == order_akey    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      redirect_to '/'
+    end   # if order and order.akey == order_akey    
+  end  
+  
+  
+#_____________________________________________________________________________________________________________________________________________
+
+
+  def signal_level_array_save
+    
+    order_id   = params[:order_id]
+    order_akey = params[:order_akey_start]
+    
+    order = Order.find(order_id)
+    
+#______________________________________
+
+  
+    if order and order.akey[0..2] == order_akey           
+    
+      signal_level_arr = params[:order_signal_level_array] || []
+
+      
+      if signal_level_arr.count.in? 1..3
+        
+        signal_level_arr = signal_level_arr.join(' ')
+        order.signal_level_arr = signal_level_arr
+        order.signal_level_done = true
+        order.save
+        
+#_______________________________________
+        
+    
+          test_url_hash = {
+  
+            t:  '2',
+            q:  "#{order.current_qw_level or '1'}",
+            oi: order.id,
+            oa: order.akey,
+            ps: '0',
+            po: '0',
+            ne: '0'                            
+          }        
+        
+          test_url_json    = JSON.generate(test_url_hash)        
+          test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
+          test_url = root_path + 'test/' + test_url_encoded_64 
+        
+          redirect_to test_url   
+          
+#_______________________________________          
+
+
+        else   # signal_level_arr.count NOT in? 1..3
+        
+          ##VALIDATION of count
+          #signal_level_arr.each  do |sign_lev_ar|
+	        #  flash['signal_level_arr_' + sign_lev_ar]  = 'checked' 	      
+          #end	 
+          
+          flash[:error_class_signal_level_arr]                = 'error_field'           
+          anchor = '#1'
+        
+#_______________________________________
+
+        
+          test_url_hash = {
+            oi: order.id,
+            oa: order.akey[0..2]
+          }        
+        
+          test_url_json    = JSON.generate(test_url_hash)        
+          test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')        
+          test_url = root_path + 'testo/' + test_url_encoded_64
+        
+        
+          redirect_to test_url + anchor
+
+        end   # signal_level_arr.checkbox_has_1_3values            
+        
+    else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      redirect_to '/'
+    end   # signal_level_arr.count.in? 1..3
+    
+  end
+  
+#_____________________________________________________________________________________________________________________________________________
   
   
   def load_page 
@@ -28,8 +213,19 @@ class TestsController < ApplicationController
     test_url_json    = Base64.decode64(test_url_encoded)    
     test_url_hash    = JSON.parse(test_url_json)
     
+    test_url_encoded = 'test/' + test_url_encoded
+    
     test_number = test_url_hash["t"].to_i    
     qw_number   = test_url_hash["q"].to_i     
+
+#_______________________________________
+
+    
+    if test_number == 1
+      cur_s = test_url_hash["cur_s"]    
+    end  
+    
+    @cur_s = cur_s
    
 #_______________________________________
 
@@ -44,7 +240,7 @@ class TestsController < ApplicationController
 
     unless order.current_test_link == '' or order.current_test_link == nil
     
-      last_answers_encoded = order.current_test_link
+      last_answers_encoded = order.current_test_link.partition('/').last
       last_answers_json    = Base64.decode64(last_answers_encoded)    
       
       last_a = last_answers_hash    = JSON.parse(last_answers_json)      
@@ -147,23 +343,24 @@ class TestsController < ApplicationController
     
     
     if qw_number.to_i == 1
-    
+     if test_number == 2      
       if order.current_test_link and cur_a
         if order.current_qw_struct or order.current_qw_level
       
-          cur_test_link_encoded            = order.current_test_link
+          cur_test_link_encoded            = order.current_test_link.partition('/').last
           cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
         
           cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
           cur_answs = cur_a
           
           if cur_link['q'].to_i != cur_answs['q'].to_i
-            redirect_to root_path + 'test/' + order.current_test_link
+            redirect_to root_path + order.current_test_link
+            #redirect_to root_path + 'test/' + order.current_test_link
           end
         
         end   # if order.current_qw_struct  
       end   # if order.current_test_link
-      
+     end   # if test_number == 2       
     end   # if qw_number.to_i == 1
     
 #_______________________________________
@@ -201,6 +398,8 @@ class TestsController < ApplicationController
         else  
           ''
         end
+        
+      order.signal_level_done = true unless order.signal_level_done        
     end
             
     
@@ -210,6 +409,8 @@ class TestsController < ApplicationController
         else  
           ''
         end
+        
+      order.signal_struct_done = true unless order.signal_level_done 
     end     
     
     order.save         
@@ -228,7 +429,7 @@ class TestsController < ApplicationController
       ol_no   = test_url_hash['o']
       kl_no   = test_url_hash['k']
       il_no   = test_url_hash['i']
-      disl_no = test_url_hash['di']
+      #disl_no = test_url_hash['di']
     end  
     
     if test_number == 2 
@@ -243,17 +444,38 @@ class TestsController < ApplicationController
         level = 'ps' if order.level == 'psihotick'
         level = 'p' if order.level == 'pogranichnick'
         level = 'n' if order.level == 'nevrotick'             
+        
+#_____________________________________
+
+        
+      next_qw_number = (qw_number + 1).to_s        
+      
+#_______________________________________________________________________________            
+
+      
+      next_qw_number_struct = (qw_number + 1).to_s        
+      
+      #GET ALL QWS WITH CUR_STRUCT TO Q_COLLECTION(qs)     qs=Question.where for_yes_answer_plus_1_point_to: cur_s
+      #GET INDEX OF CUR_QW IN Q_COLLECTION(qs)             qs.index(q)
+      #AND TRY TO GET NEXT Q WITH CUR STRUCT               next_q = qs[qs.index(q)+1]
+      #IF NEXT_Q IN CUR_STRUCT EXIST SET NEXT_NUMBER_OF_QW next_number_of_q = next_q.number_of_question                
     
+#_____________________________________
+
     
     question = questions.find_by_number_of_question(qw_number)  
+    
     if question and question.able == false
-    if test_number == 1         
-      no_params_hash = {
+     if test_number == 1         
+     
+       cur_struct = ((Question.where test: 1).where number_of_question: qw_number).first.for_yes_answer_plus_1_point_to     
+     
+       no_params_hash = {
         :c  => 'tests', 
         :an      => 'load_page', 
         :t => '1',
         :l       => level,        
-        :q   => qw_number + 1,
+        :q   => next_qw_number_struct,
         :oi    => order_id,
         :oa  => order_akey,
         :a          => "#{al_no or '0'}",
@@ -266,9 +488,10 @@ class TestsController < ApplicationController
         :o          => "#{ol_no or '0'}",
         :k          => "#{kl_no or '0'}",
         :i          => "#{il_no or '0'}",
-        :di        => "#{disl_no or '0'}"
+        #:di        => "#{disl_no or '0'}",          
+        :cur_s        => cur_struct        
       }
-    end            
+     end            
 #__________________________________________            
 
 
@@ -292,7 +515,7 @@ class TestsController < ApplicationController
         no_params_encoded_64 = (Base64.encode64 no_params_json).chomp.delete("\n")
         no_params_encoded = no_params_encoded_64 + '='
         no_params = root_path + "test/#{no_params_encoded}"
-        order.current_test_link = "#{no_params_encoded}"
+        order.current_test_link = 'test/' + "#{no_params_encoded}"
         order.save
         redirect_to no_params
   end             ### if question and question.able == false
@@ -369,7 +592,7 @@ class TestsController < ApplicationController
 
      
       
-      next_qw_number = (qw_number + 1).to_s
+      #next_qw_number = (qw_number + 1).to_s
 #__________________________________________
 
 
@@ -400,16 +623,18 @@ class TestsController < ApplicationController
           then kl_yes = (kl_no.to_i + 1).to_s
         when 'il' 
           then il_yes = (il_no.to_i + 1).to_s
-        when 'disl' 
-          then disl_yes = (disl_no.to_i + 1).to_s
+        #when 'disl' 
+        #  then disl_yes = (disl_no.to_i + 1).to_s
       end      
+
+      cur_struct = ((Question.where test: 1).where number_of_question: qw_number).first.for_yes_answer_plus_1_point_to
       
       yes_params_hash = {
         :c => 'tests', 
         :an => 'load_page',
         :t => '1', 
         :l       => level,
-        :q => next_qw_number,
+        :q => next_qw_number_struct,
         :oi => order_id,
         :oa => order_akey,
         :a => "#{al_yes or al_no or '0'}",
@@ -422,7 +647,8 @@ class TestsController < ApplicationController
         :o => "#{ol_yes or ol_no or '0'}",
         :k => "#{kl_yes or kl_no or '0'}",
         :i => "#{il_yes or il_no or '0'}",
-        :di => "#{disl_yes or disl_no or '0'}"
+        #:di => "#{disl_yes or disl_no or '0'}",          
+        :cur_s        => cur_struct        
       }
     end    
 
@@ -464,12 +690,15 @@ class TestsController < ApplicationController
                         
          
     if test_number == 1         
+    
+     cur_struct = ((Question.where test: 1).where number_of_question: qw_number).first.for_yes_answer_plus_1_point_to    
+    
       no_params_hash = {
         :c  => 'tests', 
         :an      => 'load_page', 
         :t => '1',
         :l       => level,        
-        :q   => next_qw_number,
+        :q   => next_qw_number_struct,
         :oi    => order_id,
         :oa  => order_akey,
         :a          => "#{al_no or '0'}",
@@ -482,7 +711,8 @@ class TestsController < ApplicationController
         :o          => "#{ol_no or '0'}",
         :k          => "#{kl_no or '0'}",
         :i          => "#{il_no or '0'}",
-        :di        => "#{disl_no or '0'}"
+        #:di        => "#{disl_no or '0'}",          
+        :cur_s        => cur_struct        
       }
       
     end            
@@ -523,7 +753,8 @@ class TestsController < ApplicationController
                 
       if test_number == 1        
       
-        good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i]       
+        good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i]
+        #good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i, disl_no.to_i]              
         bad_arr  = [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i]
         
         
@@ -715,9 +946,11 @@ class TestsController < ApplicationController
         order.akey         = ''
 
 #__________________________________________        
-
-
+     
+      
       if order.structure == 'FAIL'
+      
+        cur_struct = ((Question.where test: 1).where number_of_question: 1).first.for_yes_answer_plus_1_point_to      
       
         test_1_url_hash = {
           :l          => level,
@@ -735,7 +968,8 @@ class TestsController < ApplicationController
           :o          => '0',
           :k          => '0',
           :i          => '0',
-          :di         => '0'        
+          #:di         => '0',          
+          :cur_s        => cur_struct                
         }        
 
 
@@ -791,24 +1025,28 @@ class TestsController < ApplicationController
         level = 'ps'    if order.level == 'psihotick'
         level = 'p' if order.level == 'pogranichnick'
         level = 'n'    if order.level == 'nevrotick'        
+        
+                
+        cur_struct = ((Question.where test: 1).where number_of_question: "#{order.current_qw_struct or '1'}").first.for_yes_answer_plus_1_point_to
             
-        test_2_url_hash = {
-          :l       => level,
-          :t => '1',
-          :q   => "#{order.current_qw_struct or '1'}",        
-          :oi    => order_id,
-          :oa  => order_akey,
-          :a          => '0',
-          :n          => '0',
-          :s         => '0',
-          :p          => '0',
-          :g         => '0',
-          :d          => '0',
-          :m          => '0',
-          :o          => '0',
-          :k          => '0',
-          :i          => '0',
-          :di        => '0'          
+        test_2_url_hash =  {
+          :l            => level,
+          :t            => '1',
+          :q            => "#{order.current_qw_struct or '1'}",        
+          :oi           => order_id,
+          :oa           => order_akey,
+          :a            => '0',
+          :n            => '0',
+          :s            => '0',
+          :p            => '0',
+          :g            => '0',
+          :d            => '0',
+          :m            => '0',
+          :o            => '0',
+          :k            => '0',
+          :i            => '0',
+          #:di           => '0',          
+          :cur_s        => cur_struct
         }        
 
 
@@ -912,6 +1150,15 @@ class TestsController < ApplicationController
     def set_main_page
       @main_page  = MainPage.find(1)       
     end    
-  
+    def set_root
+      root_path   = MeConstant.find_by_title('root_path').content    
+    end
+    
+    def set_info
+      @site_title = MeConstant.find_by_title('site_title').content
+      @main_page  = MainPage.find(1)   
+      
+      @page       = Page.find_by_page :test                
+    end      
   
 end
