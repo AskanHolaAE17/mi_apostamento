@@ -29,13 +29,13 @@ Rails.application.routes.draw do
     
     
 
-  match '/testo/:test_encrypted',          to: 'tests#signal_level',                                via: 'get'          
-  post  '/testo/:test_encrypted',          to: 'tests#signal_level'  
+  match '/testo/:test_encrypted',          to: 'tests#level_qws_signal',                            via: 'get'          
+  post  '/testo/:test_encrypted',          to: 'tests#level_qws_signal'  
   #match '/te_s_le_ar',                     to: 'tests#signal_level_array_save',                     via: 'get'            
   post  '/te_s_le_ar',                     to: 'tests#signal_level_array_save'                     
   
-  #match '/tests/:test_encrypted',          to: 'tests#body_level',                                  via: 'get'      
-  #post  '/testo/:test_encrypted',          to: 'tests#signal_struct'
+  match '/tests/:test_encrypted',          to: 'tests#level_qws_body',                              via: 'get'      
+  post  '/tests/:test_encrypted',          to: 'tests#level_qws_body'
   #match '/testos/:test_encrypted',         to: 'tests#body_struct',                                 via: 'get'      
   
   match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'        

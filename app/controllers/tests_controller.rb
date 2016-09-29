@@ -3,12 +3,13 @@ require 'openssl'
 class TestsController < ApplicationController
 
 
-  before_action :set_main_page, only: [:load_page]
-  before_action :set_root, only: [:signal_level]
-  before_action :set_info, only: [:signal_level]  
+  before_action :set_main_page, only: [:load_page,        :level_qws_body]
+  before_action :set_root,      only: [:level_qws_signal, :level_qws_body]
+  before_action :set_info,      only: [:level_qws_signal, :level_qws_body]  
 #_____________________________________________________________________________________________________________________________________________
 
-  def signal_level
+
+  def level_qws_signal
 
     test_url_encoded = params[:test_encrypted].partition('#').first                 
     test_url_json    = Base64.decode64(test_url_encoded)    
@@ -120,7 +121,7 @@ class TestsController < ApplicationController
       signal_level_arr = params[:order_signal_level_array] || []
 
       
-      if signal_level_arr.count.in? 1..3
+      if signal_level_arr.count.in? 1..2
         
         signal_level_arr = signal_level_arr.join(' ')
         order.signal_level_arr = signal_level_arr
@@ -135,7 +136,7 @@ class TestsController < ApplicationController
             t:  '2',
             q:  "#{order.current_qw_level or '1'}",
             oi: order.id,
-            oa: order.akey,
+            oa: order.akey[0..2],
             ps: '0',
             po: '0',
             ne: '0'                            
@@ -143,7 +144,7 @@ class TestsController < ApplicationController
         
           test_url_json    = JSON.generate(test_url_hash)        
           test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
-          test_url = root_path + 'test/' + test_url_encoded_64 
+          test_url = root_path + 'tests/' + test_url_encoded_64 
         
           redirect_to test_url   
           
@@ -184,11 +185,453 @@ class TestsController < ApplicationController
     
       #security_of_mailing = SecurityOfMailing.new
       #SecureMailer.wrong_url().deliver
-      redirect_to '/'
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
     end   # signal_level_arr.count.in? 1..3
     
   end
   
+#_____________________________________________________________________________________________________________________________________________
+
+  
+  def level_qws_body
+
+          # ['c'] ---controller   # no
+          # ['an']---action name  # no
+                      
+          # ['t']    test_number
+          # ['q']    qw_number  
+          # ['oi']   order_id   
+          # ['oa']   order_akey 
+          
+          # ['ps']   psihot     
+          # ['po']   pogranich  
+          # ['ne']   nevrot     
+
+#_______________________________________    
+
+  
+    test_url_encoded  = params[:test_encrypted]                 
+    test_url_json     = Base64.decode64(test_url_encoded)    
+    test_url_hash     = JSON.parse(test_url_json)
+    
+#_______________________________________    
+
+    
+    test_number = test_url_hash['t'].to_i    
+    
+    order_id    = test_url_hash['oi']
+    order_akey  = test_url_hash['oa']
+
+#_______________________________________
+
+        
+    order = Order.find(order_id)                    
+    
+#_______________________________________      
+
+      
+    #if order.test_2_ended                                  # if Test2 has ended previously
+    #  redirect_to root_path + 'info/test_yzhe_proyden'       # Redirect immediately to explaining Msg
+    #end        
+    
+#_______________________________________
+
+
+    if order and order.akey[0..2] == order_akey
+
+#_______________________________________    
+
+        
+      qw_number      = test_url_hash['q'].to_i             
+      @qw_number     = qw_number        
+    
+      next_qw_number = qw_number + 1                    
+      #next_qw_number_struct = (qw_number + 1).to_s   # ?           
+    
+#_______________________________________
+
+    
+      test_url_encoded = 'tests/' + test_url_encoded    
+
+#_______________________________________
+
+      cur_answs = current_answers_hash = test_url_hash      
+      if qw_number.to_i == 1
+      
+        if order.current_test_link and cur_answs   # going to REDIRECT to cur test PROGRESS PAGE
+                                                   
+          if order.current_qw_level
+      
+      
+            cur_test_link_encoded            = order.current_test_link.partition('/').last   # just text after '/'
+            cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
+        
+            cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
+          
+          
+            if cur_link['q'].to_i != cur_answs['q'].to_i
+            
+              order.save
+              redirect_to root_path + order.current_test_link              
+            end
+        
+          end   # if order.current_qw_struct  
+        end   # if order.current_test_link
+      end   # if qw_number.to_i == 1      
+  
+#_______________________________________
+
+    
+      unless order.current_test_link == '' or order.current_test_link == nil
+    
+        last_answers_encoded          = order.current_test_link.partition('/').last   # just text after '/'
+        last_answers_json             = Base64.decode64(last_answers_encoded)    
+      
+        last_a = last_answers_hash    = JSON.parse(last_answers_json)      
+        cur_a  = cur_answs   # cur_answs  = current_answers_hash = test_url_hash  
+      
+      
+        if last_a["t"] == cur_a["t"]
+      
+                
+            if     last_a['ps'].to_i   < cur_a['ps'].to_i  
+                   order.yes_qws_level << (qw_number - 1).to_s << '. '
+            else
+          
+          
+              if   last_a['po'].to_i   < cur_a['po'].to_i  
+                   order.yes_qws_level << (qw_number - 1).to_s << '. '
+              else
+            
+            
+                if last_a['ne'].to_i   < cur_a['ne'].to_i                  
+                   order.yes_qws_level << (qw_number - 1).to_s << '. '                
+                   
+                end   # ['ne']            
+            
+              end   # ['po']          
+          
+            end   # if last_a['ps'].to_i < cur_a['ps'].to_i
+            
+      
+        end   # if last_a["t"] == cur_a["t"]
+       
+      end   # unless order.current_test_link == '' or order.current_test_link == nil    
+
+#_______________________________________
+
+
+      order.current_test_link = test_url_encoded        
+      
+#_______________________________________
+
+      
+      #QUESTIONS
+      questions = Test.find_by(number_of_test: test_number).questions
+      #.limit(1)          
+            
+#_______________________________________      
+
+    
+      #QUESTION
+      question  = questions.find_by number_of_question: qw_number         
+        
+      @question = question          
+    
+#_______________________________________
+
+
+      order.current_qw_level = if qw_number <= questions.count
+          qw_number.to_s
+        else  
+          ''
+        end            
+
+#_______________________________________
+
+
+        #NO HASH
+        psihot_no     = test_url_hash['ps']
+        pogranich_no  = test_url_hash['po']
+        nevrot_no     = test_url_hash['ne']
+    
+    
+        no_params_hash = {
+          t:    '2',
+          q:    next_qw_number,
+          oi:   order_id,
+          oa:   order_akey[0..2],
+          ps:   "#{psihot_no or '0'}",  
+          po:   "#{pogranich_no or '0'}",
+          ne:   "#{nevrot_no or '0'}"
+        }
+    
+#_______________________________________      
+
+    
+        #NO LINK
+        no_params_json     = JSON.generate(no_params_hash)
+        no_params_encoded  = (Base64.encode64 no_params_json).chomp.delete("\n").delete('=')
+        
+        @no_params         =  root_path         + 
+                             'tests/'           + 
+                              no_params_encoded
+        
+#_______________________________________      
+
+                                                                                                            
+      if  question  and  (qw_number < questions.count + 1)   #----- Start TestShow Part      
+
+#_______________________________________      
+
+
+        if question.able == false   # for existing, but OFFed QWS
+      
+          no_params_hash = {      
+            t:   '2',
+            q:   (qw_number + 1),
+            oi:  order_id,
+            oa:  order_akey[0..2],
+            ps:  "#{psihot_no or '0'}",
+            po:  "#{pogranich_no or '0'}",
+            ne:  "#{nevrot_no or '0'}"
+          }  
+      
+          no_params_json          = JSON.generate(no_params_hash)
+          no_params_encoded       = (Base64.encode64 no_params_json).chomp.delete("\n").delete('=')      
+      
+          order.current_test_link = 'tests/'           + 
+                                   no_params_encoded
+        
+          order.save        
+          redirect_to  root_path  +  order.current_test_link   # redirect to NEXT QW        
+      
+        end   ### if question and question.able == false    
+        
+#_______________________________________      
+
+
+        #YES HASH      
+        case       question.for_yes_answer_plus_1_point_to
+          when 'ps' 
+            then   psihot_yes    = (psihot_no.to_i + 1).to_s
+          when 'p' 
+            then   pogranich_yes = (pogranich_no.to_i + 1).to_s
+          when 'n' 
+            then   nevrot_yes    = (nevrot_no.to_i + 1).to_s
+        end      
+      
+      
+        yes_params_hash = {
+          t:   '2',
+          q:   next_qw_number,
+          oi:  order_id,
+          oa:  order_akey[0..2],
+          ps:  "#{psihot_yes or psihot_no or '0'}",
+          po:  "#{pogranich_yes or pogranich_no or '0'}",
+          ne:  "#{nevrot_yes or nevrot_no or '0'}"
+        }                        
+
+#_______________________________________      
+
+
+        #YES LINK    
+        yes_params_json     = JSON.generate(yes_params_hash)
+        yes_params_encoded  = (Base64.encode64 yes_params_json).chomp.delete("\n").delete('=')
+    
+        @yes_params         =  root_path          + 
+                              'tests/'            + 
+                               yes_params_encoded      
+    
+#_______________________________________      
+
+            
+        @current_question = qw_number.to_s         # ?
+        @questions_amount = questions.count.to_s   # ?
+      
+#_______________________________________            
+
+
+        order.save
+
+#_______________________________________            
+
+
+      else   #----- TestShow Part
+              #     unlesss question  and  (qw_number < questions.count + 1)
+
+#_______________________________________            
+
+    
+        l_arr = levels_array    = [psihot_no.to_i, pogranich_no.to_i, nevrot_no.to_i]      # count of ДА in every ResultLevelGroups
+        max_l = max_level_count = levels_array.max                                         # max count of points
+
+        l_ind = level_indexes   = l_arr.each_index.select{                                 # Indexes of Level(s) with MaxPoints
+                                  |i| l_arr[i] == max_l }        
+
+#_______________________________________
+
+      
+        if l_ind.count > 1                                                            # if more then 1 LevelGroup with MaxPoints
+        
+          # if LEVEL defining FAIL
+          order.level = 'FAIL'
+          
+          order.level_test_info     =  order.level_test_info     + ' '   +
+                                      'Ps: '      + psihot_no    + ' _ ' +       
+                                      'Po: '      + pogranich_no + ' _ ' +
+                                      'Ne: '      + nevrot_no            +                                   
+                                      ' - is FAIL || '
+                                      
+          order.yes_qws_level       =  order.yes_qws_level       +
+                                       ' - is FAIL || '                                           
+           
+          test_2_again_url_hash     =  {
+            t:  '2',
+            q:  '1',
+            oi: order_id,
+            oa: order_akey[0..2],
+            ps: '0',
+            po: '0',
+            ne: '0'
+          }        
+
+          test_2_again_url_json     =  JSON.generate(test_2_again_url_hash)
+          test_2_again_url_encoded  =  (Base64.encode64 test_2_again_url_json).chomp.delete("\n").delete('=')        
+          
+          test_2_again_url          =  root_path + 
+                                      'infos/test_proyden_neverno/' + 
+                                       test_2_again_url_encoded                            
+          
+          order.current_test_link   =  'tests/' + test_2_again_url_encoded
+          
+          order.save                        
+          redirect_to test_2_again_url   # redirect to Level Test - Start (again)
+        
+#_______________________________________        
+
+                
+        else                                                                          # if just 1 max LevelGroupResult -> define the Group
+               # unless l_ind.count > 1                                                                  
+               
+          # if LEVEL defined SUCCESS          
+          order.level = if levels_array.index(levels_array.max) == 0
+            'psihotick'           
+            
+          elsif levels_array.index(levels_array.max) == 1                   
+            'pogranichnick'                        
+                 
+          else  
+            'nevrotick'
+            
+          end          
+              
+#_______________________________________
+
+                
+          order.group = 'BAD GROUP'  if order.level == 'pogranichnick'        
+          order.group = 'BAD GROUP'  if order.level == 'psihotick'
+        
+#_______________________________________      
+      
+        
+          order.level_test_info          =   order.level_test_info         + ' '     +
+                                            'Psihot: '      + psihot_no    + ' ___ ' +       
+                                            'Pogranich: '   + pogranich_no + ' ___ ' +
+                                            'Nevrot: '      + nevrot_no                                   
+        
+          order.current_test_link        =  ''    
+
+#_______________________________________            
+
+
+          level = 'ps'    if order.level == 'psihotick'
+          level = 'p'     if order.level == 'pogranichnick'
+          level = 'n'     if order.level == 'nevrotick'        
+          
+#_______________________________________
+        
+
+          current_qw_struct_i = order.current_qw_struct.to_i
+          
+          if current_qw_struct_i == 0
+            cur_struct_qw        = ((Question.where test: 1).where number_of_question: 1).first          
+          end      
+          
+          if current_qw_struct_i != 0
+            cur_struct_qw        = ((Question.where test: 1).where number_of_question: order.current_qw_struct).first          
+          end      
+                    
+          cur_struct             = cur_struct_qw.for_yes_answer_plus_1_point_to
+            
+          test_1_start_url_hash  =  {
+        
+            l:      level,
+            t:      '1',
+            q:      "#{order.current_qw_struct or '1'}",        
+            oi:     order_id,
+            oa:     order_akey,
+            cur_s:  cur_struct,          
+          
+            a:      '0',
+            n:      '0',
+            s:      '0',
+            p:      '0',
+            g:      '0',
+            d:      '0',
+            m:      '0',
+            o:      '0',
+            k:      '0',
+            i:      '0'
+          }        
+
+#_______________________________________
+
+
+          test_1_start_url_json     = JSON.generate(test_1_start_url_hash)
+          test_1_start_url_encoded  = (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
+        
+          test_1_start_url          =  root_path                + 
+                                    'infos/'                  + 
+                                    'tekst_mezhdy_testami/'   + 
+                                     test_1_start_url_encoded                                            
+
+#__________________________________________      
+      
+      
+          unless order.test_2_ended
+            OrderMailer.b_to_test_2_levels(order, test_1_start_url).deliver                          
+          end              
+      
+          order.test_2_ended = true      
+      
+        
+          order.save
+          redirect_to     test_1_start_url
+
+
+        end                                                                           # end LevelGroup Defining
+              # end: if l_ind.count > 1                                                           
+                            
+#__________________________________________
+
+          
+      end    #----- End TestShow Part                
+
+#_______________________________________            
+
+
+    else  # unless order and order.akey[0..2] == order_akey
+          # FAIL url
+    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'    
+      
+    end   # if order and order.akey[0..2] == order_akey
+
+  end
+    
 #_____________________________________________________________________________________________________________________________________________
   
   
