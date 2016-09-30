@@ -140,7 +140,7 @@ class OrdersController < ApplicationController
     #pay-   
         
     if @order.current_test_link
-      redirect_to root_path + 'test/' + @order.current_test_link
+      redirect_to root_path + @order.current_test_link
     else  
       redirect_to test_url
     end  

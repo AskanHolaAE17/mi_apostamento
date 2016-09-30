@@ -38,6 +38,18 @@ Rails.application.routes.draw do
   post  '/tests/:test_encrypted',          to: 'tests#level_qws_body'
   #match '/testos/:test_encrypted',         to: 'tests#body_struct',                                 via: 'get'      
   
+  match '/testom/:test_encrypted',         to: 'tests#level_qws_signal_more',                       via: 'get'          
+  post  '/testom/:test_encrypted',         to: 'tests#level_qws_signal_more'  
+  
+  #testo
+  #tests
+  #testom
+  
+  #testt
+  #testss
+  #testtm
+    
+  
   match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'        
   post  '/test/:test_encrypted',           to: 'tests#load_page'                                   
 

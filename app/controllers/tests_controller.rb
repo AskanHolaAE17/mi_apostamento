@@ -15,41 +15,22 @@ class TestsController < ApplicationController
     test_url_json    = Base64.decode64(test_url_encoded)    
     test_url_hash    = JSON.parse(test_url_json)
     
-    order_id = test_url_hash['oi'].to_i    
-    order_akey = test_url_hash['oa']            
+    order_id         = test_url_hash['oi'].to_i    
+    order_akey       = test_url_hash['oa']            
     
-    order = Order.find(order_id)
+#______________________________________
+    
+    
+    order            = Order.find(order_id)
     
 #______________________________________
 
   
-    if order and order.akey[0..2] == order_akey           
-  
-        #test_url_hash = {
-
-        #  :t  => '2',
-        #  :q  => "#{order.current_qw_level or '1'}",
-        #  :oi => order.id,
-        #  :oa => order.akey,
-        #  :ps => '0',
-        #  :po => '0',
-        #  :ne => '0'                            
-        #}        
-        
-        #test_url_json    = JSON.generate(test_url_hash)        
-        #test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
-        #test_url = root_path + 'test/' + test_url_encoded_64  
-        
-        #level_body_test = test_url
-        
-#______________________________________
-
+    if order and order.akey[0..2] == order_akey             
+    
   
       if order.current_test_link == '' or order.current_test_link == nil 
       
-        #if order.signal_level_done
-        #  redirect_to level_body_test
-        #end      
         order.current_test_link = 'testo/' + test_url_encoded          
         
       else
@@ -90,15 +71,20 @@ class TestsController < ApplicationController
     #test_url_64       = Base64.encode64 test_url_uncoded
     #test_url_details  = test_url_64.chomp.delete("\n").delete('=')
     #test_url          = root_path + 'tests/' + test_url_details
+    #or
+    #test_url          = root_path + test_url_details    
 
 #______________________________________
 
       order.save
               
     else   # unless order and order.akey == order_akey    
+    
       #security_of_mailing = SecurityOfMailing.new
       #SecureMailer.wrong_url().deliver
+      
       redirect_to '/'
+      
     end   # if order and order.akey == order_akey    
   end  
   
@@ -118,65 +104,83 @@ class TestsController < ApplicationController
   
     if order and order.akey[0..2] == order_akey           
     
-      signal_level_arr = params[:order_signal_level_array] || []
+      signal_level_arr            =  params[:order_signal_level_array] || []
+
+#_______________________________________
 
       
       if signal_level_arr.count.in? 1..2
+
         
-        signal_level_arr = signal_level_arr.join(' ')
-        order.signal_level_arr = signal_level_arr
-        order.signal_level_done = true
+        current_level             =  signal_level_arr[0]                
+
+#_______________________________________
+
+        
+        signal_level_arr          =  signal_level_arr.join(' ')
+        order.signal_level_arr    =  signal_level_arr
+        
+        order.signal_level_done   =  true
         order.save
         
 #_______________________________________
         
-    
-          test_url_hash = {
+              
+        #QUESTIONS
+        test           =  Test.find_by         number_of_test: 2
+        questions_all  =  test.questions
+        questions_on   =  questions_all.where  able: true          
+        questions      =  questions_on.where   for_yes_answer_plus_1_point_to: current_level          
+          
+        question       =  questions.first
+        qw_number      =  question.number_of_question
+ 
+     
+        test_url_hash  =  {
   
-            t:  '2',
-            q:  "#{order.current_qw_level or '1'}",
-            oi: order.id,
-            oa: order.akey[0..2],
-            ps: '0',
-            po: '0',
-            ne: '0'                            
+          t:     '2',
+          q:     qw_number,
+          oi:    order.id,
+          oa:    order.akey[0..2],
+            
+          ps:    '0',
+          po:    '0',
+          ne:    '0',                            
+            
+          cur_l: current_level
           }        
         
-          test_url_json    = JSON.generate(test_url_hash)        
-          test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
-          test_url = root_path + 'tests/' + test_url_encoded_64 
+        test_url_json    = JSON.generate(test_url_hash)        
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
+        test_url = root_path + 'tests/' + test_url_encoded_64 
         
-          redirect_to test_url   
+        redirect_to test_url   
           
 #_______________________________________          
 
 
-        else   # signal_level_arr.count NOT in? 1..3
+      else   # signal_level_arr.count NOT in? 1..3
         
-          ##VALIDATION of count
-          #signal_level_arr.each  do |sign_lev_ar|
-	        #  flash['signal_level_arr_' + sign_lev_ar]  = 'checked' 	      
-          #end	 
-          
-          flash[:error_class_signal_level_arr]                = 'error_field'           
-          anchor = '#1'
+                
+        flash[:error_class_signal_level_arr]                = 'error_field'           
+        anchor = '#1'
         
 #_______________________________________
 
         
-          test_url_hash = {
-            oi: order.id,
-            oa: order.akey[0..2]
-          }        
+        test_url_hash = {
+          oi: order.id,
+          oa: order.akey[0..2]
+        }        
         
-          test_url_json    = JSON.generate(test_url_hash)        
-          test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')        
-          test_url = root_path + 'testo/' + test_url_encoded_64
+        test_url_json    = JSON.generate(test_url_hash)        
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')        
+        test_url = root_path + 'testo/' + test_url_encoded_64
         
         
-          redirect_to test_url + anchor
+        redirect_to test_url + anchor
 
-        end   # signal_level_arr.checkbox_has_1_3values            
+      end   # signal_level_arr.checkbox_has_1_3values            
         
     else   # unless order and order.akey == order_akey    
 
@@ -195,29 +199,32 @@ class TestsController < ApplicationController
   
   def level_qws_body
 
-          # ['c'] ---controller   # no
-          # ['an']---action name  # no
+          # ['c'] ------controller   # no
+          # ['an']------action name  # no
                       
-          # ['t']    test_number
-          # ['q']    qw_number  
-          # ['oi']   order_id   
-          # ['oa']   order_akey 
+          # ['t']       test_number
+          # ['q']       qw_number  
+          # ['oi']      order_id   
+          # ['oa']      order_akey 
           
-          # ['ps']   psihot     
-          # ['po']   pogranich  
-          # ['ne']   nevrot     
+          # ['ps']      psihot     
+          # ['po']      pogranich  
+          # ['ne']      nevrot     
+          
+          # ['cur_l']   current_level (of qws)
 
 #_______________________________________    
 
   
     test_url_encoded  = params[:test_encrypted]                 
+    
     test_url_json     = Base64.decode64(test_url_encoded)    
     test_url_hash     = JSON.parse(test_url_json)
     
 #_______________________________________    
 
     
-    test_number = test_url_hash['t'].to_i    
+    #test_number = test_url_hash['t'].to_i    
     
     order_id    = test_url_hash['oi']
     order_akey  = test_url_hash['oa']
@@ -243,21 +250,58 @@ class TestsController < ApplicationController
 
         
       qw_number      = test_url_hash['q'].to_i             
-      @qw_number     = qw_number        
     
-      next_qw_number = qw_number + 1                    
+      #next_qw_number = qw_number + 1                    
       #next_qw_number_struct = (qw_number + 1).to_s   # ?           
     
 #_______________________________________
 
     
       test_url_encoded = 'tests/' + test_url_encoded    
+      
+#_______________________________________
+
+
+      #if order.current_test_link  and  order.current_test_link != test_url_encoded              
+      
+      #  redirect_to   root_path   +    order.current_test_link        
+      #else   # if order.current_test_link  and  order.current_test_link != test_url_encoded                
 
 #_______________________________________
 
-      cur_answs = current_answers_hash = test_url_hash      
-      if qw_number.to_i == 1
+
+      cur_answs = current_answers_hash = test_url_hash            
       
+      last_answers_encoded          = order.current_test_link.partition('/').last   # just text after '/'
+      last_answers_json             = Base64.decode64(last_answers_encoded)    
+      
+      last_a = last_answers_hash    = JSON.parse(last_answers_json)      
+      cur_a  = cur_answs            # cur_answs  = current_answers_hash = test_url_hash
+              
+      
+      #if (  order.current_test_link == ''  or  order.current_test_link == nil  and
+      if  order.current_test_link                      and  
+          order.current_test_link != test_url_encoded  and  
+          last_a['t']     == cur_a['t']                and
+          last_a['cur_l'] >  cur_a['cur_l']            and          
+          last_a['q']     >  cur_a['q']  
+           
+            
+        #if  last_a["t"]   == cur_a["t"]               
+          redirect_to root_path + order.current_test_link
+        
+        else   #  unless  order.current_test_link  and  last_a["t"]   == cur_a["t"]   
+               ## unless last_a["t"]   == cur_a["t"]                       
+        
+        ##end   # if  last_a["t"]   == cur_a["t"]       
+          
+      #end   # if  order.current_test_link  and  last_a["t"]   == cur_a["t"]  
+
+#_______________________________________
+
+      
+      if qw_number.to_i == 1
+            
         if order.current_test_link and cur_answs   # going to REDIRECT to cur test PROGRESS PAGE
                                                    
           if order.current_qw_level
@@ -271,7 +315,7 @@ class TestsController < ApplicationController
           
             if cur_link['q'].to_i != cur_answs['q'].to_i
             
-              order.save
+              #order.save
               redirect_to root_path + order.current_test_link              
             end
         
@@ -281,81 +325,142 @@ class TestsController < ApplicationController
   
 #_______________________________________
 
+
+      #current_test_link  =  order.current_test_link
+      
+      #order.current_test_link = test_url_encoded        
+      
+#_______________________________________      
+
+ 
+      #SET CURRENT LEVEL OF QWS
+      current_level    =  test_url_hash['cur_l']   # current level (of qws)    
     
-      unless order.current_test_link == '' or order.current_test_link == nil
-    
-        last_answers_encoded          = order.current_test_link.partition('/').last   # just text after '/'
-        last_answers_json             = Base64.decode64(last_answers_encoded)    
-      
-        last_a = last_answers_hash    = JSON.parse(last_answers_json)      
-        cur_a  = cur_answs   # cur_answs  = current_answers_hash = test_url_hash  
-      
-      
-        if last_a["t"] == cur_a["t"]
-      
-                
-            if     last_a['ps'].to_i   < cur_a['ps'].to_i  
-                   order.yes_qws_level << (qw_number - 1).to_s << '. '
-            else
-          
-          
-              if   last_a['po'].to_i   < cur_a['po'].to_i  
-                   order.yes_qws_level << (qw_number - 1).to_s << '. '
-              else
-            
-            
-                if last_a['ne'].to_i   < cur_a['ne'].to_i                  
-                   order.yes_qws_level << (qw_number - 1).to_s << '. '                
-                   
-                end   # ['ne']            
-            
-              end   # ['po']          
-          
-            end   # if last_a['ps'].to_i < cur_a['ps'].to_i
-            
-      
-        end   # if last_a["t"] == cur_a["t"]
-       
-      end   # unless order.current_test_link == '' or order.current_test_link == nil    
-
-#_______________________________________
-
-
-      order.current_test_link = test_url_encoded        
-      
 #_______________________________________
 
       
       #QUESTIONS
-      questions = Test.find_by(number_of_test: test_number).questions
+      test             =  Test.find_by              number_of_test: 2
+      questions_all    =  test.questions
+      questions_on     =  questions_all.where       able: true                
+      #questions
       #.limit(1)          
             
 #_______________________________________      
 
     
       #QUESTION
-      question  = questions.find_by number_of_question: qw_number         
+      question         =  questions_all.find_by     number_of_question: qw_number                 
+    
+#_______________________________________      
+
+
+      #DEFINE YES count
+      psihot_no     = test_url_hash['ps']
+      pogranich_no  = test_url_hash['po']
+      nevrot_no     = test_url_hash['ne']
+    
+#_______________________________________              
+
+                                                                                                            
+      #if  question  and  (qw_number < questions.count + 1) and next_question    #----- Start TestShow Part
+      
+      if  question   #----- Start TestShow Part            
+      
+#_______________________________________
+
+    
+        unless order.current_test_link == '' or order.current_test_link == nil
+    
+    
+          if  last_a['t']   == cur_a['t'] 
+                              
+                
+              if  (  last_a['ps'].to_i   ==  cur_a['ps'].to_i  and
+                     last_a['po'].to_i   ==  cur_a['po'].to_i  and
+                     last_a['ne'].to_i   ==  cur_a['ne'].to_i  and
+                   
+                     order.yes_qws_level[-2] != '|'  )
+              
+                   
+                yes_qws_level       =  order.yes_qws_level.split(' ')                                 
+                yes_qws_level.pop   
+                #unless yes_qws_level.last == '||'
+              
+                order.yes_qws_level = yes_qws_level.join(' ')
+
+              end   # if YES wasn`t addes (on prew page)
+            
+      
+          end   # if last_a["t"] == cur_a["t"]
+         
+        end   # unless order.current_test_link == '' or order.current_test_link == nil    
+
+#_______________________________________      
+
+
+        order.yes_qws_level << ' ' << qw_number.to_s << '.'   # save cur qw_number to YES order array                 
+
+#_______________________________________      
+    
+    
+        #~NEXT QUESTION (if exist)
+        questions_cur_l  =  questions_all.where       for_yes_answer_plus_1_point_to: current_level          
+          
+        cur_qw_index     =  questions_cur_l.index(question)
         
-      @question = question          
+                        
+        next_qw_index    =  cur_qw_index + 1
+        next_question    =  questions_cur_l[next_qw_index]
+          
+        if next_question
+        
+          next_qw_number =  next_question.number_of_question    
+          
+        else 
+        
+          signal_level_arr     =  order.signal_level_arr.split(' ')       # get array of EXIST LEVELS
+          current_l_index      =  signal_level_arr.index(current_level)   # index of CURRENT LEVEL in array
+          next_level           =  signal_level_arr[current_l_index + 1]   # get NEXT level
+        
+          questions_new_cur_l  =  questions_all.where  for_yes_answer_plus_1_point_to: next_level   # get QWS with this level
+          
+                            
+          if questions_new_cur_l[0]   # if there are qws with THIS LEVEL
+        
+            next_question      =  questions_new_cur_l[0]             # get next QW (if there are qws with THIS LEVEL)
+            next_qw_number     =  next_question.number_of_question   # get next QW number (for hash)            
+          
+            current_level      =  next_level   # for cur_l in HASH
+          else
+          
+            next_qw_number     = Question.all.count + 1  # set UNDER LIMIT number of NEXT QW (for test will ended)
+          end              
+           
+        end  
     
 #_______________________________________
 
+      
+        @question    =  question          
+        
+        @qw_number   = qw_number        
+            
+#_______________________________________
 
-      order.current_qw_level = if qw_number <= questions.count
-          qw_number.to_s
-        else  
-          ''
-        end            
 
+        #order.current_qw_level = if qw_number <= questions.count
+        #    qw_number.to_s
+        #  else  
+        #    ''
+        #  end            
+        
+        order.current_qw_level = qw_number.to_s
+          
 #_______________________________________
 
 
         #NO HASH
-        psihot_no     = test_url_hash['ps']
-        pogranich_no  = test_url_hash['po']
-        nevrot_no     = test_url_hash['ne']
-    
-    
         no_params_hash = {
           t:    '2',
           q:    next_qw_number,
@@ -363,7 +468,9 @@ class TestsController < ApplicationController
           oa:   order_akey[0..2],
           ps:   "#{psihot_no or '0'}",  
           po:   "#{pogranich_no or '0'}",
-          ne:   "#{nevrot_no or '0'}"
+          ne:   "#{nevrot_no or '0'}",                            
+            
+          cur_l: current_level
         }
     
 #_______________________________________      
@@ -377,51 +484,47 @@ class TestsController < ApplicationController
                              'tests/'           + 
                               no_params_encoded
         
-#_______________________________________      
-
-                                                                                                            
-      if  question  and  (qw_number < questions.count + 1)   #----- Start TestShow Part      
-
-#_______________________________________      
+#_______#________________________________      
 
 
-        if question.able == false   # for existing, but OFFed QWS
+        #if question.able == false   # for existing, but OFFed QWS
       
-          no_params_hash = {      
-            t:   '2',
-            q:   (qw_number + 1),
-            oi:  order_id,
-            oa:  order_akey[0..2],
-            ps:  "#{psihot_no or '0'}",
-            po:  "#{pogranich_no or '0'}",
-            ne:  "#{nevrot_no or '0'}"
-          }  
+        #  no_params_hash = {      
+        #    t:   '2',
+        #    q:   next_qw_number,
+        #    oi:  order_id,
+        #    oa:  order_akey[0..2],
+        #    ps:  "#{psihot_no or '0'}",
+        #    po:  "#{pogranich_no or '0'}",
+        #    ne:  "#{nevrot_no or '0'}"
+        #  }  
       
-          no_params_json          = JSON.generate(no_params_hash)
-          no_params_encoded       = (Base64.encode64 no_params_json).chomp.delete("\n").delete('=')      
+        #  no_params_json          = JSON.generate(no_params_hash)
+        #  no_params_encoded       = (Base64.encode64 no_params_json).chomp.delete("\n").delete('=')      
       
-          order.current_test_link = 'tests/'           + 
-                                   no_params_encoded
+        #  order.current_test_link = 'tests/'           + 
+        #                           no_params_encoded
         
-          order.save        
-          redirect_to  root_path  +  order.current_test_link   # redirect to NEXT QW        
+        #  order.save        
+        #  redirect_to  root_path  +  order.current_test_link   # redirect to NEXT QW        
       
-        end   ### if question and question.able == false    
+        #end   ### if question and question.able == false    
         
 #_______________________________________      
 
 
-        #YES HASH      
+        #DEFINE YES count
         case       question.for_yes_answer_plus_1_point_to
           when 'ps' 
             then   psihot_yes    = (psihot_no.to_i + 1).to_s
-          when 'p' 
+          when 'po' 
             then   pogranich_yes = (pogranich_no.to_i + 1).to_s
-          when 'n' 
+          when 'ne' 
             then   nevrot_yes    = (nevrot_no.to_i + 1).to_s
         end      
       
-      
+        
+        #YES HASH      
         yes_params_hash = {
           t:   '2',
           q:   next_qw_number,
@@ -429,7 +532,9 @@ class TestsController < ApplicationController
           oa:  order_akey[0..2],
           ps:  "#{psihot_yes or psihot_no or '0'}",
           po:  "#{pogranich_yes or pogranich_no or '0'}",
-          ne:  "#{nevrot_yes or nevrot_no or '0'}"
+          ne:  "#{nevrot_yes or nevrot_no or '0'}",                            
+            
+          cur_l: current_level
         }                        
 
 #_______________________________________      
@@ -445,9 +550,10 @@ class TestsController < ApplicationController
     
 #_______________________________________      
 
-            
-        @current_question = qw_number.to_s         # ?
-        @questions_amount = questions.count.to_s   # ?
+         
+        # ?    
+        #@current_question = qw_number.to_s         # ?
+        #@questions_amount = questions.count.to_s   # ?
       
 #_______________________________________            
 
@@ -475,25 +581,46 @@ class TestsController < ApplicationController
         if l_ind.count > 1                                                            # if more then 1 LevelGroup with MaxPoints
         
           # if LEVEL defining FAIL
-          order.level = 'FAIL'
+          order.level               = 'FAIL'          
           
-          order.level_test_info     =  order.level_test_info     + ' '   +
-                                      'Ps: '      + psihot_no    + ' _ ' +       
-                                      'Po: '      + pogranich_no + ' _ ' +
+                    
+          if order.level_test_info.to_s.size > 2000
+          
+            l_t_i                   = order.level_test_info
+            order.level_test_info   = l_t_i.slice( (l_t_i.index('||')+3)..l_t_i.length)  unless l_t_i 
+
+            y_q_l                   = order.yes_qws_level
+            order.yes_qws_level     = y_q_l.slice( (y_q_l.index('||')+3)..y_q_l.length)  unless y_q_l
+          end
+          
+          order.level_test_info     =  order.level_test_info.to_s + ' '   +
+                                      'Ps: '      + psihot_no     + ' _ ' +       
+                                      'Po: '      + pogranich_no  + ' _ ' +
                                       'Ne: '      + nevrot_no            +                                   
                                       ' - is FAIL || '
                                       
-          order.yes_qws_level       =  order.yes_qws_level       +
+          order.yes_qws_level       =  order.yes_qws_level        +
                                        ' - is FAIL || '                                           
+           
+           
+          current_level_fail        =  order.signal_level_arr.split(' ')[0]
+                    
+          current_level_fail_qws    =  questions_on.where for_yes_answer_plus_1_point_to: current_level_fail                     
+          first_qw                  =  current_level_fail_qws.first
+          first_qw_number           =  first_qw.number_of_question
+          
+          order.current_qw_level    =  first_qw_number          
            
           test_2_again_url_hash     =  {
             t:  '2',
-            q:  '1',
+            q:  first_qw_number,
             oi: order_id,
             oa: order_akey[0..2],
             ps: '0',
             po: '0',
-            ne: '0'
+            ne: '0',                            
+            
+            cur_l: current_level_fail
           }        
 
           test_2_again_url_json     =  JSON.generate(test_2_again_url_hash)
@@ -528,26 +655,29 @@ class TestsController < ApplicationController
               
 #_______________________________________
 
-                
-          order.group = 'BAD GROUP'  if order.level == 'pogranichnick'        
-          order.group = 'BAD GROUP'  if order.level == 'psihotick'
+
+          order.group = 'GOOD GROUP'  if order.level == 'nevrotick'                        
+          order.group = 'BAD GROUP'   if order.level == 'pogranichnick'        
+          order.group = 'BAD GROUP'   if order.level == 'psihotick'
         
 #_______________________________________      
       
         
-          order.level_test_info          =   order.level_test_info         + ' '     +
+          order.level_test_info          =   order.level_test_info.to_s    + ' '     +
                                             'Psihot: '      + psihot_no    + ' ___ ' +       
                                             'Pogranich: '   + pogranich_no + ' ___ ' +
                                             'Nevrot: '      + nevrot_no                                   
         
           order.current_test_link        =  ''    
+          
+          order.current_qw_level         =  ''            
 
 #_______________________________________            
 
 
           level = 'ps'    if order.level == 'psihotick'
-          level = 'p'     if order.level == 'pogranichnick'
-          level = 'n'     if order.level == 'nevrotick'        
+          level = 'po'    if order.level == 'pogranichnick'
+          level = 'ne'    if order.level == 'nevrotick'        
           
 #_______________________________________
         
@@ -621,17 +751,31 @@ class TestsController < ApplicationController
 #_______________________________________            
 
 
+      #end   # if order.current_test_link  and  order.current_test_link != test_url_encoded              
+        ##end   # if  last_a["t"]   == cur_a["t"]       
+      end   # if  order.current_test_link  and  last_a["t"]   == cur_a["t"]  
+      
+#_______________________________________            
+      
+
     else  # unless order and order.akey[0..2] == order_akey
           # FAIL url
     
       #security_of_mailing = SecurityOfMailing.new
       #SecureMailer.wrong_url().deliver
+      
       redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'    
       
     end   # if order and order.akey[0..2] == order_akey
 
   end
     
+#_____________________________________________________________________________________________________________________________________________
+
+
+  def level_qws_signal
+  end
+
 #_____________________________________________________________________________________________________________________________________________
   
   
