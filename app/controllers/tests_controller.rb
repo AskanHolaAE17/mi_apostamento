@@ -3,9 +3,9 @@ require 'openssl'
 class TestsController < ApplicationController
 
 
-  before_action :set_main_page, only: [:load_page,        :level_qws_body]
-  before_action :set_root,      only: [:level_qws_signal, :level_qws_body]
-  before_action :set_info,      only: [:level_qws_signal, :level_qws_body]  
+  before_action :set_main_page, only: [:load_page,        :level_qws_body,  :level_qws_signal_more]
+  before_action :set_root,      only: [:level_qws_signal, :level_qws_body,  :level_qws_signal_more]
+  before_action :set_info,      only: [:level_qws_signal, :level_qws_body,  :level_qws_signal_more]  
 #_____________________________________________________________________________________________________________________________________________
 
 
@@ -193,6 +193,89 @@ class TestsController < ApplicationController
     end   # signal_level_arr.count.in? 1..3
     
   end
+
+#_____________________________________________________________________________________________________________________________________________
+
+
+  def load_text_between_tests_level_struct(order, order_id, order_akey)
+  
+    
+          order.group = 'GOOD GROUP'  if order.level == 'nevrotick'                        
+          order.group = 'BAD GROUP'   if order.level == 'pogranichnick'        
+          order.group = 'BAD GROUP'   if order.level == 'psihotick'        
+
+#_______________________________________            
+
+
+          level = 'ps'    if order.level == 'psihotick'
+          level = 'po'    if order.level == 'pogranichnick'
+          level = 'ne'    if order.level == 'nevrotick'        
+          
+#_______________________________________
+        
+
+          current_qw_struct_i = order.current_qw_struct.to_i
+          
+          if current_qw_struct_i == 0
+            cur_struct_qw        = ((Question.where test: 1).where number_of_question: 1).first          
+          end      
+          
+          if current_qw_struct_i != 0
+            cur_struct_qw        = ((Question.where test: 1).where number_of_question: order.current_qw_struct).first          
+          end      
+                    
+          cur_struct             = cur_struct_qw.for_yes_answer_plus_1_point_to
+            
+          test_1_start_url_hash  =  {
+        
+            l:      level,
+            t:      '1',
+            q:      "#{order.current_qw_struct or '1'}",        
+            oi:     order_id,
+            oa:     order_akey,
+            cur_s:  cur_struct,          
+          
+            a:      '0',
+            n:      '0',
+            s:      '0',
+            p:      '0',
+            g:      '0',
+            d:      '0',
+            m:      '0',
+            o:      '0',
+            k:      '0',
+            i:      '0'
+          }        
+
+#_______________________________________
+
+
+          test_1_start_url_json     = JSON.generate(test_1_start_url_hash)
+          test_1_start_url_encoded  = (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
+        
+          test_1_start_url          =  root_path                + 
+                                    'infos/'                  + 
+                                    'tekst_mezhdy_testami/'   + 
+                                     test_1_start_url_encoded                                            
+
+#__________________________________________      
+      
+      
+          unless order.test_2_ended
+            OrderMailer.b_to_test_2_levels(order, test_1_start_url).deliver                          
+          end              
+      
+      
+          order.test_2_ended     = true      
+          
+          order.current_qw_level = ''
+      
+#__________________________________________      
+
+        
+          order.save
+          redirect_to     test_1_start_url  
+  end
   
 #_____________________________________________________________________________________________________________________________________________
 
@@ -360,16 +443,9 @@ class TestsController < ApplicationController
       pogranich_no  = test_url_hash['po']
       nevrot_no     = test_url_hash['ne']
     
-#_______________________________________              
-
-                                                                                                            
-      #if  question  and  (qw_number < questions.count + 1) and next_question    #----- Start TestShow Part
-      
-      if  question   #----- Start TestShow Part            
-      
 #_______________________________________
-
-    
+        
+        
         unless order.current_test_link == '' or order.current_test_link == nil
     
     
@@ -388,6 +464,7 @@ class TestsController < ApplicationController
                 #unless yes_qws_level.last == '||'
               
                 order.yes_qws_level = yes_qws_level.join(' ')
+                
 
               end   # if YES wasn`t addes (on prew page)
             
@@ -395,11 +472,21 @@ class TestsController < ApplicationController
           end   # if last_a["t"] == cur_a["t"]
          
         end   # unless order.current_test_link == '' or order.current_test_link == nil    
+            
+#_______________________________________              
+
+                                                                                                            
+      #if  question  and  (qw_number < questions.count + 1) and next_question    #----- Start TestShow Part
+      
+      if  question   #----- Start TestShow Part                  
+
+
+        order.yes_qws_level << ' ' << qw_number.to_s << '.'   # save cur qw_number to YES order array                 
 
 #_______________________________________      
 
 
-        order.yes_qws_level << ' ' << qw_number.to_s << '.'   # save cur qw_number to YES order array                 
+        order.current_test_link = test_url_encoded
 
 #_______________________________________      
     
@@ -564,7 +651,7 @@ class TestsController < ApplicationController
 
 
       else   #----- TestShow Part
-              #     unlesss question  and  (qw_number < questions.count + 1)
+              #     unlesss question  (TEST was ENDED)
 
 #_______________________________________            
 
@@ -578,63 +665,129 @@ class TestsController < ApplicationController
 #_______________________________________
 
       
-        if l_ind.count > 1                                                            # if more then 1 LevelGroup with MaxPoints
-        
-          # if LEVEL defining FAIL
-          order.level               = 'FAIL'          
+        if l_ind.count > 1            
+                                                        # if more then 1 LevelGroup with MaxPoints
+                                                        
+          
+          #if 5==3   # SKIP fail        
+          ## if LEVEL defining FAIL
+          #order.level               = 'FAIL'          
           
                     
-          if order.level_test_info.to_s.size > 2000
+          #if order.level_test_info.to_s.size > 2000
           
-            l_t_i                   = order.level_test_info
-            order.level_test_info   = l_t_i.slice( (l_t_i.index('||')+3)..l_t_i.length)  unless l_t_i 
+          #  l_t_i                   = order.level_test_info
+          #  order.level_test_info   = l_t_i.slice( (l_t_i.index('||')+3)..l_t_i.length)  unless l_t_i 
 
-            y_q_l                   = order.yes_qws_level
-            order.yes_qws_level     = y_q_l.slice( (y_q_l.index('||')+3)..y_q_l.length)  unless y_q_l
-          end
+          #  y_q_l                   = order.yes_qws_level
+          #  order.yes_qws_level     = y_q_l.slice( (y_q_l.index('||')+3)..y_q_l.length)  unless y_q_l
+          #end
           
-          order.level_test_info     =  order.level_test_info.to_s + ' '   +
-                                      'Ps: '      + psihot_no     + ' _ ' +       
-                                      'Po: '      + pogranich_no  + ' _ ' +
-                                      'Ne: '      + nevrot_no            +                                   
-                                      ' - is FAIL || '
+          #order.level_test_info     =  order.level_test_info.to_s + ' '   +
+          #                            'Ps: '      + psihot_no     + ' _ ' +       
+          #                            'Po: '      + pogranich_no  + ' _ ' +
+          #                            'Ne: '      + nevrot_no            +                                   
+          #                            ' - is FAIL || '
                                       
-          order.yes_qws_level       =  order.yes_qws_level        +
-                                       ' - is FAIL || '                                           
+          #order.yes_qws_level       =  order.yes_qws_level        +
+          #                             ' - is FAIL || '                                           
            
            
-          current_level_fail        =  order.signal_level_arr.split(' ')[0]
+          #current_level_fail        =  order.signal_level_arr.split(' ')[0]
                     
-          current_level_fail_qws    =  questions_on.where for_yes_answer_plus_1_point_to: current_level_fail                     
-          first_qw                  =  current_level_fail_qws.first
-          first_qw_number           =  first_qw.number_of_question
+          #current_level_fail_qws    =  questions_on.where for_yes_answer_plus_1_point_to: current_level_fail                     
+          #first_qw                  =  current_level_fail_qws.first
+          #first_qw_number           =  first_qw.number_of_question
           
-          order.current_qw_level    =  first_qw_number          
+          #order.current_qw_level    =  first_qw_number          
            
-          test_2_again_url_hash     =  {
-            t:  '2',
-            q:  first_qw_number,
-            oi: order_id,
-            oa: order_akey[0..2],
-            ps: '0',
-            po: '0',
-            ne: '0',                            
+          #test_2_again_url_hash     =  {
+          #  t:  '2',
+          #  q:  first_qw_number,
+          #  oi: order_id,
+          #  oa: order_akey[0..2],
+          #  ps: '0',
+          #  po: '0',
+          #  ne: '0',                            
             
-            cur_l: current_level_fail
-          }        
+          #  cur_l: current_level_fail
+          #}        
 
-          test_2_again_url_json     =  JSON.generate(test_2_again_url_hash)
-          test_2_again_url_encoded  =  (Base64.encode64 test_2_again_url_json).chomp.delete("\n").delete('=')        
+          #test_2_again_url_json     =  JSON.generate(test_2_again_url_hash)
+          #test_2_again_url_encoded  =  (Base64.encode64 test_2_again_url_json).chomp.delete("\n").delete('=')        
           
-          test_2_again_url          =  root_path + 
-                                      'infos/test_proyden_neverno/' + 
-                                       test_2_again_url_encoded                            
+          #test_2_again_url          =  root_path + 
+          #                            'infos/test_proyden_neverno/' + 
+          #                             test_2_again_url_encoded                            
           
-          order.current_test_link   =  'tests/' + test_2_again_url_encoded
+          #order.current_test_link   =  'tests/' + test_2_again_url_encoded
+          
+          #order.save                        
+          #redirect_to test_2_again_url   # redirect to Level Test - Start (again)
+        
+          #end   # of SKIPING fail
+          
+#_______________________________________        
+
+          
+          #test_2_signal_more_hash   =  {
+            #t:  '2',
+            #q:  first_qw_number,
+          #  oi: order_id,
+          #  oa: order_akey[0..2],
+            #ps: '0',
+            #po: '0',
+            #ne: '0'                            
+            
+            #cur_l: current_level_fail
+          #}        
+          
+#_______________________________________        
+
+          
+          max_names = ''      # if same count in diffrent groups - define variable for GroupsNAMES                                   
+            
+          l_arr.each.with_index do |el, i|                     
+            if el == max_l 
+              max_names += '1 ' if i == 0
+              max_names += '2 ' if i == 1
+              max_names += '3'  if i == 2
+            end
+          end         
+          
+          max_names = max_names.split(' ')    
+
+#_______________________________________        
+
+          
+          test_2_signal_more_array    =            
+            order_id.to_s             + 
+            ' '                       + 
+            order_akey[0..2].to_s     +
+            ' '                       +            
+            max_names[0]              +
+            ' '                       +             
+            max_names[1]
+                              
+
+          #test_2_signal_more_json     =  JSON.generate(test_2_signal_more_hash)
+          test_2_signal_more_encoded  =  (Base64.encode64 test_2_signal_more_array).chomp.delete("\n").delete('=')        
+          
+          
+          order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
+          
+          test_2_signal_more          =  root_path + 
+                                         order.current_test_link
+          
+          
+          order.level_test_info          =   order.level_test_info.to_s    + ' '     +
+                                            'Psihot: '      + psihot_no    + ' ___ ' +       
+                                            'Pogranich: '   + pogranich_no + ' ___ ' +
+                                            'Nevrot: '      + nevrot_no                         
           
           order.save                        
-          redirect_to test_2_again_url   # redirect to Level Test - Start (again)
-        
+          redirect_to test_2_signal_more   # redirect to level_qws_signal_more PAGE
+          
 #_______________________________________        
 
                 
@@ -656,88 +809,23 @@ class TestsController < ApplicationController
 #_______________________________________
 
 
-          order.group = 'GOOD GROUP'  if order.level == 'nevrotick'                        
-          order.group = 'BAD GROUP'   if order.level == 'pogranichnick'        
-          order.group = 'BAD GROUP'   if order.level == 'psihotick'
-        
-#_______________________________________      
-      
-        
           order.level_test_info          =   order.level_test_info.to_s    + ' '     +
                                             'Psihot: '      + psihot_no    + ' ___ ' +       
                                             'Pogranich: '   + pogranich_no + ' ___ ' +
-                                            'Nevrot: '      + nevrot_no                                   
+                                            'Nevrot: '      + nevrot_no 
+                                            
+#_______________________________________      
+              
         
           order.current_test_link        =  ''    
           
-          order.current_qw_level         =  ''            
-
-#_______________________________________            
-
-
-          level = 'ps'    if order.level == 'psihotick'
-          level = 'po'    if order.level == 'pogranichnick'
-          level = 'ne'    if order.level == 'nevrotick'        
-          
-#_______________________________________
-        
-
-          current_qw_struct_i = order.current_qw_struct.to_i
-          
-          if current_qw_struct_i == 0
-            cur_struct_qw        = ((Question.where test: 1).where number_of_question: 1).first          
-          end      
-          
-          if current_qw_struct_i != 0
-            cur_struct_qw        = ((Question.where test: 1).where number_of_question: order.current_qw_struct).first          
-          end      
-                    
-          cur_struct             = cur_struct_qw.for_yes_answer_plus_1_point_to
-            
-          test_1_start_url_hash  =  {
-        
-            l:      level,
-            t:      '1',
-            q:      "#{order.current_qw_struct or '1'}",        
-            oi:     order_id,
-            oa:     order_akey,
-            cur_s:  cur_struct,          
-          
-            a:      '0',
-            n:      '0',
-            s:      '0',
-            p:      '0',
-            g:      '0',
-            d:      '0',
-            m:      '0',
-            o:      '0',
-            k:      '0',
-            i:      '0'
-          }        
+          order.current_qw_level         =  ''                                                        
 
 #_______________________________________
 
 
-          test_1_start_url_json     = JSON.generate(test_1_start_url_hash)
-          test_1_start_url_encoded  = (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
-        
-          test_1_start_url          =  root_path                + 
-                                    'infos/'                  + 
-                                    'tekst_mezhdy_testami/'   + 
-                                     test_1_start_url_encoded                                            
-
-#__________________________________________      
-      
-      
-          unless order.test_2_ended
-            OrderMailer.b_to_test_2_levels(order, test_1_start_url).deliver                          
-          end              
-      
-          order.test_2_ended = true      
-      
-        
-          order.save
-          redirect_to     test_1_start_url
+          #DEF
+          load_text_between_tests_level_struct(order, order_id, order_akey)
 
 
         end                                                                           # end LevelGroup Defining
@@ -773,9 +861,216 @@ class TestsController < ApplicationController
 #_____________________________________________________________________________________________________________________________________________
 
 
-  def level_qws_signal
+  def level_qws_signal_more
+    
+    details_encoded = params[:details_encoded]                 
+    details_decoded = Base64.decode64 details_encoded
+    
+    details_arr     = details_decoded.split(' ')
+    
+#_______________________________________    
+
+
+          #details_decoded             =   # for details_arr              
+          #  order_id.to_s             + 
+          #  ' '                       + 
+          #  order_akey[0..2].to_s     +
+          #  ' '                       +           
+          #  max_names[0]              +
+          #  ' '                       +           
+          #  max_names[1]
+    
+    
+    order_id    = details_arr[0]
+    order_akey  = details_arr[1]
+
+#_______________________________________
+
+        
+    order = Order.find(order_id)                    
+
+#_______________________________________
+
+
+    if order and order.akey[0..2] == order_akey
+    
+    
+      max_group_1_index = details_arr[2]
+      max_group_2_index = details_arr[3]      
+      
+#_______________________________________            
+
+
+      all_levels      = '123'
+      not_max_level_i = all_levels.delete(max_group_1_index).delete(max_group_2_index)
+      
+#_______________________________________            
+
+
+      not_max_level = case not_max_level_i.to_i
+        when 1
+          'ps'
+        when 2
+          'po'
+        when 3
+          'ne'
+      end
+                    
+      @qw_level_signals = QwLevelSignal.where.not(level: not_max_level)
+      
+#_______________________________________            
+
+      
+      @order = order
+            
+#_______________________________________            
+      
+
+    else  # unless order and order.akey[0..2] == order_akey
+          # FAIL url
+    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'    
+      
+    end   # if order and order.akey[0..2] == order_akey
+        
+    
   end
 
+#_____________________________________________________________________________________________________________________________________________
+
+
+  def signal_level_more_array_save
+    
+    order_id   = params[:order_id]
+    order_akey = params[:order_akey_start]
+
+#______________________________________
+
+    
+    order = Order.find(order_id)
+    
+#______________________________________
+
+  
+    if order and order.akey[0..2] == order_akey           
+    
+      signal_level_arr            =  params[:order_signal_level_more_array] || []
+
+#_______________________________________
+
+      
+      if signal_level_arr.count.in? 1..1
+
+        
+        current_level             =  signal_level_arr[0]                
+
+#_______________________________________
+
+        
+        signal_level_arr          =  signal_level_arr.join(' ')
+        order.level    =  signal_level_arr
+        
+        #order.signal_level_done   =  true
+        #order.save
+        
+#_______________________________________
+        
+        
+          # if LEVEL defined SUCCESS          
+          order.level = case order.level
+            when 'ps'
+              'psihotick'           
+            
+            when 'po'
+              'pogranichnick'                        
+                 
+            when 'ne'
+              'nevrotick'
+            
+          end                  
+          
+#_______________________________________
+
+          
+        #DEF      
+        load_text_between_tests_level_struct(order, order_id, order_akey)
+          
+#_______________________________________          
+
+
+      else   # signal_level_arr.count NOT in? 1..3
+        
+                
+        flash[:error_class_signal_level_arr]                = 'error_field'           
+        anchor = '#1'
+        
+#_______________________________________        
+
+
+        max_names_1    = params[:max_names_1]
+        max_names_2    = params[:max_names_2]
+        
+        
+        max_names_1_i  = case max_names_1
+          when 'ps'
+            1
+          when 'po'
+            2
+          when 'ne'
+            3                        
+        end  
+        
+        max_names_2_i  = case max_names_2
+          when 'ps'
+            1
+          when 'po'
+            2
+          when 'ne'
+            3                        
+        end  
+        
+#_______________________________________        
+        
+          
+          test_2_signal_more_array    =            
+            order_id.to_s             + 
+            ' '                       + 
+            order_akey[0..2].to_s     +
+            ' '                       +            
+            max_names_1_i.to_s        +
+            ' '                       +             
+            max_names_2_i.to_s
+                                          
+
+          test_2_signal_more_encoded  =  (Base64.encode64 test_2_signal_more_array).chomp.delete("\n").delete('=')        
+          
+          
+          order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
+          
+          test_2_signal_more          =  root_path + 
+                                         order.current_test_link
+                              
+          
+          order.save                        
+          redirect_to test_2_signal_more   # redirect to level_qws_signal_more PAGE
+
+      end   # signal_level_arr.checkbox_has_1_3values            
+        
+    else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+    end   # signal_level_arr.count.in? 1..3
+    
+  end
+  
 #_____________________________________________________________________________________________________________________________________________
   
   

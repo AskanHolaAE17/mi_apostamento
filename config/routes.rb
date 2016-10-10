@@ -30,7 +30,8 @@ Rails.application.routes.draw do
     
 
   match '/testo/:test_encrypted',          to: 'tests#level_qws_signal',                            via: 'get'          
-  post  '/testo/:test_encrypted',          to: 'tests#level_qws_signal'  
+  post  '/testo/:test_encrypted',          to: 'tests#level_qws_signal'
+    
   #match '/te_s_le_ar',                     to: 'tests#signal_level_array_save',                     via: 'get'            
   post  '/te_s_le_ar',                     to: 'tests#signal_level_array_save'                     
   
@@ -38,9 +39,11 @@ Rails.application.routes.draw do
   post  '/tests/:test_encrypted',          to: 'tests#level_qws_body'
   #match '/testos/:test_encrypted',         to: 'tests#body_struct',                                 via: 'get'      
   
-  match '/testom/:test_encrypted',         to: 'tests#level_qws_signal_more',                       via: 'get'          
-  post  '/testom/:test_encrypted',         to: 'tests#level_qws_signal_more'  
+  match '/testo_more/:details_encoded',    to: 'tests#level_qws_signal_more',                       via: 'get'          
+  post  '/testo_more/:details_encoded',    to: 'tests#level_qws_signal_more'  
   
+  post  '/te_s_le_mo_ar',                  to: 'tests#signal_level_more_array_save'                     
+    
   #testo
   #tests
   #testom

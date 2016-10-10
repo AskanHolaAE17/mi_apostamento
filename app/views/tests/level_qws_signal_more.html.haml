@@ -1,0 +1,36 @@
+#form.lead
+  = form_tag '/te_s_le_mo_ar' do 
+
+    .k
+      %a{name: '1'}
+      .dark-green{class: flash[:error_class_signal_level_arr]}
+        Выберите только 
+        %br/
+        1 утверждение,
+        %br/
+        которое больше всего Вам подходит:                                                                          
+
+      %br/                     
+        
+      - @qw_level_signals.each do |level_signal|      
+        
+        %label
+          = check_box_tag 'order_signal_level_more_array[]', level_signal.level
+          = level_signal.field
+        
+        %br/
+        %br/                
+        
+
+    = hidden_field_tag  :order_id,          @order.id   
+    = hidden_field_tag  :order_akey_start,  @order.akey[0..2]
+    
+    = hidden_field_tag  :max_names_1,       @qw_level_signals[0].level
+    = hidden_field_tag  :max_names_2,       @qw_level_signals[1].level 
+
+
+    %div     
+      = submit_tag 'Продолжить тест', class: 'btn btn-success btn-large'  
+      
+      
+      
