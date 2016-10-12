@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001165000) do
+ActiveRecord::Schema.define(version: 20161012155700) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20161001165000) do
     t.datetime "updated_at"
     t.string   "own_gender"
     t.string   "search_for_gender"
-    t.string   "structure_test_info"
+    t.string   "struct_test_info"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20161001165000) do
     t.string   "secret_question"
     t.string   "secret_answer_1"
     t.string   "secret_answer_2"
-    t.string   "structure"
+    t.string   "struct"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -218,13 +218,13 @@ ActiveRecord::Schema.define(version: 20161001165000) do
     t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "structure_test_info"
+    t.string   "struct_test_info"
     t.string   "level"
     t.boolean  "test_1_ended"
     t.boolean  "test_2_ended"
     t.string   "level_test_info"
     t.integer  "contact_id"
-    t.string   "structure"
+    t.string   "struct"
     t.string   "current_qw_level"
     t.string   "current_qw_struct"
     t.string   "current_test_link"
@@ -233,6 +233,7 @@ ActiveRecord::Schema.define(version: 20161001165000) do
     t.boolean  "signal_level_done",    default: false
     t.boolean  "signal_struct_done",   default: false
     t.string   "signal_level_arr"
+    t.string   "signal_struct_arr"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -261,6 +262,15 @@ ActiveRecord::Schema.define(version: 20161001165000) do
     t.integer  "qw_number"
     t.text     "field"
     t.string   "level"
+    t.boolean  "able",       default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "qw_struct_signals", force: :cascade do |t|
+    t.integer  "qw_number"
+    t.text     "field"
+    t.string   "struct"
     t.boolean  "able",       default: true
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false

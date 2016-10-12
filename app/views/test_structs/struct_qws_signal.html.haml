@@ -1,0 +1,30 @@
+#form.lead
+  = form_tag '/te_s_st_ar' do 
+
+    .k
+      %a{name: '1'}
+      .dark-green{class: flash[:error_class_signal_struct_arr]}
+        Из 10 утверждений выберите 2 или 3,
+        %br/
+        которые больше всего Вам подходят:                                                                          
+
+      %br/                     
+        
+      - @qw_struct_signals.each do |struct_signal|      
+        
+        %label
+          = check_box_tag 'order_signal_struct_array[]', struct_signal.struct
+          = struct_signal.field
+        = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
+        
+        %br/
+        
+
+    = hidden_field_tag  :order_id,          @order.id   
+    = hidden_field_tag  :order_akey_start,  @order.akey[0..2]
+
+
+    %div     
+      = submit_tag 'Следующий вопрос', class: 'btn btn-success btn-large'  
+      
+      

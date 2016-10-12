@@ -29,29 +29,47 @@ Rails.application.routes.draw do
     
     
 
-  match '/testo/:test_encrypted',          to: 'tests#level_qws_signal',                            via: 'get'          
-  post  '/testo/:test_encrypted',          to: 'tests#level_qws_signal'
-    
-  #match '/te_s_le_ar',                     to: 'tests#signal_level_array_save',                     via: 'get'            
-  post  '/te_s_le_ar',                     to: 'tests#signal_level_array_save'                     
-  
-  match '/tests/:test_encrypted',          to: 'tests#level_qws_body',                              via: 'get'      
-  post  '/tests/:test_encrypted',          to: 'tests#level_qws_body'
-  #match '/testos/:test_encrypted',         to: 'tests#body_struct',                                 via: 'get'      
-  
-  match '/testo_more/:details_encoded',    to: 'tests#level_qws_signal_more',                       via: 'get'          
-  post  '/testo_more/:details_encoded',    to: 'tests#level_qws_signal_more'  
-  
-  post  '/te_s_le_mo_ar',                  to: 'tests#signal_level_more_array_save'                     
-    
+  #TEST_LEVEL___________________________________________________________________
   #testo
   #tests
-  #testom
+  #testo_more
   
-  #testt
-  #testss
-  #testtm
+  match '/testo/:test_encrypted',          to: 'test_levels#level_qws_signal',                      via: 'get'          
+  post  '/testo/:test_encrypted',          to: 'test_levels#level_qws_signal'
     
+  post  '/te_s_le_ar',                     to: 'test_levels#signal_level_array_save'                     
+  
+  match '/tests/:test_encrypted',          to: 'test_levels#level_qws_body',                        via: 'get'      
+  post  '/tests/:test_encrypted',          to: 'test_levels#level_qws_body'
+  
+  match '/testo_more/:details_encoded',    to: 'test_levels#level_qws_signal_more',                 via: 'get'          
+  post  '/testo_more/:details_encoded',    to: 'test_levels#level_qws_signal_more'  
+  
+  post  '/te_s_le_mo_ar',                  to: 'test_levels#signal_level_more_array_save'                     
+    
+  
+  #TEST_STRUCT__________________________________________________________________
+  #testo_s
+  #tests_s
+  #tests_more
+  
+  match '/testo_s/:test_encrypted',        to: 'test_structs#struct_qws_signal',                    via: 'get'          
+  post  '/testo_s/:test_encrypted',        to: 'test_structs#struct_qws_signal'
+    
+  post  '/te_s_st_ar',                     to: 'test_structs#signal_struct_array_save'                     
+  
+  match '/tests_s/:test_encrypted',        to: 'test_structs#struct_qws_body',                      via: 'get'      
+  post  '/tests_s/:test_encrypted',        to: 'test_structs#struct_qws_body'
+  
+  match '/tests_more/:details_encoded',    to: 'test_structs#struct_qws_signal_more',               via: 'get'          
+  post  '/tests_more/:details_encoded',    to: 'test_structs#struct_qws_signal_more'  
+  
+  post  '/te_s_st_mo_ar',                  to: 'test_structs#signal_struct_more_array_save'           
+
+  
+  #TESTS_END____________________________________________________________________  
+  
+  
   
   match '/test/:test_encrypted',           to: 'tests#load_page',                                   via: 'get'        
   post  '/test/:test_encrypted',           to: 'tests#load_page'                                   

@@ -1,0 +1,22 @@
+-#- if @qw_number > 10
+  .counter
+    =@current_question + ' / ' + @questions_amount
+
+
+- if @question.advice != nil and @question.advice != ''
+  #advice
+    #paper
+      .advice-text
+        =@question.advice  
+  %br/      
+
+
+.lead
+  =@question.title
+
+
+= button_to 'Да',  @yes_params, class: 'btn btn-info btn-large test-click-yes-button'
+= button_to 'Нет', @no_params,  class: 'btn btn-primary btn-large test-click-no-button'
+
+
+

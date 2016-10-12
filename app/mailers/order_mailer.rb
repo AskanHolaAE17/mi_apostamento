@@ -24,9 +24,9 @@ class OrderMailer < ActionMailer::Base
   end  
 
 
-  def bx_2_events(order, link_2_events)
+  def bx_2_events_do_you_want_to_db(order, link_2_events_do_you_want_to_db)
     @order         = order
-    @link_2_events = link_2_events
+    @link_2_events_do_you_want_to_db = link_2_events_do_you_want_to_db
     mail(to: @order.email, subject: 'KIND: 2 события')
   end
 

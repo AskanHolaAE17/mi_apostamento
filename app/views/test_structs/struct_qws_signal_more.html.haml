@@ -1,0 +1,39 @@
+#form.lead
+  = form_tag '/te_s_st_mo_ar' do 
+
+    .k
+      %a{name: '1'}
+      .dark-green{class: flash[:error_class_signal_struct_arr]}
+        Выберите только 
+        %br/
+        1 утверждение,
+        %br/
+        которое больше всего Вам подходит:                                                                          
+
+      %br/                     
+        
+      - @qw_struct_signals.each do |struct_signal|      
+        
+        %label
+          = check_box_tag 'order_signal_struct_more_array[]', struct_signal.struct
+          = struct_signal.field
+        
+        %br/
+        %br/                
+        
+
+    = hidden_field_tag  :order_id,          @order.id   
+    = hidden_field_tag  :order_akey_start,  @order.akey[0..2]
+    
+    = hidden_field_tag  :max_names_1,       @qw_struct_signals[0].struct
+    = hidden_field_tag  :max_names_2,       @qw_struct_signals[1].struct
+    
+    - if @qw_struct_signals[2] != nil    
+      = hidden_field_tag  :max_names_3,       @qw_struct_signals[2].struct    
+
+
+    %div     
+      = submit_tag 'Продолжить тест', class: 'btn btn-success btn-large'  
+      
+      
+      

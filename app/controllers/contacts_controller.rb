@@ -171,11 +171,11 @@ class ContactsController < ApplicationController
     #contact.secret_question = '1' if contact.secret_question == '0'
     
     
-    contact.structure_test_info = order.structure_test_info    
-    order.structure_test_info = ''        
+    contact.struct_test_info = order.struct_test_info    
+    order.struct_test_info = ''        
 
-    contact.structure = order.structure
-    order.structure = ''        
+    contact.struct = order.struct
+    order.struct = ''        
     
     contact.level = order.level
     order.level = ''        
