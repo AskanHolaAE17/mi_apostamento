@@ -108,9 +108,12 @@ class TestLevelsController < ApplicationController
 #_______________________________________
 
       
-      if signal_level_arr.count.in? 1..2
+      if signal_level_arr.count.in? 1..1
 
-        
+        signal_level_arr_not      =  params[:order_signal_level_array] 
+        signal_level_arr          = ['ps', 'ne', 'po'].join(' ').sub(signal_level_arr_not[0], '').split(' ')   # leave all STRUCTS but SELECTED
+        # !!! порядок сверхважен: в МАССИВЕ выше и на СИГНАЛЬНОЙ СТРАНИЦЕ
+                
         current_level             =  signal_level_arr[0]                
 
 #_______________________________________
@@ -199,9 +202,9 @@ class TestLevelsController < ApplicationController
   def load_text_between_tests_level_struct(order, order_id, order_akey)
   
     
-          #order.group = 'GOOD GROUP'  if order.level == 'nevrotick'                        
-          #order.group = 'BAD GROUP'   if order.level == 'pogranichnick'        
-          #order.group = 'BAD GROUP'   if order.level == 'psihotick'        
+          order.group = 'GOOD GROUP'  if order.level == 'nevrotick'                        
+          order.group = 'BAD GROUP'   if order.level == 'pogranichnick'        
+          order.group = 'BAD GROUP'   if order.level == 'psihotick'        
 
 #_______________________________________            
 

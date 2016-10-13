@@ -28,7 +28,7 @@ class FeedbacksStructuresLevelsController < ApplicationController
       user_code             = det_arr[1].to_s          
 
       if user_code == user_code_compare
-        @struct_info = (FeedbacksStructure.find_by title: user.contact.structure).body
+        @struct_info = (FeedbacksStructure.find_by title: user.contact.struct).body
         #@struct_info = 'Nice '
         @level_info  = (FeedbacksLevel.find_by     title: user.contact.level).body        
         #@level_info  = '& Cool'

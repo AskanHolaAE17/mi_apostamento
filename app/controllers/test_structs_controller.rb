@@ -208,10 +208,10 @@ class TestStructsController < ApplicationController
   def load_want_to_db_after_test_struct(order)
   
           
-        #if order.group == 'GOOD GROUP'
+        if order.group == 'GOOD GROUP'
            order.group = 'BAD GROUP'   if order.struct.in? ['al',  'nl', 'shl', 'pl']    
-           order.group = 'GOOD GROUP'  if order.struct.in? ['gml', 'dl', 'ml',  'ol', 'kl', 'il']                        
-        #end  
+           #order.group = 'GOOD GROUP'  if order.struct.in? ['gml', 'dl', 'ml',  'ol', 'kl', 'il']                        
+        end  
 
 #_______________________________________            
        
@@ -313,6 +313,8 @@ class TestStructsController < ApplicationController
 
 
       # Creation of LINK: do_you_want_to_db 
+      
+      root_path   = MeConstant.find_by_title('root_path').content    
       
       order_id_for_do_you_want_to_db  = order.id.to_s
       oi_want_todb                    = order_id_for_do_you_want_to_db
