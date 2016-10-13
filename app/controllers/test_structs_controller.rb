@@ -3,8 +3,8 @@ require 'openssl'
 class TestStructsController < ApplicationController
 
 
-  before_action :set_root,      only: [:struct_qws_signal, :struct_qws_body,  :struct_qws_signal_more]
-  before_action :set_info,      only: [:struct_qws_signal, :struct_qws_body,  :struct_qws_signal_more]  
+  before_action :set_root,      only: [:struct_qws_signal, :struct_qws_body,  :struct_qws_signal_more, :form_gender_if_il_struct]
+  before_action :set_info,      only: [:struct_qws_signal, :struct_qws_body,  :struct_qws_signal_more, :form_gender_if_il_struct]  
 #_____________________________________________________________________________________________________________________________________________
 
 
@@ -907,12 +907,35 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
 
-          #good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i]
-          #bad_arr  = [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i]
+#_______________________________________
 
-          #DEF
-          load_want_to_db_after_test_struct(order)
-          #load_want_to_db_after_test_struct(order, good_arr, bad_arr)
+          
+        if order.struct == 'il'
+                  
+          order.save
+          flash[:struct] = order.struct
+          
+          
+          gender_rand_digit     = rand(0..9).to_s
+          
+          gender_details        = gender_rand_digit +
+                                  order.id.to_s     +
+                                  ' '               +
+                                  order.akey[0..2] 
+                                               
+          gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
+          
+          
+          redirect_to root_path + 'tests_gender/' + gender_details_url
+          
+#_______________________________________
+          
+                             
+        else
+                    
+          load_want_to_db_after_test_struct(order)        
+          
+        end
 
 
                 # end StructGroup Defining
@@ -1069,7 +1092,7 @@ class TestStructsController < ApplicationController
 
     
     order = Order.find(order_id)
-    
+    	
 #______________________________________
 
   
@@ -1089,36 +1112,40 @@ class TestStructsController < ApplicationController
 
         
         signal_struct_arr          =  signal_struct_arr.join(' ')
-        order.struct               =  signal_struct_arr
+        order.struct               =  current_struct
         
         #order.signal_struct_done   =  true
         #order.save
         
 #_______________________________________
-        
-        
-          ## if STRUCT defined SUCCESS          
-          #order.struct = case order.struct
-          #  when 'ps'
-          #    'psihotick'           
-          #  
-          #  when 'po'
-          #    'pogranichnick'                        
-                 
-          #  when 'ne'
-          #    'nevrotick'
-            
-          #end                  
-          
-#_______________________________________
 
           
-        #good_arr = [dl_no.to_i, ml_no.to_i, ol_no.to_i, pl_no.to_i, kl_no.to_i, il_no.to_i]
-        #bad_arr  = [al_no.to_i, nl_no.to_i, shl_no.to_i, gml_no.to_i]
-            
-        #DEF      
-        load_want_to_db_after_test_struct(order)
-        #load_want_to_db_after_test_struct(order, good_arr, bad_arr)
+        if order.struct == 'il'
+                  
+          order.save
+          flash[:struct] = order.struct
+          
+          
+          gender_rand_digit     = rand(0..9).to_s
+          
+          gender_details        = gender_rand_digit +
+                                  order.id.to_s     +
+                                  ' '               +
+                                  order.akey[0..2] 
+                                               
+          gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
+          
+          
+          redirect_to root_path + 'tests_gender/' + gender_details_url
+          
+#_______________________________________
+          
+                             
+        else
+                    
+          load_want_to_db_after_test_struct(order)        
+          
+        end
           
 #_______________________________________          
 
@@ -1193,6 +1220,114 @@ class TestStructsController < ApplicationController
     
   end
   
+#__________________________________________________________________________________________________________________________________________________
+
+
+  def form_gender_if_il_struct
+  
+    details_encoded = params[:details_encoded]
+    details         = Base64.decode64 details_encoded
+    
+    details[0]      = ''    
+    details_arr     = details.split(' ')
+
+#_______________________________________    
+
+
+    order_id        = details_arr[0]
+    order_akey      = details_arr[1]    
+    
+    
+    order           = Order.find(order_id)
+
+#_______________________________________
+  
+  
+    if order and order.akey[0..2] == order_akey                      
+  
+      @order = order
+      
+    else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+      
+    end   # if order and order.akey[0..2] == order_akey           
+            
+  end
+
+#__________________________________________________________________________________________________________________________________________________
+
+
+  def save_gender_if_il_struct
+  
+  
+    order_id        = params[:order_id]
+    order_akey      = params[:order_akey]      
+
+#_______________________________________
+
+    
+    order           = Order.find(order_id)
+
+#_______________________________________
+  
+  
+    if order and order.akey[0..2] == order_akey                      
+
+      if params[:order_gender] 
+
+#_______________________________________
+     
+
+        order.gender = params[:order_gender]
+
+  
+        load_want_to_db_after_test_struct(order)  
+        
+#_______________________________________      
+
+        
+      else
+
+        flash[:error_class_order_gender] = 'error_field'
+
+#_______________________________________      
+
+
+        gender_rand_digit     = rand(0..9).to_s
+          
+        gender_details        = gender_rand_digit +
+                                order.id.to_s     +
+                                ' '               +
+                                order.akey[0..2] 
+                                               
+        gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
+          
+          
+        redirect_to root_path + 'tests/gender/' + gender_details_url
+
+      end  
+      
+    else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+      #security_of_mailing = SecurityOfMailing.new
+      #SecureMailer.wrong_url().deliver
+      
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+      
+    end   # if order and order.akey[0..2] == order_akey           
+        
+  end
+
 #__________________________________________________________________________________________________________________________________________________
 
   

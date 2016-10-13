@@ -99,7 +99,7 @@ class ContactsController < ApplicationController
     @exist_contact.city               = nil
     @exist_contact.country            = nil
     @exist_contact.birthday           = nil
-    @exist_contact.own_gender         = nil
+    @exist_contact.own_gender         = order.gender || nil
     @exist_contact.search_for_gender  = nil
     @exist_contact.about_info         = nil
     @exist_contact.deep_info          = nil

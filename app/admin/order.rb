@@ -9,7 +9,8 @@ ActiveAdmin.register Order do
                             :struct, :current_qw_level, :current_qw_struct, 
                             :current_test_link, :yes_qws_level, :yes_qws_struct, 
                             :signal_level_done, :signal_struct_done,
-                            :signal_level_arr, :signal_struct_arr]
+                            :signal_level_arr, :signal_struct_arr, 
+                            :gender]
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012155700) do
+ActiveRecord::Schema.define(version: 20161013052800) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -234,6 +234,7 @@ ActiveRecord::Schema.define(version: 20161012155700) do
     t.boolean  "signal_struct_done",   default: false
     t.string   "signal_level_arr"
     t.string   "signal_struct_arr"
+    t.string   "gender"
   end
 
   create_table "pages", force: :cascade do |t|

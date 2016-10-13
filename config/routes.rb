@@ -65,7 +65,13 @@ Rails.application.routes.draw do
   post  '/tests_more/:details_encoded',    to: 'test_structs#struct_qws_signal_more'  
   
   post  '/te_s_st_mo_ar',                  to: 'test_structs#signal_struct_more_array_save'           
-
+    
+  
+  
+  match '/tests_gender/:details_encoded',  to: 'test_structs#form_gender_if_il_struct',             via: 'get'          
+  post  '/tests_gender/:details_encoded',  to: 'test_structs#form_gender_if_il_struct'    
+  
+  post  '/tests_gender_save',              to: 'test_structs#save_gender_if_il_struct'  
   
   #TESTS_END____________________________________________________________________  
   

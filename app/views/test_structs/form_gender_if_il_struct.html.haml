@@ -1,0 +1,31 @@
+#form.lead
+  = form_tag '/tests_gender_save' do 
+
+    .k
+      %a{name: '1'}
+      .dark-green{class: flash[:error_class_order_gender]}
+        Укажите Ваш пол:                                                                          
+      %br/                     
+        
+        
+      %label
+        = radio_button_tag :order_gender, 'Ж'
+        = 'Ж'
+        
+      %br/                     
+
+
+      %label
+        = radio_button_tag :order_gender, 'М'
+        = 'М'
+        
+                
+
+    = hidden_field_tag  :order_id,     @order.id   
+    = hidden_field_tag  :order_akey,   @order.akey[0..2]
+
+
+    %div     
+      = submit_tag 'Завершить тест', class: 'btn btn-success btn-large'  
+      
+      

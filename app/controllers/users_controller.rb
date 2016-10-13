@@ -72,8 +72,8 @@ class UsersController < ApplicationController
     contact.city               = 'a'
     contact.country            = 'a'
     contact.birthday           = 'September 16, 1990'
-    contact.own_gender         = 'М'
-    contact.search_for_gender  = 'Ж'
+    contact.own_gender         = order.gender
+    contact.search_for_gender  = 'ЖМ'.delete(order.gender)
     contact.about_info         = 'a'
     contact.deep_info          = 'a'
     contact.secret_question    = '1,2'
