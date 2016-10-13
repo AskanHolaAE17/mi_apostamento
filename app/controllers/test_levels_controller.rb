@@ -112,7 +112,6 @@ class TestLevelsController < ApplicationController
 
         signal_level_arr_not      =  params[:order_signal_level_array] 
         signal_level_arr          = ['ps', 'ne', 'po'].join(' ').sub(signal_level_arr_not[0], '').split(' ')   # leave all STRUCTS but SELECTED
-        # !!! порядок сверхважен: в МАССИВЕ выше и на СИГНАЛЬНОЙ СТРАНИЦЕ
                 
         current_level             =  signal_level_arr[0]                
 
@@ -372,12 +371,12 @@ class TestLevelsController < ApplicationController
           last_a['q']     >  cur_a['q']  
            
             
-        #if  last_a["t"]   == cur_a["t"]               
-          redirect_to root_path + order.current_test_link
+        #if  last_a["t"]   == cur_a["t"]                       
+          redirect_to root_path + order.current_test_link          
         
         else   #  unless  order.current_test_link  and  last_a["t"]   == cur_a["t"]   
                ## unless last_a["t"]   == cur_a["t"]                       
-        
+               
         ##end   # if  last_a["t"]   == cur_a["t"]       
           
       #end   # if  order.current_test_link  and  last_a["t"]   == cur_a["t"]  
@@ -385,28 +384,28 @@ class TestLevelsController < ApplicationController
 #_______________________________________
 
       
-      if qw_number.to_i == 1
+      #if qw_number.to_i == 1
             
-        if order.current_test_link and cur_answs   # going to REDIRECT to cur test PROGRESS PAGE
+      #  if order.current_test_link and cur_answs   # going to REDIRECT to cur test PROGRESS PAGE
                                                    
-          if order.current_qw_level
+      #    if order.current_qw_level
       
       
-            cur_test_link_encoded            = order.current_test_link.partition('/').last   # just text after '/'
-            cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
+      #      cur_test_link_encoded            = order.current_test_link.partition('/').last   # just text after '/'
+      #      cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
         
-            cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
+      #      cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
           
           
-            if cur_link['q'].to_i != cur_answs['q'].to_i
+      #      if cur_link['q'].to_i != cur_answs['q'].to_i
             
               #order.save
-              redirect_to root_path + order.current_test_link              
-            end
+      #        redirect_to root_path + order.current_test_link              
+      #      end
         
-          end   # if order.current_qw_struct  
-        end   # if order.current_test_link
-      end   # if qw_number.to_i == 1      
+      #    end   # if order.current_qw_struct  
+      #  end   # if order.current_test_link
+      #end   # if qw_number.to_i == 1      
   
 #_______________________________________
 
@@ -776,7 +775,7 @@ class TestLevelsController < ApplicationController
           test_2_signal_more_encoded  =  (Base64.encode64 test_2_signal_more_array).chomp.delete("\n").delete('=')        
           
           
-          order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
+          #order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
           
           test_2_signal_more          =  root_path + 
                                          order.current_test_link
@@ -1050,7 +1049,7 @@ class TestLevelsController < ApplicationController
           test_2_signal_more_encoded  =  (Base64.encode64 test_2_signal_more_array).chomp.delete("\n").delete('=')        
           
           
-          order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
+          #order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
           
           test_2_signal_more          =  root_path + 
                                          order.current_test_link

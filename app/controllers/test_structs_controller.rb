@@ -32,10 +32,10 @@ class TestStructsController < ApplicationController
       
         order.current_test_link = 'testo_s/' + test_url_encoded          
         
-      else
-        if order.current_test_link != 'testo_s/' + test_url_encoded
-          redirect_to root_path + order.current_test_link	
-        end  
+      #else
+      #  if order.current_test_link != 'testo_s/' + test_url_encoded
+      #    redirect_to root_path + order.current_test_link	
+      #  end  
       end   # unless order.current_test_link == '' or order.current_test_link == nil                     
 
 #______________________________________
@@ -477,28 +477,28 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
       
-      if qw_number.to_i == 1
+      #if qw_number.to_i == 1
             
-        if order.current_test_link and cur_answs   # going to REDIRECT to cur test PROGRESS PAGE
+      #  if order.current_test_link and cur_answs   # going to REDIRECT to cur test PROGRESS PAGE
                                                    
-          if order.current_qw_struct
+      #    if order.current_qw_struct
       
       
-            cur_test_link_encoded            = order.current_test_link.partition('/').last   # just text after '/'
-            cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
+      #      cur_test_link_encoded            = order.current_test_link.partition('/').last   # just text after '/'
+      #      cur_test_link_json               = Base64.decode64(cur_test_link_encoded)    
         
-            cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
+      #      cur_link  = cur_test_link_hash   = JSON.parse(cur_test_link_json)        
           
           
-            if cur_link['q'].to_i != cur_answs['q'].to_i
+      #      if cur_link['q'].to_i != cur_answs['q'].to_i
             
               #order.save
-              redirect_to root_path + order.current_test_link              
-            end
+      #        redirect_to root_path + order.current_test_link              
+      #      end
         
-          end   # if order.current_qw_struct  
-        end   # if order.current_test_link
-      end   # if qw_number.to_i == 1      
+      #    end   # if order.current_qw_struct  
+      #  end   # if order.current_test_link
+      #end   # if qw_number.to_i == 1      
   
 #_______________________________________
 
