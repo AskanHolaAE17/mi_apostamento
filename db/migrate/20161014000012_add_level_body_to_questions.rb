@@ -1,4 +1,4 @@
-class LevelBodyToQuestions < ActiveRecord::Migration
+class AddLevelBodyToQuestions < ActiveRecord::Migration
 
 
   

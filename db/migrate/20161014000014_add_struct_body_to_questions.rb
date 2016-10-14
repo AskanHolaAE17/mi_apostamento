@@ -1,4 +1,4 @@
-class StructBodyToQuestions < ActiveRecord::Migration
+class AddStructBodyToQuestions < ActiveRecord::Migration
 
 
   
