@@ -1310,7 +1310,7 @@ class TestStructsController < ApplicationController
         gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
           
           
-        redirect_to root_path + 'tests/gender/' + gender_details_url
+        redirect_to root_path + 'tests_gender/' + gender_details_url
 
       end  
       
