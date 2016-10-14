@@ -111,7 +111,7 @@ class TestLevelsController < ApplicationController
       if signal_level_arr.count.in? 1..1
 
         signal_level_arr_not      =  params[:order_signal_level_array] 
-        signal_level_arr          = ['ps', 'ne', 'po'].join(' ').sub(signal_level_arr_not[0], '').split(' ')   # leave all STRUCTS but SELECTED
+        signal_level_arr          = ['ps', 'ne', 'po'].join(' ').sub(signal_level_arr_not[0], '').split(' ')   # leave all (2) STRUCTS but 1 SELECTED
                 
         current_level             =  signal_level_arr[0]                
 
@@ -368,7 +368,7 @@ class TestLevelsController < ApplicationController
           order.current_test_link != test_url_encoded  and  
           last_a['t']     == cur_a['t']                and
           last_a['cur_l'] >  cur_a['cur_l']            and          
-          last_a['q']     >  cur_a['q']  
+          last_a['q']     >  cur_a['q']                and 5==3
            
             
         #if  last_a["t"]   == cur_a["t"]                       
