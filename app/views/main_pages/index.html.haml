@@ -1,34 +1,80 @@
-- @menu_up_item = 'main'
+- @title          = @title_tag
 
-- @title = @title_tag
-
-
--#%a 
-  %u
-    #hello
-      Подробнее о нём
--##more_hello
-  more_hello  
-
+- @menu_up_item   = 'main'
 
 - @page.title_tag = @article.title
 
 
+
 - @contact = Contact.new                                               
 
-=flash[:echo_me]
+= flash[:echo_me]
 
 - unless @info_msg.nil? and @info_msg == ''
   %h2 
-    =@info_msg
+    = @info_msg
 
 
 
 %section
-  %h3
-    =@article.number.to_s + '. '
-    =@article.title
-  -#=@main_page.description.html_safe    
+
+     
+  - if @article.number == 1 
+    %h3
+      Приветствуем Вас!
+
+#-------------------------------------------------------------------------------    
+
+  #site_motto
+
+    Как разобраться, какой партнер Вам подходит?
+    %br/
+    %br/  
+
+#-------------------------------------------------------------------------------
+
+#preamble_way
+  %h4
+    Описание работы сайта:
+  
+  = @preamble_element_way.body.html_safe
+  %br/
+  %br/
+
+#-------------------------------------------------------------------------------      
+    
+
+  -##paper
+    #form.lead
+      %b
+        = render partial: 'new_order_form' 
+    
+  
+  -#%a{name: 'more_article_info'}      
+  -##more_article_info
+    %h3
+      Подробнее о работе сайта - статья
+      =@article.number.to_s + ' -'      
+      
+    %h4  
+      = '«'+ @article.title + '»' + ' :'      
+
+#-------------------------------------------------------------------------------      
+
+#preamble_article_title
+  %section
+    %h4
+      Подробное описание:
+  
+    %h3
+      = 'Статья ' + @article.number.to_s + ' - '
+      = @article.title
+
+#-------------------------------------------------------------------------------      
+
+%section
+
+  -#= @main_page.description.html_safe    
   
   
   -#- unless contact.image.url.match(/missing.png/)     
@@ -36,23 +82,58 @@
       = image_tag contact.image.url          
   
   
-  =@descr_start.html_safe      
-  =render partial: 'layouts/articles_block/menu'   
-  =@descr_end.html_safe    
+  = @descr_start.html_safe      
+  = render partial: 'layouts/articles_block/menu'   
+  
+  = @descr_end.html_safe    
+-#= render partial: 'layouts/articles_block/menu'     
 
+#-------------------------------------------------------------------------------      
 
+= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
+
+- @next_article = @articles.find_by number: @article.number + 1
+- if @next_article
+
+  %section
+    %b
+      Читать следующую статью:
+      = link_to "/articles/#{@next_article.translit}" do
+        %div
+          =@next_article.number.to_s + '. '
+          =@next_article.title
+          
+- else            
+  %section.articles_more_links
+    - @all_articles_bur_cur = @articles.where.not number: @article.number
+    %b
+      Читать другие статьи:
+      - @all_articles_bur_cur.each do |art_link|                  
+        = link_to "/articles/#{art_link.translit}" do
+          %div
+            =art_link.number.to_s + '. '
+            =art_link.title    
+%br/            
+
+#-------------------------------------------------------------------------------      
 
 %section
   #paper
     #form.lead
       %b
-        =render partial: 'new_order_form' 
+        = render partial: 'new_order_form' 
+    
+    
+%section    
+  #preamble
+    = render partial: 'preamble'      
+    
       
       
 %section      
   .article-author-link
     Автор:
-    =link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'      
+    = link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'      
 
 
 

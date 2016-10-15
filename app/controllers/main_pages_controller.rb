@@ -24,7 +24,7 @@ class MainPagesController < ApplicationController
     
     @questions = Question.all
     #.shuffle[0..39]
-        
+            
 #_______________________________________________________________________________      
 
 
@@ -51,6 +51,10 @@ class MainPagesController < ApplicationController
       else
         Article.where.not(translit: translit)
       end    
+      
+      if @articles
+        @articles = @articles.order(:number)
+      end
     
       ##@articles = @articles.sort! { |a,b| a.login_count <=> b.login_count }
       #@articles = @articles.shuffle
@@ -83,6 +87,20 @@ class MainPagesController < ApplicationController
       end
       
     end      
+
+#________________________________________
+    
+    
+    @preamble_elements    = PreambleElement.order(:number)
+    @preamble_element_way = (@preamble_elements.where name: 'way').first
+    
+    article_numbers = '1234'
+    article_numbers = article_numbers.delete(@article.number.to_s)
+    
+    art_num_arr = article_numbers.split('')
+    art_num_arr.each do |pre_el|
+      @preamble_elements = @preamble_elements.where.not article_number: pre_el
+    end
 
 #_______________________________________
 

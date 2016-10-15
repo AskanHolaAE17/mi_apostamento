@@ -783,8 +783,12 @@ class TestLevelsController < ApplicationController
           
           #order.current_test_link     = 'testo_more/' + test_2_signal_more_encoded
           
-          test_2_signal_more          =  root_path + 
-                                         order.current_test_link
+          #test_2_signal_more          =  root_path + 
+          #                               order.current_test_link
+          
+          test_2_signal_more          =   root_path                        + 
+                                         'testo_more/'                     +  
+                                          test_2_signal_more_encoded
           
           
           order.level_test_info          =   order.level_test_info.to_s    + ' '     +

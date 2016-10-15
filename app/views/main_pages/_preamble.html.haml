@@ -1,0 +1,38 @@
+    
+%h3
+  Зачем Вам нужен наш сайт? Он:
+  
+= @preamble_elements.where(name: 'need').first.body.html_safe  
+%br/
+%br/
+
+#-------------------------------------------------------------------------------
+
+%h3
+  На какие вопросы Вы найдёте ответы, благодаря сайту:
+  
+= @preamble_elements.where(name: 'answers').first.body.html_safe        
+%br/
+%br/
+
+%b
+  ='- Вы узнаете, пройдя тест на нашем сайте'
+  
+%br/  
+%br/  
+
+-#
+  (Также Вы можете 
+  %a{href: '#more_article_info'}
+    читать дальше
+  статью о работе сайта)  
+  %br/
+  %br/
+  
+  
+%section
+  #paper
+    #form.lead
+      %b
+        = render partial: 'new_order_form' 
+  
