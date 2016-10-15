@@ -666,8 +666,14 @@ class TestLevelsController < ApplicationController
 #_______________________________________
 
       
-        if l_ind.count > 1            
+        if l_ind.count > 1  
                                                         # if more then 1 LevelGroup with MaxPoints
+                                                        
+          #if l_ind.count == 3                                                                    
+            
+          #  redirect_to 
+            
+          #end   # if l_ind.count == 3                                                                    
                                                         
           
           #if 5==3   # SKIP fail        

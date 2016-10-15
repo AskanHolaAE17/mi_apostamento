@@ -566,6 +566,8 @@ class TestStructsController < ApplicationController
                      last_a['i'].to_i   ==  cur_a['i'].to_i  and
                                                                                                                                                                                            
                      order.yes_qws_struct[-2] != '|'  )
+                     
+                order.yes_qws_struct += 'V'
               
                    
                 yes_qws_struct       =  order.yes_qws_struct.split(' ')                                 
@@ -573,7 +575,7 @@ class TestStructsController < ApplicationController
                 #unless yes_qws_struct.last == '||'
               
                 order.yes_qws_struct = yes_qws_struct.join(' ')
-                
+                order.save                
 
               end   # if YES wasn`t addes (on prew page)
             
