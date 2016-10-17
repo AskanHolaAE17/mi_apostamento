@@ -67,7 +67,8 @@
       Подробное описание:
   
     %h3
-      = 'Статья ' + @article.number.to_s + ' - '
+      - unless @article.number.to_i == 1
+        = 'Статья ' + @article.number.to_s + ' - '
       = @article.title
 
 #-------------------------------------------------------------------------------      
@@ -97,7 +98,7 @@
 
   %section
     %b
-      Читать следующую статью:
+      Читать следующую статью (статья #{@next_article.number} из #{@articles.count+1}):
       = link_to "/articles/#{@next_article.translit}" do
         %div
           =@next_article.number.to_s + '. '
