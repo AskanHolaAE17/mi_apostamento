@@ -13,30 +13,34 @@
     
     = image_tag 'fond_main/forest_original.jpg', id: 'fond_forest_main', title: "#{@main_page.fond_img_forest_title || 'Умиротворяющий лес'}", alt: "#{@main_page.fond_img_forest_alt_text || 'Умиротворяющий лес. Фон сайта для поиска пары.'}"
     
-            
-            
-    - if @menu_up_item == 'main'    
-     
-      %main
-        .row-fluid
+                       
+    
+    %main
+      .row-fluid
+        
+        - if @menu_up_item == 'main'            
+        
           %nav.block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets}"}
             = yield                 
                           
             
-    - elsif @menu_up_item == 'contacts_show'      
+        - elsif @menu_up_item == 'contacts_show'      
         
-      %main
-        .row-fluid
-          .contacts-block.span5.offset2
+          .contacts-block.span6.offset2
             .lead.info_msg
               = yield         
             
+            
+        - elsif @menu_up_item == 'test'      
+        
+          .span8.offset2.block
+            %article.lead.info_msg
+              = yield                 
+            
               
-    - else
+        - else
     
-      %main
-        .row-fluid
-          .span5.offset2.block
+          .span6.offset2.block
             %article.lead.info_msg
               = yield                 
 
