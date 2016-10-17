@@ -18,7 +18,7 @@
         
       - @qw_level_signals.each do |level_signal|      
         
-        %label
+        %label.label_checkbox
           = check_box_tag 'order_signal_level_array[]', level_signal.level
           -#   , "#{flash['signal_level_arr_' + level_signal.level]}"
           = level_signal.field

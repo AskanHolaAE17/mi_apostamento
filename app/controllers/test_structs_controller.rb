@@ -461,7 +461,7 @@ class TestStructsController < ApplicationController
           order.current_test_link != test_url_encoded  and  
           last_a['t']     == cur_a['t']                and
           last_a['cur_s'] >  cur_a['cur_s']            and          
-          last_a['q']     >  cur_a['q']                and 3==5
+          last_a['q'].to_i     >  cur_a['q'].to_i      and 3==5
            
             
         #if  last_a["t"]   == cur_a["t"]               
@@ -683,6 +683,13 @@ class TestStructsController < ApplicationController
                              'tests_s/'           + 
                               no_params_encoded
         
+#_______________________________________      
+
+        
+        if question.able == false
+          redirect_to @no_params
+        end
+                
 #_______________________________________      
 
 
@@ -1060,6 +1067,7 @@ class TestStructsController < ApplicationController
       not_max_struct_arr.each do |not_max_struct|
         @qw_struct_signals = @qw_struct_signals.where.not(struct: not_max_struct)
       end
+      
 #_______________________________________            
 
       

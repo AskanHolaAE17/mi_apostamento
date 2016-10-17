@@ -14,7 +14,7 @@
         
       - @qw_struct_signals.each do |struct_signal|      
         
-        %label
+        %label.label_checkbox
           = check_box_tag 'order_signal_struct_array[]', struct_signal.struct
           = struct_signal.field
         = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               

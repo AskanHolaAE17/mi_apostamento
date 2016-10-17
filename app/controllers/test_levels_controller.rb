@@ -366,9 +366,9 @@ class TestLevelsController < ApplicationController
       #if (  order.current_test_link == ''  or  order.current_test_link == nil  and
       if  order.current_test_link                      and  
           order.current_test_link != test_url_encoded  and  
-          last_a['t']     == cur_a['t']                and
-          last_a['cur_l'] >  cur_a['cur_l']            and          
-          last_a['q']     >  cur_a['q']                and 5==3
+          last_a['t']      == cur_a['t']               and
+          last_a['cur_l']  >  cur_a['cur_l']           and          
+          last_a['q'].to_i >  cur_a['q'].to_i          and 5==3
            
             
         #if  last_a["t"]   == cur_a["t"]                       
@@ -571,6 +571,13 @@ class TestLevelsController < ApplicationController
         @no_params         =  root_path         + 
                              'tests/'           + 
                               no_params_encoded
+        
+#_______________________________________      
+
+        
+        if question.able == false
+          redirect_to @no_params
+        end
         
 #_______#________________________________      
 
