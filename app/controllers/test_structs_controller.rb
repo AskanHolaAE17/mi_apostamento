@@ -565,9 +565,8 @@ class TestStructsController < ApplicationController
                      last_a['k'].to_i   ==  cur_a['k'].to_i  and
                      last_a['i'].to_i   ==  cur_a['i'].to_i  and
                                                                                                                                                                                            
-                     order.yes_qws_struct[-2] != '|'  )
-                     
-                order.yes_qws_struct += 'V'
+                     order.yes_qws_struct[-2] != '|'  )                    
+              
               
                    
                 yes_qws_struct       =  order.yes_qws_struct.split(' ')                                 
@@ -583,7 +582,20 @@ class TestStructsController < ApplicationController
           end   # if last_a["t"] == cur_a["t"]
          
         end   # unless order.current_test_link == '' or order.current_test_link == nil    
-            
+
+      flash[:notice]  = ' '
+      flash[:notice] += '*1order.current_test_link != "" and ' unless order.current_test_link == ''              
+      flash[:notice] += ' *2order.current_test_link != nil and' unless order.current_test_link == nil
+      flash[:notice] += ' *3order.current_test_link != "" or order.current_test_link != nil and' unless order.current_test_link == '' or order.current_test_link == nil
+      flash[:notice] += ' *4last_a["t"]   == cur_a["t"] and' if last_a['t']   == cur_a['t'] 
+      flash[:notice] += ' *5last_a["i"].to_i   ==  cur_a["i"].to_i and' if last_a['i'].to_i   ==  cur_a['i'].to_i
+      flash[:notice] += ' *6order.yes_qws_struct[-2] != "|" and ' if order.yes_qws_struct[-2] != '|'
+      
+      flash[:notice] += ' *7last_a: test = ' + last_a['t'].to_i.to_s
+      flash[:notice] += ' *8cur_a: test = ' + cur_a['t'].to_i.to_s            
+      flash[:notice] += ' *9last_a: i.count = ' + last_a['i'].to_i.to_s
+      flash[:notice] += ' *10cur_a: i.count = ' + cur_a['i'].to_i.to_s      
+      flash[:notice] += ' **FAIL CHECK' if 5==3
 #_______________________________________              
 
                                                                                                             
@@ -715,7 +727,7 @@ class TestStructsController < ApplicationController
         
         #YES HASH      
         yes_params_hash = {
-          t:   '2',
+          t:   '1',
           q:   next_qw_number,
           oi:  order_id,
           oa:  order_akey[0..2],
