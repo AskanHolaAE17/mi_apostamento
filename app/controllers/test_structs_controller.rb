@@ -461,7 +461,7 @@ class TestStructsController < ApplicationController
           order.current_test_link != test_url_encoded  and  
           last_a['t']     == cur_a['t']                and
           last_a['cur_s'] >  cur_a['cur_s']            and          
-          last_a['q']     >  cur_a['q']  
+          last_a['q']     >  cur_a['q']                and 3==5
            
             
         #if  last_a["t"]   == cur_a["t"]               
@@ -582,20 +582,7 @@ class TestStructsController < ApplicationController
           end   # if last_a["t"] == cur_a["t"]
          
         end   # unless order.current_test_link == '' or order.current_test_link == nil    
-
-      flash[:notice]  = ' '
-      flash[:notice] += '*1order.current_test_link != "" and ' unless order.current_test_link == ''              
-      flash[:notice] += ' *2order.current_test_link != nil and' unless order.current_test_link == nil
-      flash[:notice] += ' *3order.current_test_link != "" or order.current_test_link != nil and' unless order.current_test_link == '' or order.current_test_link == nil
-      flash[:notice] += ' *4last_a["t"]   == cur_a["t"] and' if last_a['t']   == cur_a['t'] 
-      flash[:notice] += ' *5last_a["i"].to_i   ==  cur_a["i"].to_i and' if last_a['i'].to_i   ==  cur_a['i'].to_i
-      flash[:notice] += ' *6order.yes_qws_struct[-2] != "|" and ' if order.yes_qws_struct[-2] != '|'
-      
-      flash[:notice] += ' *7last_a: test = ' + last_a['t'].to_i.to_s
-      flash[:notice] += ' *8cur_a: test = ' + cur_a['t'].to_i.to_s            
-      flash[:notice] += ' *9last_a: i.count = ' + last_a['i'].to_i.to_s
-      flash[:notice] += ' *10cur_a: i.count = ' + cur_a['i'].to_i.to_s      
-      flash[:notice] += ' **FAIL CHECK' if 5==3
+        
 #_______________________________________              
 
                                                                                                             

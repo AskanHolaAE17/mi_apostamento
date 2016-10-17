@@ -54,7 +54,7 @@
   -##more_article_info
     %h3
       Подробнее о работе сайта - статья
-      =@article.number.to_s + ' -'      
+      = @article.number.to_s + ' -'      
       
     %h4  
       = '«'+ @article.title + '»' + ' :'      
@@ -67,8 +67,12 @@
       Подробное описание:
   
     %h3
+    
       - unless @article.number.to_i == 1
         = 'Статья ' + @article.number.to_s + ' - '
+      - else
+        = @article.number.to_s + '. '      
+        
       = @article.title
 
 #-------------------------------------------------------------------------------      
