@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161015153900) do
+ActiveRecord::Schema.define(version: 20161018174800) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -81,6 +81,27 @@ ActiveRecord::Schema.define(version: 20161015153900) do
     t.datetime "updated_at"
     t.string   "link_if_unsaved"
     t.boolean  "sent_email_after_pay_for_waiting", default: false
+  end
+
+  create_table "contact_clones", force: :cascade do |t|
+    t.string   "name"
+    t.string   "surname"
+    t.string   "city"
+    t.string   "country"
+    t.date     "birthday"
+    t.string   "about_info"
+    t.string   "deep_info"
+    t.string   "own_gender"
+    t.string   "search_for_gender"
+    t.string   "secret_question"
+    t.string   "secret_answer_1"
+    t.string   "secret_answer_2"
+    t.integer  "order_number"
+    t.string   "email"
+    t.string   "group"
+    t.boolean  "able_for_contact",  default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contacts", force: :cascade do |t|

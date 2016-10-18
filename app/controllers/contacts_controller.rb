@@ -1,6 +1,11 @@
 require 'rsa'
+
 require 'uri'
+require "net/http"
 # encoding: utf-8
+
+
+
 class ContactsController < ApplicationController
 
   before_action :set_main_page, only: [:more_info_form, :show, :disable_contact_ask, :disable_contact]
@@ -115,6 +120,20 @@ class ContactsController < ApplicationController
       @exist_contact = Contact.new  
     end      
 
+#____________________________________
+
+
+    @contact_clone = ContactClone.find_by(order_number: order_id)  ||  ContactClone.new    
+
+#____________________________________
+
+    
+    #@about_info = params[:contact][:about_info] if params[:contact]  and  params[:contact][:about_info]
+    #@deep_info  = params[:contact][:deep_info]  if params[:contact]  and  params[:contact][:deep_info]
+    
+    #flash[:notice] =  ' '
+    #flash[:notice] =  params[:contact]
+    
   end
 #_____________________________________________________________________________________________________________________________________________
 
@@ -200,8 +219,49 @@ class ContactsController < ApplicationController
     #if order and order.more_info_save != true
     
     unless order.more_info_save    
+
+#________________________________________
+
+
+      @contact_clone = (ContactClone.find_by order_number: order.id)  ||  ContactClone.new
     
-    if contact.save        
+      #@contact_clone = unless @contact_clone
+        #ContactClone.new
+      #end
+
+      @contact_clone.update_attributes(about_info: contact.about_info,                                 
+                                       deep_info: contact.deep_info,                                 
+          
+                                       order_number: contact.order_number
+                                       )
+      
+      #@contact_clone.update_attributes(name: contact.name,
+      #                                 surname: contact.surname,
+      #                                 city: contact.city,
+      #                                 country: contact.country, 
+      #                                 birthday: contact.birthday,
+      #                                 about_info: contact.about_info,                                 
+      #                                 deep_info: contact.deep_info,                                 
+          
+      #                                 own_gender: contact.own_gender,
+      #                                 search_for_gender: contact.search_for_gender,
+      #                                 secret_question: contact.secret_question,
+      #                                 secret_answer_1: contact.secret_answer_1,
+      #                                 secret_answer_2: contact.secret_answer_2,
+          
+      #                                 order_number: contact.order_number,
+      #                                 email: contact.email,
+      #                                 group: contact.group,
+      #                                 able_for_contact: contact.able_for_contact
+      #                                 )
+
+#________________________________________
+
+    
+      if contact.save        
+      
+        @contact_clone.destroy       
+      
 #_______________________________________________________________________________    
 
 
@@ -368,11 +428,18 @@ class ContactsController < ApplicationController
           
     else   #if Contact notSave
     
+#_____________________________________________
+
+
+      @contact_clone.save
+
+#_____________________________________________
+
     
-      flash[:contact_name]            = contact.name
-      flash[:contact_surname]         = contact.surname
-      flash[:contact_city]            = contact.city
-      flash[:contact_country]         = contact.country
+      flash[:contact_name]            = contact.name.to_s[0..398]
+      flash[:contact_surname]         = contact.surname.to_s[0..398]
+      flash[:contact_city]            = contact.city.to_s[0..398]
+      flash[:contact_country]         = contact.country.to_s[0..398]
       
       flash[:contact_birthday_day]    = contact.birthday.strftime("%d %m %Y").split[0]
       flash[:contact_birthday_month]  = contact.birthday.strftime("%d %m %Y").split[1]
@@ -389,8 +456,29 @@ class ContactsController < ApplicationController
       flash[:contact_search_for_gender_female_checked] = 'checked' if contact.search_for_gender == 'Ж'
       flash[:contact_search_for_gender_both_checked]   = 'checked' if contact.search_for_gender == 'ЖМ'      
       
-      flash[:contact_about_info]      = contact.about_info
-      flash[:contact_deep_info]       = contact.deep_info                       
+      
+      
+      #flash[:contact_about_info]      = contact.about_info
+      #flash[:contact_deep_info]       = contact.deep_info                       
+            
+      ### ОТЛАДКА
+      #flash[:notice] =  ' '
+      #flash[:notice] += ' contact.about_info'
+      #flash[:notice] += ' is set;'             if contact.about_info
+      #flash[:notice] += ' is NOT set;'         unless contact.about_info
+      
+      #flash[:notice] += ' contact.deep_info'
+      #flash[:notice] += ' is set;'             if contact.deep_info
+      #flash[:notice] += ' is NOT set;'         unless contact.deep_info                  
+      
+      #flash[:notice] += ' params[:contact][:about_info]'
+      #flash[:notice] += ' is set;'             if params[:contact][:about_info]
+      #flash[:notice] += ' is NOT set;'         unless params[:contact][:about_info]          
+      
+      #flash[:notice] += ' params[:contact][:deep_info]'
+      #flash[:notice] += ' is set;'             if params[:contact][:deep_info]
+      #flash[:notice] += ' is NOT set;'         unless params[:contact][:deep_info]            
+      ###      
 
       if sqw
         sqw = sqw.split(",")         
@@ -400,8 +488,8 @@ class ContactsController < ApplicationController
       end     
            
       
-      flash[:contact_secret_answer_1] = contact.secret_answer_1      
-      flash[:contact_secret_answer_2] = contact.secret_answer_2      
+      flash[:contact_secret_answer_1] = contact.secret_answer_1.to_s[0..398]      
+      flash[:contact_secret_answer_2] = contact.secret_answer_2.to_s[0..398]      
       
 #_______________________________________________________________________________      
       
@@ -634,15 +722,34 @@ class ContactsController < ApplicationController
                                   '#'                +
                                   anchor
                                                
+#______________________________________
+
+
+      #params = { 
+      #           about_info: contact.about_info, 
+      #           deep_info:  contact.deep_info
+      #           #button1:    'Submit'                 
+      #         } 
+                
+                
+      #x = Net::HTTP.post_form(URI.parse('url_with_contacts'), params)
+      #puts x.body
+      
+#______________________________________
+
              
       redirect_to url_with_contacts         
+
 #_______________________________________________________________________________      
+
+
   end        #end Contact.save
     else        #if order.more_info_save    already
       flash[:notice]   = 'There is problem with your ID or Akey. Hm: Maybe you`re hacker, aren`t you?'
       redirect_to '/'
     end         #end   order.more_info_save    
   end
+
 #_____________________________________________________________________________________________________________________________________________
 
 

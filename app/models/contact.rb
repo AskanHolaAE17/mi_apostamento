@@ -78,7 +78,7 @@ class Contact < ActiveRecord::Base
 
   validates :about_info,             presence:         true,        
                                                
-                                     length:         { maximum:           5000,                                              
+                                     length:         { maximum:           10000,                                              
                
                                       :if =>         :about_info? }
                                       
@@ -87,7 +87,7 @@ class Contact < ActiveRecord::Base
 
   validates :deep_info,              presence:         true,        
                                                
-                                     length:         { maximum:           5000,                                              
+                                     length:         { maximum:           10000,                                              
                
                                       :if =>         :deep_info? }
 

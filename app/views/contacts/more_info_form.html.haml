@@ -1,5 +1,6 @@
+-#=flash[:notice]
+
 #form.lead
-  -#=flash[:notice]
   = form_for @contact, action: 'create' do |f|
   
 
@@ -148,8 +149,8 @@
       = f.text_area :about_info,        size:        '25x5',
                                         required:    '',                                                                                 
                                         class:       'input-xlarge', 
-                                        maxlength:   '1000',
-                                        value:       "#{flash[:contact_about_info] || @exist_contact.about_info || nil}",
+                                        maxlength:   '10000',
+                                        value:       "#{@contact_clone.about_info || @exist_contact.about_info || nil}",
                                         autofocus:    flash[:autofocus_about_info]
   
     %br/
@@ -167,8 +168,8 @@
       = f.text_area :deep_info,        size:        '25x5',
                                         required:    '',                                                                                 
                                         class:       'input-xlarge', 
-                                        maxlength:   '1000',
-                                        value:       "#{flash[:contact_deep_info] || @exist_contact.deep_info || nil}",
+                                        maxlength:   '10000',
+                                        value:       "#{@contact_clone.deep_info || @exist_contact.deep_info || nil}",
                                         autofocus:    flash[:autofocus_deep_info]  
     %br/    
   
