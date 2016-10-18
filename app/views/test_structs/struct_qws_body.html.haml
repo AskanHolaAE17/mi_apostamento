@@ -1,6 +1,7 @@
--#- if @qw_number > 10
+- if @current_question_serial_number.to_i > 1
   .counter
-    =@current_question + ' / ' + @questions_amount
+    = @current_question_serial_number + ' / ' + @questions_amount
+
 
 
 - if @question.advice != nil and @question.advice != ''
@@ -9,6 +10,7 @@
       .advice-text
         =@question.advice  
   %br/      
+
 
 
 .lead
