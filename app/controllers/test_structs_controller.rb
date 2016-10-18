@@ -209,8 +209,8 @@ class TestStructsController < ApplicationController
   
           
         if order.group == 'GOOD GROUP'
-           order.group = 'BAD GROUP'   if order.struct.in? ['al',  'nl', 'shl', 'pl']    
-           #order.group = 'GOOD GROUP'  if order.struct.in? ['gml', 'dl', 'ml',  'ol', 'kl', 'il']                        
+           order.group = 'BAD GROUP'   if order.struct.in? ['al',  'nl', 'shl', 'pl', 'gml']    
+           #order.group = 'GOOD GROUP'  if order.struct.in? ['dl', 'ml',  'ol', 'kl', 'il']                        
         end  
 
 #_______________________________________            
@@ -660,9 +660,9 @@ class TestStructsController < ApplicationController
           a:   "#{al_no or '0'}",  
           n:   "#{nl_no or '0'}",  
           s:   "#{shl_no or '0'}",  
-          p:   "#{pl_no or '0'}",  
-          
-          g:   "#{gml_no or '0'}",  
+          p:   "#{pl_no or '0'}",            
+          g:   "#{gml_no or '0'}", 
+           
           d:   "#{dl_no or '0'}",  
           m:   "#{ml_no or '0'}",  
           o:   "#{ol_no or '0'}",  
@@ -702,10 +702,10 @@ class TestStructsController < ApplicationController
           when 'shl' 
             then   shl_yes   = (shl_no.to_i + 1).to_s
           when 'pl' 
-            then   pl_yes    = (pl_no.to_i + 1).to_s
-            
+            then   pl_yes    = (pl_no.to_i + 1).to_s            
           when 'gml' 
             then   gml_yes   = (gml_no.to_i + 1).to_s
+            
           when 'dl' 
             then   dl_yes    = (dl_no.to_i + 1).to_s
           when 'ml' 
@@ -729,9 +729,9 @@ class TestStructsController < ApplicationController
           a:   "#{al_yes  or al_no  or '0'}",
           n:   "#{nl_yes  or nl_no  or '0'}",
           s:   "#{shl_yes or shl_no or '0'}",
-          p:   "#{pl_yes  or pl_no  or '0'}",
-          
+          p:   "#{pl_yes  or pl_no  or '0'}",          
           g:   "#{gml_yes or gml_no or '0'}",
+          
           d:   "#{dl_yes  or dl_no  or '0'}",
           m:   "#{ml_yes  or ml_no  or '0'}",
           o:   "#{ol_yes  or ol_no  or '0'}",
@@ -773,8 +773,8 @@ class TestStructsController < ApplicationController
 
 
         # count of ДА in every ResultStructGroups
-        l_arr = structs_array    = [al_no.to_i, nl_no.to_i, shl_no.to_i, pl_no.to_i, 
-                                    gml_no.to_i, dl_no.to_i, ml_no.to_i, ol_no.to_i, kl_no.to_i, il_no.to_i]              
+        l_arr = structs_array    = [al_no.to_i, nl_no.to_i, shl_no.to_i, pl_no.to_i, gml_no.to_i, 
+                                    dl_no.to_i, ml_no.to_i, ol_no.to_i, kl_no.to_i, il_no.to_i]              
                                             
         
         max_l = max_struct_count = structs_array.max                                         # max count of points
@@ -839,8 +839,8 @@ class TestStructsController < ApplicationController
                                         'Al: '  + al_no  + ' ___ ' +       
                                         'Nl: '  + nl_no  + ' ___ ' +
                                         'Shl: ' + shl_no + ' ___ ' +
-                                        'Gml: ' + gml_no + ' __---__ '       +
-                                        'Pl: '  + pl_no  + ' ___ ' +  
+                                        'Pl: '  + pl_no  + ' ___ ' +                                        
+                                        'Gml: ' + gml_no + ' __---__ '       +  
                                         'Dl: '  + dl_no  + ' ___ ' +
                                         'Ml: '  + ml_no  + ' ___ ' +
                                         'Ol: '  + ol_no  + ' ___ ' +  
@@ -868,10 +868,10 @@ class TestStructsController < ApplicationController
             when 2
               'shl'              
             when 3
-              'pl'              
-              
+              'pl'                            
             when 4
               'gml'
+              
             when 5
               'dl'
             when 6
@@ -885,8 +885,8 @@ class TestStructsController < ApplicationController
           end
 
             # [ 
-            # al_no.to_i, nl_no.to_i, shl_no.to_i, pl_no.to_i 
-            # gml_no.to_i, dl_no.to_i, ml_no.to_i, ol_no.to_i, kl_no.to_i, il_no.to_i
+            # al_no.to_i, nl_no.to_i, shl_no.to_i, pl_no.to_i, gml_no.to_i,  
+            # dl_no.to_i, ml_no.to_i, ol_no.to_i, kl_no.to_i, il_no.to_i
             # ]              
               
 #_______________________________________
@@ -896,8 +896,8 @@ class TestStructsController < ApplicationController
                                       'Al: '  + al_no  + ' ___ ' +       
                                       'Nl: '  + nl_no  + ' ___ ' +
                                       'Shl: ' + shl_no + ' ___ ' +
+                                      'Pl: '  + pl_no  + ' ___ ' +                                        
                                       'Gml: ' + gml_no + ' __---__ '       +
-                                      'Pl: '  + pl_no  + ' ___ ' +  
                                       'Dl: '  + dl_no  + ' ___ ' +
                                       'Ml: '  + ml_no  + ' ___ ' +
                                       'Ol: '  + ol_no  + ' ___ ' +  
@@ -1043,10 +1043,10 @@ class TestStructsController < ApplicationController
               when 2
                 'shl '              
               when 3
-                'pl '              
-              
+                'pl '                            
               when 4
                 'gml '
+                
               when 5
                 'dl '
               when 6
@@ -1176,8 +1176,8 @@ class TestStructsController < ApplicationController
         end
         
         
-        structs_arr    = ['al',  'nl', 'shl', 'pl', 
-                          'gml', 'dl', 'ml',  'ol', 'kl', 'il']
+        structs_arr    = ['al',  'nl', 'shl', 'pl', 'gml', 
+                          'dl', 'ml',  'ol', 'kl', 'il']
         
         max_names_1_i  = structs_arr.index(max_names_1)
         max_names_2_i  = structs_arr.index(max_names_2)
