@@ -112,6 +112,8 @@ class ContactsController < ApplicationController
     @exist_contact.secret_answer_1    = nil
     @exist_contact.secret_answer_2    = nil
     
+    @exist_contact.able_for_contact   = false    
+    
     @exist_contact.image_content_type = nil
     @exist_contact.image_file_name    = nil
     @exist_contact.image_file_size    = nil   
@@ -261,6 +263,12 @@ class ContactsController < ApplicationController
       if contact.save        
       
         @contact_clone.destroy       
+        
+#________________________________________
+
+
+        contact.able_for_contact = true
+        contact.save
       
 #_______________________________________________________________________________    
 

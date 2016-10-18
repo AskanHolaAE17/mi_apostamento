@@ -72,13 +72,15 @@ class UsersController < ApplicationController
     contact.city               = 'a'
     contact.country            = 'a'
     contact.birthday           = 'September 16, 1990'
-    contact.own_gender         = order.gender
-    contact.search_for_gender  = 'ЖМ'.delete(order.gender)
+    contact.own_gender         = order.gender  ||  'a'
+    contact.search_for_gender  = 'ЖМ'.delete(order.gender.to_s)  ||  'ЖМ'
     contact.about_info         = 'a'
     contact.deep_info          = 'a'
     contact.secret_question    = '1,2'
     contact.secret_answer_1    = 'a1711b'
     contact.secret_answer_2    = 'b1711a'
+    
+    contact.able_for_contact   = false    
     
     contact.image_content_type = 'image/jpeg'
     contact.image_file_name    = '002.jpg'
