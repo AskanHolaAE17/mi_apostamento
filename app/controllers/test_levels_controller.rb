@@ -251,13 +251,13 @@ class TestLevelsController < ApplicationController
 #_______________________________________
 
 
-          test_1_start_url_json     = JSON.generate(test_1_start_url_hash)
-          test_1_start_url_encoded  = (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
+          test_1_start_url_json     =  JSON.generate(test_1_start_url_hash)
+          test_1_start_url_encoded  =  (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
         
           test_1_start_url          =  root_path                + 
-                                    'infos/'                  + 
-                                    'tekst_mezhdy_testami/'   + 
-                                     test_1_start_url_encoded                                            
+                                      'infos/'                  + 
+                                      'tekst_mezhdy_testami/'   + 
+                                       test_1_start_url_encoded                                            
 
 #__________________________________________      
       

@@ -13,7 +13,7 @@ class OrderMailer < ActionMailer::Base
   def b_test_to_client_for_get_contacts_after_cool_pay(order, test_url)
     @order = order            
     @test_url = test_url
-    mail(to: @order.email, subject: 'KIND: Пройдите тест')
+    mail(to: @order.email, subject: 'KIND: Психологически безопасные отношения - Пройдите тест')
   end
 
 
