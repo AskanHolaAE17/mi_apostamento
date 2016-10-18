@@ -160,7 +160,9 @@
     
     %a{name: '9'}
     .dark-green{class: flash[:error_class_deep_info]}
-      Жизненные смыслы, сделающие жизнь полной
+      Жизненные смыслы, сделающие жизнь полной.
+      %br/
+      И какой Вы видите свою жизнь
       .contacts-examples-text
         (например, хочу дом, поездки в Испанию вдвоем, хозяйство, теплицы, 3-их детей, открыть бизнес...):
     
@@ -175,9 +177,26 @@
   
   
 
-    
+
     
     %a{name: '10'}
+    .dark-green{class: flash[:error_class_looking_for]}
+      Что Вы ждёте от отношений, партнера:
+    
+    %div    
+      = f.text_area :looking_for,       size:        '25x5',
+                                        required:    '',                                                                                 
+                                        class:       'input-xlarge', 
+                                        maxlength:   '10000',
+                                        value:       "#{@contact_clone.looking_for || @exist_contact.looking_for || nil}",
+                                        autofocus:    flash[:autofocus_looking_for]  
+    %br/    
+  
+  
+
+
+    
+    %a{name: '11'}
     .dark-green{class: flash[:error_class_image]}
       Выберите Ваше фото:
     %div                                        
@@ -189,7 +208,7 @@
 
 
     #paper
-      %a{name: '11'}
+      %a{name: '12'}
       .dark-green{class: flash[:error_class_secret_question]}
         -#Выберите 2 секретных вопроса для входа на сайт:
         Выберите 2 секретных вопроса для входа на сайт:                                                                                
@@ -211,7 +230,7 @@
         
         
         
-    %a{name: '12'}
+    %a{name: '13'}
     .dark-green{class: flash[:error_class_secret_answer_1]}
       Ответ на первый секретный вопрос:
     
@@ -227,7 +246,7 @@
                              
                              
                              
-    %a{name: '13'}
+    %a{name: '14'}
     .dark-green{class: flash[:error_class_secret_answer_2]}
       Ответ на второй секретный вопрос:
     

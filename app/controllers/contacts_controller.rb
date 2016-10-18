@@ -108,6 +108,8 @@ class ContactsController < ApplicationController
     @exist_contact.search_for_gender  = nil
     @exist_contact.about_info         = nil
     @exist_contact.deep_info          = nil
+    @exist_contact.looking_for        = nil   
+     
     @exist_contact.secret_question    = nil
     @exist_contact.secret_answer_1    = nil
     @exist_contact.secret_answer_2    = nil
@@ -167,8 +169,11 @@ class ContactsController < ApplicationController
     contact.birthday           = nil
     contact.own_gender         = nil
     contact.search_for_gender  = nil
+    
     contact.about_info         = nil
     contact.deep_info          = nil
+    contact.looking_for        = nil    
+    
     contact.secret_question    = nil
     contact.secret_answer_1    = nil
     contact.secret_answer_2    = nil
@@ -231,8 +236,9 @@ class ContactsController < ApplicationController
         #ContactClone.new
       #end
 
-      @contact_clone.update_attributes(about_info: contact.about_info,                                 
-                                       deep_info: contact.deep_info,                                 
+      @contact_clone.update_attributes(about_info:   contact.about_info,                                 
+                                       deep_info:    contact.deep_info,                                 
+                                       looking_for:  contact.looking_for,     
           
                                        order_number: contact.order_number
                                        )
@@ -515,6 +521,7 @@ class ContactsController < ApplicationController
         
         flash[:error_class_about_info]        = 'error_field' if attr == :about_info
         flash[:error_class_deep_info]         = 'error_field' if attr == :deep_info        
+        flash[:error_class_looking_for]         = 'error_field' if attr == :looking_for                
         flash[:error_class_image]             = 'error_field' if attr == :image
         
         flash[:error_class_secret_question]   = 'error_field' if attr == :secret_question
@@ -535,6 +542,7 @@ class ContactsController < ApplicationController
                      
         flash[:about_info]          = false         
         flash[:deep_info]           = false           
+        flash[:looking_for]         = false                   
         flash[:image]               = false   
               
         flash[:secret_question]     = false
@@ -605,6 +613,11 @@ class ContactsController < ApplicationController
                                 if attr == :secret_answer_2
                                   flash[:autofocus_secret_answer_2] = true
                                   @skip_autofocus = true
+                                else
+                                  if attr == :looking_for
+                                    flash[:autofocus_looking_for] = true
+                                    @skip_autofocus = true
+                                  end                                             
                                 end                                            
                               end                        
                             end            #attr == :secret_question              
@@ -674,29 +687,35 @@ class ContactsController < ApplicationController
                           anchor = '9'
                           @skip_anchor = true
                         else                        
-                          if attr == :image
+                          if attr == :looking_for
                             anchor = '10'                      
                             @skip_anchor = true
-                          else  
+                          else                          
+                        
+                            if attr == :image
+                              anchor = '11'                      
+                              @skip_anchor = true
+                            else  
                             
                             
-                            if attr == :secret_question
-                                anchor = '11'                      
-                                @skip_anchor = true
-                            else
-                              if attr == :secret_answer_1
-                                anchor = '12'                      
-                                @skip_anchor = true
+                              if attr == :secret_question
+                                  anchor = '12'                      
+                                  @skip_anchor = true
                               else
-                                if attr == :secret_answer_2
+                                if attr == :secret_answer_1
                                   anchor = '13'                      
                                   @skip_anchor = true
+                                else
+                                  if attr == :secret_answer_2
+                                    anchor = '14'                      
+                                    @skip_anchor = true
+                                  end
                                 end
-                              end
-                            end    
+                              end    
                             
                             
-                          end                          #attr == :image
+                            end                          #attr == :image
+                          end  
                         end  
                       end                            #attr == :about_info
                       

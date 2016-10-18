@@ -63,9 +63,11 @@
 
 #preamble_article_title
   %section
-    %h4
-      Подробное описание:
-  
+    .form_or_read_all
+      %b
+        = @preamble_element_form_or_read_all.html_safe
+    %br/
+    
     %h3
     
       - unless @article.number.to_i == 1
@@ -124,7 +126,7 @@
 
 %section
   #paper
-    #form.lead
+    #form.lead      
       %b
         = render partial: 'new_order_form' 
     
