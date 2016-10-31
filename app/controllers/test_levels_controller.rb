@@ -646,34 +646,25 @@ class TestLevelsController < ApplicationController
 #_______________________________________      
 
          
-        @questions_numbers_for_serial = []
-        signal_level_arr = order.signal_level_arr.split(' ')
+        #@questions_numbers_for_serial = []
+        #signal_level_arr = order.signal_level_arr.split(' ')
         
-        signal_level_arr.each do |sign_lev_arr_el|
-          questions_for_serial = questions_on.where for_yes_answer_plus_1_point_to: sign_lev_arr_el
+        #signal_level_arr.each do |sign_lev_arr_el|
+        #  questions_for_serial = questions_on.where for_yes_answer_plus_1_point_to: sign_lev_arr_el
           
-          questions_for_serial.each do |qw_for_ser|
-            @questions_numbers_for_serial << qw_for_ser.number_of_question
-          end
-          
-        end
-                 
-        @current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
-        @current_question_serial_number = @current_question_serial_number.to_s
-        
-        
-        
-        @questions_amount = @questions_numbers_for_serial.count + 1                 
-        @questions_amount = @questions_amount.to_s   
-        #@questions_amount = 0                
-        #for i in 0..signal_level_arr.count - 1
-        
-        #  questions_for_amount =  Question.where for_yes_answer_plus_1_point_to: signal_level_arr[0]
-        #  @questions_amount    += questions_for_amount.count
+        #  questions_for_serial.each do |qw_for_ser|
+        #    @questions_numbers_for_serial << qw_for_ser.number_of_question
+        #  end
           
         #end
+                 
+        #@current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
+        #@current_question_serial_number = @current_question_serial_number.to_s
         
-        #@questions_amount = (@questions_amount + 1).to_s   
+        
+        
+        #@questions_amount = @questions_numbers_for_serial.count + 1                 
+        #@questions_amount = @questions_amount.to_s   
       
 #_______________________________________            
 
