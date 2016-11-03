@@ -17,7 +17,7 @@
       - @qw_level_signals.each do |level_signal|      
         
         %label.label_checkbox
-          = check_box_tag 'order_signal_level_more_array[]', level_signal.level
+          = radio_button_tag 'order_signal_level_more_array[]', level_signal.level
           = level_signal.field
           
         = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               

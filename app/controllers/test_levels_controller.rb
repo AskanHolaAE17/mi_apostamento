@@ -1008,7 +1008,13 @@ class TestLevelsController < ApplicationController
 
       
       @order = order
-            
+
+#_______________________________________            
+
+
+      order.current_test_link = 'testo_more/' + details_encoded             
+      order.save
+
 #_______________________________________            
       
 

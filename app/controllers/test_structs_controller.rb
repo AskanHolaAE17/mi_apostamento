@@ -157,7 +157,7 @@ class TestStructsController < ApplicationController
           }        
         
         test_url_json    = JSON.generate(test_url_hash)        
-        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')        
         test_url = root_path + 'tests_s/' + test_url_encoded_64 
         
         redirect_to test_url   
@@ -453,9 +453,10 @@ class TestStructsController < ApplicationController
       cur_answs = current_answers_hash = test_url_hash            
       
       last_answers_encoded          = order.current_test_link.partition('/').last   # just text after '/'
-      last_answers_json             = Base64.decode64(last_answers_encoded)    
+      last_answers_json             = Base64.decode64 last_answers_encoded    
       
-      last_a = last_answers_hash    = JSON.parse(last_answers_json)      
+      #last_a = last_answers_hash    = JSON.parse last_answers_json      
+      last_a = 'a'
       cur_a  = cur_answs            # cur_answs  = current_answers_hash = test_url_hash
                
 #____________________
@@ -862,9 +863,11 @@ class TestStructsController < ApplicationController
             ' '                       +            
             max_names[0]              +
             ' '                       +             
-            max_names[1]              +
-            ' '                       +             
-            max_names[2]
+            max_names[1]              
+                        
+          if max_names[2]   
+            test_2_signal_more_array += ' ' + max_names[2].to_s
+          end
             
           if max_names[3]   
             test_2_signal_more_array += ' ' + max_names[3].to_s
@@ -1070,8 +1073,13 @@ class TestStructsController < ApplicationController
 
 
       all_structs      = '0123456789'
-      not_max_struct_i = all_structs.delete(max_group_1_index).delete(max_group_2_index).delete(max_group_3_index)
-      
+      not_max_struct_i = all_structs.delete(max_group_1_index).delete(max_group_2_index)
+
+
+      if max_group_3_index != nil
+        not_max_struct_i = not_max_struct_i.delete(max_group_3_index)
+      end
+            
       if max_group_4_index != nil
         not_max_struct_i = not_max_struct_i.delete(max_group_4_index)
       end

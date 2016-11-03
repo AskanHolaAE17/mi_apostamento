@@ -118,7 +118,9 @@ class ContactsController < ApplicationController
     
     @exist_contact.image_content_type = nil
     @exist_contact.image_file_name    = nil
-    @exist_contact.image_file_size    = nil   
+    @exist_contact.image_file_size    = nil
+    
+    @exist_contact.ready_strong       = false
       end
     else  
       @exist_contact = Contact.new  
@@ -180,7 +182,9 @@ class ContactsController < ApplicationController
     
     contact.image_content_type = nil
     contact.image_file_name    = nil
-    contact.image_file_size    = nil      
+    contact.image_file_size    = nil
+    
+    contact.ready_strong       = false                
       
       contact.update_attributes(contact_params)    
     else  

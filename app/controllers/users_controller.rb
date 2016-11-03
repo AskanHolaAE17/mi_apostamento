@@ -73,6 +73,8 @@ class UsersController < ApplicationController
     contact.image_file_name    = '002.jpg'
     contact.image_file_size    = '97820'
     
+    contact.ready_strong       = true
+    
     
     order.save
     contact.save    

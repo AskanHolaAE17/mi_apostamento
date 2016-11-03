@@ -17,7 +17,7 @@
       - @qw_struct_signals.each do |struct_signal|      
         
         %label.label_checkbox
-          = check_box_tag 'order_signal_struct_more_array[]', struct_signal.struct
+          = radio_button_tag 'order_signal_struct_more_array[]', struct_signal.struct
           = struct_signal.field
         
         = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
@@ -30,8 +30,10 @@
     
     = hidden_field_tag  :max_names_1,       @qw_struct_signals[0].struct
     = hidden_field_tag  :max_names_2,       @qw_struct_signals[1].struct
-    = hidden_field_tag  :max_names_3,       @qw_struct_signals[2].struct    
 
+
+    - if @qw_struct_signals[2] != nil    
+      = hidden_field_tag  :max_names_3,       @qw_struct_signals[2].struct    
     
     - if @qw_struct_signals[3] != nil    
       = hidden_field_tag  :max_names_4,       @qw_struct_signals[3].struct    
