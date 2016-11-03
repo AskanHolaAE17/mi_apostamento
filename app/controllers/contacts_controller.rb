@@ -429,7 +429,7 @@ class ContactsController < ApplicationController
     
       #unless @contacts.count == 0 
         OrderMailer.d_see_contacts(order, link_with_contacts, disable_contact_link).deliver
-        UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).deliver
+        #UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).deliver
       #end
 
 

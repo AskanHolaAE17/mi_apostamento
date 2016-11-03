@@ -40,8 +40,6 @@
         %span 
           .square{ class: @square_class }
             O
-        %span{ class: 'square-symbol-info' }
-          Ваш символ-квадратик
             
             
         =contact.name        
@@ -50,23 +48,38 @@
         .contact-image
           = image_tag contact.image.url      
   
-      %address
-        =contact.city + ', ' + contact.country
+      %br/
+
       
       .text-success
-        =contact.birthday.strftime("%B %-d, %Y")
+        =contact.birthday.strftime("%B %-d, %Y")      
+
+
+      .contact-paragraph
+        %address
+          =contact.city + ', ' + contact.country          
+  
+  
       
-      Жизненные ценности, интересы, надежды:
-      .lead
+      .half-brown-text-contacts
+        Жизненные ценности, интересы, надежды:
+      .contact-about-info.contact-paragraph.lead
         =contact.about_info   
   
-      Какой видит свою жизнь:
-      .lead
+      
+      
+      .half-brown-text-contacts
+        Какой видит свою жизнь:
+      .contact-deep-info.contact-paragraph.lead
         =contact.deep_info   
 
+
+
       - if contact.looking_for  
-        Ждёт от отношений, партнера:
-        .lead
+      
+        .half-brown-text-contacts
+          Ждёт от отношений, партнера:
+        .contact-looking-for.contact-paragraph.lead
           =contact.looking_for
   
       -#.label.label-success.select_able

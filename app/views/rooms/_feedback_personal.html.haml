@@ -1,10 +1,15 @@
 .feedback-personal-pre-block
 
-  -#=@user.name.to_s + ' ' + @user.surname.to_s[0].to_s + ','
-  =@user.name.to_s + ','                        
-
   %h3
+    -#=@user.name.to_s + ' ' + @user.surname.to_s[0].to_s + ','
+    =@user.name.to_s + ','                        
+
+
+  .room-titles
     Ваши рекомендации
+    
+  %br/
+      
   
   =link_to 'Открыть >', @link_to_feedbacks_sl, class: ' btn btn-large btn-block btn-info success-btn ', target: '_blank'
 

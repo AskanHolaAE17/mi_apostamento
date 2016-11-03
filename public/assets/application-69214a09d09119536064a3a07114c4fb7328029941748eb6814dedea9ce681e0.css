@@ -9162,11 +9162,22 @@ HTML A:hover, BODY A:hover {
   font-size: 90%;
 }
 
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/fields-contacts.sass */
+.contact-paragraph {
+  margin-left: 5%;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/image.sass */
 .contact-image {
   margin: 2% 0;
   width: 50%;
   height: auto;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/texts.sass */
+.half-brown-text-contacts {
+  color: #5C3C16;
+  font-size: 95%;
 }
 
 /* line 2, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/feedback_personals_c/feedback.sass */
@@ -9237,6 +9248,11 @@ HTML A:hover, BODY A:hover {
   font-weight: bold;
 }
 
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/texts.sass */
+.room-titles {
+  font-size: 115%;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/advice.sass */
 #advice {
   width: 70%;
@@ -9291,9 +9307,23 @@ HTML A:hover, BODY A:hover {
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/instructions.sass */
-.want-to-db-after-test-button {
+.want-to-db-after-test-button-text {
   text-align: justify;
+}
+
+/* line 6, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/instructions.sass */
+.want-to-db-after-test-button {
   font-weight: bold;
+}
+
+/* line 12, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/instructions.sass */
+.want-to-db-after-test-button-yes:focus {
+  color: #5BC0DE;
+}
+
+/* line 17, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/instructions.sass */
+.want-to-db-after-test-button-no:focus {
+  color: #5BB75B;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/block_test.sass */
