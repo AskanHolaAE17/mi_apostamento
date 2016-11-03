@@ -300,7 +300,11 @@ class TestLevelsController < ApplicationController
 #_______________________________________    
 
   
-    test_url_encoded  = params[:test_encrypted]                 
+    test_url_encoded       = params[:test_encrypted]                 
+    incom = params[:test_encrypted]                 
+    back_button_show_flag  = test_url_encoded.partition('__').last
+    test_url_encoded       = test_url_encoded.partition('__').first
+
     
     test_url_json     = Base64.decode64(test_url_encoded)    
     test_url_hash     = JSON.parse(test_url_json)
@@ -361,6 +365,19 @@ class TestLevelsController < ApplicationController
       
       last_a = last_answers_hash    = JSON.parse(last_answers_json)      
       cur_a  = cur_answs            # cur_answs  = current_answers_hash = test_url_hash
+
+#____________________
+
+
+      
+      if order.current_test_link.partition('/').first == 'tests'  and
+         last_a['q'].to_i != cur_a['q'].to_i                      and
+         back_button_show_flag != 'f' 
+            
+        @back_qw_button = root_path + order.current_test_link + '__f'   # back to PrewQw
+      end        
+    
+#____________________
               
       
       #if (  order.current_test_link == ''  or  order.current_test_link == nil  and
@@ -453,19 +470,35 @@ class TestLevelsController < ApplicationController
           if  last_a['t']   == cur_a['t'] 
                               
                 
-              if  (  last_a['ps'].to_i   ==  cur_a['ps'].to_i  and
-                     last_a['po'].to_i   ==  cur_a['po'].to_i  and
-                     last_a['ne'].to_i   ==  cur_a['ne'].to_i  and
+              if  (  last_a['ps'].to_i   ==  cur_a['ps'].to_i   and
+                     last_a['po'].to_i   ==  cur_a['po'].to_i   and
+                     last_a['ne'].to_i   ==  cur_a['ne'].to_i   and
                    
-                     order.yes_qws_level[-2] != '|'  )
+                     order.yes_qws_level[-2] != '|' )   
               
+#_______________________________________              
+
                    
                 yes_qws_level       =  order.yes_qws_level.split(' ')                                 
                 yes_qws_level.pop   
                 #unless yes_qws_level.last == '||'
+                
+                
               
                 order.yes_qws_level = yes_qws_level.join(' ')
                 
+#_______________________________________              
+
+
+              elsif back_button_show_flag == 'f'              
+              
+                yes_qws_level       =  order.yes_qws_level.split(' ')                                 
+                
+                yes_qws_level.pop   
+                yes_qws_level.pop   
+
+                
+                order.yes_qws_level = yes_qws_level.join(' ')              
 
               end   # if YES wasn`t addes (on prew page)
             
@@ -486,14 +519,33 @@ class TestLevelsController < ApplicationController
 
 #_______________________________________      
 
+        
+        ###
+        #test_url_encoded
+        
+        #cur_link_start           = test_url_encoded.partition('/').first
+        #cur_link_end_64          = test_url_encoded.partition('/').last
+        
+        
+        #cur_link_end_old_json    = Base64.decode64 cur_link_end_64                                
+        #cur_link_end_old_hash    = JSON.parse cur_link_end_old_json
+        
+        #qw_number_cur_link       = cur_link_end_old_hash
+        
+        
+        #current_test_link_actual = cur_link_start + cur_link_end
 
+
+        #order.current_test_link  = current_test_link_actual
+        
+        
         order.current_test_link = test_url_encoded
 
 #_______________________________________      
     
     
         #~NEXT QUESTION (if exist)
-        questions_cur_l  =  questions_all.where       for_yes_answer_plus_1_point_to: current_level          
+        questions_cur_l  =  questions_on.where       for_yes_answer_plus_1_point_to: current_level          
           
         cur_qw_index     =  questions_cur_l.index(question)
         
@@ -511,7 +563,7 @@ class TestLevelsController < ApplicationController
           current_l_index      =  signal_level_arr.index(current_level)   # index of CURRENT LEVEL in array
           next_level           =  signal_level_arr[current_l_index + 1]   # get NEXT level
         
-          questions_new_cur_l  =  questions_all.where  for_yes_answer_plus_1_point_to: next_level   # get QWS with this level
+          questions_new_cur_l  =  questions_on.where  for_yes_answer_plus_1_point_to: next_level   # get QWS with this level
           
                             
           if questions_new_cur_l[0]   # if there are qws with THIS LEVEL
@@ -642,7 +694,7 @@ class TestLevelsController < ApplicationController
         @yes_params         =  root_path          + 
                               'tests/'            + 
                                yes_params_encoded      
-    
+
 #_______________________________________      
 
          

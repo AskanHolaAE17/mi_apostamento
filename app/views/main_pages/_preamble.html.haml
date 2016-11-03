@@ -1,39 +1,39 @@
-    
-%h3
-  Зачем Вам нужен наш сайт? Он:
-  
-= @preamble_elements.where(name: 'need').first.body.html_safe  
-%br/
-%br/
+%section
+
+     
+  - if @article.number == 1 
+    %h3
+      Приветствуем Вас!
+
+#-------------------------------------------------------------------------------    
+
+  #site_motto
+
+    Как с нашей помощью разобраться, какой партнер Вам подходит среди ближайшего окружения или среди тысяч других людей на сайтах знакомств?
+    %br/
+    %br/  
 
 #-------------------------------------------------------------------------------
 
-%h3
-  На какие вопросы Вы найдёте ответы, благодаря сайту:
+#preamble_way
+  %h4
+    Для этого:
   
-= @preamble_elements.where(name: 'answers').first.body.html_safe        
-%br/
-%br/
-
-%b
-  ='- Вы узнаете, пройдя тест на нашем сайте'
-  
-%br/  
-%br/  
-
--#
-  (Также Вы можете 
-  %a{href: '#more_article_info'}
-    читать дальше
-  статью о работе сайта)  
-  %br/
+  = @preamble_element_way.body.html_safe
   %br/
   
-  
-%section
-  #paper
-    #form.lead      
+  %br/
+  = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
+  %br/
+  %br/
+
+#-------------------------------------------------------------------------------      
+
+#preamble_article_title
+  %section
+    .form_or_read_all
       %b
-        = render partial: 'new_order_form' 
-      %a{name: 'form2'}
-  
+        = @preamble_element_form_or_read_all.body.html_safe
+    %br/
+    
+

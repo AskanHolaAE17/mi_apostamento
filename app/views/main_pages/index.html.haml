@@ -8,71 +8,23 @@
 
 - @contact = Contact.new                                               
 
+#-------------------------------------------------------------------------------      
+
 = flash[:echo_me]
 
 - unless @info_msg.nil? and @info_msg == ''
   %h2 
     = @info_msg
 
+#-------------------------------------------------------------------------------      
 
-
-%section
-
-     
-  - if @article.number == 1 
-    %h3
-      Приветствуем Вас!
-
-#-------------------------------------------------------------------------------    
-
-  #site_motto
-
-    Как разобраться, какой партнер Вам подходит среди ближайшего окружения или тысяч других людей на сайтах знакомств?
-    %br/
-    %br/  
-
-#-------------------------------------------------------------------------------
-
-#preamble_way
-  %h4
-    Для этого:
-  
-  = @preamble_element_way.body.html_safe
-  %br/
-  
-  %br/
-  = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
-  %br/
-  %br/
+=render partial: 'preamble'
 
 #-------------------------------------------------------------------------------      
     
-
-  -##paper
-    #form.lead
-      %b
-        = render partial: 'new_order_form' 
-    
-  
-  -#%a{name: 'more_article_info'}      
-  -##more_article_info
-    %h3
-      Подробнее о работе сайта - статья
-      = @article.number.to_s + ' -'      
-      
-    %h4  
-      = '«'+ @article.title + '»' + ' :'      
-
-#-------------------------------------------------------------------------------      
-
 #preamble_article_title
   %section
-    .form_or_read_all
-      %b
-        = @preamble_element_form_or_read_all.body.html_safe
-    %br/
-    
-    
+            
     %h3
     
       - unless @article.number.to_i == 1
@@ -84,10 +36,7 @@
 
 #-------------------------------------------------------------------------------      
 
-%section
-
-  -#= @main_page.description.html_safe    
-  
+%section  
   
   -#- unless contact.image.url.match(/missing.png/)     
     .contact-image
@@ -98,33 +47,37 @@
   = render partial: 'layouts/articles_block/menu'   
   
   = @descr_end.html_safe    
--#= render partial: 'layouts/articles_block/menu'     
+  
 
 #-------------------------------------------------------------------------------      
 
 = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
 
 - @next_article = @articles.find_by number: @article.number + 1
-- if @next_article
 
-  %section
-    %b
-      Читать следующую статью (статья #{@next_article.number} из #{@articles.count+1}):
-      = link_to "/articles/#{@next_article.translit}" do
-        %div
-          =@next_article.number.to_s + '. '
-          =@next_article.title
-          
-- else            
-  %section.articles_more_links
-    - @all_articles_bur_cur = @articles.where.not number: @article.number
-    %b
-      Читать другие статьи:
-      - @all_articles_bur_cur.each do |art_link|                  
-        = link_to "/articles/#{art_link.translit}" do
+
+
+.article_links_after_article
+  - if @next_article
+
+    %section
+      %b
+        Читать следующую статью (статья #{@next_article.number} из #{@articles.count+1}):
+        = link_to "/articles/#{@next_article.translit}" do
           %div
-            =art_link.number.to_s + '. '
-            =art_link.title    
+            =@next_article.number.to_s + '. '
+            =@next_article.title
+          
+  - else            
+    %section.articles_more_links
+      - @all_articles_bur_cur = @articles.where.not number: @article.number
+      %b
+        Читать другие статьи:
+        - @all_articles_bur_cur.each do |art_link|                  
+          = link_to "/articles/#{art_link.translit}" do
+            %div
+              =art_link.number.to_s + '. '
+              =art_link.title    
 %br/            
 
 #-------------------------------------------------------------------------------      
@@ -133,12 +86,7 @@
   #paper
     #form.lead      
       %b
-        = render partial: 'new_order_form' 
-    
-    
--#%section    
-  #preamble
-    = render partial: 'preamble'      
+        = render partial: 'new_order_form'         
     
       
       

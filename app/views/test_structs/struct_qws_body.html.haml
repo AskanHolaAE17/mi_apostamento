@@ -17,8 +17,15 @@
   =@question.title
 
 
-= button_to 'Да',  @yes_params, class: 'btn btn-info btn-large test-click-yes-button'
-= button_to 'Нет', @no_params,  class: 'btn btn-primary btn-large test-click-no-button'
+= button_to 'Да',  @yes_params, class: 'btn btn-primary btn-large test-click-yes-button'
+= button_to 'Нет', @no_params,  class: 'btn btn-info btn-large test-click-no-button'
 
+
+- if @back_qw_button
+  
+  - @qws_body_block = 'qws_body_block'
+  
+  %br/
+  = button_to 'Вернуться к предыдущему вопросу', @back_qw_button,  class: 'btn btn-link btn-large back-qw-button ', style: 'margin-left: -20px;'
 
 

@@ -20,7 +20,7 @@
         
         - if @menu_up_item == 'main'            
         
-          %nav.block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets}"}
+          %nav.block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets} "}
             = yield                 
                           
             
@@ -40,7 +40,7 @@
               
         - else
     
-          .span6.offset2.block
+          .span6.offset2.block{class: @qws_body_block}
             %article.lead.info_msg
               = yield                 
 
