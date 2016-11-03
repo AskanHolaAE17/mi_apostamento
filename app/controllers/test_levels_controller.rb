@@ -301,7 +301,7 @@ class TestLevelsController < ApplicationController
 
   
     test_url_encoded       = params[:test_encrypted]                 
-    incom = params[:test_encrypted]                 
+
     back_button_show_flag  = test_url_encoded.partition('__').last
     test_url_encoded       = test_url_encoded.partition('__').first
 

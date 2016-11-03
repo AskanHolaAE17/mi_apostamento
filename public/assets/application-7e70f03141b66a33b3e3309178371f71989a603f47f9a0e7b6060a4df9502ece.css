@@ -9025,6 +9025,19 @@ HTML A:hover, BODY A:hover {
     font-size: 1.2em;
   }
 }
+/* line 2, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/links.sass */
+.article_links_after_article A {
+  text-decoration: none;
+}
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/links.sass */
+.article_links_after_article A:hover {
+  text-decoration: underline;
+}
+/* line 8, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/links.sass */
+.article_links_after_article A:focus {
+  color: #08C;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/preamble.sass */
 #preamble {
   text-align: left;
@@ -9250,12 +9263,20 @@ HTML A:hover, BODY A:hover {
   color: #04C;
 }
 
-/* line 15, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+/* line 14, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+.test-click-yes-button, .test-click-no-button {
+  font-weight: bold;
+}
+/* line 17, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
 .test-click-yes-button:focus, .test-click-no-button:focus {
   outline: none;
 }
 
-/* line 21, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+/* line 22, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+.back-qw-button {
+  font-weight: bold;
+}
+/* line 25, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
 .back-qw-button:focus {
   color: #08C;
   text-decoration: none;
@@ -9271,6 +9292,7 @@ HTML A:hover, BODY A:hover {
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/instructions.sass */
 .want-to-db-after-test-button {
+  text-align: justify;
   font-weight: bold;
 }
 

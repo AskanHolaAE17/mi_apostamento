@@ -406,7 +406,10 @@ class TestStructsController < ApplicationController
 #_______________________________________    
 
   
-    test_url_encoded  = params[:test_encrypted]                 
+    test_url_encoded       = params[:test_encrypted]                 
+
+    back_button_show_flag  = test_url_encoded.partition('__').last
+    test_url_encoded       = test_url_encoded.partition('__').first
     
     test_url_json     = Base64.decode64(test_url_encoded)    
     test_url_hash     = JSON.parse(test_url_json)
@@ -454,6 +457,18 @@ class TestStructsController < ApplicationController
       
       last_a = last_answers_hash    = JSON.parse(last_answers_json)      
       cur_a  = cur_answs            # cur_answs  = current_answers_hash = test_url_hash
+               
+#____________________
+
+      
+      if order.current_test_link.partition('/').first == 'tests_s' and
+         last_a['q'].to_i != cur_a['q'].to_i                       and
+         back_button_show_flag != 'f' 
+            
+        @back_qw_button = root_path + order.current_test_link + '__f'   # back to PrewQw
+      end        
+    
+#____________________
               
       
       #if (  order.current_test_link == ''  or  order.current_test_link == nil  and
@@ -568,13 +583,25 @@ class TestStructsController < ApplicationController
                      order.yes_qws_struct[-2] != '|'  )                    
               
               
-                   
+                                 
                 yes_qws_struct       =  order.yes_qws_struct.split(' ')                                 
                 yes_qws_struct.pop   
-                #unless yes_qws_struct.last == '||'
-              
+                            
                 order.yes_qws_struct = yes_qws_struct.join(' ')
                 order.save                
+
+#_______________________________________              
+
+
+              elsif back_button_show_flag == 'f'              
+              
+                yes_qws_struct       =  order.yes_qws_struct.split(' ')                                 
+                
+                yes_qws_struct.pop   
+                yes_qws_struct.pop   
+
+                
+                order.yes_qws_struct = yes_qws_struct.join(' ')              
 
               end   # if YES wasn`t addes (on prew page)
             
@@ -602,7 +629,7 @@ class TestStructsController < ApplicationController
     
     
         #~NEXT QUESTION (if exist)
-        questions_cur_s  =  questions_all.where       for_yes_answer_plus_1_point_to: current_struct
+        questions_cur_s  =  questions_on.where       for_yes_answer_plus_1_point_to: current_struct
           
         cur_qw_index     =  questions_cur_s.index(question)
         
@@ -620,7 +647,7 @@ class TestStructsController < ApplicationController
           current_s_index      =  signal_struct_arr.index(current_struct)   # index of CURRENT STRUCT in array
           next_struct          =  signal_struct_arr[current_s_index + 1]   # get NEXT struct
         
-          questions_new_cur_s  =  questions_all.where  for_yes_answer_plus_1_point_to: next_struct   # get QWS with this struct
+          questions_new_cur_s  =  questions_on.where  for_yes_answer_plus_1_point_to: next_struct   # get QWS with this struct
           
                             
           if questions_new_cur_s[0]   # if there are qws with THIS STRUCT
