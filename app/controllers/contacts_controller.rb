@@ -440,8 +440,8 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________
 
           
-    else   #if Contact notSave
-    
+    else   # unless contact.save
+
 #_____________________________________________
 
 
@@ -523,6 +523,7 @@ class ContactsController < ApplicationController
         flash[:error_class_deep_info]         = 'error_field' if attr == :deep_info        
         flash[:error_class_looking_for]         = 'error_field' if attr == :looking_for                
         flash[:error_class_image]             = 'error_field' if attr == :image
+        flash[:error_class_image]             = 'error_field'
         
         flash[:error_class_secret_question]   = 'error_field' if attr == :secret_question
         flash[:error_class_secret_answer_1]   = 'error_field' if attr == :secret_answer_1                
@@ -1073,7 +1074,7 @@ class ContactsController < ApplicationController
 
     # disable_contact_params is dcp
     dcp_encoded  = params[:deactive_params]
-    dcp_encoded[dcp_encoded.length-1] = ''
+    #dcp_encoded[dcp_encoded.length-1] = ''
     dcp_json     = Base64.decode64(dcp_encoded)    
     disable_contact_params_hash       = JSON.parse(dcp_json)    
     
@@ -1088,10 +1089,12 @@ class ContactsController < ApplicationController
     
     if contact and order and contact.order_number == order_number and order.akey == order_akey
       user.active                      = false
+      user.save
+            
       contact.able_for_contact         = false
       contact.link_for_disable_contact = ''
-      contact.save
-      user.save
+      contact.save      
+      
       redirect_to root_path + 'info/dannue_ydalenu_iz_bazu'
     else
       
@@ -1114,7 +1117,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :surname, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :user_id, :secret_answer_1, :secret_answer_2, :structure, :secret_question => [])
+      params.require(:contact).permit(:name, :surname, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :looking_for, :user_id, :secret_answer_1, :secret_answer_2, :structure, :secret_question => [])
     end  
  
   

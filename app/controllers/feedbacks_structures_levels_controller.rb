@@ -32,6 +32,13 @@ class FeedbacksStructuresLevelsController < ApplicationController
         #@struct_info = 'Nice '
         @level_info  = (FeedbacksLevel.find_by     title: user.contact.level).body        
         #@level_info  = '& Cool'
+        
+        @square_class = 'square_green'        if user.contact.group == 'GOOD GROUP'    
+        @square_class = 'square_violet'       if user.contact.group == 'BAD GROUP'
+    
+        #@title_on_hover = 'С этим человеком отношения безопасны'           if contact.group == 'GOOD GROUP'    
+        #@title_on_hover = 'Построение отношений с этим человеком требует больше усилий'      if contact.group == 'BAD GROUP'                  
+        
       end        
       
     end                

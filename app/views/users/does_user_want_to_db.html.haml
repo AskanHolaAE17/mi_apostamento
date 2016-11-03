@@ -1,8 +1,30 @@
 .lead  
+  Поздравляем Вас! 
+  
+.lead    
+  Вы прошли тест, и Вам на электронную почту уже отправлена ссылка на информацию о Вашей психологической модели.
+
+.lead  
+  Ваша индивидуальная модель уже получила квадратик или зелёного, или фиолетового цвета. Вы увидите, какой цвет квадратика она получила.
+  
+
+  
+= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                 
+%br/  
+%br/
+  
+.lead  
   Хотите ли Вы заполнить анкету, чтобы включиться в поиск партнера на сайте?
 
-= button_to 'Да',  @yes_want_to_db,        class: 'btn btn-info btn-large test-click-yes-button'
-= button_to 'Нет', @no_doesnt_want_to_db,  class: 'btn btn-primary btn-large test-click-no-button'
+
+
+= button_to 'Да',  @yes_want_to_db,        class: 'btn btn-success btn-large test-click-yes-button test-click-yes-button want-to-db-after-test-button'
+
+-#=button_to 'Нет, вернуться на главную', '/', class: 'btn btn-info btn-large want-to-db-after-test-button '   
+
+
+
+= button_to 'Нет', @no_doesnt_want_to_db,  class: 'btn btn-info btn-large want-to-db-after-test-button '
 
 
 

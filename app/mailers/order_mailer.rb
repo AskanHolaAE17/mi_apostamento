@@ -35,7 +35,7 @@ class OrderMailer < ActionMailer::Base
     @order = order
     @link_with_more_info_form = link_with_more_info_form
     @link_with_contacts_again = link_with_contacts_again
-    mail(to: @order.email, subject: 'KIND: Информация о себе')
+    mail(to: @order.email, subject: 'KIND: Для поиска пары')
   end
   
   

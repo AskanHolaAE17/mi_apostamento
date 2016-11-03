@@ -108,7 +108,7 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
       
-      if signal_struct_arr.count.in? 2..3
+      if signal_struct_arr.count.in? 3..4
 
         
         current_struct             =  signal_struct_arr[0]                
@@ -327,52 +327,52 @@ class TestStructsController < ApplicationController
 #__________________________________________
 
       
-      OrderMailer.bx_2_events_do_you_want_to_db(order, do_you_want_to_db_link).try(:deliver)   # LINK: do_you_want_to_db 
+      #OrderMailer.bx_2_events_do_you_want_to_db(order, do_you_want_to_db_link).try(:deliver)   # LINK: do_you_want_to_db 
                    
 #__________________________________________
       
 
-      # Creation of LINK: more_info_form
-      redirect_letter          = ('a'..'z').to_a.shuffle.first
-      link_details             = order.id.to_s               + 
-                                 redirect_letter             + 
-                                 order.akey_payed
-      link_details_encoded_64  = (Base64.encode64 link_details).chomp.delete("\n").delete('=')
+      ## Creation of LINK: more_info_form
+      #redirect_letter          = ('a'..'z').to_a.shuffle.first
+      #link_details             = order.id.to_s               + 
+      #                           redirect_letter             + 
+      #                           order.akey_payed
+      #link_details_encoded_64  = (Base64.encode64 link_details).chomp.delete("\n").delete('=')
 
       
-      link_with_more_info_form = root_path + 'much_form/' + link_details_encoded_64                            
+      #link_with_more_info_form = root_path + 'much_form/' + link_details_encoded_64                            
       
 #__________________________________________
 
 
-      plus_2_letters           = ('a'..'z').to_a.shuffle.first + 
-                                 ('A'..'Z').to_a.shuffle.first
+      #plus_2_letters           = ('a'..'z').to_a.shuffle.first + 
+      #                           ('A'..'Z').to_a.shuffle.first
                                                                                                    
       
-      details                  = order.id.to_s                 + 
-                                 plus_2_letters                + 
-                                 '&'                           +
-                                 order.akey_payed[0,3]                
+      #details                  = order.id.to_s                 + 
+      #                           plus_2_letters                + 
+      #                           '&'                           +
+      #                           order.akey_payed[0,3]                
                                  
                                  
-      details  = (Base64.encode64 details).chomp.delete("\n").delete('=')                                 
+      #details  = (Base64.encode64 details).chomp.delete("\n").delete('=')                                 
       
       
-      link_with_contacts_again = root_path                     + 
-                                'show-contacts/'               + 
-                                 details                       
+      #link_with_contacts_again = root_path                     + 
+      #                          'show-contacts/'               + 
+      #                           details                       
       
 #__________________________________________
       
       
-      unless order.test_1_ended
-        OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
-      end              
+      #unless order.test_1_ended
+      #  OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
+      #end              
             
 #__________________________________________      
 
      
-      order.test_1_ended     = true      
+      #order.test_1_ended     = true      
       order.akey         = ''
           
       order.current_qw_struct = ''
@@ -835,10 +835,12 @@ class TestStructsController < ApplicationController
             ' '                       +            
             max_names[0]              +
             ' '                       +             
-            max_names[1]
+            max_names[1]              +
+            ' '                       +             
+            max_names[2]
             
-          if max_names[2]   
-            test_2_signal_more_array += ' ' + max_names[2].to_s
+          if max_names[3]   
+            test_2_signal_more_array += ' ' + max_names[3].to_s
           end
                               
 
@@ -1032,18 +1034,19 @@ class TestStructsController < ApplicationController
     
       max_group_1_index = details_arr[2]
       max_group_2_index = details_arr[3] 
-      if details_arr[4] != nil            
-        max_group_3_index = details_arr[4] 
+      max_group_3_index = details_arr[4]       
+      if details_arr[5] != nil            
+        max_group_4_index = details_arr[5] 
       end
             
 #_______________________________________            
 
 
       all_structs      = '0123456789'
-      not_max_struct_i = all_structs.delete(max_group_1_index).delete(max_group_2_index)
+      not_max_struct_i = all_structs.delete(max_group_1_index).delete(max_group_2_index).delete(max_group_3_index)
       
-      if max_group_3_index != nil
-        not_max_struct_i = not_max_struct_i.delete(max_group_3_index)
+      if max_group_4_index != nil
+        not_max_struct_i = not_max_struct_i.delete(max_group_4_index)
       end
       
 #_______________________________________            

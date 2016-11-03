@@ -46,7 +46,13 @@ Rails.application.routes.draw do
   post  '/testo_more/:details_encoded',    to: 'test_levels#level_qws_signal_more'  
   
   post  '/te_s_le_mo_ar',                  to: 'test_levels#signal_level_more_array_save'                     
-    
+  
+  
+  
+  #TEST_LEVEL_STRUCT_BETWEEN____________________________________________________      
+  match '/testo_full/:details_encoded',    to: 'tests_level_struct_betweens#instruction_before_level_body',   via: 'get'          
+  post  '/testo_full/:details_encoded',    to: 'test_levels#instruction_before_level_body'    
+  
   
   #TEST_STRUCT__________________________________________________________________
   #testo_s

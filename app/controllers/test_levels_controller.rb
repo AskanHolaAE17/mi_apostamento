@@ -153,7 +153,7 @@ class TestLevelsController < ApplicationController
         
         test_url_json    = JSON.generate(test_url_hash)        
         test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n")        
-        test_url = root_path + 'tests/' + test_url_encoded_64 
+        test_url = root_path + 'testo_full/' + test_url_encoded_64 
         
         redirect_to test_url   
           
@@ -262,9 +262,9 @@ class TestLevelsController < ApplicationController
 #__________________________________________      
       
       
-          unless order.test_2_ended
-            OrderMailer.b_to_test_2_levels(order, test_1_start_url).deliver                          
-          end              
+          #unless order.test_2_ended
+          #  OrderMailer.b_to_test_2_levels(order, test_1_start_url).deliver                          
+          #end              
       
       
           order.test_2_ended     = true      

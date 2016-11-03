@@ -30,9 +30,11 @@
     
     = hidden_field_tag  :max_names_1,       @qw_struct_signals[0].struct
     = hidden_field_tag  :max_names_2,       @qw_struct_signals[1].struct
+    = hidden_field_tag  :max_names_3,       @qw_struct_signals[2].struct    
+
     
-    - if @qw_struct_signals[2] != nil    
-      = hidden_field_tag  :max_names_3,       @qw_struct_signals[2].struct    
+    - if @qw_struct_signals[3] != nil    
+      = hidden_field_tag  :max_names_4,       @qw_struct_signals[3].struct    
 
 
     %div     

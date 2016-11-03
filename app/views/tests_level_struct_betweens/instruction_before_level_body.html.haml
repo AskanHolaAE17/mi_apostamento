@@ -1,0 +1,11 @@
+.test-info-pages-text
+  Дочитывая до конца каждое утверждение, отвечайте ДА, только если Вы полностью с ним согласны.
+  
+
+
+- if params[:details_encoded]
+  =button_to 'Продолжить тест', " #{ @root_path + 'tests/' + params[:details_encoded] } ", class: 'btn btn-success btn-large'   
+
+-#- else
+  =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
+  

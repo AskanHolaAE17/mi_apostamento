@@ -7,7 +7,7 @@ class UserNonverballyActionsMailer < ActionMailer::Base
   def the_room_of_current_user(user, room_url)
     @user          = user
     @room_url      = room_url
-    mail(to: user.contact.email, subject: 'KIND: Ваша комната создана')    
+    mail(to: user.contact.email, subject: 'KIND: Ваша комната с практическими рекомендациями создана')    
   end 
     
   

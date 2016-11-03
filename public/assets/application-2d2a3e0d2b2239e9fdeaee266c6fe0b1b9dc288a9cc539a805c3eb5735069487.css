@@ -8794,6 +8794,48 @@ HTML A:hover, BODY A:hover {
   border-color: #D13939;
 }
 
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
+.block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 7%;
+  padding: 5%;
+  background: url(/assets/bred-c61f10a528a1d976ac87b1e55cc8684126f3aa3412a1836da6f5d4771019c3fd.png);
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  color: #341c00;
+  text-align: justify;
+  line-height: 1.5em;
+  font-size: 1.3em;
+  font-family: "Open Sans", Helvetica, sans-serif;
+}
+/* line 20, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
+.block P {
+  margin-bottom: 2%;
+}
+/* line 23, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
+.block P::before {
+  content: "";
+  width: 30px;
+  height: 15px;
+  float: left;
+}
+/* line 29, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
+.block h3 {
+  text-align: left;
+}
+
+/* line 35, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
+#more_article_info_1 H3::before {
+  content: "";
+  width: 30px;
+  height: 15px;
+  float: left;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
 #form {
   padding: 5%;
@@ -8872,48 +8914,6 @@ HTML A:hover, BODY A:hover {
   text-align: left;
 }
 
-/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
-.block {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: 7%;
-  padding: 5%;
-  background: url(/assets/bred-c61f10a528a1d976ac87b1e55cc8684126f3aa3412a1836da6f5d4771019c3fd.png);
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  -o-background-size: 100% 100%;
-  background-size: 100% 100%;
-  color: #341c00;
-  text-align: justify;
-  line-height: 1.5em;
-  font-size: 1.3em;
-  font-family: "Open Sans", Helvetica, sans-serif;
-}
-/* line 20, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
-.block P {
-  margin-bottom: 2%;
-}
-/* line 23, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
-.block P::before {
-  content: "";
-  width: 30px;
-  height: 15px;
-  float: left;
-}
-/* line 29, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
-.block h3 {
-  text-align: left;
-}
-
-/* line 35, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/block.sass */
-#more_article_info_1 H3::before {
-  content: "";
-  width: 30px;
-  height: 15px;
-  float: left;
-}
-
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/note.sass */
 #note {
   width: 50%;
@@ -8929,6 +8929,42 @@ HTML A:hover, BODY A:hover {
 /* line 15, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/note.sass */
 #note P:before {
   content: none;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/squares.sass */
+.square_green {
+  background-color: #00a129;
+  color: #00a129;
+}
+
+/* line 7, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/squares.sass */
+.square_violet {
+  background-color: #611d82;
+  color: #611d82;
+}
+
+/* line 13, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/squares.sass */
+.square {
+  display: inline-block;
+  box-sizing: content-box;
+  vertical-align: middle;
+  width: 11px;
+  height: 11px;
+  margin: 0 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+  font-size: 0em;
+}
+
+/* line 28, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/squares.sass */
+.square-symbol-info {
+  color: #5C3C16;
+  font-size: 85%;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/features/secure.sass */
@@ -8983,7 +9019,7 @@ HTML A:hover, BODY A:hover {
   margin-left: 30px;
 }
 
-@media (min-width: 1000px) {
+@media only screen and (min-width: 1400px) {
   /* line 2, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/block_media.sass */
   .block {
     font-size: 1.2em;
@@ -9040,36 +9076,6 @@ HTML A:hover, BODY A:hover {
 /* line 51, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/preamble.sass */
 .form_or_read_all {
   margin-left: 30px;
-}
-
-/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/squares.sass */
-.square_green {
-  background-color: #00a129;
-  color: #00a129;
-}
-
-/* line 7, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/squares.sass */
-.square_violet {
-  background-color: #611d82;
-  color: #611d82;
-}
-
-/* line 13, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/articles_c/squares.sass */
-.square {
-  display: inline-block;
-  box-sizing: content-box;
-  vertical-align: middle;
-  width: 11px;
-  height: 11px;
-  margin: 0 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-  font-size: 0em;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/block.sass */
@@ -9199,8 +9205,9 @@ HTML A:hover, BODY A:hover {
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/order_info_pages_c/text.sass */
 .order-info-pages-text {
   font-size: 0.95em;
+  text-align: justify;
 }
-/* line 4, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/order_info_pages_c/text.sass */
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/order_info_pages_c/text.sass */
 .order-info-pages-text P:before {
   content: none;
 }
@@ -9228,19 +9235,29 @@ HTML A:hover, BODY A:hover {
   margin: 5%;
 }
 
-/* line 2, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+.test-click-yes-button {
+  margin-right: 5%;
+  float: left;
+}
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
 .test-click-yes-button:focus {
   color: #04C;
 }
 
-/* line 7, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+/* line 10, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
 .test-click-no-button:focus {
   color: #5BC0DE;
 }
 
-/* line 12, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+/* line 15, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
 .test-click-yes-button:focus, .test-click-no-button:focus {
   outline: none;
+}
+
+/* line 20, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
+.want-to-db-after-test-button {
+  font-weight: bold;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/counter.sass */
@@ -9249,4 +9266,14 @@ HTML A:hover, BODY A:hover {
   text-align: right;
   color: #5C3C16;
   font-weight: normal;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/info_text.sass */
+.test-info-pages-text {
+  font-size: 0.95em;
+  text-align: justify;
+}
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/info_text.sass */
+.test-info-pages-text P:before {
+  content: none;
 }

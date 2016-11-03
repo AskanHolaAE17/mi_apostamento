@@ -16,14 +16,18 @@
     
     - @receiver_id = contact.user_id.to_s
   
+    - @square_class = 'square_green'        if contact.group == 'GOOD GROUP'    
+    - @square_class = 'square_green'        if contact.group == 'BAD GROUP'    
+
+  
     -# COLOR
-    - @color = 'green'       if contact.group == 'GOOD GROUP'    
-    - @color = 'saddlebrown' if contact.group == 'MIDDLE GROUP'    
-    - @color = 'indigo'      if contact.group == 'BAD GROUP'
+    - @color = '#00a129'       if contact.group == 'GOOD GROUP'    
+    -# @color = 'saddlebrown' if contact.group == 'MIDDLE GROUP'    
+    - @color = '#611d82'      if contact.group == 'BAD GROUP'
     
-    - @title_on_hover = 'С этим человеком отношения безопасны'           if contact.group == 'GOOD GROUP'    
-    - @title_on_hover = 'С этим человеком строить отношения сложнее, чем с людьми с зеленым квадратом' if contact.group == 'MIDDLE GROUP'    
-    - @title_on_hover = 'Построение отношений с этим человеком требует больше усилий'      if contact.group == 'BAD GROUP'          
+    -# @title_on_hover = 'С этим человеком отношения безопасны'           if contact.group == 'GOOD GROUP'    
+    -# @title_on_hover = 'С этим человеком строить отношения сложнее, чем с людьми с зеленым квадратом' if contact.group == 'MIDDLE GROUP'    
+    -# @title_on_hover = 'Построение отношений с этим человеком требует больше усилий'      if contact.group == 'BAD GROUP'          
       
       
     
@@ -31,10 +35,15 @@
     %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
        
       %strong
-        .contact-square{style: "background-color: #{@color}; color: #{@color}; ", title: @title_on_hover}
-          OO
-          .contact-square-info
-            ?
+
+
+        %span 
+          .square{ class: @square_class }
+            O
+        %span{ class: 'square-symbol-info' }
+          Ваш символ-квадратик
+            
+            
         =contact.name        
       
       - unless contact.image.url.match(/missing.png/)     
@@ -47,14 +56,18 @@
       .text-success
         =contact.birthday.strftime("%B %-d, %Y")
       
+      Жизненные ценности, интересы, надежды:
       .lead
         =contact.about_info   
   
+      Какой видит свою жизнь:
       .lead
         =contact.deep_info   
 
-      .lead
-        =contact.looking_for
+      - if contact.looking_for  
+        Ждёт от отношений, партнера:
+        .lead
+          =contact.looking_for
   
       -#.label.label-success.select_able
         =contact.email        
