@@ -257,9 +257,19 @@
                                         maxlength:   '100',
                                         value:       "#{flash[:contact_secret_answer_2] || @exist_contact.secret_answer_2 || nil}",
                                         autofocus:    flash[:autofocus_secret_answer_2]
-    -#%br/                                                                  
+    %br/                                                                  
   
   
+  
+    %a{name: '15'}  
+    
+    -#=f.check_box :ready_strong, {id: 'ready_strong', checked: flash['contact_ready_strong']}, 'true', nil
+    -#=f.label     :ready_strong, 'Я понимаю, что среди посетителей сайта могут быть агрессивно настроенные люди и готов(а) дать им ответ.', for: 'ready_strong'
+    
+    .lead{ class: flash[:error_class_ready_strong] }
+      %label
+        = f.check_box :ready_strong, checked: flash['contact_ready_strong_checked'] 
+        Я понимаю, что среди посетителей сайта могут быть агрессивно настроенные люди и готов(а) дать им ответ.
 
 
 

@@ -502,8 +502,11 @@ class ContactsController < ApplicationController
       end     
            
       
-      flash[:contact_secret_answer_1] = contact.secret_answer_1.to_s[0..398]      
-      flash[:contact_secret_answer_2] = contact.secret_answer_2.to_s[0..398]      
+      flash[:contact_secret_answer_1]      = contact.secret_answer_1.to_s[0..398]      
+      flash[:contact_secret_answer_2]      = contact.secret_answer_2.to_s[0..398]
+      
+      flash[:contact_ready_strong_checked] = true if contact.ready_strong == true
+      
       
 #_______________________________________________________________________________      
       
@@ -528,7 +531,8 @@ class ContactsController < ApplicationController
         flash[:error_class_secret_question]   = 'error_field' if attr == :secret_question
         flash[:error_class_secret_answer_1]   = 'error_field' if attr == :secret_answer_1                
         flash[:error_class_secret_answer_2]   = 'error_field' if attr == :secret_answer_2
-                
+        
+        flash[:error_class_ready_strong]      = 'error_field' if attr == :ready_strong               
 
  
                 
@@ -549,6 +553,8 @@ class ContactsController < ApplicationController
         flash[:secret_question]     = false
         flash[:secret_answer_1]     = false   
         flash[:secret_answer_2]     = false      
+        
+        flash[:ready_strong]        = false              
                           
 #_______________________________________________________________________________        
                         
@@ -618,6 +624,11 @@ class ContactsController < ApplicationController
                                   if attr == :looking_for
                                     flash[:autofocus_looking_for] = true
                                     @skip_autofocus = true
+                                  else
+                                    if attr == :ready_strong
+                                      flash[:autofocus_ready_strong] = true
+                                      @skip_autofocus = true
+                                    end                                     
                                   end                                             
                                 end                                            
                               end                        
@@ -710,6 +721,11 @@ class ContactsController < ApplicationController
                                   if attr == :secret_answer_2
                                     anchor = '14'                      
                                     @skip_anchor = true
+                                  else
+                                    if attr == :ready_strong
+                                      anchor = '15'                      
+                                      @skip_anchor = true
+                                    end                                    
                                   end
                                 end
                               end    
@@ -1117,7 +1133,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :surname, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :looking_for, :user_id, :secret_answer_1, :secret_answer_2, :structure, :secret_question => [])
+      params.require(:contact).permit(:name, :surname, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :looking_for, :user_id, :secret_answer_1, :secret_answer_2, :structure, :ready_strong, :secret_question => [])
     end  
  
   
