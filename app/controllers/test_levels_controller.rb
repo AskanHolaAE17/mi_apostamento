@@ -981,8 +981,25 @@ class TestLevelsController < ApplicationController
     if order and order.akey[0..2] == order_akey
     
     
-      max_group_1_index = details_arr[2]
-      max_group_2_index = details_arr[3]      
+      #max_group_1_index = details_arr[2]
+      #max_group_2_index = details_arr[3]      
+      
+      signal_level_arr   = order.signal_level_arr.split(' ')
+      signal_level_arr_i = []
+      
+      signal_level_arr.each do |sign_lev_ar|
+        signal_level_arr_i << case sign_lev_ar
+          when 'ps'
+            '1'
+          when 'po'
+            '2'
+          when 'ne'
+            '3'
+        end      
+      end
+      
+      max_group_1_index = signal_level_arr_i[0]
+      max_group_2_index = signal_level_arr_i[1]        
       
 #_______________________________________            
 
