@@ -8914,6 +8914,25 @@ HTML A:hover, BODY A:hover {
   text-align: left;
 }
 
+/* line 3, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/links.sass */
+.blue-standart-link A {
+  text-decoration: none;
+}
+/* line 7, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/links.sass */
+.blue-standart-link A:hover {
+  text-decoration: underline;
+}
+/* line 11, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/links.sass */
+.blue-standart-link A:active {
+  text-decoration: underline;
+  color: #005580;
+}
+/* line 17, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/links.sass */
+.blue-standart-link A:focus {
+  text-decoration: none;
+  color: #08C;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/note.sass */
 #note {
   width: 50%;
@@ -9215,15 +9234,6 @@ HTML A:hover, BODY A:hover {
 /* line 27, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/messages_c/messages.sass */
 .msg-type {
   color: #5C3C16;
-}
-
-/* line 34, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/messages_c/messages.sass */
-.to-msg-link A {
-  color: #2A8400;
-}
-/* line 37, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/messages_c/messages.sass */
-.to-msg-link A:hover {
-  color: #1B5400;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/order_info_pages_c/text.sass */

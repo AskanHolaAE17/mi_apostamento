@@ -246,11 +246,19 @@ class RequestsForCommunicationsController < ApplicationController
            
     user_sender.white_writing_able_users_ids_list   = user_sender.white_writing_able_users_ids_list.to_s + user_receiver.id.to_s + ' '
     user_receiver.white_writing_able_users_ids_list = user_receiver.white_writing_able_users_ids_list.to_s + user_sender.id.to_s   + ' '       
+
+#_______________________________________________________________________________
+
     
-    
-    if user_sender.save and user_receiver.save and request.save
+    conversation = Conversation.new
+    conversation.members = user_sender.id.to_s + ' ' + user_receiver.id.to_s                 
+      
+#_______________________________________________________________________________
+
+          
+    if user_sender.save and user_receiver.save and request.save and conversation.save
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_obshchenie_odobren').msg                
-      UserNonverballyActionsMailer.request_is_approved(user_sender, user_receiver, room_url).deliver
+      UserNonverballyActionsMailer.request_is_approved(user_receiver, user_sender, room_url).deliver
       
     else
       msg = (OrderInfoPage.find_by translit: 'poprobyyte_eshche_raz').msg                  
