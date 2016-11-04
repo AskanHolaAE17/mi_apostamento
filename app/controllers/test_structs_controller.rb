@@ -853,6 +853,15 @@ class TestStructsController < ApplicationController
           
           max_names = max_names.split(' ')    
 
+
+          if al_no.to_i + nl_no.to_i + shl_no.to_i + pl_no.to_i + gml_no.to_i + dl_no.to_i + ml_no.to_i + ol_no.to_i + kl_no.to_i + il_no.to_i == 0
+
+            for i in 0..max_names.length-1
+              max_names[i] = '0'
+            end
+          
+          end
+      
 #_______________________________________        
 
           
@@ -1067,8 +1076,60 @@ class TestStructsController < ApplicationController
       max_group_3_index = details_arr[4]       
       if details_arr[5] != nil            
         max_group_4_index = details_arr[5] 
-      end
-            
+      end      
+
+#___________________            
+
+
+      if max_group_1_index.to_i == max_group_2_index.to_i
+      
+        signal_struct_arr = order.signal_struct_arr.split(' ')         
+        signal_struct_arr_i = []
+        
+        signal_struct_arr.each do |sign_struct_ar|        
+          
+          signal_struct_arr_i << case sign_struct_ar
+            when 'al'
+              '0'
+            when 'nl'
+              '1'              
+            when 'shl'
+              '2'              
+            when 'pl'
+              '3'                            
+            when 'gml'
+              '4'
+              
+            when 'dl'
+              '5'
+            when 'ml'
+              '6'
+            when 'ol'
+              '7'
+            when 'kl'
+              '8'
+            when 'il'
+              '9'  
+          end   # signal_struct_arr_i << case sign_struct_ar
+          
+        end   # signal_struct_arr.each do |sign_struct_ar|        
+
+      
+
+#___________________   
+
+      
+        max_group_1_index = signal_struct_arr_i[0]
+        max_group_2_index = signal_struct_arr_i[1]
+        max_group_3_index = signal_struct_arr_i[2]
+      
+        if signal_struct_arr_i[3] != nil            
+          max_group_4_index = signal_struct_arr_i[3]
+        end            
+
+      end   # if max_group_1_index.to_i == max_group_2_index.to_i
+      
+                  
 #_______________________________________            
 
 
