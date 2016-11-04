@@ -455,8 +455,12 @@ class TestStructsController < ApplicationController
       last_answers_encoded          = order.current_test_link.partition('/').last   # just text after '/'
       last_answers_json             = Base64.decode64 last_answers_encoded    
       
-      #last_a = last_answers_hash    = JSON.parse last_answers_json      
-      last_a = 'a'
+      if order.current_test_link.partition('/').first == 'tests_s'
+        last_a = last_answers_hash    = JSON.parse last_answers_json       
+      else  
+        last_a = 'a'
+      end  
+      
       cur_a  = cur_answs            # cur_answs  = current_answers_hash = test_url_hash
                
 #____________________
@@ -564,7 +568,6 @@ class TestStructsController < ApplicationController
         
         
         unless order.current_test_link == '' or order.current_test_link == nil
-    
     
           if  last_a['t']   == cur_a['t'] 
                               
