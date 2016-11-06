@@ -9246,6 +9246,47 @@ HTML A:hover, BODY A:hover {
   content: none;
 }
 
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/nav_menu.sass */
+.nav-menu-room {
+  background: url(/assets/bred-c61f10a528a1d976ac87b1e55cc8684126f3aa3412a1836da6f5d4771019c3fd.png);
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+
+/* line 8, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/nav_menu.sass */
+.block-nav-menu-room {
+  position: fixed;
+  margin-top: 10%;
+  padding: 1%;
+  padding-left: 3%;
+}
+/* line 17, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/nav_menu.sass */
+.block-nav-menu-room A {
+  margin-left: -23px;
+  text-decoration: none;
+  text-align: left;
+  font-size: 92%;
+}
+
+/* line 28, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/nav_menu.sass */
+#paper-nav-menu-room {
+  padding: 20%;
+  padding-right: 5%;
+  background: url(/assets/form/form_fond-693b1187ba04807214da1f3be9018c98d862552ce56ec70a2ddda18e11bb9418.png);
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+
+/* line 38, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/nav_menu.sass */
+.question-nav-menu-room {
+  font-size: 80%;
+  vertical-align: middle;
+}
+
 /* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests_for_communications.sass */
 .request_communic_status {
   color: #5C3C16;

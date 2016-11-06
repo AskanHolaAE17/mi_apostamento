@@ -37,10 +37,34 @@
             %article.lead.info_msg
               = yield                 
             
+          
+              
+        - elsif @menu_up_item == 'room'      
+                
+
+          -#- if @this_page_name == 'feedback-room'  
+            .span6.offset1.block{class: @qws_body_block}
+              %article.lead.info_msg
+                = yield                 
+                
+          -#- else                 
+            .contacts-block.span6.offset1
+              .lead.info_msg
+                = yield                           
+      
+          .contacts-block.span6.offset1
+            .lead.info_msg
+              = yield                                 
+              
+          .span3.offset6.nav-menu-room.block-nav-menu-room
+            %article.lead.info_msg
+              =render partial: 'rooms/menu/navigation'              
+          
+              
               
         - else
     
-          .span6.offset2.block{class: @qws_body_block}
+          .span7.offset2.block{class: @qws_body_block}
             %article.lead.info_msg
               = yield                 
 

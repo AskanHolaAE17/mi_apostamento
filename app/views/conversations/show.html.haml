@@ -1,0 +1,36 @@
+- @menu_up_item = 'conversations'
+
+
+.k  
+
+  - if flash[:answer_on_request]
+
+    %article
+      %section
+        #note
+          =flash[:answer_on_request].html_safe
+
+    %br/      
+
+
+
+
+  .room-titles
+    .k
+    
+    - unless @conversations_msg_users_names.count > 0 
+      Ваши собеседники будут отображаться здесь
+
+
+
+    - else
+      
+      Выберите собеседника:
+      %br/
+      %br/	
+      
+      - @conversations_msg_users_names.each_with_index do |conv_names, i|
+        .blue-standart-link
+          %b
+            =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i]
+

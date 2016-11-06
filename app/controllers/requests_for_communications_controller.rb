@@ -2,6 +2,8 @@
 class RequestsForCommunicationsController < ApplicationController
 
 
+before_action :set_root, :set_info, only: [:show]
+
 #_______________________________________________________________________________  
 
 
@@ -462,11 +464,87 @@ class RequestsForCommunicationsController < ApplicationController
           
   end
 
+#_______________________________________________________________________________
+
+
+  def show  
+
+    details_64  = params[:details]
+    details     = Base64.decode64 details_64
+
+
+    req_id_len  = details.last.to_i
+    
+    details     = details[0..details.length-2]
+
+
+    req_user_id            = details[details.length-req_id_len..details.length-1].to_s
+    
+    req_user_code          = details[0...details.length-req_id_len]   # DONE=)           
+        
+#______________________________________
+
+
+    user_id     = req_user_id
+    user_code   = req_user_code
+    
+    user        = User.find(user_id)
+    
+#______________________________________
+
+
+    user_id_in_b     = user.id_in_base.to_s if user
+    user_id_in_b_len = user_id_in_b.length
+      
+    if user and user_id_in_b[user_id_in_b.length-req_id_len..user_id_in_b.length-1] == user_code
+
+
+      # getted Requests
+      @getted_rqs = RequestsForCommunication.where(receiver: user.id)
+      @getted_rqs_from_users = []
+      
+      @getted_rqs.each do |rq|
+        @getted_rqs_from_users << User.find(rq.user_id)
+      end      
+        
+        
+      # sent Requests  
+      @sent_rqs   = user.requests_for_communications
+      @sent_rqs_to_users = []
+      
+      @sent_rqs.each do |rq|
+        @sent_rqs_to_users << User.find(rq.receiver)
+      end      
+
+
+    else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+    end   # if order and order.akey[0..2] == order_akey           
+
+    
+  end  
+  
 #_______________________________________________________________________________  
   
   
   
   private  
+  
+    def set_root
+      root_path   = MeConstant.find_by_title('root_path').content    
+    end  
+  
+    def set_info
+      @site_title = MeConstant.find_by_title('site_title').content
+      @main_page  = MainPage.find(1)   
+      
+      @page       = Page.find_by_page :requests                
+    end          
+      
     def requests_for_communication_params
       params.require(:requests_for_communication).permit(:user_id, :receiver, :status, :able)
     end  

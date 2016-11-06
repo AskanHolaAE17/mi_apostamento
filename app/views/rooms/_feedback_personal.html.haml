@@ -1,5 +1,16 @@
 .feedback-personal-pre-block
 
+
+  - if flash[:res]
+    #paper
+      =flash[:res]
+      
+  - if flash[:in_from_db_succes]
+    #paper      
+      =flash[:in_from_db_succes]
+    
+    
+
   %h3
     -#=@user.name.to_s + ' ' + @user.surname.to_s[0].to_s + ','
     =@user.name.to_s + ','                        

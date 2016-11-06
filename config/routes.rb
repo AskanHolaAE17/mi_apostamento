@@ -116,7 +116,11 @@ Rails.application.routes.draw do
   ## dannue_receive_obrabotanu  
   match 'receive/:details',                to: 'tests#qs',                                          via: 'get'
   
-    
+  
+  #_____________________________________________________________________________
+  
+  
+      
   match 'do_you_want_to_db/:details',      to: 'users#does_user_want_to_db',                        via: 'get'  
   match 'room_sent/:details',              to: 'users#room_url_without_added_to_base',              via: 'get'
   post  'room_sent/:details',              to: 'users#room_url_without_added_to_base',              via: 'get'          
@@ -138,7 +142,45 @@ Rails.application.routes.draw do
   # FEEDBACKS SL
   post  'recommendations/:details',        to: 'feedbacks_structures_levels#show'                                          
   match 'recommendations/:details',        to: 'feedbacks_structures_levels#show',                  via: 'get'             
+  
+  #_____________________________________________________________________________
+	
+
+  # NAVIGATION MENU - ROOM
+  # CONVERSATIONS
+
+  post  'conversations/:details',          to: 'conversations#show'                                          
+  match 'conversations/:details',          to: 'conversations#show',                                via: 'get'               	
+
+#_____________________________________________________________________________	
+  
     
+  # NAVIGATION MENU - ROOM
+  # REQUESTS
+    
+  post  'requests/:details',               to: 'requests_for_communications#show'                                          
+  match 'requests/:details',               to: 'requests_for_communications#show',                  via: 'get'               
+  
+  #________________________________________
+  
+  
+  # NAVIGATION MENU - ROOM
+  # SHOW/OFF IN BASE 
+  
+  
+  # SHOW OFF
+
+  post  'in_from_base/:details',                to: 'users#show_off_in_db'                                          
+  match 'in_from_base/:details',                to: 'users#show_off_in_db',                                  via: 'get'                   
+  
+  ## OFF
+    
+  #post  'from_base/:details',              to: 'users#off_in_db'                                          
+  #match 'from_base/:details',              to: 'users#off_in_db',                                   via: 'get'                 
+  
+  
+  #_____________________________________________________________________________
+  
   
   
   resources :users do

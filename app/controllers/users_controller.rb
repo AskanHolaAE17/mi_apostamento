@@ -2,6 +2,11 @@ class UsersController < ApplicationController
 
 
 
+before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
+
+#_______________________________________________________________________________    
+
+
   def does_user_want_to_db
   
     @main_page  = MainPage.find(1)       
@@ -324,11 +329,138 @@ class UsersController < ApplicationController
     
   end  
 
+#_______________________________________________________________________________
+
 
   def create
   end
 
+#_______________________________________________________________________________
+
+
+  def show_off_in_db
+  
+    details_full_with_flag = params[:details]
+    
+    flag_in_from           = details_full_with_flag.first
+    details_full           = details_full_with_flag[1..details_full_with_flag.length-1]
+    
+    details_64             = details_full.partition('__').first
+    details                = Base64.decode64 details_64
+    
+#______________________________________
+    
+    
+    # deviding str
+    
+    full              = details
+
+    details           = full[0..full.length-2]
+        
+    user_id_len       = full.last.to_i     
+    user_id           = details[0..user_id_len-1]
+
+    user_code         = details[user_id_len..details.length-1]
+        
+#______________________________________
+
+
+    user_id     = user_id
+    user_code   = user_code
+    
+    user        = User.find(user_id)
+    
+#______________________________________
+
+  
+    if user
+      user_id_in_base     = user.id_in_base 
+      user_id_in_base_len = user_id_in_base.length
+    end
+
+    
+    if user and user.id_in_base[user_id_in_base_len-4..user_id_in_base_len-2] == user_code
+               
+#______________________________________
+
+
+      # DEF HANDLING                
+      
+      if flag_in_from == 'i' 
+      
+        user.contact.able_for_contact = true
+        flash[:in_from_db_succes] = 'Вы добавились в базу.'                
+      else  
+      
+        user.contact.able_for_contact = false        
+        flash[:in_from_db_succes] = 'Вы удалились из базы.'        
+      end  
+      
+      
+      if user.contact.save
+      
+      else   # unless user.save
+      
+        flash[:res] = 'Попробуйте ещё раз'
+      
+      end   # if user.save
+
+#______________________________________
+
+    
+      # REDIRECT TO CURRENT URL after def handling
+    
+      cur_url_details_full  = details_full.partition('__').last
+    
+    
+      cur_url_root_64       = cur_url_details_full.partition('_').first    
+    
+      cur_url_root          = case cur_url_root_64
+      when 'ro'
+        'room/'
+      end    
+    
+    
+      cur_url_details  = cur_url_details_full.partition('_').last
+    
+      cur_url          = root_path + cur_url_root + cur_url_details
+    
+#______________________________________      
+
+
+      redirect_to cur_url
+
+    
+    else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+      
+    end   # unless user and ..
+
+    
+  end
+
+#_______________________________________________________________________________
+
+
+
   private  
+  
+    def set_root
+      root_path   = MeConstant.find_by_title('root_path').content    
+    end  
+  
+    def set_info
+      @site_title = MeConstant.find_by_title('site_title').content
+      @main_page  = MainPage.find(1)   
+      
+      @page       = Page.find_by_page :room_one
+    end          
+
+  
     def user_params
       params.require(:user).permit(:id_in_base, :email, :name, :surname, :group, :akey, :active, :white_writing_able_users_ids_list)
     end  
