@@ -27,11 +27,15 @@
             
         - elsif @menu_up_item == 'contacts'      
 
-          .contacts-block.span6.offset2
-            .lead.info_msg
+          .contacts-block.span6.offset2             
+            .lead.info_msg             
+              .block-nav-menu-room  
+                =render partial: 'layouts/menu/navigation'                      
+                %br/
+                
               = yield                                 
               
-          .span3.offset7.nav-menu-room.block-nav-menu-room
+          -#.span3.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
               =render partial: 'layouts/menu/navigation'    
 
@@ -56,7 +60,7 @@
             .lead.info_msg
               = yield                                 
               
-          .span4.offset7.nav-menu-room.block-nav-menu-room
+          -#.span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
               =render partial: 'layouts/menu/navigation'              
 
@@ -72,15 +76,30 @@
                 = yield                                                   
               
 
+
         - elsif @menu_up_item == 'recommendations'                      
+
+          .span7.offset2.block{class: @qws_body_block}                              
+            .lead.info_msg             
+              = yield                                                 
+
       
-          .span7.offset2.block{class: @qws_body_block}
-            .lead.info_msg
-              = yield                                 
+          -#.contacts-block.span7.offset2
+          
+            .lead.info_msg           
+              .block-nav-menu-room  
+                =render partial: 'layouts/menu/navigation'                      
+                %br/    
+                        
+            .block{class: @qws_body_block}               
+              .lead.info_msg                                 
+                = yield                                 
+
               
-          .span4.offset8.nav-menu-room.nav-menu-recommend.block-nav-menu-room
+          -#.span4.offset8.nav-menu-room.nav-menu-recommend.block-nav-menu-room
             %article.lead.info_msg
               =render partial: 'layouts/menu/navigation'                           
+              
               
 
         - elsif @menu_up_item == 'requests'                      
@@ -89,7 +108,7 @@
             .lead.info_msg
               = yield                                 
               
-          .span4.offset7.nav-menu-room.block-nav-menu-room
+          -#.span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
               =render partial: 'layouts/menu/navigation'              
 
@@ -100,7 +119,18 @@
             .lead.info_msg
               = yield                                 
               
-          .span4.offset7.nav-menu-room.block-nav-menu-room
+          -#.span6.offset2             
+            .lead.info_msg             
+              .block-nav-menu-room  
+                =render partial: 'layouts/menu/navigation'                      
+                %br/
+            
+            .block      
+              = yield                                 
+              
+            
+              
+          -#.span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
               =render partial: 'layouts/menu/navigation'              
 
