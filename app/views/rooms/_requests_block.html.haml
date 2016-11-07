@@ -1,4 +1,6 @@
-.k
+.requests-pre-block
+
+
   .room-titles
     Ваши запросы на общение
   
@@ -9,75 +11,92 @@
 
 
 
-  - if @getted_rqs.count > 0
+  - if @getted_rqs.count > 0 
+    
     %p
       %b
-        Полученные:
-
-    %br/
+        Полученные:        
+    
+    
     .request_communic_block
       - @getted_rqs.each_with_index do |rq, i|
 
-        - @user_from = @getted_rqs_from_users[i]
-        - @rq        = rq 
+
+        - if i < 3 
+        
+          %br/        
+        
+          - @user_from = @getted_rqs_from_users[i]
+          - @rq        = rq 
   
 
-        .request-who
-          =@getted_rqs_from_users[i].name
-        %br/
+          .request-who
+            =@getted_rqs_from_users[i].name
     
     
-        - if rq.status == 'yes'  
-          - status = 'Запрос Вами одобрен'
-        - elsif rq.status == 'still'    
-          - status = 'Запрос ожидает действия'
-        - elsif rq.status == 'no'      
-          - status = 'Запрос отклонен Вами'
-        - elsif rq.status == 'stop'
-          - status = 'Запрос отменен пользователем'        
+          - if rq.status == 'yes'  
+            - status = 'Запрос Вами одобрен'
+          - elsif rq.status == 'still'    
+            - status = 'Запрос ожидает действия'
+          - elsif rq.status == 'no'      
+            - status = 'Запрос отклонен Вами'
+          - elsif rq.status == 'stop'
+            - status = 'Запрос отменен пользователем'        
     
-        .request_communic_status  
-          * #{status}
+          .request_communic_status  
+            * #{status}
   
-        - if rq.status == 'still'
-          =render partial: 'requests_for_communications/request_incoming_agree'
-          =render partial: 'requests_for_communications/request_incoming_reject'
+          - if rq.status == 'still'
+            =render partial: 'requests_for_communications/request_incoming_agree'
+            =render partial: 'requests_for_communications/request_incoming_reject'
 
-        %hr
-
-   
-
+          %hr
+          
+        - else
+        
+          %br/
+          =link_to 'Все запросы', @nav_menu_room_requests_link + '#incoming', class: ' btn btn-large btn-block btn-info success-btn '   
+          - break
 
 
 
   - if @sent_rqs.count > 0
+  
     %br/
 
     %p
       %b
         Отправленные:
         %br/
+
       
     - @sent_rqs.each_with_index do |rq, i|  
-  
-      .request-who
-        =@sent_rqs_to_users[i].name
+
+      - if i < 3
+        
+          
+        .request-who
+          =@sent_rqs_to_users[i].name
 
     
     
-      - if rq.status == 'yes'  
-        - status = 'Запрос одобрен'
-      - elsif rq.status == 'still'    
-        - status = 'Запрос ожидает действия'
-      - elsif rq.status == 'no'      
-        - status = 'Запрос отклонен'
-      - elsif rq.status == 'stop'
-        - status = 'Запрос отменен Вами'            
+        - if rq.status == 'yes'  
+          - status = 'Запрос одобрен'
+        - elsif rq.status == 'still'    
+          - status = 'Запрос ожидает действия'
+        - elsif rq.status == 'no'      
+          - status = 'Запрос отклонен'
+        - elsif rq.status == 'stop'
+          - status = 'Запрос отменен Вами'            
     
-      .request_communic_status  
-        * #{status}
+        .request_communic_status  
+          * #{status}
 
-      %hr
-  
+        %hr
+          
+      - else
+        
+        =link_to 'Все запросы', @nav_menu_room_requests_link + '#outcoming', class: ' btn btn-large btn-block btn-info success-btn '
+        - break  
   
 

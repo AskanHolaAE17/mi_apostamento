@@ -33,7 +33,7 @@
               
           .span3.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
-              =render partial: 'rooms/menu/navigation'    
+              =render partial: 'layouts/menu/navigation'    
 
         
           -#.contacts-block.span6.offset2
@@ -52,13 +52,13 @@
               
         - elsif @menu_up_item == 'room'                      
       
-          .contacts-block.span6.offset2
+          .room.contacts-block.span6.offset2
             .lead.info_msg
               = yield                                 
               
           .span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
-              =render partial: 'rooms/menu/navigation'              
+              =render partial: 'layouts/menu/navigation'              
 
               
           -#- if @this_page_name == 'feedback-room'  
@@ -80,7 +80,7 @@
               
           .span4.offset8.nav-menu-room.nav-menu-recommend.block-nav-menu-room
             %article.lead.info_msg
-              =render partial: 'rooms/menu/navigation'                           
+              =render partial: 'layouts/menu/navigation'                           
               
 
         - elsif @menu_up_item == 'requests'                      
@@ -91,7 +91,7 @@
               
           .span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
-              =render partial: 'rooms/menu/navigation'              
+              =render partial: 'layouts/menu/navigation'              
 
 
         - elsif @menu_up_item == 'conversations'                      
@@ -102,7 +102,7 @@
               
           .span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
-              =render partial: 'rooms/menu/navigation'              
+              =render partial: 'layouts/menu/navigation'              
 
                             
         - else

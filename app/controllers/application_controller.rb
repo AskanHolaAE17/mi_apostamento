@@ -471,8 +471,6 @@ class ApplicationController < ActionController::Base
     # NAVIGATION MENU - ROOM ONE
     # ROOM ONE (Room of current User)
         
-    
-        
         
     @nav_menu_room_one_link = room_url_def(user.id)
     @room_one_menu_title    = 'Ваши комната с новостями и событиями'    

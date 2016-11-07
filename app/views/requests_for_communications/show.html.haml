@@ -24,6 +24,9 @@
 
 
   - if @getted_rqs.count > 0
+  
+    %a{ name: 'incoming' }
+      
     %p
       %b
         Полученные:
@@ -65,6 +68,8 @@
 
 
   - if @sent_rqs.count > 0
+  
+    %a{ name: 'outcoming' }  
     %br/
 
     %p

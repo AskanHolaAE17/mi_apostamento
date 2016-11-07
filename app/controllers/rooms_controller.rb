@@ -197,6 +197,7 @@ before_action :set_main_page, only: [:show]
           if us_id.to_s != @user.id.to_s
             conversation_user = User.find(us_id)
             @conversations_msg_users_names << conversation_user.name.to_s + ' ' + conversation_user.surname.to_s
+            
 #______________________________________        
 
     
@@ -227,8 +228,8 @@ before_action :set_main_page, only: [:show]
             @conversations_msg_users_links << conv_details
           end
         end
-      end           
-           
+      end                 
+      
 #_______________________________________
       
       

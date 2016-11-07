@@ -1,4 +1,4 @@
-.k  
+.convers-pre-block  
 
 
   - if flash[:answer_on_request]
@@ -25,10 +25,21 @@
       
       Выберите собеседника:
       %br/
-      %br/	
       
       - @conversations_msg_users_names.each_with_index do |conv_names, i|
         .blue-standart-link
-          %b
-            =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i], target: '_blank' 
+        
+          - if i < 5
+          
+            %br/
+            %b
+              =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i], target: '_blank' 
+              
+              
+          - else
+              
+            %br/
+            =link_to 'Все собеседники', @nav_menu_room_convers_link, class: ' btn btn-large btn-block btn-info success-btn '
+            - break            
+            
 

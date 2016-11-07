@@ -8766,13 +8766,17 @@ HTML A:hover, BODY A:hover {
   text-align: left;
   font-size: 92%;
 }
+/* line 30, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
+.block-nav-menu-room A:active {
+  color: white;
+}
 
-/* line 31, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
+/* line 36, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
 .nav-menu-recommend {
   position: absolute;
 }
 
-/* line 36, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
+/* line 41, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
 #paper-nav-menu-room {
   padding: 20%;
   padding-right: 5%;
@@ -8783,7 +8787,7 @@ HTML A:hover, BODY A:hover {
   background-size: 100% 100%;
 }
 
-/* line 47, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
+/* line 52, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
 .question-nav-menu-room {
   font-size: 80%;
   vertical-align: middle;
@@ -9294,21 +9298,41 @@ HTML A:hover, BODY A:hover {
   content: none;
 }
 
-/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests_for_communications.sass */
+/* line 3, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/conversations.sass */
+.convers-pre-block A {
+  font-size: 1em;
+}
+
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests-for-communications.sass */
 .request_communic_status {
   color: #5C3C16;
 }
 
-/* line 11, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests_for_communications.sass */
+/* line 11, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests-for-communications.sass */
 .request-who {
   color: #2A8400;
   font-size: 1.1em;
   font-weight: bold;
 }
 
+/* line 22, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests-for-communications.sass */
+.requests-pre-block A {
+  font-size: 1.1em;
+  text-decoration: none;
+}
+/* line 26, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/requests-for-communications.sass */
+.requests-pre-block A:hover {
+  text-decoration: underline;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/texts.sass */
 .room-titles {
   font-size: 115%;
+}
+
+/* line 8, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/rooms_c/texts.sass */
+.room A:focus {
+  color: #08C;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/advice.sass */
