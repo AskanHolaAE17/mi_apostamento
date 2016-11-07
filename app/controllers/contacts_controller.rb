@@ -960,7 +960,7 @@ class ContactsController < ApplicationController
 
 
     # NAVIGATION MENU - ROOM
-    navigation_menu_room(@user)
+    navigation_menu_room(@user, 'co')
 
     
   end

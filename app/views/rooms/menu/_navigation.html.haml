@@ -19,13 +19,14 @@
       -#= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
 
 
-  =link_to @link_to_feedbacks_sl,  class: 'btn btn-link btn-large back-qw-button ', target: '_blank', title: @recommendations_menu_title do
-    ▪&nbsp;Рекомен&shy;дации    
-    %span.question-nav-menu-room    
-      ?    
+  - if @menu_up_item != 'recommendations'                      
+    =link_to @link_to_feedbacks_sl,  class: 'btn btn-link btn-large back-qw-button ', title: @recommendations_menu_title do
+      ▪&nbsp;Рекомен&shy;дации    
+      %span.question-nav-menu-room    
+        ?    
     
           
-  =link_to '/',  class: 'btn btn-link btn-large back-qw-button ', title: 'Записаться на психологическую консультацию' do
+  -#=link_to '/',  class: 'btn btn-link btn-large back-qw-button ', title: 'Записаться на психологическую консультацию' do
     ▪&nbsp;Консуль&shy;тация     
     %span.question-nav-menu-room    
       ?    
@@ -36,10 +37,11 @@
       ?        
     
     
-  =link_to @nav_menu_room_requests_link,  class: 'btn btn-link btn-large back-qw-button ', title: @requests_menu_title do
-    ▪&nbsp;Запросы    
-    %span.question-nav-menu-room    
-      ?        
+  - if @menu_up_item != 'requests'            
+    =link_to @nav_menu_room_requests_link,  class: 'btn btn-link btn-large back-qw-button ', title: @requests_menu_title do
+      ▪&nbsp;Запросы    
+      %span.question-nav-menu-room    
+        ?        
     
     
   - if @menu_up_item != 'room'        

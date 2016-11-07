@@ -286,7 +286,8 @@ class ApplicationController < ActionController::Base
 
 #_______________________________________________________________________________
   
-  def navigation_menu_room(user)
+  
+  def navigation_menu_room(user, root)
 
      
     # NAVIGATION MENU - ROOM
@@ -407,7 +408,7 @@ class ApplicationController < ActionController::Base
       off_db_link_form      
     else  
     
-      (show_db_link || off_db_link_now) + '__' + 'ro' + '_' + params[:details]   
+      (show_db_link || off_db_link_now) + '__' + root + '_' + params[:details]   
     end
       
     

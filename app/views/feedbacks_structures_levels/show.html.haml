@@ -1,7 +1,20 @@
-- @menu_up_item = 'feedback-room'
+- @menu_up_item = 'recommendations'
+
+-#- @menu_up_item = 'feedback-room'recommendations
 -#- @this_page_name = 'feedback-room'
 
 
+
+- if flash[:res]
+  #paper
+    =flash[:res]
+      
+- if flash[:in_from_db_succes]
+  #paper      
+    =flash[:in_from_db_succes]
+      
+      
+      
 .k
 
   -#

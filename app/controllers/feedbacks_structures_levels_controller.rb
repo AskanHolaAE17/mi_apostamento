@@ -39,9 +39,34 @@ class FeedbacksStructuresLevelsController < ApplicationController
         #@title_on_hover = 'С этим человеком отношения безопасны'           if contact.group == 'GOOD GROUP'    
         #@title_on_hover = 'Построение отношений с этим человеком требует больше усилий'      if contact.group == 'BAD GROUP'                  
         
-      end        
+        
+#_______________________________________
+
+
+        navigation_menu_room(user, 're')            
+        
+      else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+        redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
       
-    end                
-  end
+      end   # if user_code == user_code_compare
+      
+    else   # unless user
+
+#_______________________________________
+
+    
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+      
+    end   # if user    
+    
+    
+  end   # def
+  
+#_______________________________________________________________________________  
+  
   
 end

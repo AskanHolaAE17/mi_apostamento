@@ -516,6 +516,10 @@ before_action :set_root, :set_info, only: [:show]
         @sent_rqs_to_users << User.find(rq.receiver)
       end      
 
+#_______________________________________
+
+      navigation_menu_room(user, 'req')
+
 
     else   # unless order and order.akey == order_akey    
 

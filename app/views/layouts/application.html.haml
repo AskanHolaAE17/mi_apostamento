@@ -52,11 +52,11 @@
               
         - elsif @menu_up_item == 'room'                      
       
-          .contacts-block.span6.offset1
+          .contacts-block.span6.offset2
             .lead.info_msg
               = yield                                 
               
-          .span4.offset6.nav-menu-room.block-nav-menu-room
+          .span4.offset7.nav-menu-room.block-nav-menu-room
             %article.lead.info_msg
               =render partial: 'rooms/menu/navigation'              
 
@@ -72,7 +72,39 @@
                 = yield                                                   
               
 
+        - elsif @menu_up_item == 'recommendations'                      
+      
+          .span7.offset2.block{class: @qws_body_block}
+            .lead.info_msg
+              = yield                                 
               
+          .span4.offset8.nav-menu-room.nav-menu-recommend.block-nav-menu-room
+            %article.lead.info_msg
+              =render partial: 'rooms/menu/navigation'                           
+              
+
+        - elsif @menu_up_item == 'requests'                      
+      
+          .span6.offset2.block
+            .lead.info_msg
+              = yield                                 
+              
+          .span4.offset7.nav-menu-room.block-nav-menu-room
+            %article.lead.info_msg
+              =render partial: 'rooms/menu/navigation'              
+
+
+        - elsif @menu_up_item == 'conversations'                      
+      
+          .span6.offset2.block
+            .lead.info_msg
+              = yield                                 
+              
+          .span4.offset7.nav-menu-room.block-nav-menu-room
+            %article.lead.info_msg
+              =render partial: 'rooms/menu/navigation'              
+
+                            
         - else
     
           .span7.offset2.block{class: @qws_body_block}

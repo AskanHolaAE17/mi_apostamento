@@ -1,6 +1,17 @@
 - @menu_up_item = 'conversations'
 
 
+
+- if flash[:res]
+  #paper
+    =flash[:res]
+      
+- if flash[:in_from_db_succes]
+  #paper      
+    =flash[:in_from_db_succes]
+      
+      
+      
 .k  
 
   - if flash[:answer_on_request]

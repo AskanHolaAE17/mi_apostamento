@@ -238,7 +238,7 @@ before_action :set_main_page, only: [:show]
 
     
     # NAVIGATION MENU - ROOM
-    navigation_menu_room(@user)    
+    navigation_menu_room(@user, 'ro')    
     
     
   end
