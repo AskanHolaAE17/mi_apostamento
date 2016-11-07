@@ -8768,6 +8768,11 @@ HTML A:hover, BODY A:hover {
 }
 
 /* line 31, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
+.nav-menu-recommend {
+  position: absolute;
+}
+
+/* line 36, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
 #paper-nav-menu-room {
   padding: 20%;
   padding-right: 5%;
@@ -8778,7 +8783,7 @@ HTML A:hover, BODY A:hover {
   background-size: 100% 100%;
 }
 
-/* line 42, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
+/* line 47, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/nav-menu.sass */
 .question-nav-menu-room {
   font-size: 80%;
   vertical-align: middle;
