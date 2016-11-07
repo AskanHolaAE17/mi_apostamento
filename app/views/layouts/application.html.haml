@@ -23,12 +23,23 @@
           %nav.block{class: "span#{@main_page.count_of_columns} offset#{@main_page.count_of_left_offsets} "}
             = yield                 
                           
+
             
-        - elsif @menu_up_item == 'contacts_show'      
-        
+        - elsif @menu_up_item == 'contacts'      
+
           .contacts-block.span6.offset2
             .lead.info_msg
-              = yield         
+              = yield                                 
+              
+          .span3.offset7.nav-menu-room.block-nav-menu-room
+            %article.lead.info_msg
+              =render partial: 'rooms/menu/navigation'    
+
+        
+          -#.contacts-block.span6.offset2
+              .lead.info_msg
+                = yield         
+
             
             
         - elsif @menu_up_item == 'test'      
@@ -39,9 +50,17 @@
             
           
               
-        - elsif @menu_up_item == 'room'      
-                
+        - elsif @menu_up_item == 'room'                      
+      
+          .contacts-block.span6.offset1
+            .lead.info_msg
+              = yield                                 
+              
+          .span4.offset6.nav-menu-room.block-nav-menu-room
+            %article.lead.info_msg
+              =render partial: 'rooms/menu/navigation'              
 
+              
           -#- if @this_page_name == 'feedback-room'  
             .span6.offset1.block{class: @qws_body_block}
               %article.lead.info_msg
@@ -50,17 +69,9 @@
           -#- else                 
             .contacts-block.span6.offset1
               .lead.info_msg
-                = yield                           
-      
-          .contacts-block.span6.offset1
-            .lead.info_msg
-              = yield                                 
+                = yield                                                   
               
-          .span3.offset6.nav-menu-room.block-nav-menu-room
-            %article.lead.info_msg
-              =render partial: 'rooms/menu/navigation'              
-          
-              
+
               
         - else
     

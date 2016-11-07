@@ -851,7 +851,7 @@ class ContactsController < ApplicationController
     check_is_contact_able = Contact.find_by(order_number: order_id)    
     
     unless check_is_contact_able.able_for_contact
-      redirect_to root_path + 'info/polzovatel_ne_nayden'
+      redirect_to root_path + 'info/stranitsa_ne_otkruta'
     end
     
 #_______________________________________________________________________________
@@ -957,6 +957,11 @@ class ContactsController < ApplicationController
       @current_tmp_new_message_link = details + '_contacts'
 
 #______________________________________
+
+
+    # NAVIGATION MENU - ROOM
+    navigation_menu_room(@user)
+
     
   end
   
@@ -1126,7 +1131,7 @@ class ContactsController < ApplicationController
   
   end  
 
-#_____________________________________________________________________________________________________________________________________________
+#_______________________________________________________________________________
 
 
 

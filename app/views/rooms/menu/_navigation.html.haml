@@ -1,18 +1,22 @@
 #paper-nav-menu-room
     
           
-  -# If in DB  
-  =link_to '/',  class: 'btn btn-link btn-large back-qw-button ' do
-    ▪&nbsp;Участники   
+  - if @nav_menu_contacts_link and @menu_up_item != 'contacts'      
+    =link_to @nav_menu_contacts_link,  class: 'btn btn-link btn-large back-qw-button ', title: @contacts_menu_title do 
+      ▪&nbsp;Анкеты   
+      %span.question-nav-menu-room    
+        ?      
   
+
+  - if @menu_up_item != 'contacts'        
   
-  =link_to @nav_menu_room_show_off_in_base_link,  class: 'btn btn-link btn-large back-qw-button ', title: @show_off_in_base_menu_title do
-    ▪ 
-    =@show_off_in_base_menu_name
-    %span.question-nav-menu-room    
-      ?
+    =link_to @nav_menu_room_show_off_in_base_link,  class: 'btn btn-link btn-large back-qw-button ', title: @show_off_in_base_menu_title do
+      ▪ 
+      =@show_off_in_base_menu_name
+      %span.question-nav-menu-room    
+        ?
       
-    -#= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
+      -#= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
 
 
   =link_to @link_to_feedbacks_sl,  class: 'btn btn-link btn-large back-qw-button ', target: '_blank', title: @recommendations_menu_title do
@@ -37,5 +41,11 @@
     %span.question-nav-menu-room    
       ?        
     
+    
+  - if @menu_up_item != 'room'        
+    =link_to @nav_menu_room_one_link,  class: 'btn btn-link btn-large back-qw-button ', title: @room_one_menu_title do
+      ▪&nbsp;Комната
+      %span.question-nav-menu-room    
+        ?            
                
     
