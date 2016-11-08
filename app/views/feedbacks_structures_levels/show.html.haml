@@ -4,6 +4,8 @@
 -#- @this_page_name = 'feedback-room'
 
 
+%a{ name: 'top' }
+
 
 - if flash[:res]
   #paper
@@ -51,3 +53,6 @@
     =@level_info.html_safe
     
     
+    
+.block-nav-menu-room  
+  =render partial: 'layouts/menu/navigation_bottom'                      

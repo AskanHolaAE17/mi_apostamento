@@ -1,4 +1,11 @@
+%br/
+
 #paper-nav-menu-room  
+
+
+
+  =render partial: 'layouts/menu/to_the_top_button'
+
        
           
   - if @nav_menu_contacts_link and @menu_up_item != 'contacts'      
@@ -30,9 +37,9 @@
     ▪&nbsp;Консуль&shy;тация     
     %span.question-nav-menu-room    
       ?    
-  
-  
-  - if @menu_up_item != 'conversations'                          
+
+    
+  - if @menu_up_item != 'conversations'                      
     =link_to @nav_menu_room_convers_link,  class: 'btn btn-link btn-large back-qw-button ', title: @convers_menu_title do
       ▪&nbsp;Собесед&shy;ники
       %span.question-nav-menu-room    

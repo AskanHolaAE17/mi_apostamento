@@ -3,6 +3,10 @@
 
 
 
+%a{ name: 'top' }
+
+
+
 .block-nav-menu-room  
   -#%article.lead.info_msg
   =render partial: 'layouts/menu/navigation'                  
@@ -18,3 +22,9 @@
 
 %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
   =render partial: 'rooms/requests_block'
+  
+  
+  
+.block-nav-menu-room  
+  =render partial: 'layouts/menu/navigation_bottom'                  
+  

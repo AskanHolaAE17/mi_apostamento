@@ -2,6 +2,10 @@
 
 
 
+%a{ name: 'top' }
+
+
+
 - if flash[:res]
   #paper
     =flash[:res]
@@ -53,3 +57,8 @@
           %b
             =link_to conv_names, @root_path + 'messages/' + @conversations_msg_users_links[i]
 
+
+
+      - if @conversations_msg_users_names.count > 5   
+        .block-nav-menu-room  
+          =render partial: 'layouts/menu/navigation_bottom'                  

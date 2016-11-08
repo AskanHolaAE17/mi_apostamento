@@ -497,6 +497,14 @@ class ApplicationController < ActionController::Base
 
 #______________________________________    
 
+    
+    # TO THE TOP - BUTTON
+
+    @to_the_top_button_link  = '#top' 
+    @to_the_top_button_title = 'Вернуться в начало страницы'
+    
+#______________________________________    
+    
   
   end    
   

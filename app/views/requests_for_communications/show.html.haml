@@ -2,6 +2,10 @@
 
 
 
+%a{ name: 'top' }
+
+
+
 - if flash[:res]
   #paper
     =flash[:res]
@@ -108,3 +112,6 @@
   
   
 
+- if @sent_rqs.count + @getted_rqs.count > 3
+  .block-nav-menu-room  
+    =render partial: 'layouts/menu/navigation_bottom'                  
