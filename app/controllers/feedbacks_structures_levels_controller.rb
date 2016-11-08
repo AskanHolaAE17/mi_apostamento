@@ -29,9 +29,7 @@ class FeedbacksStructuresLevelsController < ApplicationController
 
       if user_code == user_code_compare
         @struct_info = (FeedbacksStructure.find_by title: user.contact.struct).body
-        #@struct_info = 'Nice '
-        @level_info  = (FeedbacksLevel.find_by     title: user.contact.level).body        
-        #@level_info  = '& Cool'
+        #@level_info  = (FeedbacksLevel.find_by     title: user.contact.level).body        
         
         @whose_partner   = user.contact.name
         @struct_recomend = (FeedbacksStructure.find_by title: user.contact.struct).recomend_part

@@ -49,37 +49,48 @@
   %br/
 
 
-            
-  =render partial: 'contents_of_feedback'            
+  
+  - if @struct_recomend            
+    =render partial: 'contents_of_feedback'            
             
       
             
   .feedback-personal-body
   
-  
+
+    -#.k   #contr+
+      
+      %a{ name: 'part1' }  
+      %h3
+        Часть I :
+      =@struct_info.html_safe
+      = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+
+
+      %a{ name: 'part2' }    
+      %h3
+        Часть II :    
+      =@level_info.html_safe
+      = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+      
+      %br/
+    
+    
     %a{ name: 'part1' }  
     %h3
-      Часть I :
+      Обратная связь :
     =@struct_info.html_safe
     = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
-
-
-    %a{ name: 'part2' }    
-    %h3
-      Часть II :    
-    =@level_info.html_safe
-    = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+          
     
-    %br/
-    
-    
-    %a{ name: 'recomend' }
-    .feedback_recomend_part
+    - if @struct_recomend
+      %a{ name: 'recomend' }
+      .feedback_recomend_part
 
-      %h3.whose_partner
-        =@whose_partner + ', рекомендации Вашему партнеру:'
+        %h3.whose_partner
+          =@whose_partner + ', рекомендации Вашему партнеру:'
         
-      =@struct_recomend
+        =@struct_recomend
     
     
 %a{ name: 'down' }    
