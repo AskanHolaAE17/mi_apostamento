@@ -389,11 +389,11 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
       if flag_in_from == 'i' 
       
         user.contact.able_for_contact = true
-        flash[:in_from_db_succes] = 'Вы добавились в базу.'                
+        flash[:in_from_db_succes] = 'Вы добавились в базу и теперь можете видеть анкеты других участников.'                
       else  
       
         user.contact.able_for_contact = false        
-        flash[:in_from_db_succes] = 'Вы удалились из базы.'        
+        flash[:in_from_db_succes] = 'Вы удалились из базы и больше не можете видеть анкеты других участников.'        
       end  
       
       

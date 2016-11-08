@@ -13,7 +13,7 @@ ActiveAdmin.register Contact do
                               :user_id, :secret_question, 
                               :secret_answer_1, :secret_answer_2, :structure,
                               :about_info, :deep_info, :looking_for,
-                              :ready_strong]                              
+                              :ready_strong, :redirect_to_room_flag]                              
     end
   end
 end

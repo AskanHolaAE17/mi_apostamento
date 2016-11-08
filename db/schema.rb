@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104000000) do
+ActiveRecord::Schema.define(version: 20161108023000) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20161104000000) do
     t.string   "struct"
     t.text     "looking_for"
     t.boolean  "ready_strong"
+    t.string   "redirect_to_room_flag",    default: "f"
   end
 
   create_table "conversations", force: :cascade do |t|

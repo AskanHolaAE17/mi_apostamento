@@ -1,9 +1,15 @@
 .feedback-personal-pre-block
 
 
+  - if flash[:more_info_form_save]
+    #paper
+      =flash[:more_info_form_save]
+
+
   - if flash[:res]
     #paper
       =flash[:res]
+
       
   - if flash[:in_from_db_succes]
     #paper      

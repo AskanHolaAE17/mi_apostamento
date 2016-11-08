@@ -394,8 +394,11 @@ class ApplicationController < ActionController::Base
     
 #____________________
 
-      
-        off_db_link_form         = root_path + 'much_form/' + show_db_form_link_details_encoded_64          
+
+        @show_off_in_base_menu_name = 'Добавиться'
+        @show_off_in_base_menu_title = 'Добавиться в базу (другие пользователи смогут Вас видеть)'
+              
+        off_db_link_form         = root_path + 'much_form/' + show_db_form_link_details_encoded_64 + '__t'          
         
       end   # if user.contact.order.more_form_save
               
@@ -446,7 +449,7 @@ class ApplicationController < ActionController::Base
 #____________________
 
 
-      contacts_details         = (Base64.encode64 contacts_details).chomp.delete("\n")
+      contacts_details         = (Base64.encode64 contacts_details).chomp.delete("\n").delete('=')
 
 
       @nav_menu_contacts_link  =  root_path               + 

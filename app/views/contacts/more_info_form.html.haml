@@ -273,9 +273,11 @@
 
 
 
-    = f.hidden_field  :email,             value:  @order.email
-    = f.hidden_field  :group,             value:  @order.group      
-    = f.hidden_field  :order_number,      value:  @order.id   
+    = f.hidden_field  :email,                      value:  @order.email
+    = f.hidden_field  :group,                      value:  @order.group      
+    = f.hidden_field  :order_number,               value:  @order.id
+    
+    = f.hidden_field  :redirect_to_room_flag,      value:  "#{flash[:contact_redirect_to_room_flag] || @redirect_to_room_flag}"       
 
 
 

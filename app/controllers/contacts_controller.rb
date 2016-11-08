@@ -23,9 +23,16 @@ class ContactsController < ApplicationController
 #_______________________________________________________________________________      
 
 
-    order_info  = params[:order_info]
+    order_info_full       = params[:order_info]
+    order_info            = order_info_full.partition('__').first
     
+#_______________________________________________________________________________      
+
     
+    @redirect_to_room_flag   = order_info_full.partition('__').last || 'f'    # t/f      
+    
+#_______________________________________________________________________________      
+
     
     #link_details_begin_for_url = order_info
     #link_details_begin_ascii_8 = URI.decode(link_details_begin_for_url)    
@@ -159,7 +166,13 @@ class ContactsController < ApplicationController
     #-#contact = Contact.find_by(order_number: params[:order_number])     
     #-#contact.update_attributes(contact_params.clone) 
     
+    redirect_to_room_flag = params[:contact][:redirect_to_room_flag]   # t/f
+    
+#______________________________________
+
+    
     order_id_form = params[:contact][:order_number]
+
     
     if Contact.find_by(order_number: order_id_form)
       contact = Contact.find_by order_number: order_id_form
@@ -438,7 +451,22 @@ class ContactsController < ApplicationController
 
 
       msg_page_before_show_contacts = root_path + 'info/pismo_so_ssulkoy_na_bazy'      
-      #redirect_to link_with_contacts                         
+
+#_____________________________________________
+
+
+      if redirect_to_room_flag == 't' 
+      
+        msg_page_before_show_contacts  =  room_url 
+        flash[:more_info_form_save]    =  'Вы добавились в базу и теперь можете видеть анкеты других участников'
+        
+      end   # if redirect_to_room_flag == 't'             
+      
+#_____________________________________________
+
+      
+      #redirect_to link_with_contacts                                           
+      
       redirect_to msg_page_before_show_contacts
       
 #_______________________________________________________________________________
@@ -506,11 +534,13 @@ class ContactsController < ApplicationController
       end     
            
       
-      flash[:contact_secret_answer_1]      = contact.secret_answer_1.to_s[0..398]      
-      flash[:contact_secret_answer_2]      = contact.secret_answer_2.to_s[0..398]
+      flash[:contact_secret_answer_1]        = contact.secret_answer_1.to_s[0..398]      
+      flash[:contact_secret_answer_2]        = contact.secret_answer_2.to_s[0..398]
       
-      flash[:contact_ready_strong_checked] = true if contact.ready_strong == true
+      flash[:contact_ready_strong_checked]   = true if contact.ready_strong == true
       
+      
+      flash[:contact_redirect_to_room_flag]  = contact.redirect_to_room_flag       
       
 #_______________________________________________________________________________      
       
@@ -1142,7 +1172,7 @@ class ContactsController < ApplicationController
     end          
 
     def contact_params
-      params.require(:contact).permit(:name, :surname, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :looking_for, :user_id, :secret_answer_1, :secret_answer_2, :structure, :ready_strong, :secret_question => [])
+      params.require(:contact).permit(:name, :surname, :own_gender, :city, :country, :birthday, :search_for_gender, :about_info, :email, :order_number, :able_for_contact, :group, :structure_test_info, :level, :level_test_info, :link_for_disable_contact, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at, :utf8,:_method, :authenticity_token, :commit, :id, :deep_info, :looking_for, :user_id, :secret_answer_1, :secret_answer_2, :structure, :ready_strong, :redirect_to_room_flag, :secret_question => [])
     end  
  
   
