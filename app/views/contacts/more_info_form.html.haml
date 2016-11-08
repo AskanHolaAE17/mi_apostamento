@@ -216,14 +216,19 @@
       %br/                     
 
 
-      -#=flash['contact.secret_question'] 
+  
       - @secret_questions.each do |secret_question|      
+
+
+        %label      
+          =f.check_box :secret_question, {multiple: true, id: 'secret_question_' + secret_question.id.to_s, checked: flash['contact_secret_question_' + secret_question.id.to_s]}, secret_question.id, nil
+          =secret_question.body
       
-        =f.check_box :secret_question, {multiple: true, id: 'secret_question_' + secret_question.id.to_s, checked: flash['contact_secret_question_' + secret_question.id.to_s]}, secret_question.id, nil
-        =f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s              
-        -#=flash[:sqw]
-              
-           
+      
+        -#=f.check_box :secret_question, {multiple: true, id: 'secret_question_' + secret_question.id.to_s, checked: flash['contact_secret_question_' + secret_question.id.to_s]}, secret_question.id, nil
+        -#=f.label     :secret_question, secret_question.body, for: 'secret_question_' + secret_question.id.to_s              
+    
+       
         %br/
         %br/             
                 
