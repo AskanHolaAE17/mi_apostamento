@@ -4,6 +4,7 @@
 -#- @this_page_name = 'feedback-room'
 
 
+    
 %a{ name: 'top' }
 
 
@@ -17,12 +18,11 @@
       
 
       
-.block-nav-menu-room  
+-#.block-nav-menu-room.block-nav-menu-room-up  
   -#%article.lead.info_msg
   =render partial: 'layouts/menu/navigation'                  
   %br/
-  
-  
+    
   
         
 .k
@@ -36,23 +36,54 @@
       .contact-square-info
         ?
   
-    
-  %span 
-    .square{ class: @square_class }
-      O
-  %span{ class: 'square-symbol-info' }
-    Ваш символ-квадратик
+  
+  .square-feedback      
+  
+    %span 
+      .square{ class: @square_class }
+        O
+        
+    %span{ class: 'square-symbol-info' }
+      Ваш символ-квадратик
+                        
+  %br/
+
+
+            
+  =render partial: 'contents_of_feedback'            
+            
       
             
-  %br/                      
-  %br/
-            
-            
   .feedback-personal-body
+  
+  
+    %a{ name: 'part1' }  
+    %h3
+      Часть I :
     =@struct_info.html_safe
+    = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+
+
+    %a{ name: 'part2' }    
+    %h3
+      Часть II :    
     =@level_info.html_safe
+    = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+    
+    %br/
     
     
+    %a{ name: 'recomend' }
+    .feedback_recomend_part
+
+      %h3.whose_partner
+        =@whose_partner + ', рекомендации Вашему партнеру:'
+        
+      =@struct_recomend
     
-.block-nav-menu-room  
+    
+%a{ name: 'down' }    
+.block-nav-menu-room.block-nav-menu-room-down  
   =render partial: 'layouts/menu/navigation_bottom'                      
+  
+  

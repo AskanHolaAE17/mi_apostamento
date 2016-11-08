@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108023000) do
+ActiveRecord::Schema.define(version: 20161108151000) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -163,8 +163,9 @@ ActiveRecord::Schema.define(version: 20161108023000) do
   create_table "feedbacks_structures", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.text     "recomend_part"
   end
 
   create_table "groups", force: :cascade do |t|

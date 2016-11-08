@@ -23,6 +23,9 @@ class OrdersController < ApplicationController
 
             
     if @order.save
+    
+    
+      @order.name[0] = @order.name[0].upcase    
       #pay+me_liqpay    = MeLiqpay.find_by_me_number(1)
       #pay+public_key   = me_liqpay.public_key
       #pay+private_key  = ENV['lp_private_key']

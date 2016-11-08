@@ -33,6 +33,10 @@ class FeedbacksStructuresLevelsController < ApplicationController
         @level_info  = (FeedbacksLevel.find_by     title: user.contact.level).body        
         #@level_info  = '& Cool'
         
+        @whose_partner   = user.contact.name
+        @struct_recomend = (FeedbacksStructure.find_by title: user.contact.struct).recomend_part
+        
+        
         @square_class = 'square_green'        if user.contact.group == 'GOOD GROUP'    
         @square_class = 'square_violet'       if user.contact.group == 'BAD GROUP'
     

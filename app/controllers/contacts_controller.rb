@@ -289,8 +289,10 @@ class ContactsController < ApplicationController
         
 #________________________________________
 
-
+      
+        contact.name[0] = contact.name[0].upcase
         contact.able_for_contact = true
+        
         contact.save
       
 #_______________________________________________________________________________    

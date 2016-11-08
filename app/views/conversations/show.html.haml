@@ -16,7 +16,7 @@
       
 
 
-.block-nav-menu-room  
+.block-nav-menu-room.block-nav-menu-room-up  
   -#%article.lead.info_msg
   =render partial: 'layouts/menu/navigation'                  
   %br/
@@ -60,5 +60,5 @@
 
 
       - if @conversations_msg_users_names.count > 5   
-        .block-nav-menu-room  
+        .block-nav-menu-room.block-nav-menu-room-down  
           =render partial: 'layouts/menu/navigation_bottom'                  

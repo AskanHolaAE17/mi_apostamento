@@ -16,7 +16,7 @@
 
 
 
-.block-nav-menu-room  
+.block-nav-menu-room.block-nav-menu-room-up  
   -#%article.lead.info_msg
   =render partial: 'layouts/menu/navigation'                  
   %br/
@@ -113,5 +113,5 @@
   
 
 - if @sent_rqs.count + @getted_rqs.count > 3
-  .block-nav-menu-room  
+  .block-nav-menu-room.block-nav-menu-room-down  
     =render partial: 'layouts/menu/navigation_bottom'                  
