@@ -50,12 +50,39 @@ class ApplicationController < ActionController::Base
     key_int.join
   end   
   
+#_______________________________________________________________________________
+
   
   def id_in_base(devided_by)    # without Id in begin of string
     iibase = akey + akey          #id_in_base
     iibase = iibase.gsub(/\D+/, '')
     iibase = iibase.slice(0, iibase.length/devided_by.to_i)  
     iibase = iibase.to_s
+  end    
+
+
+  def id_in_base_with_id(devided_by, id)    # without Id in begin of string
+    iibase = akey + akey          #id_in_base
+    iibase = iibase.gsub(/\D+/, '')
+    iibase = iibase.slice(0, iibase.length*2/devided_by.to_i)  
+    iibase = id.to_s + iibase.to_s
+    
+    
+    iibase_len = iibase.length
+    iibase     = if iibase_len < 8
+    
+      for i in iibase_len-1..7
+        iibase[i] = rand(0..9).to_s
+      end
+      iibase
+    
+    elsif iibase_len > 8
+
+      iibase[0..7]
+    
+    end
+    
+    iibase
   end    
 
 #_______________________________________________________________________________

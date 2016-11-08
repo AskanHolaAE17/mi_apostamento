@@ -4,6 +4,9 @@
 -#- @this_page_name = 'feedback-room'
 
 
+%br/
+%br/
+
     
 %a{ name: 'top' }
 
@@ -88,9 +91,9 @@
       .feedback_recomend_part
 
         %h3.whose_partner
-          =@whose_partner + ', рекомендации Вашему партнеру:'
+          =@whose_partner + ', практические рекомендации Вашему партнеру:'
         
-        =@struct_recomend
+        =@struct_recomend.html_safe
     
     
 %a{ name: 'down' }    

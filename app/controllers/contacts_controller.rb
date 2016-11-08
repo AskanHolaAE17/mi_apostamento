@@ -376,8 +376,8 @@ class ContactsController < ApplicationController
         user.save
         room.save
     
-      user.id_in_base    = user.id.to_s + id_in_base(3)
-      room.id_in_base    = room.id.to_s + id_in_base(3)
+      user.id_in_base    = id_in_base_with_id(3, user.id.to_s)                
+      room.id_in_base    = id_in_base_with_id(3, room.id.to_s)                
       
     else
     

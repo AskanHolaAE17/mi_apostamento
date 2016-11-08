@@ -8899,12 +8899,24 @@ HTML A:hover, BODY A:hover {
   padding: 2% 1%;
   color: white;
 }
+/* line 83, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form .btn-primary:focus {
+  color: #04C;
+}
+/* line 88, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form .btn-info:focus {
+  color: #5BC0DE;
+}
+/* line 93, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+#form .btn-success:focus {
+  color: #5BB75B;
+}
 
-/* line 84, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+/* line 100, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
 .reject-btn {
   border-color: #D13939;
 }
-/* line 88, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
+/* line 104, /home/vitalina/mi_apostamento/app/assets/stylesheets/elements/form.sass */
 .reject-btn:hover, .reject-btn:focus {
   color: #D13939;
 }
@@ -9196,11 +9208,23 @@ HTML A:hover, BODY A:hover {
   width: 50%;
   height: auto;
 }
+/* line 8, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/image.sass */
+.contact-image IMG {
+  border-radius: 3%;
+}
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/texts.sass */
 .half-brown-text-contacts {
-  color: #5C3C16;
-  font-size: 95%;
+  color: #08C;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  box-shadow: none;
+}
+
+/* line 12, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/contacts_c/texts.sass */
+.text-birthday-contacts {
+  color: #2A8400;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
 
 /* line 3, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/messages_c/messages.sass */

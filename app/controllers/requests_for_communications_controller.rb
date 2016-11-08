@@ -521,7 +521,7 @@ before_action :set_root, :set_info, only: [:show]
       navigation_menu_room(user, 'req')
 
 
-    else   # unless order and order.akey == order_akey    
+    else   # unless user and user_id_in_b... == user_code
 
 #_______________________________________
 

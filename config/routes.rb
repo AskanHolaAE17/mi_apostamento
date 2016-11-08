@@ -97,7 +97,7 @@ Rails.application.routes.draw do
   post  '/contacts',                       to: 'contacts#create'                # for MoreContactsForm works (path for creating new contact)  
   match '/contacts/:details',              to: 'contacts#show',                                     via: 'get'      
 
-  match '/contacts-show/:details',         to: 'contacts#link_with_contacts',                                     via: 'get'        
+  match '/contacts-show/:details',         to: 'contacts#link_with_contacts',                       via: 'get'        
 
 
        
@@ -106,11 +106,11 @@ Rails.application.routes.draw do
   
   
   
-  match '/deactivate-contact/:deactive_params',    to: 'contacts#disable_contact_ask',                      via: 'get'      
-  match '/de-activate-contact/:deactive_params',   to: 'contacts#disable_contact',                          via: 'get'        
+  match '/deactivate-contact/:deactive_params',    to: 'contacts#disable_contact_ask',              via: 'get'      
+  match '/de-activate-contact/:deactive_params',   to: 'contacts#disable_contact',                  via: 'get'        
   post  '/de-activate-contact/:deactive_params',   to: 'contacts#disable_contact'  
   
-  match '/show-contacts/:details',                 to: 'contacts#link_with_contacts_again',                 via: 'get'          
+  match '/show-contacts/:details',                 to: 'contacts#link_with_contacts_again',         via: 'get'          
   
   
             
