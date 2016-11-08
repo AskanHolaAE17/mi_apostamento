@@ -9294,6 +9294,16 @@ HTML A:hover, BODY A:hover {
   margin: 5%;
 }
 
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/block-test.sass */
+.qws_body_block {
+  padding-bottom: 2%;
+}
+
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/block-test.sass */
+.qw_body_text {
+  text-align: justify;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/buttons.sass */
 .test-click-yes-button {
   margin-right: 5%;
@@ -9336,6 +9346,16 @@ HTML A:hover, BODY A:hover {
   font-weight: normal;
 }
 
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/info-text.sass */
+.test-info-pages-text {
+  font-size: 0.95em;
+  text-align: justify;
+}
+/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/info-text.sass */
+.test-info-pages-text P:before {
+  content: none;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/instructions.sass */
 .want-to-db-after-test-button-text {
   text-align: justify;
@@ -9356,24 +9376,9 @@ HTML A:hover, BODY A:hover {
   color: #5BB75B;
 }
 
-/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/block_test.sass */
-.qws_body_block {
-  padding-bottom: 2%;
-}
-
-/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/block_test.sass */
-.qw_body_text {
-  text-align: justify;
-}
-
-/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/info_text.sass */
-.test-info-pages-text {
-  font-size: 0.95em;
-  text-align: justify;
-}
-/* line 5, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/info_text.sass */
-.test-info-pages-text P:before {
-  content: none;
+/* line 3, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/tests_c/form.sass */
+.struct_qws_signal INPUT:checked + SPAN {
+  color: #164700;
 }
 
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/menu/nav-menu.sass */

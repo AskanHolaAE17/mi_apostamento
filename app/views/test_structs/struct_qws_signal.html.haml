@@ -3,7 +3,7 @@
 #form.lead
   = form_tag '/te_s_st_ar' do 
 
-    .k
+    .struct_qws_signal
       %a{name: '1'}
       .dark-green{class: flash[:error_class_signal_struct_arr]}
         Прочитайте до конца 10 утверждений 
@@ -12,17 +12,32 @@
         %br/
         которые больше всего Вам подходят:                                                                          
 
-      %br/                     
+      %br/                     	
+
+
+      - @qw_struct_signals.each_with_index do |struct_signal|            
         
-      - @qw_struct_signals.each do |struct_signal|      
+        - if flash['signal_struct_arr_' + struct_signal.struct] == 'checked'
+      
         
-        %label.label_checkbox
-          = check_box_tag 'order_signal_struct_array[]', struct_signal.struct
-          = struct_signal.field
-        = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
+          %label.label_checkbox
+            = check_box_tag 'order_signal_struct_array[]', struct_signal.struct, checked: true
+            %span
+              = struct_signal.field
+                  
         
+        - else          
+        
+          %label.label_checkbox
+            = check_box_tag 'order_signal_struct_array[]', struct_signal.struct
+            %span
+              = struct_signal.field
+
+         
+        = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
         %br/
         
+
 
     = hidden_field_tag  :order_id,          @order.id   
     = hidden_field_tag  :order_akey_start,  @order.akey[0..2]

@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   
   
   #TEST_LEVEL_STRUCT_BETWEEN____________________________________________________      
+
+
   match '/testo_full/:details_encoded',    to: 'tests_level_struct_betweens#instruction_before_level_body',   via: 'get'          
   post  '/testo_full/:details_encoded',    to: 'test_levels#instruction_before_level_body'    
   
@@ -71,8 +73,7 @@ Rails.application.routes.draw do
   post  '/tests_more/:details_encoded',    to: 'test_structs#struct_qws_signal_more'  
   
   post  '/te_s_st_mo_ar',                  to: 'test_structs#signal_struct_more_array_save'           
-    
-  
+          
   
   match '/tests_gender/:details_encoded',  to: 'test_structs#form_gender_if_il_struct',             via: 'get'          
   post  '/tests_gender/:details_encoded',  to: 'test_structs#form_gender_if_il_struct'    

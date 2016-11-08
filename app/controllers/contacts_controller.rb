@@ -235,10 +235,10 @@ class ContactsController < ApplicationController
         sqw.gsub!("'","")      
         sqw.gsub!(" ","")                       
         contact.secret_question = sqw
-      end  
-                   
+      end                     
 
 #_______________________________________________________________________________
+    
     
     #if order and order.more_info_save != true
     

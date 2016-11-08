@@ -169,7 +169,28 @@ class TestStructsController < ApplicationController
         
                 
         flash[:error_class_signal_struct_arr]                = 'error_field'           
-        anchor = '#1'
+        #anchor = '#1'
+        anchor = ''
+        
+#_______________________________________
+
+
+      if signal_struct_arr
+        sqw = signal_struct_arr.to_s
+        sqw.gsub!('"',"'")
+        sqw.gsub!('[',"")
+        sqw.gsub!(']',"")
+        sqw.gsub!("'","")      
+        sqw.gsub!(" ","")                       
+        #signal_struct_arr = sqw
+      #end                     
+      
+      #if sqw
+        sqw = sqw.split(",")         
+        sqw.each  do |sqw|
+	        flash['signal_struct_arr_' + sqw.to_s]   = 'checked' 	      
+        end	 
+      end           
         
 #_______________________________________
 
