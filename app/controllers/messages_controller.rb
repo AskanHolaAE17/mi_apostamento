@@ -5,6 +5,7 @@ class MessagesController < ApplicationController
 
 
   def new
+    
     @page       = Page.find_by_page :message_new
     @main_page  = MainPage.find(1)       
     
@@ -13,7 +14,9 @@ class MessagesController < ApplicationController
 #______________________________________
   
   
-    details         = params[:details]
+    details_64      = params[:details]
+    details         = Base64.decode64 details_64
+    
     details_arr     = details_from_url_to_array(details)
     
     user_id_in_base = details_arr[0].to_s

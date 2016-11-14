@@ -1,1 +1,5 @@
-=button_to 'Написать сообщение', @message_path_new + @sender_id + @message_letter + '_' + @receiver_id + '_contacts', class: ' btn btn-large btn-block btn-info request-btn '   
+- @message_path_new    = @message_path_new + @sender_id + @message_letter + '_' + @receiver_id + '_contacts'
+- @message_path_new_64 = Base64.encode64 @message_path_new
+
+
+=button_to 'Написать сообщение', root_path + 'message_new/' + @message_path_new_64, class: ' btn btn-large btn-block btn-info request-btn '   
