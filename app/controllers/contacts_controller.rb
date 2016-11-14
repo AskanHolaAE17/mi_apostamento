@@ -970,8 +970,9 @@ class ContactsController < ApplicationController
                          
                                                                                                       
     #message_details    = (Base64.encode64 message_details).chomp.delete("\n")
+    @root_path = root_path    
     
-    @message_path_new  = root_path + 'message_new/' + message_details         
+    @message_path_new  = message_details         
         
 #______________________________________
 

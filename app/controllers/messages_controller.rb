@@ -50,8 +50,10 @@ class MessagesController < ApplicationController
     
     
     if @user and @user.id_in_base == user_id_in_base
-      @sender_id    = sender_id
-      @receiver_id  = details_arr[2].to_s      
+      @sender_id     = sender_id
+      @receiver_id   = details_arr[2].to_s      
+      
+      @receiver_name = User.find(@receiver_id).name
     else
       redirect_to   ''  
     end

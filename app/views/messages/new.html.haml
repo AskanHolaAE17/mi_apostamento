@@ -9,6 +9,9 @@
 
   = form_for [@user, @user.messages.build] do |f|
      
+    =@receiver_name
+    %br/ 
+    %br/
     
     %a{name: '1'}    
     .dark-green{class: flash[:error_class_title]}
