@@ -538,7 +538,88 @@ class ApplicationController < ActionController::Base
   
   end    
   
-#_______________________________________________________________________________  
+#_______________________________________________________________________________
+
+  
+  def room_see_link(contacts, user)
+  
+    @contacts  = contacts
+    room       = user.room
+    
+#_______________________________________
+
+    
+    user_id               = user.id.to_s   
+    contact_id            = user.contact.id.to_s
+    
+    user_id_in_base_first = user.id_in_base.to_s.first.to_i.to_s      
+
+
+    contact_id_letter     = contact_id.insert(contact_id.length-1, (0..9).to_a.shuffle.first.to_s)
+    
+    contact_i_am_details  = contact_id_letter.insert(contact_id_letter.length-1, user_id_in_base_first)                                
+
+#_______________________________________
+
+
+    # ROOMS  
+
+    @room_see_link = []
+    @contacts.each do |c|      
+
+#______________________________________    
+  
+    # EVERY ROOM
+        
+      room = Room.find_by user_id: c.user_id
+    
+
+      plus_2_letters           = ('a'..'z').to_a.shuffle.first + 
+                                 ('a'..'z').to_a.shuffle.first
+                                 
+      plus_3_letters           = ('a'..'z').to_a.shuffle.first + 
+                                 ('a'..'z').to_a.shuffle.first + 
+                                 ('a'..'z').to_a.shuffle.first                                       
+           
+      room_details             = room.id.to_s                           + 
+                                 plus_2_letters                         + 
+                                 c.user_id.to_s                           +
+                                 '_'                                    +
+                                 user.id_in_base.to_s[0, 2]             +
+                                 plus_3_letters                         + 
+                                 room.id_in_base.to_s[0, 3]                                                      
+
+
+      devider_central_position = room_details.index('_')            
+      devider_start_position   = devider_central_position.to_i / 2      
+      
+      time_now_min             = Time.now.min
+      devider_end_position     = if time_now_min % 2 == 0
+        room_details.length-3
+      else  
+        room_details.length-2 
+      end  
+      
+      room_details.insert(devider_start_position, '_')
+      room_details.insert(devider_end_position, '_')     
+      
+#_______________________________________
+
+
+      details    = room_details + '__' + contact_i_am_details
+
+      details_64 = (Base64.encode64 details).chomp.delete("\n").delete('=')
+
+#_______________________________________
+      
+      
+      @room_see_link << 'room_see/' + details_64
+      
+    end
+  
+  end  
+
+#_______________________________________________________________________________    
 
 
 end

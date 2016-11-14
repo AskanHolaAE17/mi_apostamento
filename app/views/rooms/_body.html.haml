@@ -1,0 +1,118 @@
+.k
+  .k
+
+    - @receiver_id = @contact.user_id.to_s
+  
+    - @square_class = 'square_green'        if @contact.group == 'GOOD GROUP'    
+    - @square_class = 'square_green'        if @contact.group == 'BAD GROUP'    
+
+  
+    -# COLOR
+    - @color = '#00a129'       if @contact.group == 'GOOD GROUP'    
+    - @color = '#611d82'      if @contact.group == 'BAD GROUP'
+    
+
+    
+    %article.contact-block
+       
+      %strong
+      
+        %span 
+          .square{ class: @square_class }
+            O            
+        
+        =@contact.name        
+
+
+      
+      - unless @contact.image.url.match(/missing.png/)     
+        .contact-image
+          = image_tag @contact.image.url      
+  
+      %br/
+
+
+      
+      .text-success.text-birthday-contacts
+        =@contact.birthday.strftime("%B %-d, %Y")      
+
+
+
+      .contact-paragraph
+        %address
+          =@contact.city + ', ' + @contact.country          
+  
+  
+      %a{ name: 'about' }      
+      
+      .half-brown-text-contacts
+        Жизненные ценности, интересы, надежды:
+        
+      .contact-about-info.contact-paragraph.lead
+        =@contact.about_info
+   
+      
+      
+      %a{ name: 'deep' }      
+
+      .half-brown-text-contacts
+        Какой видит свою жизнь:
+        
+      .contact-deep-info.contact-paragraph.lead
+        =@contact.deep_info  
+
+
+
+      %a{ name: 'look' }
+
+      .half-brown-text-contacts
+        Ждёт от отношений, партнера:
+          
+      .contact-looking-for.contact-paragraph.lead        
+        =@contact.looking_for
+        
+        
+        
+      - @receiver_user_id = @contact.user_id          
+      - @exist_sent_request    = @requests_of_current_user.find_by receiver: @receiver_user_id
+      
+      -# @exist_income_request    = RequestsForCommunication.where    user_id: @receiver_user_id
+      -# @exist_income_request    = (@exist_income_request.where      receiver: @user.id).last
+      
+      
+        
+      -# if @exist_sent_request == nil
+        - @exist_sent_request = RequestsForCommunication.first  
+        - @exist_sent_request.status = 'hello'
+      -# if @exist_income_request == nil
+        - @exist_income_request = RequestsForCommunication.first  
+        - @exist_income_request.status = 'hello'        
+      
+        
+      - if (@exist_sent_request and @exist_sent_request.status == 'yes') or (@exist_income_request and @exist_income_request.status == 'yes')
+        %section
+          %b
+            =render partial: 'messages/message_button'
+            
+      - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
+        %hr/
+        %section
+          %b
+            Запрос на общение уже отправлен
+      
+      
+      - elsif (@exist_sent_request and @exist_sent_request.status == 'no') or (@exist_income_request and @exist_income_request.status == 'no')
+        %hr/
+        %section
+          %b
+            Пользователь уже отклонил запрос от Вас
+      
+      
+      - else
+        %section
+          %b
+            =render partial: 'requests_for_communications/new_request_for_communication'                                 
+      
+      
+      
+

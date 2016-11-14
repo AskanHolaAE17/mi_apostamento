@@ -52,6 +52,26 @@
                 = yield         
 
             
+
+
+        - elsif @menu_up_item == 'room_see'      
+
+          .contacts-block.span6.offset2             
+            .lead.info_msg             
+            
+              .block-nav-menu-room.block-nav-menu-room-up  
+                =render partial: 'layouts/menu/navigation'                      
+                %br/
+                
+              = yield                                 
+                                                                 
+              
+            .lead.info_msg             
+              .block-nav-menu-room.block-nav-menu-room-down  
+                =render partial: 'layouts/menu/navigation_bottom'                                                   
+
+
+
             
         - elsif @menu_up_item == 'test'      
         

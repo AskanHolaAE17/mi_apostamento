@@ -418,8 +418,12 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
       cur_url_root          = case cur_url_root_64
       when 'ro'
         'room/'
+      when 'roo'
+        'room_see/'        
       when 're'
-        'recommendations/'        
+        'recommends/'        
+      #when 're'
+      #  'recommendations/'                
       when 'co'
         'contacts/'
       when 'con'

@@ -1,0 +1,15 @@
+- if flash[:res]
+  #paper
+    =flash[:res]
+      
+- if flash[:in_from_db_succes]
+  #paper      
+    =flash[:in_from_db_succes]
+      
+      
+      
+- if flash[:info_on_request_added]
+  %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+    %section
+      #note
+        =flash[:info_on_request_added].html_safe

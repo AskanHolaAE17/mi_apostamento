@@ -358,7 +358,6 @@ class ContactsController < ApplicationController
         
         d_c_params_json = JSON.generate(disable_contact_params_hash)
         d_c_params_encoded_64 = (Base64.encode64 d_c_params_json).chomp.delete("\n")
-        #d_c_params_encoded = d_c_params_encoded_64 + '='
         disable_contact_params = d_c_params_encoded_64
 
 
@@ -898,10 +897,14 @@ class ContactsController < ApplicationController
     unless ( order and order.akey_payed == akey_payed )
       redirect_to '/'  
     end               
+
 #_______________________________________________________________________________
 
 
+    @root_path = MeConstant.find_by_title('root_path').content
+
     contact                   = Contact.find_by order_number: order_id         # current User
+    
     @user                     = User.find(contact.user_id)
     ###Request
     #@request = requests_for_communication = RequestsForCommunication.new    
@@ -990,6 +993,10 @@ class ContactsController < ApplicationController
 
 #______________________________________
 
+
+    room_see_link(@contacts, @user)
+
+#______________________________________
 
     # NAVIGATION MENU - ROOM
     navigation_menu_room(@user, 'co')

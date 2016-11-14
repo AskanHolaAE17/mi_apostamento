@@ -5,10 +5,10 @@
 
 
 %br/
-%br/
 
     
 %a{ name: 'top' }
+
 
 
 - if flash[:res]
@@ -39,8 +39,15 @@
       .contact-square-info
         ?
   
+
+  %h3
+    Мы рады приветствовать Вас, 
+    =@user.name
+    !
+
+
   
-  .square-feedback      
+  %p.square-feedback      
   
     %span 
       .square{ class: @square_class }

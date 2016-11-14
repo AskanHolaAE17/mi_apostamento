@@ -1,23 +1,32 @@
 class RoomsController < ApplicationController
 
-before_action :set_main_page, only: [:show]
+
+
+before_action :set_main_page,            only: [:show]
+before_action :set_root,      :set_info, only: [:any_room]
 
 #_______________________________________________________________________________
 
 
+
   def show    
   
-    @root_path  = MeConstant.find_by_title('root_path').content      
+    @root_path   = MeConstant.find_by_title('root_path').content      
   
-    details = params[:details]
+    details      = params[:details]
     
     room_details = Base64.decode64(details)        
+    #room_details_full = Base64.decode64(details)        
+    
+    #room_details      = room_details_full.partition('__').first
+    #room_details_any  = room_details_full.partition('__').last
     
 #_______________________________________
 
     
     @room_details_res     = ''
     @devider_pos_counter  = 0
+    
     
     room_details.split('').each do |a|  #remote all '_' but central
       if a == '_'
@@ -244,6 +253,221 @@ before_action :set_main_page, only: [:show]
     
   end
 
+#_______________________________________________________________________________
+    
+
+  def any_room     # ROOM_SEE root
+  
+    @root_path     = MeConstant.find_by_title('root_path').content      
+  
+    details_64     = params[:details]
+    details_full   = Base64.decode64(details_64)        
+        
+    
+    room_details      = details_full.partition('__').first        
+    
+    contact_i_am_info = details_full.partition('__').last    
+    
+#_______________________________________
+
+    
+    @room_details_res     = ''
+    @devider_pos_counter  = 0
+    
+    
+    room_details.split('').each do |a|  #remote all '_' but central
+      if a == '_'
+        @devider_pos_counter += 1
+        
+        unless @devider_pos_counter == 2
+          next
+        end
+        
+      end  
+      
+      @room_details_res  += a
+    end 
+      
+    room_details          = @room_details_res.to_s 
+    
+#_______________________________________    
+
+
+    @current_i = 0  # common counter of position
+
+#_______________________________________    
+
+
+    room_id = ''  # getting of user_id  
+    
+    for i in 0..room_details.length-1
+      unless room_details[i].in? ('a'..'z')
+        room_id += room_details[i]
+        @current_i += 1
+      else        
+        break
+      end
+    end   
+    
+    room_id = room_id.to_i
+    
+    
+    #skip alphabet symbols         
+    for i in @current_i..room_details.length-1
+      if room_details[i].in? ('a'..'z')
+        @current_i += 1
+      else
+        break  
+      end
+    end     
+    
+#_______________________________________
+
+    
+    user_id = ''  # getting of room_id
+    
+    for i in @current_i..room_details.length-1
+      unless room_details[i] == '_'
+        user_id += room_details[i]        
+      else        
+        @current_i += 1
+        break
+      end  
+      @current_i += 1      
+    end        
+    
+    @current_i += 1 if room_details[@current_i] == '_'
+    
+    user_id      = user_id.to_i    
+    @user_id_any = user_id
+    
+#_______________________________________
+
+    
+    user_id_in_base_start_2symbols = ''   # getting of user_id_in_base (start_2symbols)
+    
+    for i in @current_i..room_details.length-1
+      unless room_details[i].in? ('a'..'z') 
+        user_id_in_base_start_2symbols += room_details[i]
+        @current_i += 1        
+      else
+        break
+      end  
+    end     
+    
+    
+    #skip alphabet symbols         
+    for i in @current_i..room_details.length-1
+      if room_details[i].in? ('a'..'z')
+        @current_i += 1
+      else
+        break  
+      end
+    end         
+    
+#_______________________________________
+
+    
+    room_id_in_base_start_3symbols = ''   # getting of room_id_in_base (start_3symbols)
+    
+    for i in @current_i..room_details.length-1
+      unless room_details[i].in? ('a'..'z') 
+        room_id_in_base_start_3symbols += room_details[i]
+      else
+        break
+      end  
+    end     
+    
+#_______________________________________  
+  
+  
+    @user    = User.find(user_id)  # request Receiver
+    @room    = Room.find(room_id)
+    @contact = @user.contact    
+    
+    user_id  = user_id.to_s
+    room_id  = room_id.to_s    
+        
+#_______________________________________
+
+    
+    unless @user                                                   and 
+           @room                                                   and 
+           @room.user_id.to_s == user_id                           and 
+           user_id_in_base_start_2symbols == @user.id_in_base[0,2] and 
+           room_id_in_base_start_3symbols == @room.id_in_base[0,3] and 
+           contact_i_am_info                                          and
+           contact_i_am_info != ''
+    
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'      
+      
+#_______________________________________
+
+      
+    else            
+      
+      #contact_i_am_info
+      
+      iam_details           = contact_i_am_info.to_s
+      iam_contact_full_id   = iam_details.clone
+      
+      user_id_in_base_first_get         = iam_details[iam_details.length-2]
+      iam_details[iam_details.length-2] = ''
+      
+      iam_details[iam_details.length-2] = ''      
+      
+      contact_id            = iam_details
+      contact               = Contact.find(contact_id)      
+      
+#_______________________________________
+
+      
+      if contact and @user_me = User.find(contact.user_id) and @user_me
+      
+        user_id_in_base_first_is = @user_me.id_in_base.to_s.first.to_i.to_s        
+        
+      #_______________________________________
+        
+                
+        if user_id_in_base_first_is == user_id_in_base_first_get                  
+
+#_______________________________________
+
+
+          # ROOM SEE PAGE - LOADED SUCCESS
+      
+          @requests_of_current_user = @user_me.requests_for_communications
+      
+          navigation_menu_room(@user_me, 'roo')
+          
+          #@contact = (User.find(@user_id_any)).contact
+
+#_______________________________________
+
+        
+        else   # if user_id_in_base_first_is == user_id_in_base_first_get
+        
+          redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'      
+        
+        end   # if user_id_in_base_first_is == user_id_in_base_first_get
+      
+      #_______________________________________
+      
+      
+      else   # if contact and user = User.find(contact.user_id) and user
+      
+        redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'      
+        
+      end   # if contact and user = User.find(contact.user_id) and user
+      
+      
+    end   # unless @user and @room and @room.user_id ... and iam_details ...    
+  
+#_______________________________________
+
+  
+  end  # DEF
+  
 #_______________________________________________________________________________    
 
 
@@ -257,6 +481,20 @@ before_action :set_main_page, only: [:show]
     def user_params
       params.require(:room).permit(:user_id, :id_in_base, :font_size, :tmp_income_key)
     end  
+    
+    
+    
+    def set_root
+      root_path   = MeConstant.find_by_title('root_path').content    
+      @root_path  = root_path
+    end  
+  
+    def set_info
+      @site_title = MeConstant.find_by_title('site_title').content
+      @main_page  = MainPage.find(1)   
+      
+      @page       = Page.find_by_page :conversations
+    end                
 
     
 end

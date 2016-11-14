@@ -21,11 +21,21 @@ class FeedbacksStructuresLevelsController < ApplicationController
         
     
     if user      
+    
+      
+      @user = user
+
+#_______________________________________
+
+
       user_id_in_base       = user.id_in_base.to_s
       user_iib_last_compare = user_id_in_base.length - 1
       user_code_compare     = user_id_in_base[user_iib_last_compare - 1] + user_id_in_base[user_iib_last_compare]        
       
       user_code             = det_arr[1].to_s          
+
+#_______________________________________
+
 
       if user_code == user_code_compare
         @struct_info = (FeedbacksStructure.find_by title: user.contact.struct).body

@@ -1,27 +1,11 @@
 - @menu_up_item = 'contacts'
--#- @menu_up_item = 'contacts_show'
 
 
 
 %a{ name: 'top' }
 
 
-
-- if flash[:res]
-  #paper
-    =flash[:res]
-      
-- if flash[:in_from_db_succes]
-  #paper      
-    =flash[:in_from_db_succes]
-      
-      
-      
-- if flash[:info_on_request_added]
-  %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
-    %section
-      #note
-        =flash[:info_on_request_added].html_safe
+=render partial: 'flash'
 
 
 - unless @contacts.count == 0 
@@ -38,27 +22,23 @@
   
     -# COLOR
     - @color = '#00a129'       if contact.group == 'GOOD GROUP'    
-    -# @color = 'saddlebrown' if contact.group == 'MIDDLE GROUP'    
     - @color = '#611d82'      if contact.group == 'BAD GROUP'
     
-    -# @title_on_hover = 'С этим человеком отношения безопасны'           if contact.group == 'GOOD GROUP'    
-    -# @title_on_hover = 'С этим человеком строить отношения сложнее, чем с людьми с зеленым квадратом' if contact.group == 'MIDDLE GROUP'    
-    -# @title_on_hover = 'Построение отношений с этим человеком требует больше усилий'      if contact.group == 'BAD GROUP'          
-      
-      
+
     
-    -#.white_border
     %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
        
+       
       %strong
-
-
+      
         %span 
           .square{ class: @square_class }
-            O
-            
-            
-        =contact.name        
+            O            
+        
+        =link_to @root_path + @room_see_link[index], target: '_blank', class: ' link contact-name-link ' do    
+          =contact.name        
+
+
       
       - unless contact.image.url.match(/missing.png/)     
         .contact-image
@@ -66,9 +46,11 @@
   
       %br/
 
+
       
       .text-success.text-birthday-contacts
         =contact.birthday.strftime("%B %-d, %Y")      
+
 
 
       .contact-paragraph
@@ -80,28 +62,49 @@
       .half-brown-text-contacts
         Жизненные ценности, интересы, надежды:
       .contact-about-info.contact-paragraph.lead
-        =contact.about_info   
+        =contact.about_info[0..120]
+  
+        - if contact.about_info.length > 121
+            
+          ='...'
+          
+          %br/
+          .link
+            =link_to 'Показать полностью...', @root_path + @room_see_link[index] + '#about', target: '_blank'
   
       
       
       .half-brown-text-contacts
         Какой видит свою жизнь:
       .contact-deep-info.contact-paragraph.lead
-        =contact.deep_info   
+        =contact.deep_info[0..120]   
+  
+        - if contact.deep_info.length > 121
+            
+          ='...'
+          
+          %br/
+          .link
+            =link_to 'Показать полностью...', @root_path + @room_see_link[index] + '#deep', target: '_blank'
 
 
 
-      - if contact.looking_for  
+      - if contact.looking_for     
       
         .half-brown-text-contacts
           Ждёт от отношений, партнера:
-        .contact-looking-for.contact-paragraph.lead
-          =contact.looking_for
+          
+        .contact-looking-for.contact-paragraph.lead        
+          =contact.looking_for[0..120]
   
-      -#.label.label-success.select_able
-        =contact.email        
-        
-        
+          - if contact.looking_for.length > 121
+            
+            ='...'
+          
+            %br/
+            .link
+              =link_to 'Показать полностью', @root_path + @room_see_link[index] + '#look', target: '_blank'
+    
         
         
       - @receiver_user_id = contact.user_id          
@@ -111,8 +114,6 @@
       - @exist_income_request    = (@exist_income_request.where      receiver: @user.id).last
       
       
-      -#- if @exist_income_request == nil
-        - @exist_income_request = @exist_sent_request
         
       - if @exist_sent_request == nil
         - @exist_sent_request = RequestsForCommunication.first  
@@ -133,6 +134,7 @@
           %b
             Запрос на общение уже отправлен
       
+      
       - elsif (@exist_sent_request and @exist_sent_request.status == 'no') or (@exist_income_request and @exist_income_request.status == 'no')
         %hr/
         %section
@@ -143,18 +145,9 @@
       - else
         %section
           %b
-            =render partial: 'requests_for_communications/new_request_for_communication'                     
-        
-       
-    
-      -#%br/
+            =render partial: 'requests_for_communications/new_request_for_communication'                                 
       
       
-      -#-if index == 1
-      -#  %section
-      -#    #form.lead
-      -#      %b      
-      -#        = render partial: 'consults/consult_form'
       
 - else    
 
@@ -162,24 +155,7 @@
     .lead 
       -# Email или отложка:
       База создается. Зайдите повторно через несколько дней.
+
     
     =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
--#______________________________________________________________________________  
-
-
-
--#%section
-  #form.lead
-    %b
-      -#=render partial: 'new_consult_form' 
-
-
-  
-    
-
-
-
-
-
-
 
