@@ -1,0 +1,79 @@
+.k
+  .k
+
+    - @receiver_id = @contact.user_id.to_s
+  
+    - @square_class = 'square_green'        if @contact.group == 'GOOD GROUP'    
+    - @square_class = 'square_green'        if @contact.group == 'BAD GROUP'    
+
+  
+    -# COLOR
+    - @color = '#00a129'       if @contact.group == 'GOOD GROUP'    
+    - @color = '#611d82'      if @contact.group == 'BAD GROUP'
+    
+
+    
+    %article.contact-block
+       
+      %strong
+      
+        %span 
+          .square{ class: @square_class }
+            O            
+        
+        =@contact.name        
+
+
+      
+      - unless @contact.image.url.match(/missing.png/)     
+        .contact-image
+          = image_tag @contact.image.url      
+  
+      %br/
+
+
+      
+      .text-success.text-birthday-contacts
+        =@contact.birthday.strftime("%B %-d, %Y")      
+
+
+
+      .contact-paragraph
+        %address
+          =@contact.city + ', ' + @contact.country          
+  
+  
+      %a{ name: 'about' }      
+      
+      .half-brown-text-contacts
+        Жизненные ценности, интересы, надежды:
+        
+      .contact-about-info.contact-paragraph.lead
+        =@contact.about_info
+   
+      
+      
+      %a{ name: 'deep' }      
+
+      .half-brown-text-contacts
+        Какой видит свою жизнь:
+        
+      .contact-deep-info.contact-paragraph.lead
+        =@contact.deep_info  
+
+
+
+      %a{ name: 'look' }
+
+      .half-brown-text-contacts
+        Ждёт от отношений, партнера:
+          
+      .contact-looking-for.contact-paragraph.lead        
+        =@contact.looking_for
+        
+        
+        
+      =render partial: 'any_room_body_request'      
+      
+      
+

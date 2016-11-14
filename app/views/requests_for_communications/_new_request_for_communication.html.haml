@@ -1,3 +1,6 @@
+- if @user_me
+  - @user = @user_me
+
 = form_for [@user, @user.requests_for_communications.build] do |f|
      
   

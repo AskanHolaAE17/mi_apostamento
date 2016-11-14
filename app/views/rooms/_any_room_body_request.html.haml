@@ -1,0 +1,45 @@
+.k
+  .k
+    .k
+
+
+      - @receiver_user_id = @contact.user_id          
+      - @exist_sent_request    = @requests_of_current_user.find_by receiver: @receiver_user_id
+      
+      - @exist_income_request    = RequestsForCommunication.where    user_id: @receiver_user_id
+      - @exist_income_request    = (@exist_income_request.where      receiver: @user.id).last
+      
+      
+        
+      - if @exist_sent_request == nil
+        - @exist_sent_request = RequestsForCommunication.first  
+        - @exist_sent_request.status = 'hello'
+      - if @exist_income_request == nil
+        - @exist_income_request = RequestsForCommunication.first  
+        - @exist_income_request.status = 'hello'        
+      
+        
+      - if (@exist_sent_request and @exist_sent_request.status == 'yes') or (@exist_income_request and @exist_income_request.status == 'yes')
+        %section
+          %b
+            =render partial: 'messages/message_button'
+            
+      - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
+        %hr/
+        %section
+          %b
+            Запрос на общение уже отправлен
+      
+      
+      - elsif (@exist_sent_request and @exist_sent_request.status == 'no') or (@exist_income_request and @exist_income_request.status == 'no')
+        %hr/
+        %section
+          %b
+            Пользователь уже отклонил запрос от Вас
+      
+      
+      - else
+        %section
+          %b
+            =render partial: 'requests_for_communications/new_request_for_communication'                                 
+
