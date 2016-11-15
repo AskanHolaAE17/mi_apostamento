@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108151000) do
+ActiveRecord::Schema.define(version: 20161115014700) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -362,6 +362,16 @@ ActiveRecord::Schema.define(version: 20161108151000) do
     t.datetime "when_starts_new_counter"
   end
 
+  create_table "show_feedback_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "asker"
+    t.string   "receiver"
+    t.string   "status"
+    t.boolean  "able",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tests", force: :cascade do |t|
     t.integer  "number_of_test"
     t.string   "title"
@@ -389,6 +399,7 @@ ActiveRecord::Schema.define(version: 20161108151000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "white_writing_able_users_ids_list",           default: ""
+    t.string   "feedback_able_users_ids_list"
   end
 
 end

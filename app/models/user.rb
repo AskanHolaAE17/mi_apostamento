@@ -5,5 +5,6 @@ class User < ActiveRecord::Base
   
   has_many :messages
   has_many :requests_for_communications
+  has_many :show_feedback_requests    
   
 end

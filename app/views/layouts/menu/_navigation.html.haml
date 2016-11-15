@@ -41,7 +41,14 @@
     
   - if @menu_up_item != 'requests'            
     =link_to @nav_menu_room_requests_link,  class: 'btn btn-link btn-large back-qw-button ', title: @requests_menu_title do
-      ▪&nbsp;Запросы    
+      ▪&nbsp;Запросы на общение    
+      %span.question-nav-menu-room    
+        ?        
+    
+    
+  - if @menu_up_item != 'show_feedback_requests'            
+    =link_to @nav_menu_room_requests_fb_show_link,  class: 'btn btn-link btn-large back-qw-button ', title: @requests_fb_show_menu_title do
+      ▪&nbsp;Запросы на открытие    
       %span.question-nav-menu-room    
         ?        
     

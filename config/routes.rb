@@ -173,7 +173,16 @@ Rails.application.routes.draw do
   post  'requests/:details',               to: 'requests_for_communications#show'                                          
   match 'requests/:details',               to: 'requests_for_communications#show',                  via: 'get'               
   
-  #________________________________________
+#_____________________________________________________________________________	
+  
+    
+  # NAVIGATION MENU - ROOM
+  # FEEDBACKS SHOW
+    
+  post  'feedbacks_show/:details',         to: 'show_feedback_requests#show'                                          
+  match 'feedbacks_show/:details',         to: 'show_feedback_requests#show',                       via: 'get'               
+  
+#________________________________________
   
   
   # NAVIGATION MENU - ROOM
@@ -197,6 +206,7 @@ Rails.application.routes.draw do
   
   resources :users do
     resources :requests_for_communications
+    resources :show_feedback_requests
     resources :messages
   end  
   

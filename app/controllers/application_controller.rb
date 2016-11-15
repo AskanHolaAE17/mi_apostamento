@@ -337,6 +337,27 @@ class ApplicationController < ActionController::Base
     
 #______________________________________
 
+     
+    # NAVIGATION MENU - ROOM
+    # FEEDBACK OPEN
+    
+    req_fb_show_link_id      = user.id.to_s
+    
+    req_fb_show_code         = user.id_in_base.to_s   # requests_link_id_in_base
+    req_fb_show_code_len     = req_fb_show_code.length
+    req_fb_show_link_code    = req_fb_show_code[req_fb_show_code_len-3..req_fb_show_code_len-1]    
+    
+    req_fb_show_link_id_len  = req_fb_show_link_id.length.to_s    
+    
+    
+    requests_fb_show_link_details        = req_fb_show_link_code + req_fb_show_link_id + req_fb_show_link_id_len
+    requests_fb_show_link_details_64     = (Base64.encode64 requests_fb_show_link_details).delete("\n").delete('=')
+    
+    @nav_menu_room_requests_fb_show_link = root_path + 'feedbacks_show/' + requests_fb_show_link_details_64
+    @requests_fb_show_menu_title         = 'Запросы на открытие обратных связей - полученные и отправленные'
+    
+#______________________________________
+
 
     # NAVIGATION MENU - ROOM
     # CONVERSATIONS    

@@ -430,6 +430,9 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
         'conversations/'                        
       when 'req'
         'requests/'                                
+      when 'fes'
+        'feedbacks_show/'                                
+        
       end    
     
     
@@ -474,7 +477,7 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
 
   
     def user_params
-      params.require(:user).permit(:id_in_base, :email, :name, :surname, :group, :akey, :active, :white_writing_able_users_ids_list)
+      params.require(:user).permit(:id_in_base, :email, :name, :surname, :group, :akey, :active, :white_writing_able_users_ids_list, :feedback_able_users_ids_list)
     end  
 
     

@@ -1,0 +1,17 @@
+- if @user_me
+  - @user = @user_me
+
+= form_for [@user, @user.show_feedback_requests.build] do |f|
+     
+  
+  = f.hidden_field :receiver, value: @receiver_user_id
+  = f.hidden_field :status,   value: 'still'
+    
+  
+  = f.submit 'Предложить показать обратные связи друг другу', class: ' btn btn-large btn-success btn-block request-btn show-feedb-btn '
+  
+  
+        
+        
+        
+

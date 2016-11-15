@@ -1,0 +1,123 @@
+- @menu_up_item = 'show_feedback_requests'
+
+
+
+%a{ name: 'top' }
+
+
+
+- if flash[:res]
+  #paper
+    =flash[:res]
+      
+- if flash[:in_from_db_succes]
+  #paper      
+    =flash[:in_from_db_succes]
+
+
+
+.block-nav-menu-room.block-nav-menu-room-up  
+  =render partial: 'layouts/menu/navigation'                  
+  %br/
+  
+        
+      
+      
+.k
+  .room-titles
+    Ваши запросы на общение
+  
+    - if @getted_rqs_fb_show.count == 0 and @sent_rqs_fb_show.count == 0
+      будут отображаться здесь
+  
+  %br/
+
+
+
+  - if @getted_rqs_fb_show.count > 0
+  
+    %a{ name: 'incoming' }
+      
+    %p
+      %b
+        Полученные:
+
+    %br/
+    .request_communic_block
+      - @getted_rqs_fb_show.each_with_index do |rq, i|
+
+        - @user_from   = @getted_rqs_fb_show_from_users[i]
+        - @rq_fb_show  = rq_fb_show 
+  
+
+        .request-who
+          =@getted_rqs_fb_show_from_users[i].name
+        %br/
+    
+    
+        - if rq_fb_show.status == 'yes'  
+          - status = 'Запрос Вами одобрен'
+        - elsif rq_fb_show.status == 'still'    
+          - status = 'Запрос ожидает действия'
+        - elsif rq_fb_show.status == 'no'      
+          - status = 'Запрос отклонен Вами'
+        - elsif rq_fb_show.status == 'stop'
+          - status = 'Запрос отменен пользователем'        
+    
+        .request_communic_status  
+          * #{status}
+  
+        - if rq_fb_show.status == 'still'
+          =render partial: 'show_feedback_requests/request_incoming_agree'
+          =render partial: 'show_feedback_requests/request_incoming_reject'
+
+        %hr
+
+   
+
+
+
+
+  - if @sent_rqs_fb_show.count > 0
+  
+    %a{ name: 'outcoming' }  
+    %br/
+
+    %p
+      %b
+        Отправленные:
+        %br/
+      
+    - @sent_rqs_fb_show.each_with_index do |rq, i|  
+  
+      .request-who
+        =@sent_rqs_fb_show_to_users[i].name
+
+    
+    
+      - if rq_fb_show.status == 'yes'  
+        - status = 'Запрос одобрен'
+      - elsif rq_fb_show.status == 'still'    
+        - status = 'Запрос ожидает действия'
+      - elsif rq_fb_show.status == 'no'      
+        - status = 'Запрос отклонен'
+      - elsif rq_fb_show.status == 'stop'
+        - status = 'Запрос отменен Вами'            
+    
+      .request_communic_status  
+        * #{status}
+
+      %hr
+  
+  
+
+- if @sent_rqs_fb_show.count + @getted_rqs_fb_show.count > 3
+  .block-nav-menu-room.block-nav-menu-room-down  
+    =render partial: 'layouts/menu/navigation_bottom'                  
+    
+    
+    
+    
+    
+    
+    
