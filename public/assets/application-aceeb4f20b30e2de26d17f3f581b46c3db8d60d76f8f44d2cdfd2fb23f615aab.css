@@ -9274,6 +9274,11 @@ HTML A:hover, BODY A:hover {
   color: #5C3C16;
 }
 
+/* line 35, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/messages_c/messages.sass */
+.msg-new-btn:active {
+  color: #5BC0DE;
+}
+
 /* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/order_info_pages_c/text.sass */
 .order-info-pages-text {
   font-size: 0.95em;
@@ -9561,4 +9566,13 @@ HTML A:hover, BODY A:hover {
 .feedback-personal-body {
   font-size: 0.9em;
   text-align: justify;
+}
+
+/* line 1, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/feedback_personals_c/show_feedback_button.sass */
+.show-feedb-btn {
+  text-decoration: none;
+}
+/* line 8, /home/vitalina/mi_apostamento/app/assets/stylesheets/controllers/feedback_personals_c/show_feedback_button.sass */
+.show-feedb-btn:active {
+  color: #5BB75B;
 }
