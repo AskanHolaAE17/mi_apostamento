@@ -361,17 +361,16 @@ before_action :set_root,      :set_info, only: [:any_room]
 #_______________________________________
 
       
-    end
+    end    
     
 #___________________________________________________________
-
 
     
     # NAVIGATION MENU - ROOM
     navigation_menu_room(@user, 'ro')    
     
     
-  end
+  end   # DEF
 
 #_______________________________________________________________________________
     
@@ -561,6 +560,14 @@ before_action :set_root,      :set_info, only: [:any_room]
           navigation_menu_room(@user_me, 'roo')
           
           #@contact = (User.find(@user_id_any)).contact
+          
+#_______________________________________
+
+
+      # SHOW Feedbacks Button
+      
+      @feedback_open_request        = ShowFeedbackRequest.find_by user_id: @user_me.id
+      @feedback_open_request_status = @feedback_open_request.status          
           
 #_______________________________________
 

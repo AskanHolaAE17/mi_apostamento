@@ -111,6 +111,10 @@ before_action :set_root, :set_info, only: [:show, :open]
 
 
     request_fb_show_exist = ShowFeedbackRequest.find_by user_id: user_sender.id   
+    
+    request_fb_show_exist.members = ' ' + request_fb_show_exist.user_id.to_s + ' ' + request_fb_show_exist.receiver.to_s
+    request_fb_show_exist.save
+    
     if request_fb_show_exist and request_fb_show_exist.receiver == request.receiver  # if request from current user was sended to this receiver
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_otkrutie_obratnuh_svyazey_yzhe_bul_otpravlen').msg      
                         
@@ -704,7 +708,7 @@ before_action :set_root, :set_info, only: [:show, :open]
     end          
       
     def show_feedback_request_params
-      params.require(:show_feedback_request).permit(:user_id, :receiver, :status, :able)
+      params.require(:show_feedback_request).permit(:user_id, :receiver, :status, :able, :members)
     end  
   
 

@@ -127,7 +127,8 @@
         %section
           %b
             =render partial: 'messages/message_button'
-            =render partial: 'feedbacks_structures_levels/show_feedback_button'
+            -#=render partial: 'feedbacks_structures_levels/show_feedback_button'
+            =render partial: 'show_feedback_requests/new_show_feedback_request'
             
       - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
         %hr/

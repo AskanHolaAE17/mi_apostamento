@@ -1,0 +1,51 @@
+.k
+  .k
+    .k
+
+
+      -# @receiver_user_id = @contact.user_id          
+      -# @exist_sent_request    = @requests_of_current_user.find_by receiver: @receiver_user_id
+      
+      -# @exist_income_request    = RequestsForCommunication.where    user_id: @receiver_user_id
+      -# @exist_income_request    = (@exist_income_request.where      receiver: @user.id).last
+      
+      
+        
+      -# if @exist_sent_request == nil
+        - @exist_sent_request = RequestsForCommunication.first  
+        - @exist_sent_request.status = 'hello'
+      -# if @exist_income_request == nil
+        - @exist_income_request = RequestsForCommunication.first  
+        - @exist_income_request.status = 'hello'        
+      
+        
+      - if @feedback_open_request_status and @feedback_open_request_status == 'yes'
+        %section
+        
+          %b
+            =link_to @nav_menu_room_one_link + '#show_feedbacks', class: ' btn btn-large btn-block btn-success request-btn msg-new-btn show-feedb-btn ' do
+              Посмотреть обратную связь участника
+            %br/  
+            
+            
+      - elsif @feedback_open_request_status and @feedback_open_request_status == 'still'
+        %hr/
+        %section
+          %b
+            Запрос на открытие обратных связей уже отправлен
+        %hr/            
+      
+      
+      - elsif @feedback_open_request_status and @feedback_open_request_status == 'no'
+        %hr/
+        %section
+          %b
+            Пользователь уже отклонил запрос от Вас на открытие образных связей
+        %hr/
+            
+      
+      - else
+        %section
+          %b
+            =render partial: 'show_feedback_requests/new_show_feedback_request'
+
