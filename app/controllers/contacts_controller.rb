@@ -997,7 +997,16 @@ class ContactsController < ApplicationController
 
     room_see_link(@contacts, @user)
 
+#_______________________________________
+
+
+      # SHOW Feedbacks Button
+      
+      @feedback_open_request        = ShowFeedbackRequest.find_by user_id: @user.id
+      @feedback_open_request_status = @feedback_open_request.status if @feedback_open_request          
+          
 #______________________________________
+
 
     # NAVIGATION MENU - ROOM
     navigation_menu_room(@user, 'co')

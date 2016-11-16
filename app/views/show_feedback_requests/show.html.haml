@@ -44,7 +44,7 @@
 
     %br/
     .request_communic_block
-      - @getted_rqs_fb_show.each_with_index do |rq, i|
+      - @getted_rqs_fb_show.each_with_index do |rq_fb_show, i|
 
         - @user_from   = @getted_rqs_fb_show_from_users[i]
         - @rq_fb_show  = rq_fb_show 
@@ -88,7 +88,7 @@
         Отправленные:
         %br/
       
-    - @sent_rqs_fb_show.each_with_index do |rq, i|  
+    - @sent_rqs_fb_show.each_with_index do |rq_fb_show, i|  
   
       .request-who
         =@sent_rqs_fb_show_to_users[i].name

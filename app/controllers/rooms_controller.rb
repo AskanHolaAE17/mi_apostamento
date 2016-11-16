@@ -567,7 +567,7 @@ before_action :set_root,      :set_info, only: [:any_room]
       # SHOW Feedbacks Button
       
       @feedback_open_request        = ShowFeedbackRequest.find_by user_id: @user_me.id
-      @feedback_open_request_status = @feedback_open_request.status          
+      @feedback_open_request_status = @feedback_open_request.status if @feedback_open_request          
           
 #_______________________________________
 
