@@ -1,0 +1,100 @@
+- @menu_up_item = 'recommendations_any'
+
+
+%br/
+
+    
+%a{ name: 'top' }
+
+
+
+- if flash[:res]
+  #paper
+    =flash[:res]
+      
+- if flash[:in_from_db_succes]
+  #paper      
+    =flash[:in_from_db_succes]
+      
+
+      
+.block-nav-menu-room.block-nav-menu-room-up  
+  =render partial: 'layouts/menu/navigation'                  
+  %br/
+    
+  
+
+        
+.k
+
+
+  %h3    
+  
+    =@user.name    
+    
+
+  
+  %p.square-feedback      
+  
+    %span 
+      .square{ class: @square_class }
+        O
+        
+    %span{ class: 'square-symbol-info' }
+      Символ-квадратик
+                        
+  %br/
+
+
+  
+  - if @struct_recomend            
+    =render partial: 'contents_of_feedback'            
+            
+      
+            
+  .feedback-personal-body
+  
+
+    -#.k   #contr+
+      
+      %a{ name: 'part1' }  
+      %h3
+        Часть I :
+      =@struct_info.html_safe
+      = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+
+
+      %a{ name: 'part2' }    
+      %h3
+        Часть II :    
+      =@level_info.html_safe
+      = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+      
+      %br/
+    
+    
+    
+    %a{ name: 'part1' }  
+    
+    %h3
+      Обратная связь #{@user.name} :
+      
+    =@struct_info.html_safe
+    = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')                       
+          
+    
+    - if @struct_recomend
+      %a{ name: 'recomend' }
+      .feedback_recomend_part
+
+        %h3.whose_partner
+          =@whose_partner + ', практические рекомендации партнеру:'
+        
+        =@struct_recomend.html_safe
+    
+    
+%a{ name: 'down' }    
+.block-nav-menu-room.block-nav-menu-room-down  
+  =render partial: 'layouts/menu/navigation_bottom'                      
+  
+  

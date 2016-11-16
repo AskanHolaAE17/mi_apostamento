@@ -169,6 +169,28 @@ before_action :set_root,      :set_info, only: [:any_room]
         @sent_rqs_to_users << User.find(rq.receiver)
       end      
 
+#_______________________________________      
+
+
+      # FEEDBACKS OPEN
+      # getted Show Feedback Requests
+      @getted_rqs_fb_show = ShowFeedbackRequest.where(receiver: @user.id)
+      @getted_rqs_fb_show_from_users = []
+      
+      @getted_rqs_fb_show.each do |rq|
+        @getted_rqs_fb_show_from_users << User.find(rq.user_id)
+      end
+      
+        
+        
+      # sent Show Feedback Requests
+      @sent_rqs_fb_show   = @user.show_feedback_requests
+      @sent_rqs_fb_show_to_users = []
+      
+      @sent_rqs_fb_show.each do |rq|
+        @sent_rqs_fb_show_to_users << User.find(rq.receiver)
+      end      
+
 #_______________________________________
 
 
@@ -237,14 +259,112 @@ before_action :set_root,      :set_info, only: [:any_room]
             @conversations_msg_users_links << conv_details
           end
         end
-      end                 
+      end   # # MESSAGES end                 
       
 #_______________________________________
       
       
+#_______________________________________
+
+
+      # SHOW Feedbacks Users      
+      
+      @show_feedbacks_rqs    = ShowFeedbackRequest.where("user_id LIKE ? OR receiver LIKE ?", "%#{@user.id}%", "%#{@user.id}%")
+      @show_feedbacks_rqs    = @show_feedbacks_rqs.where status: 'yes'
+        @show_feedbacks_users_names = []
+        @show_feedbacks_users_links = []
+      
+              
+      @show_feedbacks_rqs.each do |c|
+        #users_companions = c.members.split(' ')      
+      
+        #users_companions.each do |us_id|        
+          #if us_id.to_s != @user.id.to_s
+            #conversation_user = User.find(us_id)
+            #@show_feedbacks_users_names << conversation_user.name.to_s + ' ' + conversation_user.surname.to_s
+        user = if c.receiver.to_i != @user.id
+          User.find(c.receiver)
+        else
+          User.find(c.user_id)
+        end
+        
+            
+        @show_feedbacks_users_names << user.name.to_s + ' ' + user.surname.to_s    
+            
+#______________________________________        
+
+    
+    # conv_link
+    
+      #conversation_id       = user.id
+      #conv_user_first_id    = @user.id
+      #conv_user_last_id     = user.id
+      
+      #conv_id_len           = conversation_id.to_s.length
+      #conv_user_last_id_len = conv_user_last_id.to_s.length
+
+           
+      #conv_details          = conv_id_len.to_s                 +
+      #                        conversation_id.to_s             +
+      #                        conv_user_first_id.to_s          +
+      #                        conv_user_last_id.to_s           +
+      #                        conv_user_last_id_len.to_s       +
+      #                        @user.id.to_s                    +                             
+      #                        @user.id.to_s.length.to_s
+
+
+      #conv_details_64       = (Base64.encode64 conv_details).chomp.delete("\n").delete('=')
+      #conv_details          = conv_details_64
+
+#______________________________________        
+
+
+    fbo_user_id_in_base       = user.id_in_base.to_s   # FeedBacks Open - fbo
+    fbo_user_iib_last         = fbo_user_id_in_base.length - 1
+    fbo_user_code             = fbo_user_id_in_base[fbo_user_iib_last - 1] + fbo_user_id_in_base[fbo_user_iib_last]
+    
+    fbo_feed_al_arr           = fbo_feedback_sl_array = []    
+    fbo_feed_al_arr << user.id
+    fbo_feed_al_arr << ('a'..'z').to_a.shuffle.first
+    fbo_feed_al_arr << fbo_user_code
+
+    fbo_details               = full_encode_array_to_link_details(fbo_feed_al_arr, false)
+    
+    fbo_details               = Base64.decode64 fbo_details
+    
+    
+    
+    fbo_user_id               = @user.id.to_s   
+    fbo_contact_id            = @user.contact.id.to_s
+    
+    fbo_user_id_in_base_first = @user.id_in_base.to_s.first.to_i.to_s      
+
+
+    fbo_contact_id_letter     = fbo_contact_id.insert(fbo_contact_id.length-1, (0..9).to_a.shuffle.first.to_s)
+    
+    fbo_contact_i_am_details  = fbo_contact_id_letter.insert(fbo_contact_id_letter.length-1, fbo_user_id_in_base_first)                                
+    
+#______________________________________
+            
+
+            show_feedbacks_users_links_details    = fbo_details + '__' + fbo_contact_i_am_details
+            
+            show_feedbacks_users_links_details_64 = (Base64.encode64 show_feedbacks_users_links_details).delete("\n").delete('=')
+            
+
+            @show_feedbacks_users_links << show_feedbacks_users_links_details_64
+          #end
+        #end
+        
+      end   # @show_feedbacks_users.each do |c|                 
+      
+#_______________________________________
+
+      
     end
     
 #___________________________________________________________
+
 
     
     # NAVIGATION MENU - ROOM

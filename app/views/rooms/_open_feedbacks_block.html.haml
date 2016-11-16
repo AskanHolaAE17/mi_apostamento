@@ -1,0 +1,102 @@
+.requests-pre-block
+
+
+  .room-titles
+    Ваши запросы на открытие обратных связей
+  
+    - if @getted_rqs_fb_show.count == 0 and @sent_rqs_fb_show.count == 0
+      будут отображаться здесь
+  
+  %br/
+
+
+
+  - if @getted_rqs_fb_show.count > 0 
+    
+    %p
+      %b
+        Полученные:        
+    
+    
+    .request_communic_block
+      - @getted_rqs_fb_show.each_with_index do |rq_fb_show, i|
+
+
+        - if i < 3 
+        
+          %br/        
+        
+          - @user_from = @getted_rqs_fb_show_from_users[i]
+          - @rq_fb_show        = rq_fb_show 
+  
+
+          .request-who
+            =@getted_rqs_fb_show_from_users[i].name
+    
+    
+          - if rq_fb_show.status == 'yes'  
+            - status = 'Запрос Вами одобрен'
+          - elsif rq_fb_show.status == 'still'    
+            - status = 'Запрос ожидает действия'
+          - elsif rq_fb_show.status == 'no'      
+            - status = 'Запрос отклонен Вами'
+          - elsif rq_fb_show.status == 'stop'
+            - status = 'Запрос отменен пользователем'        
+    
+          .request_communic_status  
+            * #{status}
+  
+          - if rq_fb_show.status == 'still'
+            =render partial: 'show_feedback_requests/request_incoming_agree'
+            =render partial: 'show_feedback_requests/request_incoming_reject'
+
+          %hr
+          
+        - else
+        
+          %br/
+          =link_to 'Все запросы', @nav_menu_room_requests_fb_show_link + '#incoming', class: ' btn btn-large btn-block btn-info success-btn '   
+          - break
+
+
+
+  - if @sent_rqs_fb_show.count > 0
+  
+    %br/
+
+    %p
+      %b
+        Отправленные:
+        %br/
+
+      
+    - @sent_rqs_fb_show.each_with_index do |rq_fb_show, i|  
+
+      - if i < 3
+        
+          
+        .request-who
+          =@sent_rqs_fb_show_to_users[i].name
+
+    
+    
+        - if rq_fb_show.status == 'yes'  
+          - status = 'Запрос одобрен'
+        - elsif rq_fb_show.status == 'still'    
+          - status = 'Запрос ожидает действия'
+        - elsif rq_fb_show.status == 'no'      
+          - status = 'Запрос отклонен'
+        - elsif rq_fb_show.status == 'stop'
+          - status = 'Запрос отменен Вами'            
+    
+        .request_communic_status  
+          * #{status}
+
+        %hr
+          
+      - else
+        
+        =link_to 'Все запросы', @nav_menu_room_requests_fb_show_link + '#outcoming', class: ' btn btn-large btn-block btn-info success-btn '
+        - break  
+  
+

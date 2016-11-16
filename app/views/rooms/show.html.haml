@@ -13,16 +13,30 @@
   %br/
 
 
-
+%a{ name: 'feedb' }
 %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
   =render partial: 'rooms/feedback_personal'
 
+
+%a{ name: 'convers' }
 %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
   =render partial: 'rooms/conversations_block'
 
+
+%a{ name: 'requests' }
 %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
   =render partial: 'rooms/requests_block'
+
+
+%a{ name: 'show_feedbacks' }
+%article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+  =render partial: 'rooms/show_feedbacks_block'
+
   
+%a{ name: 'open_feedbacks' }
+%article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
+  =render partial: 'rooms/open_feedbacks_block'
+    
   
   
 .block-nav-menu-room.block-nav-menu-room-down  

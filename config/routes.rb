@@ -182,6 +182,12 @@ Rails.application.routes.draw do
   post  'feedbacks_show/:details',         to: 'show_feedback_requests#show'                                          
   match 'feedbacks_show/:details',         to: 'show_feedback_requests#show',                       via: 'get'               
   
+  
+  # FEEDBACKS OPEN
+    
+  post  'feedbacks_open/:details',         to: 'show_feedback_requests#open'                                          
+  match 'feedbacks_open/:details',         to: 'show_feedback_requests#open',                       via: 'get'               
+    
 #________________________________________
   
   

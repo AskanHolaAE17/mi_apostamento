@@ -2,7 +2,7 @@
 class ShowFeedbackRequestsController < ApplicationController
 
 
-before_action :set_root, :set_info, only: [:show]
+before_action :set_root, :set_info, only: [:show, :open]
 
 #_______________________________________________________________________________  
 
@@ -116,7 +116,7 @@ before_action :set_root, :set_info, only: [:show]
                         
     elsif request.save
     
-      room_url = room_url + '#open_feedback'
+      room_url = room_url + '#open_feedbacks'
       UserNonverballyActionsMailer.new_incoming_request_for_open_feedback(user_sender, user_receiver, room_url ).deliver      
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_otkrutie_obratnuh_svyazey_otpravlen').msg
         
@@ -142,7 +142,7 @@ before_action :set_root, :set_info, only: [:show]
 
 #______________________________________
 
-    receiver       = params[:requests_for_communication][:receiver]
+    receiver       = params[:show_feedback_request][:receiver]
     user_sender    = User.find(params[:user_id])
          
     requests       = ShowFeedbackRequest.where user_id: user_sender.id    
@@ -263,7 +263,7 @@ before_action :set_root, :set_info, only: [:show]
        #and conversation.save
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_otkrutie_obratnuh_svyazey_odobren').msg                
       
-      room_url = room_url + '#show_feedback'
+      room_url = room_url + '#show_feedbacks'
       UserNonverballyActionsMailer.request_for_open_feedback_is_approved(user_receiver, user_sender, room_url).deliver
       
     else
@@ -536,7 +536,157 @@ before_action :set_root, :set_info, only: [:show]
     
   end  
   
-#_______________________________________________________________________________  
+#_______________________________________________________________________________
+
+
+  def open   
+  
+
+    details_64   = params[:details]
+    details_full = Base64.decode64 details_64
+    
+    
+    details      = details_full.partition('__').first            
+    contact_i_am_info = details_full.partition('__').last    
+    
+#_______________________
+
+    
+    det_arr      = details_from_url_to_array(details, false)
+    
+    user_id      = det_arr[0]
+    user         = User.find(user_id)        
+
+#_______________________________________
+
+
+    if user      
+    
+      
+      @user = user
+
+#_______________________________________
+
+
+      user_id_in_base       = user.id_in_base.to_s
+      user_iib_last_compare = user_id_in_base.length - 1
+      user_code_compare     = user_id_in_base[user_iib_last_compare - 1] + user_id_in_base[user_iib_last_compare]        
+      
+      user_code             = det_arr[1].to_s          
+
+#_______________________________________
+
+
+      if user_code == user_code_compare
+#_______________________
+
+
+    unless contact_i_am_info                                          and
+           contact_i_am_info != ''
+    
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'      
+      
+#_______________________________________
+
+      
+    else            
+      
+      #contact_i_am_info
+      
+      iam_details           = contact_i_am_info.to_s
+      iam_contact_full_id   = iam_details.clone
+      
+      user_id_in_base_first_get         = iam_details[iam_details.length-2]
+      iam_details[iam_details.length-2] = ''
+      
+      iam_details[iam_details.length-2] = ''      
+      
+      contact_id            = iam_details
+      contact               = Contact.find(contact_id)      
+      
+#_______________________________________
+
+      
+      if @user_me = User.find(contact.user_id) and @user_me 
+         # and contact
+      
+        #user_id_in_base_first_is = @user_me.id_in_base.to_s.first.to_i.to_s        
+        
+      #_______________________________________
+        
+                
+        #if user_id_in_base_first_is == user_id_in_base_first_get                  
+
+#_______________________________________
+
+
+          # ROOM SEE PAGE - LOADED SUCCESS
+      
+          @requests_of_current_user = @user_me.requests_for_communications
+      
+          navigation_menu_room(@user_me, 'roo')
+          
+          #@contact = (User.find(@user_id_any)).contact
+
+#_______________________________________
+
+
+        @struct_info = (FeedbacksStructure.find_by title: @user.contact.struct).body
+        #@level_info  = (FeedbacksLevel.find_by     title: user.contact.level).body        
+        
+        @whose_partner   = @user_me.contact.name
+        @struct_recomend = (FeedbacksStructure.find_by title: @user.contact.struct).recomend_part          
+        
+        
+        @square_class = 'square_green'        if @user.contact.group == 'GOOD GROUP'    
+        @square_class = 'square_violet'       if @user.contact.group == 'BAD GROUP'
+        
+#_______________________________________
+
+        
+        #else   # if user_id_in_base_first_is == user_id_in_base_first_get
+        
+        #  redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'      
+        
+        #end   # if user_id_in_base_first_is == user_id_in_base_first_get
+      
+      #_______________________________________
+      
+      
+      else   # if contact and user = User.find(contact.user_id) and user
+      
+        redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'      
+        
+      end   # if contact and user = User.find(contact.user_id) and user
+      
+      
+    end   # unless @user and @room and @room.user_id ... and iam_details ...    
+  
+#_______________________________________
+
+
+      else   # unless order and order.akey == order_akey    
+
+#_______________________________________
+
+    
+        redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+      
+      end   # if user_code == user_code_compare
+      
+    else   # unless user
+
+#_______________________________________
+
+    
+      redirect_to root_path + 'info/' + 'dannue_receive_obrabotanu'  
+      
+    end   # if user    
+
+  
+  end   # DEF
+
+#_______________________________________________________________________________    
   
   
   
