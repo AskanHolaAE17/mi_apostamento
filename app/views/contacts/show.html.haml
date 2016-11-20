@@ -24,6 +24,18 @@
     - @color = '#00a129'       if contact.group == 'GOOD GROUP'    
     - @color = '#611d82'      if contact.group == 'BAD GROUP'
     
+    
+    - user_cur = User.find(contact.user_id)
+    
+        
+      
+    - @feedback_open_requests.each do |fb_open_rq|
+      - if fb_open_rq.user_id == user_cur.id or fb_open_rq.receiver == user_cur.id
+        - @feedback_open_request = fb_open_rq
+        - break
+      
+    - @feedback_open_request_status = @feedback_open_request.status if @feedback_open_request              
+    
 
     
     %article.contact-block{style: "margin-left: #{cycle('30px', '20px', '12px', '22px')};"}
@@ -129,7 +141,7 @@
             =render partial: 'messages/message_button'
             -#=render partial: 'feedbacks_structures_levels/show_feedback_button'
             -#=render partial: 'show_feedback_requests/new_show_feedback_request'
-            =render partial: 'contacts/request_feedback_open'
+            
             
       - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
         %hr/
@@ -151,6 +163,8 @@
             =render partial: 'requests_for_communications/new_request_for_communication'                                 
       
       
+      %br/
+      =render partial: 'contacts/request_feedback_open'      
       
 - else    
 

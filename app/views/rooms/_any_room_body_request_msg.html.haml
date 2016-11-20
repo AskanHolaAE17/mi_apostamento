@@ -1,32 +1,31 @@
 .k
   .k
     .k
-
-
-      - @receiver_user_id = @contact.user_id          
-      - @exist_sent_request    = @requests_of_current_user.find_by receiver: @receiver_user_id
-      
+    
+      - if @user_me
+        - @user = @user_me
+        
       - @exist_income_request    = RequestsForCommunication.where    user_id: @receiver_user_id
       - @exist_income_request    = (@exist_income_request.where      receiver: @user.id).last
       
       
         
-      - if @exist_sent_request == nil
+      -# if @exist_sent_request == nil
         - @exist_sent_request = RequestsForCommunication.first  
         - @exist_sent_request.status = 'hello'
-      - if @exist_income_request == nil
+      -# if @exist_income_request == nil
         - @exist_income_request = RequestsForCommunication.first  
         - @exist_income_request.status = 'hello'        
       
-        
+      
+      
       - if (@exist_sent_request and @exist_sent_request.status == 'yes') or (@exist_income_request and @exist_income_request.status == 'yes')
         %section
           %b
             =render partial: 'messages/message_button'
+            %br/
             
-            -#=render partial: 'feedbacks_structures_levels/show_feedback_button'
-            =render partial: 'rooms/any/any_room_body_request_feedback_open'            
-            
+
             
       - elsif (@exist_sent_request and @exist_sent_request.status == 'still') or (@exist_income_request and @exist_income_request.status == 'still')
         %hr/
@@ -48,4 +47,7 @@
         %section
           %b
             =render partial: 'requests_for_communications/new_request_for_communication'                                 
-
+            
+            
+      =render partial: 'rooms/any/any_room_body_request_feedback_open'       
+      

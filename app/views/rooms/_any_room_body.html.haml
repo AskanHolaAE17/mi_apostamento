@@ -1,7 +1,9 @@
 .k
   .k
 
-    - @receiver_id = @contact.user_id.to_s
+    - @receiver_id        = @contact.user_id.to_s
+    - @receiver_user_id   = @contact.user_id          
+    - @exist_sent_request = @requests_of_current_user.find_by receiver: @receiver_user_id    
   
     - @square_class = 'square_green'        if @contact.group == 'GOOD GROUP'    
     - @square_class = 'square_green'        if @contact.group == 'BAD GROUP'    
@@ -33,7 +35,6 @@
 
 
       =render partial: 'any_room_body_request_msg'      
-            
       
       
       .text-success.text-birthday-contacts

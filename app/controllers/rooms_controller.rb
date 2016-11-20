@@ -566,7 +566,16 @@ before_action :set_root,      :set_info, only: [:any_room]
 
       # SHOW Feedbacks Button
       
-      @feedback_open_request        = ShowFeedbackRequest.find_by user_id: @user_me.id
+      #@feedback_open_request        = ShowFeedbackRequest.find_by user_id: @user_me.id
+      @feedback_open_rqs            = ShowFeedbackRequest.where("user_id LIKE ? OR receiver LIKE ?", "%#{@user_me.id}%", "%#{@user_me.id}%")
+      
+      @feedback_open_rqs.each do |fb_open_rq|
+        if fb_open_rq.user_id == @user.id or fb_open_rq.receiver == @user.id
+          @feedback_open_request = fb_open_rq
+          break
+        end
+      end
+      
       @feedback_open_request_status = @feedback_open_request.status if @feedback_open_request          
           
 #_______________________________________

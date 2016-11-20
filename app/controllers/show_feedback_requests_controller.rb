@@ -112,8 +112,8 @@ before_action :set_root, :set_info, only: [:show, :open]
 
     request_fb_show_exist = ShowFeedbackRequest.find_by user_id: user_sender.id   
     
-    request_fb_show_exist.members = ' ' + request_fb_show_exist.user_id.to_s + ' ' + request_fb_show_exist.receiver.to_s
-    request_fb_show_exist.save
+    #request_fb_show_exist.members = ' ' + request_fb_show_exist.user_id.to_s + ' ' + request_fb_show_exist.receiver.to_s
+    #request_fb_show_exist.save
     
     if request_fb_show_exist and request_fb_show_exist.receiver == request.receiver  # if request from current user was sended to this receiver
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_otkrutie_obratnuh_svyazey_yzhe_bul_otpravlen').msg      
@@ -268,7 +268,7 @@ before_action :set_root, :set_info, only: [:show, :open]
       msg = (RoomNonverballyInfoPage.find_by translit: 'zapros_na_otkrutie_obratnuh_svyazey_odobren').msg                
       
       room_url = room_url + '#show_feedbacks'
-      UserNonverballyActionsMailer.request_for_open_feedback_is_approved(user_receiver, user_sender, room_url).deliver
+      UserNonverballyActionsMailer.request_for_open_feedback_is_approved(user_sender, user_receiver, room_url).deliver
       
     else
       msg = (OrderInfoPage.find_by translit: 'poprobyyte_eshche_raz').msg                  
