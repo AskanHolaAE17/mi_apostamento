@@ -123,16 +123,49 @@ class TestStructsController < ApplicationController
         order.save
         
 #_______________________________________
-        
-              
+
+
         #QUESTIONS
         test           =  Test.find_by         number_of_test: 1
         questions_all  =  test.questions
         questions_on   =  questions_all.where  able: true          
         questions      =  questions_on.where   for_yes_answer_plus_1_point_to: current_struct
+
+#_______________________________________
+
+
+        # PARAMS with QWS NUMBERS
+        # cur_user_qws
+        # cuq_ 
+        
+        cuq_signal_structs         = order.signal_struct_arr.split(' ')
+        
+        
+        cuq_all_qws_numbers_array  = []                
+        
+        cuq_signal_structs.each do |struct|
+          cuq_all_cur_user_qws     = questions_on.where for_yes_answer_plus_1_point_to: struct
+          
+          cuq_all_cur_user_qws.each do |cuq|
+            cuq_all_qws_numbers_array << cuq.number_of_question.to_s
+          end 
+        end  
+        
+        
+        cuq_all_qws_numbers_shuffle    = cuq_all_qws_numbers_array.shuffle
+        cuq_all_qws_numbers_params     = cuq_all_qws_numbers_shuffle.join(' ')
+        
+        cuq_all_qws_numbers_params    += ' ' + rand(0..9).to_s + rand(0..9).to_s
+        cuq_all_qws_numbers_params_64  = (Base64.encode64 cuq_all_qws_numbers_params).delete("\n").delete('=')
+
+#_______________________________________
+        
+              
+        #QUESTION
           
         question       =  questions.first
-        qw_number      =  question.number_of_question
+        qw_number      =  cuq_all_qws_numbers_shuffle.first
+        #qw_number      =  question.number_of_question        
  
      
         test_url_hash  =  {
@@ -160,7 +193,12 @@ class TestStructsController < ApplicationController
         test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')        
         test_url = root_path + 'tests_s/' + test_url_encoded_64 
         
-        redirect_to test_url   
+#_______________________________________
+
+
+        test_url_qws = test_url + '?qs=' + cuq_all_qws_numbers_params_64
+
+        redirect_to  test_url_qws 
           
 #_______________________________________          
 
@@ -226,6 +264,7 @@ class TestStructsController < ApplicationController
 
   #def load_want_to_db_after_test_struct(order, order_id, order_akey)
   #def load_want_to_db_after_test_struct(order, good_arr, bad_arr)
+  
   def load_want_to_db_after_test_struct(order)
   
           
@@ -564,6 +603,58 @@ class TestStructsController < ApplicationController
       #questions
       #.limit(1)          
             
+#_______________________________________
+
+
+        # PARAMS with QWS NUMBERS
+        # cur_user_qws
+        # cuq_ 
+        
+        cuq_signal_structs         = order.signal_struct_arr.split(' ')
+        
+        
+        cuq_all_qws_numbers_array  = []                
+        
+        cuq_signal_structs.each do |struct|
+          cuq_all_cur_user_qws     = questions_on.where for_yes_answer_plus_1_point_to: struct
+          
+          cuq_all_cur_user_qws.each do |cuq|
+            cuq_all_qws_numbers_array << cuq.number_of_question.to_s
+          end 
+        end  
+        
+        cuq_all_qws_numbers_params     = cuq_all_qws_numbers_array.join(' ')
+        cuq_all_qws_numbers_params    += ' ' + rand(0..9).to_s + rand(0..9).to_s
+        cuq_all_qws_numbers_params_64  = (Base64.encode64 cuq_all_qws_numbers_params).delete("\n").delete('=')
+
+#_______________________________________
+
+
+        ##
+        #current_struct
+        
+        params_qs_64     = params[:qs]
+        params_qs_full   = Base64.decode64 params_qs_64
+        
+        params_qs_full_ar          = params_qs_full[0..params_qs_full.length-4].split(' ')
+        params_qs_full_ar_in_order = params_qs_full_ar.sort
+        
+        cuq_all_qws_numbers_params_ar          = cuq_all_qws_numbers_params[0..cuq_all_qws_numbers_params.length-4].split(' ')
+        cuq_all_qws_numbers_params_ar_in_order = cuq_all_qws_numbers_params_ar.sort	
+        
+        unless params_qs_full_ar_in_order == cuq_all_qws_numbers_params_ar_in_order
+          redirect_to '/'
+        end
+        
+        params_qs        = params_qs_full[0..params_qs_full.length-4]
+        all_cur_user_qws = params_qs.split(' ')                           
+        @all_cur_user_qws = params_qs_full_ar
+    
+#_______________________________________      
+
+
+      @back_qw_button = @back_qw_button + '?qs=' + params_qs_64   if @back_qw_button
+
 #_______________________________________      
 
     
@@ -653,47 +744,58 @@ class TestStructsController < ApplicationController
 #_______________________________________      
     
     
-        #~NEXT QUESTION (if exist)
-        questions_cur_s  =  questions_on.where       for_yes_answer_plus_1_point_to: current_struct
+        ##~NEXT QUESTION (if exist)
+        #questions_cur_s  =  questions_on.where       for_yes_answer_plus_1_point_to: current_struct
           
-        cur_qw_index     =  questions_cur_s.index(question)
+        #cur_qw_index     =  questions_cur_s.index(question)
         
                         
-        next_qw_index    =  cur_qw_index + 1
-        next_question    =  questions_cur_s[next_qw_index]
+        #next_qw_index    =  cur_qw_index + 1
+        #next_question    =  questions_cur_s[next_qw_index]
           
-        if next_question
+        #if next_question
         
-          next_qw_number =  next_question.number_of_question    
+        #  next_qw_number =  next_question.number_of_question    
           
-        else 
+        #else 
         
-          signal_struct_arr     =  order.signal_struct_arr.split(' ')       # get array of EXIST STRUCTS
-          current_s_index      =  signal_struct_arr.index(current_struct)   # index of CURRENT STRUCT in array
-          next_struct          =  signal_struct_arr[current_s_index + 1]   # get NEXT struct
+        #  signal_struct_arr     =  order.signal_struct_arr.split(' ')       # get array of EXIST STRUCTS
+        #  current_s_index      =  signal_struct_arr.index(current_struct)   # index of CURRENT STRUCT in array
+        #  next_struct          =  signal_struct_arr[current_s_index + 1]   # get NEXT struct
         
-          questions_new_cur_s  =  questions_on.where  for_yes_answer_plus_1_point_to: next_struct   # get QWS with this struct
+        #  questions_new_cur_s  =  questions_on.where  for_yes_answer_plus_1_point_to: next_struct   # get QWS with this struct
           
                             
-          if questions_new_cur_s[0]   # if there are qws with THIS STRUCT
+        #  if questions_new_cur_s[0]   # if there are qws with THIS STRUCT
         
-            next_question      =  questions_new_cur_s[0]             # get next QW (if there are qws with THIS STRUCT)
-            next_qw_number     =  next_question.number_of_question   # get next QW number (for hash)            
+        #    next_question      =  questions_new_cur_s[0]             # get next QW (if there are qws with THIS STRUCT)
+        #    next_qw_number     =  next_question.number_of_question   # get next QW number (for hash)            
           
-            current_struct     =  next_struct   # for cur_s in HASH
-          else
+        #    current_struct     =  next_struct   # for cur_s in HASH
+        #  else
           
-            next_qw_number     = Question.all.count + 1  # set UNDER LIMIT number of NEXT QW (for test will ended)
-          end              
+        #    next_qw_number     = Question.all.count + 1  # set UNDER LIMIT number of NEXT QW (for test will ended)
+        #  end              
            
-        end  
-    
+        #end  
+        
+#_______________________________________
+
+        
+        next_qw_index   = @all_cur_user_qws.index(qw_number.to_s) + 1
+        
+        next_qw_number = if @all_cur_user_qws[next_qw_index]        
+          @all_cur_user_qws[next_qw_index].to_s
+        else
+          (Question.count + 1).to_s
+        end
+
 #_______________________________________
 
       
-        @question    =  question          
+        @question      =  question          
         
-        @qw_number   =  qw_number        
+        @qw_number     =  qw_number        
             
 #_______________________________________
 
@@ -732,8 +834,10 @@ class TestStructsController < ApplicationController
         no_params_encoded  = (Base64.encode64 no_params_json).chomp.delete("\n").delete('=')
         
         @no_params         =  root_path         + 
-                             'tests_s/'           + 
-                              no_params_encoded
+                             'tests_s/'         + 
+                              no_params_encoded +
+                             '?qs='             +
+                              params_qs_64
         
 #_______________________________________      
 
@@ -801,8 +905,10 @@ class TestStructsController < ApplicationController
         yes_params_encoded  = (Base64.encode64 yes_params_json).chomp.delete("\n").delete('=')
     
         @yes_params         =  root_path          + 
-                              'tests_s/'            + 
-                               yes_params_encoded      
+                              'tests_s/'          + 
+                               yes_params_encoded +
+                               '?qs='             +
+                               params_qs_64
     
 #_______________________________________      
 
