@@ -8712,12 +8712,13 @@ HTML, BODY {
   overflow-x: hidden;
   background-color: #EBFFCC;
   font-weight: 600;
+  cursor: default;
 }
-/* line 12, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/html-body.sass */
+/* line 14, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/html-body.sass */
 HTML A, BODY A {
   text-decoration: underline;
 }
-/* line 15, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/html-body.sass */
+/* line 17, /home/vitalina/mi_apostamento/app/assets/stylesheets/common/html-body.sass */
 HTML A:hover, BODY A:hover {
   cursor: pointer;
 }
