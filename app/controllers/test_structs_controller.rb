@@ -124,6 +124,30 @@ class TestStructsController < ApplicationController
         
 #_______________________________________
 
+          
+        if 'il'.in? params[:order_signal_struct_array]
+                  
+          #order.save
+          #flash[:struct] = order.struct
+          
+          
+          gender_rand_digit     = rand(0..9).to_s
+          
+          gender_details        = gender_rand_digit +
+                                  order.id.to_s     +
+                                  ' '               +
+                                  order.akey[0..2] 
+                                               
+          gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
+          
+          
+          redirect_to root_path + 'tests_gender/' + gender_details_url
+          
+#_______________________________________
+          
+                             
+        else   # unless order.struct == 'il'
+                    
 
         #QUESTIONS
         test           =  Test.find_by         number_of_test: 1
@@ -202,6 +226,8 @@ class TestStructsController < ApplicationController
           
 #_______________________________________          
 
+
+        end   # if order.struct == 'il'
 
       else   # signal_struct_arr.count NOT in? 1..3
         
@@ -733,6 +759,20 @@ class TestStructsController < ApplicationController
       
       if  question   #----- Start TestShow Part                  
 
+        
+        if order.gender 
+        
+          if order.gender == 'Ж'
+            @she_gender = true
+            #@he_gender  = false
+          end
+          
+          if order.gender == 'М'
+            #@she_gender = false
+            @he_gender  = true
+          end
+                    
+        end
 
         order.yes_qws_struct << ' ' << qw_number.to_s << question.for_yes_answer_plus_1_point_to[0] << '.'   # save cur qw_number to YES order array                 
 
@@ -1375,32 +1415,32 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
           
-        if order.struct == 'il'
+        #if order.struct == 'il'
                   
-          order.save
-          flash[:struct] = order.struct
+        #  order.save
+        #  flash[:struct] = order.struct
           
           
-          gender_rand_digit     = rand(0..9).to_s
+        #  gender_rand_digit     = rand(0..9).to_s
           
-          gender_details        = gender_rand_digit +
-                                  order.id.to_s     +
-                                  ' '               +
-                                  order.akey[0..2] 
+        #  gender_details        = gender_rand_digit +
+        #                          order.id.to_s     +
+        #                          ' '               +
+        #                          order.akey[0..2] 
                                                
-          gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
+        #  gender_details_url    = Base64.encode64(gender_details).delete("\n").delete('=')
           
           
-          redirect_to root_path + 'tests_gender/' + gender_details_url
+        #  redirect_to root_path + 'tests_gender/' + gender_details_url
           
 #_______________________________________
           
                              
-        else
+        #else   # unless order.struct == 'il'
                     
           load_want_to_db_after_test_struct(order)        
           
-        end
+        #end   # if order.struct == 'il'
           
 #_______________________________________          
 
@@ -1541,10 +1581,90 @@ class TestStructsController < ApplicationController
      
 
         order.gender = params[:order_gender]
+        order.save
 
   
-        load_want_to_db_after_test_struct(order)  
+        #load_want_to_db_after_test_struct(order)  
         
+#_______________________________________
+                              
+
+        #QUESTIONS
+        test           =  Test.find_by         number_of_test: 1
+        questions_all  =  test.questions
+        questions_on   =  questions_all.where  able: true          
+        #questions      =  questions_on.where   for_yes_answer_plus_1_point_to: current_struct
+
+#_______________________________________
+
+
+        # PARAMS with QWS NUMBERS
+        # cur_user_qws
+        # cuq_ 
+        
+        cuq_signal_structs         = order.signal_struct_arr.split(' ')
+        
+        
+        cuq_all_qws_numbers_array  = []                
+        
+        cuq_signal_structs.each do |struct|
+          cuq_all_cur_user_qws     = questions_on.where for_yes_answer_plus_1_point_to: struct
+          
+          cuq_all_cur_user_qws.each do |cuq|
+            cuq_all_qws_numbers_array << cuq.number_of_question.to_s
+          end 
+        end  
+        
+        
+        cuq_all_qws_numbers_shuffle    = cuq_all_qws_numbers_array.shuffle
+        cuq_all_qws_numbers_params     = cuq_all_qws_numbers_shuffle.join(' ')
+        
+        cuq_all_qws_numbers_params    += ' ' + rand(0..9).to_s + rand(0..9).to_s
+        cuq_all_qws_numbers_params_64  = (Base64.encode64 cuq_all_qws_numbers_params).delete("\n").delete('=')
+
+#_______________________________________
+        
+              
+        #QUESTION
+          
+        #question       =  questions.first
+        qw_number      =  cuq_all_qws_numbers_shuffle.first
+        current_struct = cuq_signal_structs.first
+        #qw_number      =  question.number_of_question        
+ 
+     
+        test_url_hash  =  {
+  
+          t:     '1',
+          q:     qw_number,
+          oi:    order.id,
+          oa:    order.akey[0..2],
+            
+          a:     '0',
+          n:     '0',
+          s:     '0',
+          p:     '0',
+          g:     '0',
+          d:     '0',
+          m:     '0',
+          o:     '0',
+          k:     '0',
+          i:     '0',                            
+            
+          cur_s: current_struct
+          }        
+        
+        test_url_json    = JSON.generate(test_url_hash)        
+        test_url_encoded_64 = (Base64.encode64 test_url_json).chomp.delete("\n").delete('=')        
+        test_url = root_path + 'tests_s/' + test_url_encoded_64 
+        
+#_______________________________________
+
+
+        test_url_qws = test_url + '?qs=' + cuq_all_qws_numbers_params_64
+
+        redirect_to  test_url_qws 
+          
 #_______________________________________      
 
         

@@ -1,3 +1,20 @@
+- if @she_gender
+
+  :css
+    .he{
+      display: none;
+    }
+
+
+- if @he_gender
+
+  :css
+    .she{
+      display: none;
+    }
+    
+    
+
 -#- if @current_question_serial_number.to_i > 1
   .counter
     = @current_question_serial_number + ' / ' + @questions_amount
@@ -14,7 +31,7 @@
 
 
 .lead.qw_body_text
-  =@question.title
+  =@question.title.html_safe
 
 
 = button_to 'Да',  @yes_params, class: 'btn btn-primary btn-large test-click-yes-button'
