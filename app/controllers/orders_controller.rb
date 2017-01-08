@@ -151,83 +151,11 @@ class OrdersController < ApplicationController
     #pay-   
 # test_struct_url_______________________________________________________________________________
 #				
-          @order.level == 'ne'        
-          
-#_______________________________________
-        
-
-          current_qw_struct_i = order.current_qw_struct.to_i
-          
-          if current_qw_struct_i == 0
-            cur_struct_qw        = ((Question.where test: 1).where number_of_question: 1).first          
-          end      
-          
-          if current_qw_struct_i != 0
-            cur_struct_qw        = ((Question.where test: 1).where number_of_question: order.current_qw_struct).first          
-          end      
-                    
-          cur_struct             = cur_struct_qw.for_yes_answer_plus_1_point_to
-            
-          test_1_start_url_hash  =  {
-        
-            l:      level,
-            t:      '1',
-            q:      "#{@order.current_qw_struct or '1'}",        
-            oi:     @order.id,
-            oa:     @order.akey,
-            cur_s:  cur_struct,          
-          
-            a:      '0',
-            n:      '0',
-            s:      '0',
-            p:      '0',
-            g:      '0',
-            d:      '0',
-            m:      '0',
-            o:      '0',
-            k:      '0',
-            i:      '0'
-          }        
-
-#_______________________________________
-
-
-          test_1_start_url_json     =  JSON.generate(test_1_start_url_hash)
-          test_1_start_url_encoded  =  (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
-        
-          test_1_start_url          =  root_path                +                                       
-                                      'testo_s/'   + 
-                                       test_1_start_url_encoded                                            
-
-#__________________________________________      
-      
-      
-          #unless order.test_2_ended
-          #  OrderMailer.b_to_test_2_levels(order, test_1_start_url).deliver                          
-          #end              
-      
-      
-          @order.test_2_ended     = true      
-      
-#__________________________________________      
-
-        
-          @order.save
-          redirect_to     test_1_start_url  
-#				
-# END_test_struct_url___________________________________________________________________________				
-				
     if @order.current_test_link
       redirect_to root_path + @order.current_test_link
     else  
-      #redirect_to test_url
-			redirect_to test_1_start_url
-    end          
-    #9.01.17#if @order.current_test_link
-    #9.01.17#  redirect_to root_path + @order.current_test_link
-    #9.01.17#else  
-    #9.01.17#  redirect_to test_url
-    #9.01.17#end  
+      redirect_to test_url
+    end  
 
 #_______________________________________________________________________________if @order.save
        
