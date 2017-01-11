@@ -119,6 +119,7 @@ class OrdersController < ApplicationController
       
           @order.group = 'GOOD GROUP'   
 
+          @order.level = 'nevrotick'
           level = 'ne'
           
 #_______________________________________
