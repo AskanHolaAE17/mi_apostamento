@@ -142,7 +142,7 @@ class OrdersController < ApplicationController
             t:      '1',
             q:      "#{@order.current_qw_struct or '1'}",        
             oi:     @order.id,
-            oa:     @order.akey,
+            oa:     @order.akey[0..2],
             cur_s:  cur_struct,          
           
             a:      '0',
