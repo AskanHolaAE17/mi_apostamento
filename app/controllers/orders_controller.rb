@@ -114,63 +114,7 @@ class OrdersController < ApplicationController
         
         test_url = root_path + 'testo/' + test_url_encoded_64
 
-#11.1.17#___________________________________________      
-      
-      
-          @order.group = 'GOOD GROUP'   
-
-          level = 'ne'
-          
-#_______________________________________
-        
-
-          current_qw_struct_i = @order.current_qw_struct.to_i
-          
-          if current_qw_struct_i == 0
-            cur_struct_qw        = ((Question.where test: 1).where number_of_question: 1).first          
-          end      
-          
-          if current_qw_struct_i != 0
-            cur_struct_qw        = ((Question.where test: 1).where number_of_question: @order.current_qw_struct).first          
-          end      
-                    
-          cur_struct             = cur_struct_qw.for_yes_answer_plus_1_point_to
-            
-          test_1_start_url_hash  =  {
-        
-            l:      level,
-            t:      '1',
-            q:      "#{@order.current_qw_struct or '1'}",        
-            oi:     order_id,
-            oa:     order_akey,
-            cur_s:  cur_struct,          
-          
-            a:      '0',
-            n:      '0',
-            s:      '0',
-            p:      '0',
-            g:      '0',
-            d:      '0',
-            m:      '0',
-            o:      '0',
-            k:      '0',
-            i:      '0'
-          }        
-
-#_______________________________________
-
-
-          test_1_start_url_json     =  JSON.generate(test_1_start_url_hash)
-          test_1_start_url_encoded  =  (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
-        
-          test_1_start_url          =  root_path                + 
-                                      'infos/'                  + 
-                                      'tekst_mezhdy_testami/'   + 
-                                       test_1_start_url_encoded                                            
-      
-        test_url = root_path + 'testo_s/' + test_1_start_url_encoded
-      
-#11.1.17#___________________________________________
+#___________________________________________
         
       
         #order = Order.find(order_id)      
