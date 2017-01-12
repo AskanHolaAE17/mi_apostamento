@@ -270,7 +270,7 @@ before_action :set_root,      :set_info, only: [:any_room]
       # SHOW Feedbacks Users      
       
       #@show_feedbacks_rqs    = ShowFeedbackRequest.where("user_id LIKE ? OR receiver LIKE ?", "%#{@user.id}%", "%#{@user.id}%")
-      @show_feedbacks_rqs    = ShowFeedbackRequest.where(["user_id = ? or receiver = ?", @user.id, @user.id])
+      @show_feedbacks_rqs    = ShowFeedbackRequest.where(["user_id = ? or receiver = ?", @user.id.to_s, @user.id.to_s])
       @show_feedbacks_rqs    = @show_feedbacks_rqs.where status: 'yes'
         @show_feedbacks_users_names = []
         @show_feedbacks_users_links = []
