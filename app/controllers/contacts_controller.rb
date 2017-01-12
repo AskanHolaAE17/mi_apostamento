@@ -1009,7 +1009,8 @@ class ContactsController < ApplicationController
       #@feedback_open_request_status = @feedback_open_request.status if @feedback_open_request          
       
       
-      @feedback_open_requests        = ShowFeedbackRequest.where("user_id LIKE ? OR receiver LIKE ?", "%#{@user.id}%", "%#{@user.id}%")
+      #@feedback_open_requests        = ShowFeedbackRequest.where("user_id LIKE ? OR receiver LIKE ?", "%#{@user.id}%", "%#{@user.id}%")
+      @feedback_open_requests        = ShowFeedbackRequest.where(["user_id = ? or receiver = ?", @user.id.to_s, @user.id.to_s])  
             
       @feedback_open_requests.each do |fb_open_rq|
         if fb_open_rq.user_id == @user.id or fb_open_rq.receiver == @user.id
