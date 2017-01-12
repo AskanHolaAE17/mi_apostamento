@@ -108,7 +108,7 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
       
-      if signal_struct_arr.count.in? 3..4
+      if signal_struct_arr.count.in? 2..4
 
         
         current_struct             =  signal_struct_arr[0]                
