@@ -125,7 +125,7 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
           
-        if 'il'.in? params[:order_signal_struct_array] and (order.gender == '' or order.gender == nil)
+        if 'il'.in? params[:order_signal_struct_array] and 5==3
                   
           #order.save
           #flash[:struct] = order.struct
@@ -1146,7 +1146,7 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
           
-        if order.struct == 'il' and 5==3
+        if order.struct == 'il' 
                   
           order.save
           flash[:struct] = order.struct
