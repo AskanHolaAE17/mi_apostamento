@@ -154,7 +154,7 @@ class OrdersController < ApplicationController
             d:      '0',
             m:      '0',
             o:      '0',
-            k:      '0',
+            #k:      '0',
             i:      '0'
           }        
 
