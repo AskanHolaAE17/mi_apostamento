@@ -1146,7 +1146,7 @@ class TestStructsController < ApplicationController
 #_______________________________________
 
           
-        if order.struct == 'il'
+        if order.struct == 'il' and 5==3
                   
           order.save
           flash[:struct] = order.struct
