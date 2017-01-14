@@ -976,13 +976,9 @@ class TestStructsController < ApplicationController
 	end	
         
         
-        if flash[:questions_amount]
-	  @questions_amount = flash[:questions_amount]
-	else	
-          @questions_amount = order.signal_struct_arr.split(' ').count
-          @questions_amount = @questions_amount.to_s   
-	  flash[:questions_amount] = @questions_amount	
-	end	
+        @questions_amount = order.signal_struct_arr.split(' ').count
+        @questions_amount = @questions_amount.to_s   
+		    
       
 #_______________________________________            
 
