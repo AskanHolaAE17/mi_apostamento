@@ -972,7 +972,7 @@ class TestStructsController < ApplicationController
           #@current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
           #@current_question_serial_number = @current_question_serial_number.to_s
 	  flash[:current_question_serial_number] = '1'	
-	  flash[:current_question_serial_number] = @current_question_serial_number	
+	  @current_question_serial_number = flash[:current_question_serial_number]	
 	end	
         
         
