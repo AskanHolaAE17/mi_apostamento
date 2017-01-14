@@ -1,5 +1,6 @@
 require 'uri'
 require 'openssl'
+require 'base64'
 class TestStructsController < ApplicationController
 
 
@@ -971,7 +972,7 @@ class TestStructsController < ApplicationController
 		    
 		    
 	all_qws_for_to_do_64 = params[:qs]
-	all_qws_for_to_do    = Base64.encode all_qws_for_to_do_64	    
+	all_qws_for_to_do    = Base64.decode64 all_qws_for_to_do_64	    
 	all_qws_for_to_do_ar = all_qws_for_to_do.split(' ')		            
         @current_question_serial_number	= (all_qws_for_to_do_ar.index(qw_number.to_s) + 1).to_s
 		    
