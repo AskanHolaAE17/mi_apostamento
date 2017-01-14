@@ -951,8 +951,8 @@ class TestStructsController < ApplicationController
                                params_qs_64
     
 #_______________________________________      
-
-         
+       	     
+		    
         #@questions_numbers_for_serial = []
         #signal_struct_arr = order.signal_struct_arr.split(' ')
         
@@ -965,18 +965,18 @@ class TestStructsController < ApplicationController
           
         #end
                  
-        if flash[:current_question_serial_number]
-	  flash[:current_question_serial_number] = (flash[:current_question_serial_number].to_i + 1).to_s	
-	  @current_question_serial_number = flash[:current_question_serial_number]	
-	else	
-          #@current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
-          #@current_question_serial_number = @current_question_serial_number.to_s
-	  flash[:current_question_serial_number] = '1'	
-	  @current_question_serial_number = flash[:current_question_serial_number]	
-	end	
+
+        #@current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
+        #@current_question_serial_number = @current_question_serial_number.to_s	
+		    
+		    
+	all_qws_for_to_do_64 = params[:qs]
+	all_qws_for_to_do    = Base64.decode all_qws_for_to_do_64	    
+	all_qws_for_to_do_ar = all_qws_for_to_do.split(' ')		            
+        @current_question_serial_number	= (all_qws_for_to_do_ar.index(qw_number.to_s) + 1).to_s
+		    
         
-        
-        @questions_amount = order.signal_struct_arr.split(' ').count
+        @questions_amount = order.signal_struct_arr.split(' ').count * 5
         @questions_amount = @questions_amount.to_s   
 		    
       
