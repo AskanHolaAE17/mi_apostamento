@@ -965,13 +965,24 @@ class TestStructsController < ApplicationController
           
         #end
                  
-        #@current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
-        #@current_question_serial_number = @current_question_serial_number.to_s
+        if flash[:current_question_serial_number]
+	  flash[:current_question_serial_number] = (flash[:current_question_serial_number].to_i + 1).to_s	
+	  @current_question_serial_number = flash[:current_question_serial_number]	
+	else	
+          #@current_question_serial_number = @questions_numbers_for_serial.index(qw_number) + 1   
+          #@current_question_serial_number = @current_question_serial_number.to_s
+	  flash[:current_question_serial_number] = '1'	
+	  flash[:current_question_serial_number] = @current_question_serial_number	
+	end	
         
         
-        
-        #@questions_amount = @questions_numbers_for_serial.count + 1                 
-        #@questions_amount = @questions_amount.to_s   
+        if flash[:questions_amount]
+	  @questions_amount = flash[:questions_amount]
+	else	
+          @questions_amount = order.signal_struct_arr.split(' ').count
+          @questions_amount = @questions_amount.to_s   
+	  flash[:questions_amount] = @questions_amount	
+	end	
       
 #_______________________________________            
 
