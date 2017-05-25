@@ -113,15 +113,18 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
 #__________________________________________    
 
         
-    unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)            
-      unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
+    unless order.name[0..1] == '51'
+      
+      unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)            
         unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
+          unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
         
-          UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
+            UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
         
+          end
         end
-      end
-    end   # unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)                
+      end   # unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)                
+    end
 
 #__________________________________________    
 
