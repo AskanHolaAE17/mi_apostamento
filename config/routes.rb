@@ -1,5 +1,7 @@
 Rails.application.routes.draw do                
 
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
   match '/',                               to: 'main_pages#index',                                  via: 'get'  
   post  '/',                               to: 'main_pages#index'           
 
@@ -222,8 +224,7 @@ Rails.application.routes.draw do
   
     
   root 'main_pages#index'
-  
-  devise_for :admin_users, ActiveAdmin::Devise.config
+
   ActiveAdmin.routes(self)    
     
   match "*path",                           to: 'main_pages#index',                                  via: 'get'

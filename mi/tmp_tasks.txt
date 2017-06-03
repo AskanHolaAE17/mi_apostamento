@@ -1,0 +1,1 @@
+-> delete descr in MainPage(1) online if Site'll still work without
