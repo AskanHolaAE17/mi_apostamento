@@ -24,7 +24,6 @@ module MiApostamento
     #config.active_record.raise_in_transactional_callbacks = true
     
     config.encoding = 'utf-8'
-    
-    config.assets.initialize_on_precompile = false
+
   end
 end
