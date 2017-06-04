@@ -112,16 +112,20 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
         
 #__________________________________________    
 
-        
-    unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)            
-      unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
+      
+    unless order.name[0..1] == '59'
+    
+      unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)            
         unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
+          unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
         
-          UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
+            UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)
         
+          end
         end
-      end
-    end   # unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)                
+      end   # unless UserNonverballyActionsMailer.the_room_of_current_user(user, room_url).try(:deliver)  
+    
+    end   # unless order.name[0..1] == '59'
 
 #__________________________________________    
 
@@ -291,17 +295,21 @@ before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
       unless order.test_1_ended
         
         
-        unless OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
+        unless order.name[0..1] == '59'  
+        
           unless OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
             unless OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
+              unless OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
             
-              OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
+                OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)      
               
+              end
             end
-          end
-        end   # unless OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)            
+          end   # unless OrderMailer.c_more_info_form(order, link_with_more_info_form, link_with_contacts_again).try(:deliver)            
         
-        
+      
+        end   # unless order.name[0..1] == '59'  
+      
       end   # unless order.test_1_ended              
             
 #__________________________________________      
