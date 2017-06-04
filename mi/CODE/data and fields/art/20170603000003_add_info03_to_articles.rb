@@ -1,4 +1,4 @@
-class AddInfo03AgainToArticles < ActiveRecord::Migration
+class AddInfo03ToArticles < ActiveRecord::Migration
 
   
 
