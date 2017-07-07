@@ -27,6 +27,8 @@ $ heroku git:remote -a heroku_repo_name
 
 
 
+git push -u origin <branch>
+
 
 
 
