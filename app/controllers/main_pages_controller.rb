@@ -95,7 +95,7 @@ class MainPagesController < ApplicationController
     
     @preamble_elements    = PreambleElement.order(:number)
     
-    @preamble_element_way               = (@preamble_elements.where name: 'way').first
+    @preamble_element_way               = (@preamble_elements.where name: 'way').first.body.split('<hr/>')
     @preamble_element_form_or_read_all  = (@preamble_elements.where name: 'form_or_read_all').first
     
     article_numbers = '1234'
