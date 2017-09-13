@@ -366,6 +366,15 @@ ActiveRecord::Schema.define(version: 20171115011801) do
     t.datetime "updated_at"
   end
 
+  create_table "test_target_services", force: :cascade do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "number"
+    t.boolean  "active",     default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "tests", force: :cascade do |t|
     t.integer  "number_of_test"
     t.string   "title"

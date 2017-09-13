@@ -95,6 +95,7 @@ class MainPagesController < ApplicationController
     
     @preamble_elements    = PreambleElement.order(:number)
     
+    @preample_element_select_start_way  = (@preamble_elements.find_by name: 'select_start_way_before_registration').body
     @preamble_element_way               = (@preamble_elements.where name: 'way').first.body.split('<hr/>')
     @preamble_element_form_or_read_all  = (@preamble_elements.where name: 'form_or_read_all').first
     
