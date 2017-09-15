@@ -20,6 +20,7 @@ class MainPagesController < ApplicationController
     @root_path              = root_path
     
     @prerender_page         = root_path                
+    selected_start_way_name = params[:w]
     
 #_______________________________________________________________________________      
 
@@ -103,8 +104,17 @@ class MainPagesController < ApplicationController
     @current_url = request.env['PATH_INFO']
     @current_url[0] = ''
     
-    @preamble_element_way               = (@preamble_elements.where name: 'way').first.body.split('<hr/>')
+    
+    @load_main_page_content = true
+    unless selected_start_way_name    
+      @load_main_page_content = false   
+    else
+      @preamble_element_way             = (@preamble_elements.where name: selected_start_way_name).first.body.split('<hr/>')   
+    end
+            
+    
     @preamble_element_form_or_read_all  = (@preamble_elements.where name: 'form_or_read_all').first
+    
     
     article_numbers = '1234'
     article_numbers = article_numbers.delete(@article.number.to_s)

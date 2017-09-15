@@ -1,0 +1,22 @@
+%section
+  
+  #preamble_way
+    - @preamble_element_way.each_with_index do |pre, i|
+      .block_fond 
+        =pre.html_safe
+      
+        #-------------------------------------------------------------------------------      
+
+        - if i == @preamble_element_way.count - 1
+        
+          %br/
+          %br/
+        
+          #preamble_article_title
+            %section
+              .form_or_read_all
+                %b
+                  = @preamble_element_form_or_read_all.body.html_safe
+                       
+          %br/   
+    

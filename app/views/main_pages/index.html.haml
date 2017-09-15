@@ -7,6 +7,7 @@
   
 - @contact = Contact.new                                               
 
+
 #-------------------------------------------------------------------------------      
 
 = flash[:echo_me]
@@ -15,33 +16,26 @@
   %h2 
     = @info_msg
 
+    
 #-------------------------------------------------------------------------------      
 
-=render partial: 'preamble'
+-#=render partial: 'preamble'
 
-#-------------------------------------------------------------------------------      
+- unless @load_main_page_content
+  =render partial: 'preamble_select_way'
+
+  
+  #-------------------------------------------------------------------------------      
+
+
+- else  
+  =render partial: 'preamble_content'
+  =render partial: 'article_form'
+
+  
     
            
-.block_fond
-  
-  %br/
-  =render partial: 'article'
-     
 
-  %section
-    #paper
-      #form.lead      
-        %b
-          = render partial: 'new_order_form'         
-    
-            
-  %section      
-    .article-author-link
-      Автор:
-      = link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'      
-      
-    %br/
-    %br/
 
 
 

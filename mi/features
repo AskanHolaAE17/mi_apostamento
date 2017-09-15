@@ -26,7 +26,7 @@ $ heroku domains:www.add example.com
 $ heroku git:remote -a heroku_repo_name
 
 
-
+~git checkout -b <branch>
 git push -u origin <branch>
 
 
