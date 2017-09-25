@@ -30,5 +30,8 @@ $ heroku git:remote -a heroku_repo_name
 git push -u origin <branch>
 
 
+git push -u origin main_page_in_4_ways
+heroku run 'rails db:migrate' --app 
+
 
 

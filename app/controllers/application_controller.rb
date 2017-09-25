@@ -650,12 +650,21 @@ class ApplicationController < ActionController::Base
     
     original_path_body = original_path.split('#')[0]
         
-    target   = original_path.split('#').last   if original_path.include? '#'        
-    target ||= ''    
+    target   = original_path.split('#').last   if original_path.include? '#'          
     
     
-    original_path
-    original_path_body + '?w=' + params[:w] + '#' + target   if params[:w]   # yakor       
+    if params[:w]            
+      
+      if target
+        original_path_body + '?w=' + params[:w] + '#' + target      # yakor       
+      else
+      
+        original_path_body + '?w=' + params[:w]
+      end  
+      
+    else
+      original_path
+    end  
     
   end  
 
@@ -672,7 +681,8 @@ class ApplicationController < ActionController::Base
     
     #   '__word#text__' to   A word: text
     
-    for i in 1..text.count('__')/4 do
+    #for i in 1..text.count('__')/4 do
+    for i in 1..text.scan(/__/).length/2 do
       
       index_start  = text.index('__')
       2.times{ text[index_start] = '' }
@@ -682,14 +692,14 @@ class ApplicationController < ActionController::Base
     
     
       string_for_link    = text[index_start..index_end-1]    
-      string_for_link_ar = string_for_link.split('#')
+      string_for_link_ar = string_for_link.split('%%')
     
       href = string_for_link_ar[0]
       body = string_for_link_ar[1]
     
     
       # forming link
-      link = "<a href='" + save_path_of_one_selected_way_on_main_pages("/#" + href) + "'>" + body + "</a>"
+      link = "<a href='" + save_path_of_one_selected_way_on_main_pages(href) + "'>" + body + "</a>"
 
       # replace  string_for_link by A-link
       text.slice!  string_for_link 

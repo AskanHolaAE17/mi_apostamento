@@ -108,7 +108,9 @@ class MainPagesController < ApplicationController
     @load_main_page_content = false
     if selected_start_way_name and (@preamble_elements.where name: selected_start_way_name).first
       @load_main_page_content = true
-      @preamble_element_way             = (@preamble_elements.where name: selected_start_way_name).first.body.split('<hr/>')       
+      @preamble_element_way             = (@preamble_elements.where name: selected_start_way_name).first.body
+      @preamble_element_way             = create_links_on_main_pages(@preamble_element_way)   if params[:w]
+      @preamble_element_way             = @preamble_element_way.split('<hr/>')       
     end        
             
     
@@ -148,8 +150,9 @@ class MainPagesController < ApplicationController
 #_______________________________________________________________________________     
     
 
-    # ArticlesMenu in last but one Paragraph in Text  
+    # ArticlesMenu in last but one Paragraph in Text
     descr_full   =  @article.description
+    descr_full   =  create_links_on_main_pages(descr_full)   if params[:w]
     tmp_split    =  descr_full.rindex('<p>')                                    # tmp part: find LAST entry of '<p>' in text                          
     tmp_text     =  descr_full.slice(0, tmp_split)                              # tmp TEXT without last paragraph
     split_symbol =  tmp_text.rindex('<p>') + 3                                  # find LAST BUT ONE split symbol (on original text)     
