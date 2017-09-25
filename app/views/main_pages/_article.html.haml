@@ -42,7 +42,7 @@
     %section
       %b
         Читать следующую статью (статья #{@next_article.number} из #{@articles.count+1}):
-        = link_to "/articles/#{@next_article.translit}#preamble_article_title" do
+        = link_to save_path_of_one_selected_way_on_main_pages("/articles/#{@next_article.translit}#preamble_article_title") do
           %div
             =@next_article.number.to_s + '. '
             =@next_article.title
@@ -53,7 +53,7 @@
       %b
         Читать другие статьи:
         - @all_articles_bur_cur.each do |art_link|                  
-          = link_to "/articles/#{art_link.translit}#preamble_article_title" do
+          = link_to save_path_of_one_selected_way_on_main_pages("/articles/#{art_link.translit}#preamble_article_title") do
             %div
               =art_link.number.to_s + '. '
               =art_link.title    

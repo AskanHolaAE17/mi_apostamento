@@ -2,7 +2,8 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :null_session
-  helper_method :akey, :repl_all_subs, :swap_symb, :id_in_base, :xor_with, :room_url_def, :navigation_menu_room
+  helper_method :akey, :repl_all_subs, :swap_symb, :id_in_base, :xor_with, :room_url_def, :navigation_menu_room, 
+                :save_path_of_one_selected_way_on_main_pages, :create_links_on_main_pages
   
       
   def akey(*m)
@@ -640,7 +641,107 @@ class ApplicationController < ActionController::Base
   
   end  
 
-#_______________________________________________________________________________    
+  
+#_______________________________________________________________________________
+  
+  
+  
+  def save_path_of_one_selected_way_on_main_pages(original_path)
+    
+    original_path_body = original_path.split('#')[0]
+        
+    target   = original_path.split('#').last   if original_path.include? '#'        
+    target ||= ''    
+    
+    
+    original_path
+    original_path_body + '?w=' + params[:w] + '#' + target   if params[:w]   # yakor       
+    
+  end  
+
+  
+#_______________________________________________________________________________      
 
 
+  
+  def create_links_on_main_pages(text_for_replaces)
+    
+    text = text_for_replaces
+    
+    
+    
+    #   '__word#text__' to   A word: text
+    
+    for i in 1..text.count('__')/4 do
+      
+      index_start  = text.index('__')
+      2.times{ text[index_start] = '' }
+    
+      index_end  = text.index('__')
+      2.times{ text[index_end] = '' }
+    
+    
+      string_for_link    = text[index_start..index_end-1]    
+      string_for_link_ar = string_for_link.split('#')
+    
+      href = string_for_link_ar[0]
+      body = string_for_link_ar[1]
+    
+    
+      # forming link
+      link = "<a href='" + save_path_of_one_selected_way_on_main_pages("/#" + href) + "'>" + body + "</a>"
+
+      # replace  string_for_link by A-link
+      text.slice!  string_for_link 
+      text.insert( index_start, link )
+      
+    end  
+    
+    
+    
+    #   '_d_'           to   A d
+    
+    for i in 1..text.scan(/_>/).length do
+      
+      index_start  = text.index('_>')
+      2.times{ text[index_start] = '' }
+    
+      index_end  = text.index('<_')
+      2.times{ text[index_end] = '' }   
+
+      
+      string_for_link    = text[index_start..index_end-1]   
+      
+      
+      # forming link
+      link = "<a name='" + string_for_link + "'></a>"   
+      
+      # replace  string_for_link by A-link
+      text.slice!  string_for_link 
+      text.insert( index_start, link )      
+      
+    end  
+    
+    
+    text
+  end  
+
+
+#_______________________________________________________________________________      
+
+  
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

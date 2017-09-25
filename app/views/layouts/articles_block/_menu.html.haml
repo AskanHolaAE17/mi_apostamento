@@ -6,7 +6,7 @@
 
   - @articles.each do |article|
   
-    = link_to "/articles/#{article.translit}#preamble_article_title" do
+    = link_to save_path_of_one_selected_way_on_main_pages("/articles/#{article.translit}#preamble_article_title") do
       %div
         =article.number.to_s + '. '
         =article.title
