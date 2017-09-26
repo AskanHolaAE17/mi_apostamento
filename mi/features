@@ -25,12 +25,18 @@ $ heroku domains:add example.com
 $ heroku domains:www.add example.com
 $ heroku git:remote -a heroku_repo_name
 
+______
 
+
+..main_page_in_4_ways, article_save_selected_way_in_links
+
+git branch   # get name of current branch
 ~git checkout -b <branch>
 git push -u origin <branch>
 
 
-git push -u origin main_page_in_4_ways
+~git checkout -b article_save_selected_way_in_links
+git push -u origin article_save_selected_way_in_links 
 heroku run 'rails db:migrate' --app 
 
 
