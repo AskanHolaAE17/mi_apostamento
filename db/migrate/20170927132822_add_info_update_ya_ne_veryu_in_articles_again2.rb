@@ -1,4 +1,4 @@
-class AddInfoUpdateYaNeVeryuInArticles < ActiveRecord::Migration
+class AddInfoUpdateYaNeVeryuInArticlesAgain2 < ActiveRecord::Migration
 
   
 
