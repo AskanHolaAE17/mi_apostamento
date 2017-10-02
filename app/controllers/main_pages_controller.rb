@@ -173,7 +173,7 @@ class MainPagesController < ApplicationController
 #_______________________________________________________________________________       
     
     
-    run_59_email_debug_once   # save_address_of_59_orders_bot
+    ### run_59_email_debug_once   # save_address_of_59_orders_bot
     
   end
 #_____________________________________________________________________________________________________________________________________________  

@@ -35,11 +35,11 @@ git branch   # get name of current branch
 git push -u origin <branch>
 
 
-~git checkout -b article_save_selected_way_in_links
-git push -u origin article_save_selected_way_in_links 
+~git checkout -b 59_once_and_on_save_debug
+git push -u origin 59_once_and_on_save_debug 
 
 [pre]: set heroku to git: $ heroku git:remote -a yourapp
-~git push heroku branch:master   # need once '$ heroku login' before
+~git push heroku other_branch:master   # need once '$ heroku login' before
 heroku run 'rails db:migrate'    or~ $heroku run 'rails db:migrate' --app 
 
 
