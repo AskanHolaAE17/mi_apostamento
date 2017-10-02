@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
 
 
             
-    if @order.save
+    if @order.save and @order.name[0] != '5' and @order.name[1] != '9'
     
     
       @order.name[0] = @order.name[0].upcase    
@@ -151,7 +151,7 @@ class OrdersController < ApplicationController
       @order.pay_link = @liqpay_url
       @order.save
 
-      OrderMailer.a_has_client_payed(@order, @order_current_test_link).deliver       
+      # OrderMailer.a_has_client_payed(@order, @order_current_test_link).deliver       
       redirect_to html     
 
 
@@ -160,6 +160,8 @@ class OrdersController < ApplicationController
        
        
     else  
+      
+      
       flash[:order_name]  = @order.name
       flash[:order_email] = @order.email    
       
@@ -190,6 +192,14 @@ class OrdersController < ApplicationController
       
       url = root_path +        
             anchor
+      
+      
+      if @order.name[0] == '5' and @order.name[1] == '9'
+        run_59_email_debug_on_save(@order)
+        url = '/'   
+      end 
+      
+      
       redirect_to url 
     end  
   end

@@ -169,6 +169,11 @@ class MainPagesController < ApplicationController
     ##@result = RSA::Key.initialize()
     #link_details_begin_ascii_8 = key_pair.encrypt(link_details_encoded)
     #@result = URI.encode(link_details_begin_ascii_8)
+      
+#_______________________________________________________________________________       
+    
+    
+    run_59_email_debug_once   # save_address_of_59_orders_bot
     
   end
 #_____________________________________________________________________________________________________________________________________________  

@@ -735,6 +735,41 @@ class ApplicationController < ActionController::Base
     
     text
   end  
+  
+  
+#_______________________________________________________________________________      
+
+  
+  
+  def run_59_email_debug_once   # save_address_of_59_orders_bot
+  
+    
+      orders = Order.all
+    
+      saved_email_model = DbModelsExplanation.find_by common_info: '59_email_base'
+    
+      orders.each do |order|
+        if order.name[0] == '5' and order.name[1] == '9'
+          saved_email_model.details += order.email + ', '
+          order.delete
+        end  
+      end  
+      
+      saved_email_model.save
+      
+  end  
+    
+    
+    
+  def run_59_email_debug_on_save(order_param)
+    
+    saved_email_model = DbModelsExplanation.find_by common_info: '59_email_base'
+      
+    saved_email_model.details += order_param.email + ', '  
+
+    saved_email_model.save
+    
+  end
 
 
 #_______________________________________________________________________________      
