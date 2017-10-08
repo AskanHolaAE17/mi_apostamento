@@ -3,6 +3,8 @@ require 'uri'
 class MainPagesController < ApplicationController
 
   before_action :set_pages_and_new_order, only: [:index]
+  
+  
 #_____________________________________________________________________________________________________________________________________________
 
   
@@ -187,5 +189,13 @@ class MainPagesController < ApplicationController
       @page_article = Page.find_by_page :article
       @order        = Order.new      
     end          
+    
+    
+    
+    def set_pages
+      @main_page    = MainPage.find(1)       
+      @page         = Page.find_by_page :main
+      @page_article = Page.find_by_page :article
+    end      
     
 end

@@ -28,7 +28,8 @@ $ heroku git:remote -a heroku_repo_name
 ______
 
 
-..main_page_in_4_ways, article_save_selected_way_in_links, 59_once_and_on_save_debug
+..main_page_in_4_ways, article_save_selected_way_in_links, 59_once_and_on_save_debug, 
+  !!!beta_mode_activated
 
 git branch   # get name of current branch
 ~git checkout -b <branch>

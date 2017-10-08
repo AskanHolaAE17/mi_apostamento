@@ -1,0 +1,35 @@
+
+- @title          = @title_tag
+
+- @menu_up_item   = 'main'
+
+- @page.title_tag = @article.title
+
+  
+- @contact = Contact.new                                               
+
+
+#-------------------------------------------------------------------------------      
+
+= flash[:echo_me]
+
+- unless @info_msg.nil? and @info_msg == ''
+  %h2 
+    = @info_msg
+
+    
+#-------------------------------------------------------------------------------      
+
+-#=render partial: 'preamble'
+
+- unless @load_main_page_content
+  =render partial: 'preamble_select_way'
+
+  
+  #-------------------------------------------------------------------------------      
+
+
+- else  
+  =render partial: 'preamble_content'
+  =render partial: 'article_form'
+ 
