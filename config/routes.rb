@@ -209,11 +209,6 @@ Rails.application.routes.draw do
   #match 'from_base/:details',              to: 'users#off_in_db',                                   via: 'get'                 
   
   
-  #_____________________________________________________________________________
-  
-  
-  match 'kindrelations',                to: 'main_pages#beta',                                  via: 'get'   
-  
 #_____________________________________________________________________________  
   
   
