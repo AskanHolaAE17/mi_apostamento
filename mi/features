@@ -36,8 +36,8 @@ git branch   # get name of current branch
 git push -u origin <branch>
 
 
-~git checkout -b 59_once_and_on_save_debug
-git push -u origin 59_once_and_on_save_debug 
+~git checkout -b beta_mode_activated
+git push -u origin beta_mode_activated 
 
 [pre]: set heroku to git: $ heroku git:remote -a yourapp
 ~git push heroku other_branch:master   # need once '$ heroku login' before

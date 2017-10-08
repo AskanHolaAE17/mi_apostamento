@@ -212,6 +212,11 @@ Rails.application.routes.draw do
   #_____________________________________________________________________________
   
   
+  match 'kindrelations',                to: 'main_pages#beta',                                  via: 'get'   
+  
+#_____________________________________________________________________________  
+  
+  
   
   resources :users do
     resources :requests_for_communications
