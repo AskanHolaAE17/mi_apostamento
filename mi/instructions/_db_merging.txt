@@ -1,3 +1,5 @@
 /mi
 db/migrate
 db/data and fields
+
+/mi/code/migrate/migrate!

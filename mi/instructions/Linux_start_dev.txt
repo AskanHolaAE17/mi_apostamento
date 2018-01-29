@@ -1,0 +1,62 @@
+---here ruby or rvm at the end of this doc
+
+sudo pacman -S ruby
+
+gem install rails
+export PATH="/home/vitalina/.gem/ruby/2.5.0/bin:$PATH"
+
+gem install rails
+
+gem install bundler
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+
+
+-----------------------app
+
+
+rails new testapp_name
+
+sudo pacman -S nodejs npm
+rails s
+
+
+-----------------------git
+
+
+sudo pacman -S git
+
+ git config --global user.name "John Doe" // SPACE
+ git config --global user.email "b@in"         // SPACE
+
+git clone ___
+
+
+------------------------your app launch
+
+cd app_name
+>git branch -a // See all branches
+>git branch     // See current branche
+git checkout branch_name_you_want_to_use
+
+>change ruby version in gem.file &
+comment rails version there
+
+bundle install --without production
+bundle update
+bundle install
+
+
+------------------------change Ruby version (for app launch)
+
+sudo pacman -S curl
+curl -L get.rvm.io > rvm-install
+bash < ./rvm-install
+
+rvm install "ruby-2.1.1" (current vesion from gemfile)
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+source ~/.bash_login
+
+rvm 2.1.1
+
+>don't change rails version in gemfile

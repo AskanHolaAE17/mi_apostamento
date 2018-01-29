@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115011801) do
+ActiveRecord::Schema.define(version: 20171002194801) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -130,8 +130,6 @@ ActiveRecord::Schema.define(version: 20171115011801) do
     t.text     "looking_for"
     t.boolean  "ready_strong"
     t.string   "redirect_to_room_flag",    default: "f"
-    t.string   "own_gender"
-    t.string   "search_for_gender"
   end
 
   create_table "conversations", force: :cascade do |t|

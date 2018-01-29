@@ -1,7 +1,7 @@
 IMG IN CSS
 css: background: asset_url('bred.png');
-$ rake assets:precompile RAILS_ENV=development
-// $ rake assets:precompile 
+$ rails assets:precompile 
+// $ rails assets:precompile RAILS_ENV=development
 
 
 
@@ -32,7 +32,9 @@ ______
   !!!beta_mode_activated
 
 git branch   # get name of current branch
-~git checkout -b <branch>
+~git checkout -b <branch>   # create new branch
+~git checkout 'aaa'   # change branch to aaa
+~git branch -d 'aaa'   # delete branch
 git push -u origin <branch>
 
 
@@ -44,4 +46,16 @@ git push -u origin beta_mode_activated
 heroku run 'rails db:migrate'    or~ $heroku run 'rails db:migrate' --app 
 
 
+------
 
+current branches tree:
+ 
+2018
+2018_01_29-------Right-Base-Db-Migrations
+1
+1.1---
+2
+3
+
+
+(mi/i/Branches_logic.txt)
