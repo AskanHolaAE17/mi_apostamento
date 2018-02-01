@@ -1,22 +1,47 @@
----here ruby or rvm at the end of this doc
+------------------------install Ruby and change Ruby version (for app launch)
 
-sudo pacman -S ruby
 
-gem install rails
-export PATH="/home/vitalina/.gem/ruby/2.5.0/bin:$PATH"
+sudo pacman -S ruby  # ~
 
-gem install rails
+sudo pacman -S curl
+curl -L get.rvm.io > rvm-install
+bash < ./rvm-install
 
-gem install bundler
+
+rvm install "ruby-2.1.1" (current vesion from gemfile)
+source /home/vitalinka/.rvm/scripts/rvm   # try
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+source ~/.bash_login   # ?
+
+rvm 2.1.1
+
+
+------------------------get app in any way
+------------------------prepare app directory for work
+
+
+gem install bundler   # out of app dir
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
-
------------------------app
-
-
-rails new testapp_name
+in dir:
+bundle install --without production
+bundle update
+bundle install
 
 sudo pacman -S nodejs npm
+
+sudo reboot
+
+
+------------------------launch your app
+
+
+bash --login
+
+~rails assets:precompile
+~rails db:migrate
+
 rails s
 
 
@@ -31,32 +56,83 @@ sudo pacman -S git
 git clone ___
 
 
-------------------------your app launch
-
 cd app_name
->git branch -a // See all branches
->git branch     // See current branche
+git branch -a // See all branches
+~git branch     // See current branch
+~git checkout -b name_of_NEW_branch   //create branch
 git checkout branch_name_you_want_to_use
 
->change ruby version in gem.file &
-comment rails version there
 
-bundle install --without production
-bundle update
-bundle install
+-----------------------Heroku set up
 
 
-------------------------change Ruby version (for app launch)
+sudo pacman -S heroku-toolbelt   # or via visual Packmanager
 
-sudo pacman -S curl
-curl -L get.rvm.io > rvm-install
-bash < ./rvm-install
+figaro heroku:set -e production
 
-rvm install "ruby-2.1.1" (current vesion from gemfile)
+heroku git:remote -a yourapp_name_on_heroku   # set name of your Heroku app localy
+git push heroku other_branch:master
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-source ~/.bash_login
+heroku run 'rails db:migrate'
 
-rvm 2.1.1
 
->don't change rails version in gemfile
+----------------------------------------------
+-----------------------so For every fresh app:)
+
+
+bash --login
+
+rails assets:precompile
+rails db:migrate
+
+rails s
+
+git branch -a
+~git checkout -b name_of_NEW_branch
+git checkout branch_name_you_want_to_use
+
+figaro heroku:set -e productiongit branch -a
+
+git add .
+git commit -m 'name_of_commit'
+
+git push -u origin branch_name
+
+~at first:
+  heroku git:remote -a yourapp_name_on_heroku   # set name of your Heroku app localy
+
+git push heroku branch_name:master
+
+heroku run 'rails db:migrate'
+
+
+-----------------------fior every new commit:)
+
+
+    bash --login   # if commiting without changes at last time
+
+    rails assets:precompile
+
+    git branch -a
+    git checkout -b name_of_NEW_branch
+git branch
+git checkout branch_name_you_want_to_use
+
+    figaro heroku:set -e productiongit branch -a
+
+git add .
+git commit -m 'name_of_commit'
+
+git push -u origin branch_name
+git push heroku branch_name:master
+
+    heroku run 'rails db:migrate'
+
+
+-----------------------
+
+
+# TMP: sudo mhwd-kernel -i linux415  
+# mhdw-kernil -li --> list kernel versions
+# reboot
+

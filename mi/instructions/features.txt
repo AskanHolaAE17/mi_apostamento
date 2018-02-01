@@ -13,6 +13,7 @@ $ figaro heroku:set -e production
 OpenAccess to others in Google mail here:
 https://www.google.com/settings/security/lesssecureapps
 https://accounts.google.com/DisplayUnlockCaptcha
+https://www.google.com/accounts/UnlockCaptcha
 http://kindrelations.com/
 do_you_want_to_db/3101
 
@@ -49,7 +50,13 @@ heroku run 'rails db:migrate'    or~ $heroku run 'rails db:migrate' --app
 ------
 
 current branches tree:
+
+  2018
+* 2018_01_29-------Right-Base-Db-Migrations
+
+
  
+EXAMPLE FUTURE:
 2018
 2018_01_29-------Right-Base-Db-Migrations
 1
