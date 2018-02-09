@@ -106,7 +106,7 @@ git push heroku branch_name:master
 heroku run 'rails db:migrate'
 
 
------------------------fior every new commit:)
+-----------------------for every new commit:)
 
 
     bash --login   # if commiting without changes at last time
@@ -118,7 +118,7 @@ heroku run 'rails db:migrate'
 git branch
 git checkout branch_name_you_want_to_use
 
-    figaro heroku:set -e productiongit branch -a
+    figaro heroku:set -e production
 
 git add .
 git commit -m 'name_of_commit'
@@ -129,7 +129,7 @@ git push heroku branch_name:master
     heroku run 'rails db:migrate'
 
 
------------------------
+-----------------------2018_01_29-------Right-Base-Db-Migrations
 
 
 # TMP: sudo mhwd-kernel -i linux415  
