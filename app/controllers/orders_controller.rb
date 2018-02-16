@@ -151,7 +151,7 @@ class OrdersController < ApplicationController
       @order.pay_link = @liqpay_url
       @order.save
 
-      # OrderMailer.a_has_client_payed(@order, @order_current_test_link).deliver       
+      OrderMailer.a_has_client_payed(@order, @order_current_test_link).deliver       
       redirect_to html     
 
 
@@ -268,7 +268,7 @@ class OrdersController < ApplicationController
            order_id += details[i]
         end        
     
-        order_akey = ''
+        # order_akey = ''
         for i in (order_id_length-1)..(details.length-1 - order_id_length)
            order_akey += details[i]
         end     
