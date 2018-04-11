@@ -30,7 +30,14 @@ Rails.application.routes.draw do
   #match  '/i_have_payed_test/:details',    to: 'orders#b_get_contacts_after_pay',                   via: 'get'  
   #post  '/i_have_payed_test/:details',     to: 'orders#b_get_contacts_after_pay'  
     
+  
+  
     
+  #CONSULT___________________________________________________________________
+
+  match '/personal_consult',               to: 'personal_consult#index',                                  via: 'get'  
+
+
 
   #TEST_LEVEL___________________________________________________________________
   #testo
