@@ -29,13 +29,6 @@ Rails.application.routes.draw do
   post  '/i_have_payed_consult/:details',  to: 'consults#e_get_consults_after_pay'
   #match  '/i_have_payed_test/:details',    to: 'orders#b_get_contacts_after_pay',                   via: 'get'  
   #post  '/i_have_payed_test/:details',     to: 'orders#b_get_contacts_after_pay'  
-    
-  
-  
-    
-  #CONSULT___________________________________________________________________
-
-  match '/personal_consult',               to: 'personal_consult#index',                                  via: 'get'  
 
 
 
@@ -215,6 +208,16 @@ Rails.application.routes.draw do
   #post  'from_base/:details',              to: 'users#off_in_db'                                          
   #match 'from_base/:details',              to: 'users#off_in_db',                                   via: 'get'                 
   
+    
+  
+  
+    
+  #CONSULT___________________________________________________________________
+
+  match '/personal_consult',                 to: 'personal_consults#index',                                  via: 'get'  
+
+
+
   
 #_____________________________________________________________________________  
   
