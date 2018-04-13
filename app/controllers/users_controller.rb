@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+# Users in DatingBase
 
 
 before_action :set_root, :set_info, only: [:show_in_db, :off_in_db]
