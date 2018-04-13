@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
   has_many :requests_for_communications
   has_many :show_feedback_requests    
   
+  belongs_to :user_site
+  
 end

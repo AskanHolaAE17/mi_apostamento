@@ -1,0 +1,22 @@
+= form_for @user_personal_consult, url: {action: 'create'} do |f|
+
+
+  %a{name: 'form'}
+  
+  
+
+  .dark-green{class: flash[:error_class_email]}
+    Ваш email:
+    
+  = f.text_field :email, type: 'email', required: '', 
+                           class: 'input-xlarge', 
+                           placeholder: 'email@example.com', 
+                           value: "#{flash[:order_email] || nil}",
+                           autofocus: flash[:autofocus_email] 
+  
+
+
+  %div       
+    = f.submit 'Дальше', class: 'btn btn-large btn-success ' 
+    
+       

@@ -214,7 +214,9 @@ Rails.application.routes.draw do
     
   #CONSULT___________________________________________________________________
 
-  match '/personal_consult',                 to: 'personal_consults#index',                                  via: 'get'  
+  match '/personal_consult',                 to: 'user_personal_consults#new',                                  via: 'get'
+  post '/personal_consult',                  to: 'user_personal_consults#create'
+  #resources :user_personal_consult
 
 
 
