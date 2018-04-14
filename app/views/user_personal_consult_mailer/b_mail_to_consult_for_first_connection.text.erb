@@ -1,5 +1,4 @@
-<%= @user_personal_consult.created_at.in_time_zone(3) %> 
-(по часовому поясу +3)
+<%= @user_personal_consult.created_at.in_time_zone(3).strftime("%d %b, %Y в %H:%M") %> (по киевскому летнему времени)
 с сайта KindRelations.com был отправлен 
 запрос на психологическую консультацию.
 
