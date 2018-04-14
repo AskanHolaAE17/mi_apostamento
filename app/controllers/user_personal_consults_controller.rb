@@ -20,8 +20,7 @@ class UserPersonalConsultsController < ApplicationController
   
       user_site              = UserSite.new
       user_personal_consult  = user_site.user_personal_consults.build(user_personal_consult_params)     
-            
-      # user_personal_consult  = UserPersonalConsult.update_attributes(user_personal_consult_params)     
+              
       user_site.email        = user_personal_consult.email    
       
       akey_full = akey
@@ -38,15 +37,6 @@ class UserPersonalConsultsController < ApplicationController
          # with extra text field (+required)
         # DESCR in form      
         ### INCREMENT COOL USER PAY HANDLE BUTTON (story and count  of user_cons, common_sum of user_site) + name 
-    
-    
-      # user_cons edit (akey_short)
-        
-      # user_site < user_personal
-      # user_site edit (email, akey_short)   
-    
-      # user_personal_consult.save
-      # user_site.save
               
     
       redirect_to '/'  # info page with waiting SOON message from Consulter

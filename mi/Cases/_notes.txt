@@ -1,0 +1,4 @@
+- update_attributes 
+  works just on creating
+  
+  
