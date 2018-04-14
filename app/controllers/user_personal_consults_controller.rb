@@ -14,27 +14,44 @@ class UserPersonalConsultsController < ApplicationController
   
   def create
   
-    user_personal_consult = UserPersonalConsult.new(user_personal_consult_params)   
-    
-    # NAME in form (for future emails)
-    # [email -> ] TYPE of connection (~checkboxes)
-    ## with extra text field (+required)
-    # DESCR in form
-    
-    
-    # user_cons edit (akey_short)
-        
-    # user_site < user_personal
-    # user_site edit (email, akey_short)   
-    
-    # user_personal_consult.save
-    # user_site.save
-    
-    
-    ### INCREMENT COOL USER PAY HANDLE BUTTON (story and count  of user_cons, common_sum of user_site) + name    
-    
-    redirect_to '/'  # info page with waiting SOON message from Consulter
+    unless '@'.in?params[:user_personal_consult][:email].to_s or params[:email].to_s.length > 3   # email must be at least: a@a || @aa || aa@
+      redirect_to '/personal_consult' 
+    else  
   
+      user_site              = UserSite.new
+      user_personal_consult  = user_site.user_personal_consults.build(user_personal_consult_params)     
+            
+      # user_personal_consult  = UserPersonalConsult.update_attributes(user_personal_consult_params)     
+      user_site.email        = user_personal_consult.email    
+      
+      akey_full = akey
+      user_site.akey_short              = akey_full[0..akey_full.length/2]
+      akey_full = akey
+      user_personal_consult.akey_short  = akey_full[0..akey_full.length/2]
+      
+      user_site.save
+      user_personal_consult.save
+    
+      ##pendeing:
+        # NAME in form (for future emails)
+        # [email -> ] TYPE of connection (~checkboxes)
+         # with extra text field (+required)
+        # DESCR in form      
+        ### INCREMENT COOL USER PAY HANDLE BUTTON (story and count  of user_cons, common_sum of user_site) + name 
+    
+    
+      # user_cons edit (akey_short)
+        
+      # user_site < user_personal
+      # user_site edit (email, akey_short)   
+    
+      # user_personal_consult.save
+      # user_site.save
+              
+    
+      redirect_to '/'  # info page with waiting SOON message from Consulter
+  
+    end
   end
 
 
@@ -46,7 +63,8 @@ class UserPersonalConsultsController < ApplicationController
   private  
   
     def user_personal_consult_params
-      params.require(:user_personal_consult).permit(:user_site_id, :email, :name, :akey_short, :count_of_consults, :story_of_sessions, :type_of_connection, :connection_field)
+      params.require(:user_personal_consult).permit(:user_site_id, :email, :akey_short, :count_of_consults, :story_of_sessions)
+      # params.require(:user_personal_consult).permit(:user_site_id, :email, :name, :akey_short, :count_of_consults, :story_of_sessions, :type_of_connection, :connection_field)
     end  
   
     def set_main_page_and_page

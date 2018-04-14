@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     #key_int.shuffle!    
     #key_int.join  
         
-	  m = m[0] ? m[0] : false 
+	  m = m[0] ? m[0] : false   
 	  n = m || 2 
 	  time = Time.now.sec
 	
