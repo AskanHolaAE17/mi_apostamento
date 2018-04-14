@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413112900) do
+ActiveRecord::Schema.define(version: 20180414112900) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -396,10 +396,12 @@ ActiveRecord::Schema.define(version: 20180413112900) do
     t.string   "email"
     t.string   "name"
     t.string   "akey_short"
-    t.integer  "count_of_consults", default: 0
-    t.string   "story_of_sessions", default: ""
+    t.integer  "count_of_consults",  default: 0
+    t.string   "story_of_sessions",  default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type_of_connection"
+    t.string   "connection_address"
     t.index ["user_site_id"], name: "index_user_personal_consults_on_user_site_id"
   end
 

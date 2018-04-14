@@ -17,10 +17,23 @@
 
 
 
-#$(document).ready(function(){
+$(document).ready(function(){
+
+// alert("Hello! I am an alert box!!:)");
+// $( ".un_selectable" ).css( "font-weight", "bold" );
+
 
 //= require main_pages/main_pages
 
-#});
+//= require forms/personal_consult_form/connection_field
 
 
+
+
+});
+
+
+
+// alert("Hello! I am an alert box!!");
+
+// # - is a comment

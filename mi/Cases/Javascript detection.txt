@@ -1,0 +1,3 @@
+%noscript
+  %meta{:content => "2;url=http://yoursite.com/nojswarning.html", "http-equiv" => "refresh"}/
+  

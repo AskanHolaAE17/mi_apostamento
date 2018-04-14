@@ -4,19 +4,78 @@
   %a{name: 'form'}
   
   
-
+  %a{name: 'email'}
   .dark-green{class: flash[:error_class_email]}
-    Ваш email:
+    Ваш Email:
     
   = f.text_field :email, type: 'email', required: '', 
                            class: 'input-xlarge', 
                            placeholder: 'email@example.com', 
-                           value: "#{flash[:order_email] || nil}",
+                           value: "#{flash[:user_personal_consult_email] || nil}",
                            autofocus: flash[:autofocus_email] 
   
+  
+  
+                           
 
 
   %div       
     = f.submit 'Дальше', class: 'btn btn-large btn-success ' 
     
        
+  -#
+    Type Ancorn!
+    Connect Ancorn!
+    
+    :type_of_connection, :connection_field
+    
+    
+-#
+  %a{name: 'type'}
+  .dark-green{class: flash[:error_class_type_of_connection]}
+    Как с Вами связаться:                                                                           
+      
+        
+  =f.radio_button :type_of_connection, 'Email', checked: flash[:user_personal_consult_type_of_connection_male_checked], id: 'type_of_connection_email', required: ''
+  =f.label :type_of_connection, 'Email', for: 'type_of_connection_email'
+    
+  -#%br/                 
+    
+    
+  =f.radio_button :type_of_connection, 'Telegram', checked: flash[:user_personal_consult_type_of_connection_female_checked], id: 'type_of_connection_telegram'
+  =f.label :type_of_connection, 'Telegram', for: 'type_of_connection_telegram'  
+    
+  -#%br/                 
+    
+    
+  =f.radio_button :type_of_connection, 'WhatsApp', checked: flash[:user_personal_consult_type_of_connection_female_checked], id: 'type_of_connection_whatsapp'
+  =f.label :type_of_connection, 'WhatsApp', for: 'type_of_connection_whatsapp'  
+    
+  %br/                 
+    
+    
+  =f.radio_button :type_of_connection, 'Messenger', checked: flash[:user_personal_consult_type_of_connection_female_checked], id: 'type_of_connection_messenger'
+  =f.label :type_of_connection, 'Messenger', for: 'type_of_connection_messenger'  
+    
+  -#%br/      
+      
+    
+  =f.radio_button :type_of_connection, 'Viber', checked: flash[:user_personal_consult_type_of_connection_female_checked], id: 'type_of_connection_viber'
+  =f.label :type_of_connection, 'Viber', for: 'type_of_connection_viber'  
+    
+  -#%br/                 
+    
+    
+  =f.radio_button :type_of_connection, 'Skype', checked: flash[:user_personal_consult_type_of_connection_female_checked], id: 'type_of_connection_skype'
+  =f.label :type_of_connection, 'Skype', for: 'type_of_connection_skype'        
+  
+  
+  
+  %div
+    %a{name: 'connect'}  
+    = f.text_field :connection_field, required: '', 
+                           class: 'input-xlarge', 
+                           placeholder: '', 
+                           value: "#{flash[:user_personal_consult_connection_field] || nil}",
+                           autofocus: flash[:autofocus_email] 
+    
