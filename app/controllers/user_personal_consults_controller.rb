@@ -48,8 +48,11 @@ class UserPersonalConsultsController < ApplicationController
         akey_full = akey
         user_personal_consult.akey_short  = akey_full[0..akey_full.length/2]
       
+        # user_personal_consult.story_of_sessions = 'Zero consult time: ' + params[:user_personal_consult][:story_of_sessions].to_s + ', '   # to! timezone +3
+      
         user_site.save
         user_personal_consult.save
+        @user_personal_consult = user_personal_consult
     
         ##pendeing:
           # NAME in form (for future emails)
@@ -59,7 +62,9 @@ class UserPersonalConsultsController < ApplicationController
           ### INCREMENT COOL USER PAY HANDLE BUTTON (story and count  of user_cons, common_sum of user_site) + name 
               
     
-        redirect_to '/'  # info page with waiting SOON message from Consulter
+        UserPersonalConsultMailer.b_mail_to_consult_for_first_connection(@user_personal_consult).try(:deliver)
+        
+        redirect_to '/info/zapros_na_personalnyyu_konsyltatsiyu_otpravlen__personal_consult_form' 
   
       end   # for:: email must be at least: a@a || @aa || aa@          
       
