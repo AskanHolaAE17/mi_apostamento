@@ -120,8 +120,11 @@ class UserPersonalConsultsController < ApplicationController
       
       SecureMailer.personal_consult_first_request_is_created_by_bot(user_personal_consult, error_live).try(:deliver)
       
-      # REDIRECT TO DEADLOCK
-      redirect_to '/'   
+      
+      # REDIRECT TO DEADLOCK (page)
+      flash[:deadlock] = 'deadlock'
+      
+      redirect_to '/info/zapros_na_personalnyyu_konsyltatsiyu_otpravlen__personal_consult_form'   
     
     end   # for:: unless 'record is created by Human, not bot'
           
