@@ -1,7 +1,7 @@
 # encoding: utf-8
 class OrderMailer < ActionMailer::Base
 
-  default from: 'be-in-pair@gmail.com'
+  default from: 'be.in.pair@gmail.com'
 
   
   def a_has_client_payed(order, order_current_test_link)

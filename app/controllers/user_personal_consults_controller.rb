@@ -31,7 +31,7 @@ class UserPersonalConsultsController < ApplicationController
     
     def created_by_human(waiting_time)
     
-      if waiting_time >= 1
+      if waiting_time >= 1   # count of seconds between PageEndedLoading and FormIsSended
         true
       else        
         false
@@ -100,15 +100,28 @@ class UserPersonalConsultsController < ApplicationController
       user_site.save
       user_personal_consult.save
             
-      error_description = ''            
-      error_live = ErrorLive.new( error_title: 'PersonalConsult Request is created by bot', error_description: error_description)            
-      error_number = error_live.id      
-      error_code = 101
+      the_story_of_sessions   = "___ StoryOfSessions:   #{user_personal_consult.story_of_sessions}   "    if user_personal_consult.story_of_sessions != ''
+      the_type_of_connection  = "___ TypeOfConnection:   #{user_personal_consult.type_of_connection}   "  if user_personal_consult.type_of_connection
+      the_connection_address  = "___ ConnectionAddress:   #{user_personal_consult.connection_address} "   if user_personal_consult.connection_address
+      
+      error_description   = " UserGlobal id: #{user_site.id} ___   
+ PersonalConsult id:   #{user_personal_consult.id} ___   
+ Email:   #{user_personal_consult.email} "     +
+                              the_story_of_sessions.to_s   +
+                              the_type_of_connection.to_s  +
+                              the_connection_address.to_s
+                          
+      error_live = ErrorLive.new( error_title: 'PersonalConsult Request is created by bot', 
+                                  error_description: error_description, 
+                                  error_code: 101)                                                                                                  
+      error_live.save
+      error_live.error_number = error_live.id
       error_live.save
       
-      SecureMailer.personal_consult_first_request_is_created_by_bot(user_personal_consult, error_live)
+      SecureMailer.personal_consult_first_request_is_created_by_bot(user_personal_consult, error_live).try(:deliver)
       
-      redirect_to '/'
+      # REDIRECT TO DEADLOCK
+      redirect_to '/'   
     
     end   # for:: unless 'record is created by Human, not bot'
           

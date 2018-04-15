@@ -1,7 +1,7 @@
 # encoding: utf-8
 class UserNonverballyActionsMailer < ActionMailer::Base
 
-  default from: 'be-in-pair@gmail.com'
+  default from: 'be.in.pair@gmail.com'
 
 
   def the_room_of_current_user(user, room_url)

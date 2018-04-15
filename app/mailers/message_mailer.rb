@@ -1,7 +1,7 @@
 # encoding: utf-8
 class MessageMailer < ActionMailer::Base
 
-  default from: 'be-in-pair@gmail.com'
+  default from: 'be.in.pair@gmail.com'
 
 
   def new_income_message(user_sender, user_receiver, room_url)
