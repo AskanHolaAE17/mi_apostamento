@@ -8,6 +8,9 @@ class UserPersonalConsultsController < ApplicationController
     
     @user_personal_consult  = UserPersonalConsult.new
     
+    
+    flash[:time_prev] = Time.now    
+    
   end
   
   
@@ -16,39 +19,58 @@ class UserPersonalConsultsController < ApplicationController
 
 
   def create   
-        
+                
     
-    def created_by_human
+    time_prev = flash[:time_prev].to_time             # form loaded     at
+    time_next = Time.now.to_time                      # form processed  at
     
-      return true
+    waiting_time = (time_next - time_prev).round      # in seconds
+    
+    # flash[:error] = " #{time_prev}  and  #{time_next}  is  #{waiting_time} sec"
+    
+    
+    def created_by_human(waiting_time)
+    
+      if waiting_time >= 1
+        true
+      else        
+        false
+      end  
       
     end
     
     #_____________________________________________________________________________    
     
     
+    user_site              = UserSite.new
+    user_personal_consult  = user_site.user_personal_consults.build(user_personal_consult_params)     
+              
+    user_site.email        = user_personal_consult.email    
       
-    if created_by_human
+    akey_full = akey
+    user_site.akey_short              = akey_full[0..akey_full.length/2]
+    akey_full = akey
+    user_personal_consult.akey_short  = akey_full[0..akey_full.length/2]
+      
+    # user_personal_consult.story_of_sessions = 'Zero consult time: ' + params[:user_personal_consult][:story_of_sessions].to_s + ', '   # to! timezone +3      
+    
+     
+    #_____________________________________________________________________________          
+   
+      
+    if created_by_human(waiting_time)
     
       unless '@'.in?params[:user_personal_consult][:email].to_s or params[:email].to_s.length > 3   # email must be at least: a@a || @aa || aa@
-        redirect_to '/personal_consult' 
+      
+        # SAVING THE DATA FROM FORM FIELDS
+      
+        redirect_to '/personal_consult'         
         
       #_____________________________________________________________________________
       
       
       else   # for:: email must be at least: a@a || @aa || aa@
   
-        user_site              = UserSite.new
-        user_personal_consult  = user_site.user_personal_consults.build(user_personal_consult_params)     
-              
-        user_site.email        = user_personal_consult.email    
-      
-        akey_full = akey
-        user_site.akey_short              = akey_full[0..akey_full.length/2]
-        akey_full = akey
-        user_personal_consult.akey_short  = akey_full[0..akey_full.length/2]
-      
-        # user_personal_consult.story_of_sessions = 'Zero consult time: ' + params[:user_personal_consult][:story_of_sessions].to_s + ', '   # to! timezone +3
       
         user_site.save
         user_personal_consult.save
@@ -73,7 +95,20 @@ class UserPersonalConsultsController < ApplicationController
       
     else   # for:: unless 'record is created by Human, not bot'
     
-      # EXCEPTION
+      user_site.active = false
+      
+      user_site.save
+      user_personal_consult.save
+            
+      error_description = ''            
+      error_live = ErrorLive.new( error_title: 'PersonalConsult Request is created by bot', error_description: error_description)            
+      error_number = error_live.id      
+      error_code = 101
+      error_live.save
+      
+      SecureMailer.personal_consult_first_request_is_created_by_bot(user_personal_consult, error_live)
+      
+      redirect_to '/'
     
     end   # for:: unless 'record is created by Human, not bot'
           
