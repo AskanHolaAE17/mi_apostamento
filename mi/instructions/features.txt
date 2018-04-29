@@ -43,8 +43,11 @@ git push -u origin <branch>
 git push -u origin beta_mode_activated 
 
 [pre]: set heroku to git: $ heroku git:remote -a yourapp
-~git push heroku other_branch:master   # need once '$ heroku login' before
+uload to Heroku current branch
+~or: git push heroku other_branch:master   # need once '$ heroku login' before
 heroku run 'rails db:migrate'    or~ $heroku run 'rails db:migrate' --app 
+
+on error on lunch app: heroku logs --tail
 
 
 ------
