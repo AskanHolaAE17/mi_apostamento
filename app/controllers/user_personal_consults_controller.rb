@@ -21,7 +21,7 @@ class UserPersonalConsultsController < ApplicationController
   def create   
                 
     
-    time_prev = flash[:time_prev].to_time             # form loaded     at
+    time_prev = flash.now[:time_prev].to_time             # form loaded     at
     time_next = Time.now.to_time                      # form processed  at
     
     waiting_time = (time_next - time_prev).round      # in seconds
