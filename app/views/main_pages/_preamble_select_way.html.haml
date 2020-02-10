@@ -1,0 +1,17 @@
+%section
+  
+  .block_fond
+    =@preample_element_select_start_way_before.html_safe 
+    
+    - @preample_element_select_start_way.each do |pre_start|
+    
+      - pre_start_el_array = pre_start.split(' ', 2)
+      - link_path          = pre_start_el_array[0]
+      - pre_start_el_body  = pre_start_el_array[1]
+      
+      .select_start_way 
+        =link_to @root_path + @current_url + '?w=' + link_path do
+          =pre_start_el_body.html_safe    
+      
+      
+    =@preample_element_select_start_way_after.html_safe   

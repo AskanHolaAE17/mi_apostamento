@@ -1,39 +1,45 @@
 %section
-
-     
-  - if @article.number == 1 
-    %h3
-      Приветствуем Вас!
-
-#-------------------------------------------------------------------------------    
-
-  #site_motto
-
-    Как с нашей помощью разобраться, какой партнер Вам подходит среди ближайшего окружения или среди тысяч других людей на сайтах знакомств?
-    %br/
-    %br/  
-
-#-------------------------------------------------------------------------------
-
-#preamble_way
-  %h4
-    Для этого:
   
-  = @preamble_element_way.body.html_safe
-  %br/
+  .block_fond
+    =@preample_element_select_start_way_before.html_safe 
+    
+    - @preample_element_select_start_way.each do |pre_start|
+    
+      - pre_start_el_array = pre_start.split(' ', 2)
+      - link_path          = pre_start_el_array[0]
+      - pre_start_el_body  = pre_start_el_array[1]
+      
+      .select_start_way 
+        =link_to @root_path + @current_url + '?w=' + link_path do
+          =pre_start_el_body.html_safe    
+      
+      
+    =@preample_element_select_start_way_after.html_safe       
   
-  %br/
-  = image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
-  %br/
-  %br/
+  
+    #-------------------------------------------------------------------------------
+  
+  
+  
+  #preamble_way
+    - @preamble_element_way.each_with_index do |pre, i|
+      .block_fond 
+        =pre.html_safe
+      
+        #-------------------------------------------------------------------------------      
 
-#-------------------------------------------------------------------------------      
-
-#preamble_article_title
-  %section
-    .form_or_read_all
-      %b
-        = @preamble_element_form_or_read_all.body.html_safe
-    %br/
+        - if i == @preamble_element_way.count - 1
+        
+          %br/
+          %br/
+        
+          #preamble_article_title
+            %section
+              .form_or_read_all
+                %b
+                  = @preamble_element_form_or_read_all.body.html_safe
+                       
+          %br/   
+    
     
 

@@ -2,7 +2,8 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :null_session
-  helper_method :akey, :repl_all_subs, :swap_symb, :id_in_base, :xor_with, :room_url_def, :navigation_menu_room
+  helper_method :akey, :repl_all_subs, :swap_symb, :id_in_base, :xor_with, :room_url_def, :navigation_menu_room, 
+                :save_path_of_one_selected_way_on_main_pages, :create_links_on_main_pages
   
       
   def akey(*m)
@@ -640,7 +641,152 @@ class ApplicationController < ActionController::Base
   
   end  
 
-#_______________________________________________________________________________    
+  
+#_______________________________________________________________________________
+  
+  
+  
+  def save_path_of_one_selected_way_on_main_pages(original_path)
+    
+    original_path_body = original_path.split('#')[0]
+        
+    target   = original_path.split('#').last   if original_path.include? '#'          
+    
+    
+    if params[:w]            
+      
+      if target
+        original_path_body + '?w=' + params[:w] + '#' + target      # yakor       
+      else
+      
+        original_path_body + '?w=' + params[:w]
+      end  
+      
+    else
+      original_path
+    end  
+    
+  end  
+
+  
+#_______________________________________________________________________________      
 
 
+  
+  def create_links_on_main_pages(text_for_replaces)
+    
+    text = text_for_replaces
+    
+    
+    
+    #   '__word#text__' to   A word: text
+    
+    #for i in 1..text.count('__')/4 do
+    for i in 1..text.scan(/__/).length/2 do
+      
+      index_start  = text.index('__')
+      2.times{ text[index_start] = '' }
+    
+      index_end  = text.index('__')
+      2.times{ text[index_end] = '' }
+    
+    
+      string_for_link    = text[index_start..index_end-1]    
+      string_for_link_ar = string_for_link.split('%%')
+    
+      href = string_for_link_ar[0]
+      body = string_for_link_ar[1]
+    
+    
+      # forming link
+      link = "<a href='" + save_path_of_one_selected_way_on_main_pages(href) + "'>" + body + "</a>"
+
+      # replace  string_for_link by A-link
+      text.slice!  string_for_link 
+      text.insert( index_start, link )
+      
+    end  
+    
+    
+    
+    #   '_d_'           to   A d
+    
+    for i in 1..text.scan(/_>/).length do
+      
+      index_start  = text.index('_>')
+      2.times{ text[index_start] = '' }
+    
+      index_end  = text.index('<_')
+      2.times{ text[index_end] = '' }   
+
+      
+      string_for_link    = text[index_start..index_end-1]   
+      
+      
+      # forming link
+      link = "<a name='" + string_for_link + "'></a>"   
+      
+      # replace  string_for_link by A-link
+      text.slice!  string_for_link 
+      text.insert( index_start, link )      
+      
+    end  
+    
+    
+    text
+  end  
+  
+  
+#_______________________________________________________________________________      
+
+  
+  
+  def run_59_email_debug_once   # save_address_of_59_orders_bot
+  
+    
+      orders = Order.all
+    
+      saved_email_model = DbModelsExplanation.find_by common_info: '59_email_base'
+    
+      orders.each do |order|
+        if order.name[0] == '5' and order.name[1] == '9'
+          saved_email_model.details += order.email + ', '
+          order.delete
+        end  
+      end  
+      
+      saved_email_model.save
+      
+  end  
+    
+    
+    
+  def run_59_email_debug_on_save(order_param)
+    
+    saved_email_model = DbModelsExplanation.find_by common_info: '59_email_base'
+      
+    saved_email_model.details += order_param.email + ', '  
+
+    saved_email_model.save
+    
+  end
+
+
+#_______________________________________________________________________________      
+
+  
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

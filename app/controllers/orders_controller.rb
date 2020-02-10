@@ -22,24 +22,87 @@ class OrdersController < ApplicationController
 
 
             
-    if @order.save
+    if @order.save and @order.name[0] != '5' and @order.name[1] != '9'
     
     
       @order.name[0] = @order.name[0].upcase    
-      #pay+me_liqpay    = MeLiqpay.find_by_me_number(1)
-      #pay+public_key   = me_liqpay.public_key
-      #pay+private_key  = ENV['lp_private_key']
-      #pay+api_version  = me_liqpay.api_version           
       
-      #pay+@pay_way = MeConstant.find_by_title('pay_via_sandbox').content  
+      @order.sum_for_pay = (MeConstant.find_by title: 'test_price').content
+      
+      
+#_______________________________________________________________________________
+
+
+          @order.group = 'GOOD GROUP'   
+
+          @order.level = 'nevrotick'
+          level = 'ne'
+          
+          
+          
+          current_qw_struct_i = @order.current_qw_struct.to_i
+          
+          if current_qw_struct_i == 0
+            cur_struct_qw        = ((Question.where test: 1).where number_of_question: 1).first          
+          end      
+          
+          if current_qw_struct_i != 0
+            cur_struct_qw        = ((Question.where test: 1).where number_of_question: @order.current_qw_struct).first          
+          end      
+                    
+          cur_struct             = cur_struct_qw.for_yes_answer_plus_1_point_to
+            
+          test_1_start_url_hash  =  {
+        
+            l:      level,
+            t:      '1',
+            q:      "#{@order.current_qw_struct or '1'}",        
+            oi:     @order.id,
+            oa:     @order.akey[0..2],
+            cur_s:  cur_struct,          
+          
+            a:      '0',
+            n:      '0',
+            s:      '0',
+            p:      '0',
+            g:      '0',
+            d:      '0',
+            m:      '0',
+            o:      '0',
+            #k:      '0',
+            i:      '0'
+          }        
+
+
+
+          test_1_start_url_json     =  JSON.generate(test_1_start_url_hash)
+          test_1_start_url_encoded  =  (Base64.encode64 test_1_start_url_json).chomp.delete("\n").delete('=')
+                                                 
+      
+        test_url = root_path + 'testo_s/' + test_1_start_url_encoded
+        
+        
+        @order.current_test_link = 'testo_s/' + test_1_start_url_encoded
+        @order_current_test_link = root_path + @order.current_test_link
+      
+#_______________________________________________________________________________
+      
+      
+      me_liqpay    = MeLiqpay.find_by_me_number(1)
+      public_key   = me_liqpay.public_key
+      private_key  = ENV['lp_private_key']
+      api_version  = me_liqpay.api_version           
+      
+      @pay_way = MeConstant.find_by_title('pay_via_sandbox').content  
+      
 #_______________________________________________________________________________if @order.save
 
 
     
-      #pay+liqpay = Liqpay::Liqpay.new(
-      #pay+  :public_key  => public_key,
-      #pay+  :private_key => private_key
-      #pay+)    
+      liqpay = Liqpay::Liqpay.new(
+        :public_key  => public_key,
+        :private_key => private_key
+      )    
     
       def encode_json(params)
         JSON.generate(params)
@@ -48,16 +111,17 @@ class OrdersController < ApplicationController
       def encode64(params)
         (Base64.encode64 params).chomp.delete("\n")
       end
+      
 #_______________________________________________________________________________if @order.save
 
-
     
-      #pay+def cnb_form_request(params = {}, liqpay, public_key, api_version)
-      #pay+  params[:public_key] = public_key
-      #pay+  json_params = encode64 encode_json params
-      #pay+  signature = liqpay.cnb_signature params            
-      #pay+  @liqpay_url = "https://liqpay.com/api/#{api_version}/checkout?data=#{json_params.to_s}&signature=#{signature.to_s}"
-      #pay+end
+      def cnb_form_request(params = {}, liqpay, public_key, api_version)
+        params[:public_key] = public_key
+        json_params = encode64 encode_json params
+        signature = liqpay.cnb_signature params            
+        @liqpay_url = "https://liqpay.com/api/#{api_version}/checkout?data=#{json_params.to_s}&signature=#{signature.to_s}"
+      end
+      
 #_______________________________________________________________________________if @order.save
 
 
@@ -69,27 +133,152 @@ class OrdersController < ApplicationController
       details_encoded     = details_encoded_64 + '=' 
       server_url_details  = details_encoded
       
-      #pay+html = cnb_form_request({
-      #pay+  :version          => api_version,
-      #pay+  :action           => 'pay',
-      #pay+  :amount           => @order.sum_for_pay,
-      #pay+  :currency         => 'UAH',
-      #pay+  :description      => "Оплата теста",flash[:oa]
-      #pay+  :server_url       => root_path + 'i_have_payed/' + server_url_details,
-      #pay+  :result_url       => root_path + 'info/proverte_email_posle_oplatu',
-      #pay+  :sandbox          => @pay_way        
-      #pay+}, liqpay, public_key, api_version)                                  
+      html = cnb_form_request({
+        :version          => api_version,
+        :action           => 'pay',
+        :amount           => @order.sum_for_pay,
+        :currency         => 'UAH',
+        :description      => "Оплата теста",
+        :server_url       => root_path + 'orders/' + server_url_details,
+        :result_url       => root_path + 'info/proverte_email_posle_oplatu',
+        :sandbox          => @pay_way        
+      }, liqpay, public_key, api_version)  
+      
 #_______________________________________________________________________________if @order.save
 
 
 
       @order.pay_link = @liqpay_url
-      #@order.save
+      @order.save
 
-      #pay+OrderMailer.a_has_client_payed(@order).deliver       
-      #pay+redirect_to html     
+      OrderMailer.a_has_client_payed(@order, @order_current_test_link).deliver       
+      redirect_to html     
 
 
+#_______________________________________________________________________________if @order.save
+       
+       
+       
+    else  
+      
+      
+      flash[:order_name]  = @order.name
+      flash[:order_email] = @order.email    
+      
+      
+      anchor = ''
+      @order.errors.each do |attr, msg|
+        flash[:error_class_name]  = 'error_field' if attr == :name
+        flash[:error_class_email] = 'error_field' if attr == :email
+                
+                
+        flash[:autofocus_name] = false                
+        flash[:autofocus_email] = false     
+            
+        if attr == :name
+          flash[:autofocus_name] = true
+        else
+          if attr == :email
+            flash[:autofocus_email] = true
+          end
+        end                
+                
+                
+        if attr.in? [:name, :email]
+          anchor = '#form'
+        end
+      end
+      
+      
+      url = root_path +        
+            anchor
+      
+      
+      if @order.name[0] == '5' and @order.name[1] == '9'
+        run_59_email_debug_on_save(@order)
+        url = '/'   
+      end 
+      
+      
+      redirect_to url 
+    end  
+  end
+
+#_____________________________________________________________________________________________________________________________________________
+  
+  
+  def payed
+            
+    
+      root_path = MeConstant.find_by_title('root_path').content 
+                
+    
+    me_liqpay    = MeLiqpay.find_by_me_number(1)
+    public_key   = me_liqpay.public_key
+    private_key  = ENV['lp_private_key']
+        
+    data = params[:data]     
+    data_json = Base64.decode64(data)    
+    data_hash = JSON.parse(data_json)
+    
+        
+    liqpay = Liqpay::Liqpay.new(
+      :public_key  => public_key,
+      :private_key => private_key
+    )    
+    
+    sign = liqpay.str_to_sign(
+      private_key +
+      data +
+      private_key
+    )       
+      
+#_______________________________________________________________________________
+  
+  
+    
+    if sign == params[:signature]
+      if data_hash["status"].in? ['success', 'sandbox']        
+            
+#_______________________________________
+        
+        
+        details = params[:url_details]   # server_url_details
+
+        #server_url_details  = @order.id.to_s.length.to_s + letter + @order.akey + @order.id.to_s   
+        
+        
+        details_encoded = details
+        details_encoded[details_encoded.length-1] = ''
+        details         = Base64.decode64(details_encoded)    
+                
+        
+        order_id_length = ''        
+        for i in 0..details.length-1
+          unless details[i].in? ('a'..'z')
+            order_id_length += details[i]
+          else
+            break
+          end
+        end
+        order_id_length = order_id_length.to_i
+    
+        order_id = ''
+        for i in (details.length-order_id_length)..(details.length-1)
+           order_id += details[i]
+        end        
+    
+        # order_akey = ''
+        for i in (order_id_length-1)..(details.length-1 - order_id_length)
+           order_akey += details[i]
+        end     
+        
+        
+        @order = Order.find(order_id)
+    
+#_______________________________________
+
+      
         test_url_hash = {
 
           #t:  '2',
@@ -192,68 +381,32 @@ class OrdersController < ApplicationController
           @order.sent_email_with_test = true
         end  
         
-        @order.save        
-        # order -> local var
-#_______________________________________________________________________________
-  
-  
+        @order.save                
+
         
-      #else
-      #  redirect_to '/'
-      #pay+end  
-    #else
-    #  redirect_to '/'  
-    #pay+end     
-    
-    #pay-   
-# test_struct_url_______________________________________________________________________________
-#				
+    else
+       redirect_to '/'
+     end  
+      
+     
+  else
+    redirect_to '/'  
+  end   
+        
+#_______________________________________________________________________________
+
+        
     if @order.current_test_link
       redirect_to root_path + @order.current_test_link
     else  
       redirect_to test_url
     end  
 
-#_______________________________________________________________________________if @order.save
-       
-       
-       
-    else  
-      flash[:order_name]  = @order.name
-      flash[:order_email] = @order.email    
-      
-      
-      anchor = ''
-      @order.errors.each do |attr, msg|
-        flash[:error_class_name]  = 'error_field' if attr == :name
-        flash[:error_class_email] = 'error_field' if attr == :email
-                
-                
-        flash[:autofocus_name] = false                
-        flash[:autofocus_email] = false     
-            
-        if attr == :name
-          flash[:autofocus_name] = true
-        else
-          if attr == :email
-            flash[:autofocus_email] = true
-          end
-        end                
-                
-                
-        if attr.in? [:name, :email]
-          anchor = '#form'
-        end
-      end
-      
-      
-      url = root_path +        
-            anchor
-      redirect_to url 
-    end  
-  end
-
-#_____________________________________________________________________________________________________________________________________________
+    
+    
+  end  
+  
+#_____________________________________________________________________________________________________________________________________________  
   
   
   

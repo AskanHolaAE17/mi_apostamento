@@ -1,0 +1,60 @@
+%a{ name: 'preamble_article_title' }
+#preamble_article_title
+
+
+  %section
+            
+    %h3
+    
+      - unless @article.number.to_i == 1
+        = 'Статья ' + @article.number.to_s + ' - '
+      - else
+        = @article.number.to_s + '. '      
+        
+      = @article.title
+
+#-------------------------------------------------------------------------------      
+
+%section  
+  
+  -#- unless contact.image.url.match(/missing.png/)     
+    .contact-image
+      = image_tag contact.image.url          
+  
+  
+  = @descr_start.html_safe      
+  = render partial: 'layouts/articles_block/menu'   
+  
+  = @descr_end.html_safe    
+  
+
+#-------------------------------------------------------------------------------      
+
+= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
+
+- @next_article = @articles.find_by number: @article.number + 1
+
+
+
+.article_links_after_article
+  - if @next_article
+
+    %section
+      %b
+        Читать следующую статью (статья #{@next_article.number} из #{@articles.count+1}):
+        = link_to save_path_of_one_selected_way_on_main_pages("/articles/#{@next_article.translit}#preamble_article_title") do
+          %div
+            =@next_article.number.to_s + '. '
+            =@next_article.title
+          
+  - else            
+    %section.articles_more_links
+      - @all_articles_bur_cur = @articles.where.not number: @article.number
+      %b
+        Читать другие статьи:
+        - @all_articles_bur_cur.each do |art_link|                  
+          = link_to save_path_of_one_selected_way_on_main_pages("/articles/#{art_link.translit}#preamble_article_title") do
+            %div
+              =art_link.number.to_s + '. '
+              =art_link.title    
+%br/  

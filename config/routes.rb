@@ -1,5 +1,7 @@
 Rails.application.routes.draw do                
 
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
   match '/',                               to: 'main_pages#index',                                  via: 'get'  
   post  '/',                               to: 'main_pages#index'           
 
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   post  'infos/:msg/:to_test_2',           to: 'order_info_pages#show'                                 
   
   post  '/orders',                         to: 'orders#create'                  # for OrderForm works (path for creating new order)
+  match 'orders/:url_details',             to: 'orders#payed',                                      via: 'get'    
   
   
   match  '/i_have_payed_consult/:details', to: 'consults#e_get_consults_after_pay',                 via: 'get'  
@@ -27,7 +30,14 @@ Rails.application.routes.draw do
   #match  '/i_have_payed_test/:details',    to: 'orders#b_get_contacts_after_pay',                   via: 'get'  
   #post  '/i_have_payed_test/:details',     to: 'orders#b_get_contacts_after_pay'  
     
+  
+  
     
+  #CONSULT___________________________________________________________________
+
+  match '/personal_consult',               to: 'personal_consult#index',                                  via: 'get'  
+
+
 
   #TEST_LEVEL___________________________________________________________________
   #testo
@@ -206,7 +216,7 @@ Rails.application.routes.draw do
   #match 'from_base/:details',              to: 'users#off_in_db',                                   via: 'get'                 
   
   
-  #_____________________________________________________________________________
+#_____________________________________________________________________________  
   
   
   
@@ -222,8 +232,7 @@ Rails.application.routes.draw do
   
     
   root 'main_pages#index'
-  
-  devise_for :admin_users, ActiveAdmin::Devise.config
+
   ActiveAdmin.routes(self)    
     
   match "*path",                           to: 'main_pages#index',                                  via: 'get'

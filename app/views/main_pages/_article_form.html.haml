@@ -1,0 +1,22 @@
+.block_fond
+  
+  %br/
+  =render partial: 'article'
+     
+
+  %section
+    #paper
+      #form.lead      
+        %b
+          = render partial: 'new_order_form'         
+          -#
+            В скором времени регистрация будет доступна вновь  
+    
+            
+  %section      
+    .article-author-link
+      Автор:
+      = link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'      
+      
+    %br/
+    %br/ 

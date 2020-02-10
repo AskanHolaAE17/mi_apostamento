@@ -1,13 +1,14 @@
-.order-info-pages-text
-  =@info_msg.html_safe
+.block_fond  
+  .order-info-pages-text
+    =@info_msg.html_safe
   
 
 
--#%br/
+  %br/
 
-- if params[:to_test_2]
-  =button_to 'Продолжить тест', " #{ @root_path + 'testo_s/' + params[:to_test_2] } ", class: 'btn btn-success btn-large'   
+  - if params[:to_test_2]
+    =button_to 'Продолжить тест', " #{ @root_path + 'testo_s/' + params[:to_test_2] } ", class: 'btn btn-success btn-large'   
 
-- else
-  =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
+  - else
+    =button_to 'На главную', '/', class: 'btn btn-success btn-large'   
   

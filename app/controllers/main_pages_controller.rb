@@ -3,6 +3,8 @@ require 'uri'
 class MainPagesController < ApplicationController
 
   before_action :set_pages_and_new_order, only: [:index]
+  
+  
 #_____________________________________________________________________________________________________________________________________________
 
   
@@ -20,6 +22,7 @@ class MainPagesController < ApplicationController
     @root_path              = root_path
     
     @prerender_page         = root_path                
+    selected_start_way_name = params[:w]
     
 #_______________________________________________________________________________      
 
@@ -95,8 +98,31 @@ class MainPagesController < ApplicationController
     
     @preamble_elements    = PreambleElement.order(:number)
     
-    @preamble_element_way               = (@preamble_elements.where name: 'way').first
-    @preamble_element_form_or_read_all  = (@preamble_elements.where name: 'form_or_read_all').first
+    @preample_element_select_start_way        = (@preamble_elements.find_by name: 'select_start_way_before_registration').body.split('<hr/>')
+    @preample_element_select_start_way_before = @preample_element_select_start_way[0]
+    @preample_element_select_start_way_after  = @preample_element_select_start_way.last
+    @preample_element_select_start_way        = @preample_element_select_start_way[1...-1]
+    
+    @current_url = request.env['PATH_INFO']
+    @current_url[0] = ''
+    
+    
+    @load_main_page_content = false
+    if selected_start_way_name and (@preamble_elements.where name: selected_start_way_name).first
+      @load_main_page_content = true
+      @preamble_element_way             = (@preamble_elements.where name: selected_start_way_name).first.body
+      @preamble_element_way             = create_links_on_main_pages(@preamble_element_way)   if params[:w]
+      @preamble_element_way             = @preamble_element_way.split('<hr/>')       
+    end        
+            
+    
+    
+    #@preamble_element_enter_form_or_read_all_article  = 'Вы можете __form#пройти тест__ прямо сейчас или _>read<_ читать подробное описание:'
+    @preamble_element_enter_form_or_read_all_article  = (@preamble_elements.where name: 'form_or_read_all').first.body    
+    
+    @preamble_element_enter_form_or_read_all_article  = create_links_on_main_pages(@preamble_element_enter_form_or_read_all_article)   if params[:w]
+    
+    
     
     article_numbers = '1234'
     article_numbers = article_numbers.delete(@article.number.to_s)
@@ -126,8 +152,9 @@ class MainPagesController < ApplicationController
 #_______________________________________________________________________________     
     
 
-    # ArticlesMenu in last but one Paragraph in Text  
+    # ArticlesMenu in last but one Paragraph in Text
     descr_full   =  @article.description
+    descr_full   =  create_links_on_main_pages(descr_full)   if params[:w]
     tmp_split    =  descr_full.rindex('<p>')                                    # tmp part: find LAST entry of '<p>' in text                          
     tmp_text     =  descr_full.slice(0, tmp_split)                              # tmp TEXT without last paragraph
     split_symbol =  tmp_text.rindex('<p>') + 3                                  # find LAST BUT ONE split symbol (on original text)     
@@ -144,6 +171,11 @@ class MainPagesController < ApplicationController
     ##@result = RSA::Key.initialize()
     #link_details_begin_ascii_8 = key_pair.encrypt(link_details_encoded)
     #@result = URI.encode(link_details_begin_ascii_8)
+      
+#_______________________________________________________________________________       
+    
+    
+    ### run_59_email_debug_once   # save_address_of_59_orders_bot
     
   end
 #_____________________________________________________________________________________________________________________________________________  
@@ -157,5 +189,13 @@ class MainPagesController < ApplicationController
       @page_article = Page.find_by_page :article
       @order        = Order.new      
     end          
+    
+    
+    
+    def set_pages
+      @main_page    = MainPage.find(1)       
+      @page         = Page.find_by_page :main
+      @page_article = Page.find_by_page :article
+    end      
     
 end

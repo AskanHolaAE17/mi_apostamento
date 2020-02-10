@@ -4,9 +4,9 @@
 
 - @page.title_tag = @article.title
 
-
-
+  
 - @contact = Contact.new                                               
+
 
 #-------------------------------------------------------------------------------      
 
@@ -16,90 +16,18 @@
   %h2 
     = @info_msg
 
-#-------------------------------------------------------------------------------      
-
-=render partial: 'preamble'
-
-#-------------------------------------------------------------------------------      
     
-#preamble_article_title
-
-
-  %section
-            
-    %h3
-    
-      - unless @article.number.to_i == 1
-        = 'Статья ' + @article.number.to_s + ' - '
-      - else
-        = @article.number.to_s + '. '      
-        
-      = @article.title
-
 #-------------------------------------------------------------------------------      
 
-%section  
+-#=render partial: 'preamble'
+
+- unless @load_main_page_content
+  =render partial: 'preamble_select_way'
+
   
-  -#- unless contact.image.url.match(/missing.png/)     
-    .contact-image
-      = image_tag contact.image.url          
-  
-  
-  = @descr_start.html_safe      
-  = render partial: 'layouts/articles_block/menu'   
-  
-  = @descr_end.html_safe    
-  
-
-#-------------------------------------------------------------------------------      
-
-= image_tag('elements/slicer.png', alt: '--------------------', id: 'separator')               
-
-- @next_article = @articles.find_by number: @article.number + 1
+  #-------------------------------------------------------------------------------      
 
 
-
-.article_links_after_article
-  - if @next_article
-
-    %section
-      %b
-        Читать следующую статью (статья #{@next_article.number} из #{@articles.count+1}):
-        = link_to "/articles/#{@next_article.translit}" do
-          %div
-            =@next_article.number.to_s + '. '
-            =@next_article.title
-          
-  - else            
-    %section.articles_more_links
-      - @all_articles_bur_cur = @articles.where.not number: @article.number
-      %b
-        Читать другие статьи:
-        - @all_articles_bur_cur.each do |art_link|                  
-          = link_to "/articles/#{art_link.translit}" do
-            %div
-              =art_link.number.to_s + '. '
-              =art_link.title    
-%br/            
-
-#-------------------------------------------------------------------------------      
-
-%section
-  #paper
-    #form.lead      
-      %b
-        = render partial: 'new_order_form'         
-    
-      
-      
-%section      
-  .article-author-link
-    Автор:
-    = link_to 'Психологически безопасные отношения', 'https://plus.google.com/111002677865823058693?rel=author', target: '_blank'      
-
-
-
-
-
-
-
+- else  
+  =render partial: 'preamble_content'
+  =render partial: 'article_form'

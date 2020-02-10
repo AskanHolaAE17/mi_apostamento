@@ -1,0 +1,138 @@
+------------------------install Ruby and change Ruby version (for app launch)
+
+
+sudo pacman -S ruby  # ~
+
+sudo pacman -S curl
+curl -L get.rvm.io > rvm-install
+bash < ./rvm-install
+
+
+rvm install "ruby-2.1.1" (current vesion from gemfile)
+source /home/vitalinka/.rvm/scripts/rvm   # try
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+source ~/.bash_login   # ?
+
+rvm 2.1.1
+
+
+------------------------get app in any way
+------------------------prepare app directory for work
+
+
+gem install bundler   # out of app dir
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+
+in dir:
+bundle install --without production
+bundle update
+bundle install
+
+sudo pacman -S nodejs npm
+
+sudo reboot
+
+
+------------------------launch your app
+
+
+bash --login
+
+~rails assets:precompile
+~rails db:migrate
+
+rails s
+
+
+-----------------------git
+
+
+sudo pacman -S git
+
+ git config --global user.name "John Doe" // SPACE
+ git config --global user.email "b@in"         // SPACE
+
+git clone ___
+
+
+cd app_name
+git branch -a // See all branches
+~git branch     // See current branch
+~git checkout -b name_of_NEW_branch   //create branch
+git checkout branch_name_you_want_to_use
+
+
+-----------------------Heroku set up
+
+
+sudo pacman -S heroku-toolbelt   # or via visual Packmanager
+
+figaro heroku:set -e production
+
+heroku git:remote -a yourapp_name_on_heroku   # set name of your Heroku app localy
+git push heroku other_branch:master
+
+heroku run 'rails db:migrate'
+
+
+----------------------------------------------
+-----------------------so For every fresh app:)
+
+
+bash --login
+
+rails assets:precompile
+rails db:migrate
+
+rails s
+
+git branch -a
+~git checkout -b name_of_NEW_branch
+git checkout branch_name_you_want_to_use
+
+figaro heroku:set -e productiongit branch -a
+
+git add .
+git commit -m 'name_of_commit'
+
+git push -u origin branch_name
+
+~at first:
+  heroku git:remote -a yourapp_name_on_heroku   # set name of your Heroku app localy
+
+git push heroku branch_name:master
+
+heroku run 'rails db:migrate'
+
+
+-----------------------for every new commit:)
+
+
+    bash --login   # if commiting without changes at last time
+
+    rails assets:precompile
+
+    git branch -a
+    git checkout -b name_of_NEW_branch
+git branch
+git checkout branch_name_you_want_to_use
+
+    figaro heroku:set -e production
+
+git add .
+git commit -m 'name_of_commit'
+
+git push -u origin branch_name
+git push heroku branch_name:master
+
+    heroku run 'rails db:migrate'
+
+
+-----------------------2018_01_29-------Right-Base-Db-Migrations
+
+
+# TMP: sudo mhwd-kernel -i linux415  
+# mhdw-kernil -li --> list kernel versions
+# reboot
+

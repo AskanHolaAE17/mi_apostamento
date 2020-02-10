@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
-gem 'rails', '4.2.4'
+ruby '2.3.3'
+gem 'rails', '5.0.3'
 
 
 
@@ -56,7 +56,8 @@ end
 
 
 group :production do
-  gem 'pg'
+  # gem 'pg'
+  gem 'pg', '~> 0.18'
   gem 'json', '~> 1.8', '>= 1.8.3'  
   gem 'heroku-deflater'
 end
